@@ -1,3 +1,4 @@
 Here we write the code
-examples
-TATAKAE
+=======
+examples 1
+>>>>>>> 0a1c2b5a945448b1066bc652a5e84179c0d7b495
