@@ -1,2 +1,2 @@
 Here we write the code
-example
+examples
