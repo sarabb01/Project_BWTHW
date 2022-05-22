@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.the_best_app">
+    package="com.example.prova_project">
    <application
-        android:label="the_best_app"
+        android:label="prova_project"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -31,4 +31,5 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+        <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
