@@ -12,7 +12,7 @@ class Opt1Page extends StatelessWidget {
     print('${Opt1Page.routename} built');
     return Scaffold(
       appBar: AppBar(
-        title: Text(Opt1Page.routename),
+        title: Text('Ciao'),
       ),
       body: Center(
         child: Container(
