@@ -20,6 +20,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   late TextEditingController _sex; // = TextEditingController();
   late TextEditingController _username; // = TextEditingController();
   late TextEditingController _password; // = TextEditingController();
+  late TextEditingController _age;
 
   @override
   void initState() {
@@ -29,6 +30,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     _sex = TextEditingController();
     _username = TextEditingController();
     _password = TextEditingController();
+    _age = TextEditingController();
   }
 
   @override
@@ -38,6 +40,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     _sex.dispose();
     _username.dispose();
     _password.dispose();
+    _age.dispose();
     super.dispose();
   }
 
@@ -48,6 +51,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       _sex.clear();
       _username.clear();
       _password.clear();
+      _age.clear();
     });
   }
 
@@ -85,30 +89,25 @@ class _RegistrationPageState extends State<RegistrationPage> {
           ),
           FormSeparator(label: 'Name'),
           Inputs_Forms(
-            controller: _name,
-            label: 'Enter your Name',
-            onSubmit: (value) => print(value),
-          ),
+              controller: _name, label: 'Enter your Name', DataType: 'STR'),
           FormSeparator(label: 'Surname'),
           Inputs_Forms(
               controller: _surname,
               label: 'Enter your Surname',
-              onSubmit: (value) => print(value)),
+              DataType: 'STR'),
+          FormSeparator(label: 'Age'),
+          Inputs_Forms(controller: _age, label: 'Subject Age', DataType: 'NUM'),
           FormSeparator(label: 'Sex'),
           Inputs_Forms(
-              controller: _sex,
-              label: 'Female or Male',
-              onSubmit: (value) => print(value)),
+              controller: _sex, label: 'Female or Male', DataType: 'STR'),
           FormSeparator(label: 'Username'),
           Inputs_Forms(
-              controller: _username,
-              label: 'Email Addres',
-              onSubmit: (value) => print(value)),
+              controller: _username, label: 'Email Addres', DataType: 'STR'),
           FormSeparator(label: 'Password'),
           Inputs_Forms(
               controller: _password,
               label: 'Enter your Password',
-              onSubmit: (value) => print(value)),
+              DataType: 'STR'),
           Sign_In_Button(context, LoginPage.route),
         ])));
   }
@@ -140,7 +139,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     color: Colors.black,
                     size: 30,
                   ),
-                  Text('Sign In')
+                  Text(
+                    'Sign In',
+                    style: TextStyle(color: Colors.black),
+                  )
                 ]))));
   }
 

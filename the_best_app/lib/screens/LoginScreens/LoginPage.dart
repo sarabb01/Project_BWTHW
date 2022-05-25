@@ -22,6 +22,40 @@ class LoginPage extends StatefulWidget {
 class _log_in_settings extends State<LoginPage> {
   late TextEditingController _username; // = TextEditingController();
   late TextEditingController _password; // = TextEditingController();
+  bool obscure_text = true;
+
+  bool user_submitted = false;
+  bool password_submitted = false;
+
+  String? get user_errorText {
+    final user_text = _username.text;
+    if (user_text.isEmpty || user_text == null) {
+      return 'Must not be empty';
+    }
+  }
+
+  String? get pass_errorText {
+    String pass_text = _username.text;
+    if (pass_text.isEmpty || pass_text == null) {
+      return 'Must not be empty';
+    } else if (pass_text.length < 8 &&
+        pass_text.isNotEmpty &&
+        pass_text != null) {
+      return "Password Too Short (Min 8 Character Recquired)";
+    }
+  }
+
+  void user_submit() {
+    setState(() {
+      user_submitted = true;
+    });
+  }
+
+  void pass_submit() {
+    setState(() {
+      password_submitted = true;
+    });
+  }
 
   @override
   void initState() {
@@ -46,10 +80,16 @@ class _log_in_settings extends State<LoginPage> {
     } //if
   } //_checkLogin
 
-  setInputData() {
+  void setInputData() {
     setState(() {
       _username.clear();
       _password.clear();
+    });
+  }
+
+  void set_ObscureText() {
+    setState(() {
+      obscure_text = !obscure_text;
     });
   }
 
@@ -87,7 +127,7 @@ class _log_in_settings extends State<LoginPage> {
               height: 150,
               child: SvgPicture.asset('assets/Images/register.svg')),
           Container(
-              height: 250,
+              height: 300,
               child: Padding(
                 padding:
                     EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 10),
@@ -105,10 +145,101 @@ class _log_in_settings extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           // Username TextBox
-                          Username_format(_username),
+                          Padding(
+                            padding: EdgeInsets.all(10),
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold),
+                              autocorrect: false,
+                              controller: _username,
+                              decoration: new InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.black, width: 1.0),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.blue, width: 1.0),
+                                  ),
+                                  iconColor: Colors.black,
+                                  labelText: 'Username',
+                                  labelStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15),
+                                  prefixIcon: Icon(
+                                    Icons.account_circle,
+                                    color: Colors.black,
+                                  ),
+                                  hintText: 'Enter a Valid Mail Adress',
+                                  hintStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15),
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  errorText:
+                                      user_submitted ? user_errorText : null,
+                                  errorStyle: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15)),
+                            ),
+                          ),
                           SizedBox(height: 5),
                           // Password TextBox
-                          PassWord_format(_password),
+                          Padding(
+                            padding: EdgeInsets.all(10),
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.black),
+                              autocorrect: false,
+                              controller: _password,
+                              obscureText: obscure_text,
+                              decoration: new InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.black, width: 1.0),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.blue, width: 1.0),
+                                  ),
+                                  iconColor: Colors.black,
+                                  labelText: 'Password',
+                                  labelStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15),
+                                  prefixIcon: Icon(
+                                    Icons.lock,
+                                    color: Colors.black,
+                                  ),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      MdiIcons.eye,
+                                      color: Colors.black,
+                                    ),
+                                    onPressed: () {
+                                      set_ObscureText();
+                                    },
+                                  ),
+                                  hintText: 'Enter Your Password',
+                                  hintStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15),
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  errorText: password_submitted
+                                      ? pass_errorText
+                                      : null,
+                                  errorStyle: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15)),
+                            ),
+                          ),
                         ],
                       ),
                     )),
@@ -142,13 +273,22 @@ class _log_in_settings extends State<LoginPage> {
                     children: [
                       Icon(
                         Icons.login,
+                        color: Colors.black,
                       ),
-                      Text('Log-In')
+                      Text(
+                        'Log-In',
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold),
+                      )
                     ],
                   ),
                 ),
                 onPressed: () async {
-                  if (await _User_LogIn(_username.text, _password.text)) {
+                  if (_username.text.isEmpty || _password.text.isEmpty) {
+                    _username.text.isEmpty ? user_submit() : null;
+                    _password.text.isEmpty ? pass_submit() : null;
+                  } else if (await _User_LogIn(
+                      _username.text, _password.text)) {
                     Navigator.pushNamed(context, HomePage.route,
                         arguments: {'username': _username.text});
                     setInputData();
@@ -209,6 +349,8 @@ class _log_in_settings extends State<LoginPage> {
                         EdgeInsets.only(left: 20, top: 5, right: 20, bottom: 5),
                     child: Text(
                       'Forgot Password ',
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
                     ),
                   )))
         ])));
