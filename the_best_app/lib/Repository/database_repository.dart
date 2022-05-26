@@ -20,8 +20,8 @@ class Users_Database_Repo extends ChangeNotifier {
 
   // ######### CHECKING USER PRESENCE #########
   //@Query('SELECT username FROM Users_Credentialss WHERE username = :username')
-  Future<String?> findUser(String username) async {
-    final results = await database.user_crededentials_dao.findUser(username);
+  Future<Users_Credentials?> findUser(String username) async {
+    final results = await database.user_crededentials_dao.checkUser(username);
     return results;
   }
 

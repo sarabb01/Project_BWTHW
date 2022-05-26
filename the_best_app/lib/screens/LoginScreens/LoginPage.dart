@@ -1,4 +1,5 @@
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,6 +9,8 @@ import 'package:prova_project/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:prova_project/Screens/HomeScreens/HomePage.dart';
 import 'package:prova_project/Screens/LoginScreens/ForgotPasswordPage.dart';
 import 'package:prova_project/Utils/Credentials_Form.dart';
+import 'package:prova_project/Database/Entities/User_Creds.dart';
+import 'package:prova_project/Repository/database_repository.dart';
 import 'package:prova_project/Classes/Users_Credential.dart';
 
 class LoginPage extends StatefulWidget {
@@ -85,13 +88,29 @@ class _log_in_settings extends State<LoginPage> {
       obscure_text = !obscure_text;
     });
   }
-
+  /*
   // Checking User Credentials  => true if credentials are saved into the database,false otherwise
   Future<bool> _User_LogIn(String data1, String data2) async {
     if (widget.users_credentials.Check_User(data1) &&
         widget.users_credentials.Check_User_Password(data2)) {
       final sp = await SharedPreferences.getInstance();
       sp.setString('username', data1);
+      return await Future<bool>.value(true);
+    } else {
+      return await Future<bool>.value(false);
+    }
+  }
+  */
+
+  Future<bool> _User_LogIn(String username, String password) async {
+    final result =
+        await Provider.of<Users_Database_Repo>(context, listen: false)
+            .findUser(username);
+    var _user = result?.username;
+    var _password = result?.password;
+    if (_user != null && _password != null && _password == password) {
+      final sp = await SharedPreferences.getInstance();
+      sp.setString('username', _user);
       return await Future<bool>.value(true);
     } else {
       return await Future<bool>.value(false);
@@ -251,80 +270,78 @@ class _log_in_settings extends State<LoginPage> {
           SizedBox(
             height: 5,
           ),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Padding(
-              // LOG-IN
-              padding: EdgeInsets.only(left: 20, top: 5, right: 20, bottom: 10),
-              child: ElevatedButton(
-                style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                          side: BorderSide(color: Colors.lightBlue)),
-                    ),
-                    padding: MaterialStateProperty.all(EdgeInsets.all(5)),
-                    backgroundColor: MaterialStateProperty.all(
-                        Colors.blue), // <-- Button color
-                    overlayColor:
-                        MaterialStateProperty.resolveWith<Color?>((states) {
-                      if (states.contains(MaterialState.pressed))
-                        return Colors.red; // <-- Splash color
-                    })),
-                child: Padding(
-                  padding:
-                      EdgeInsets.only(left: 20, top: 1, right: 20, bottom: 1),
-                  child: Column(
-                    children: [
-                      Icon(
-                        Icons.login,
-                        color: Colors.black,
-                      ),
-                      Text(
-                        'Log-In',
-                        style: TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.bold),
-                      )
-                    ],
+          Center(
+              child: Padding(
+            // LOG-IN
+            padding: EdgeInsets.only(left: 20, top: 5, right: 20, bottom: 10),
+            child: ElevatedButton(
+              style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: BorderSide(color: Colors.lightBlue)),
                   ),
+                  padding: MaterialStateProperty.all(EdgeInsets.all(5)),
+                  backgroundColor: MaterialStateProperty.all(
+                      Colors.blue), // <-- Button color
+                  overlayColor:
+                      MaterialStateProperty.resolveWith<Color?>((states) {
+                    if (states.contains(MaterialState.pressed))
+                      return Colors.red; // <-- Splash color
+                  })),
+              child: Padding(
+                padding:
+                    EdgeInsets.only(left: 20, top: 1, right: 20, bottom: 1),
+                child: Column(
+                  children: [
+                    Icon(
+                      Icons.login,
+                      color: Colors.black,
+                    ),
+                    Text(
+                      'Log-In',
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    )
+                  ],
                 ),
-                onPressed: () async {
-                  if (_username.text.isEmpty || _password.text.isEmpty) {
-                    _username.text.isEmpty ? user_submit() : null;
-                    _password.text.isEmpty ? pass_submit() : null;
-                  } else if (await _User_LogIn(
-                      _username.text, _password.text)) {
-                    Navigator.pushReplacementNamed(context, HomePage.route,
-                        arguments: {'username': _username.text});
-                    setInputData();
-                  } else {
-                    showDialog<void>(
-                        context: context,
-                        builder: (BuildContext context) {
-                          Future.delayed(Duration(seconds: 10), () {
-                            Navigator.of(context).pop(true);
-                          });
-                          return AlertDialog(
-                              actionsAlignment: MainAxisAlignment.center,
-                              title: Text(
-                                'Wrong Access',
-                                textAlign: TextAlign.center,
-                              ),
-                              content: Text("Wrong Credentials",
-                                  textAlign: TextAlign.center),
-                              actions: <Widget>[
-                                IconButton(
-                                  icon: Icon(Icons.error),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ]);
-                        });
-                  }
-                },
               ),
-            )
-          ]),
+              onPressed: () async {
+                if (_username.text.isEmpty || _password.text.isEmpty) {
+                  _username.text.isEmpty ? user_submit() : null;
+                  _password.text.isEmpty ? pass_submit() : null;
+                } else if (await _User_LogIn(_username.text, _password.text)) {
+                  Navigator.pushReplacementNamed(context, HomePage.route,
+                      arguments: {'username': _username.text});
+                  setInputData(); // To Clear the content of TextEditingController()
+                } else {
+                  showDialog<void>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        Future.delayed(Duration(seconds: 10), () {
+                          Navigator.of(context).pop(true);
+                        });
+                        return AlertDialog(
+                            actionsAlignment: MainAxisAlignment.center,
+                            title: Text(
+                              'Wrong Access',
+                              textAlign: TextAlign.center,
+                            ),
+                            content: Text("Wrong Credentials",
+                                textAlign: TextAlign.center),
+                            actions: <Widget>[
+                              IconButton(
+                                icon: Icon(Icons.error),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ]);
+                      });
+                }
+              },
+            ),
+          )),
           Padding(
               // FORGOT PASSWORD
               padding:

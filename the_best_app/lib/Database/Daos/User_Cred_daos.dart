@@ -1,7 +1,4 @@
-import 'dart:ffi';
-
 import 'package:floor/floor.dart';
-import 'package:prova_project/Classes/Users_Credential.dart';
 import 'package:prova_project/Database/Entities/User_Creds.dart';
 
 @dao
@@ -9,8 +6,8 @@ abstract class User_Crededentials_Dao {
   @Query('SELECT username FROM Users_Credentials')
   Future<List<String>?> findAllUsers();
 
-  @Query('SELECT username FROM Users_Credentialss WHERE username = :username')
-  Future<String?> findUser(String username);
+  @Query('SELECT * FROM Users_Credentials WHERE username = :username')
+  Future<Users_Credentials?> checkUser(String username);
 
   @Insert(
       onConflict: OnConflictStrategy

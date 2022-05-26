@@ -82,7 +82,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Users Credentials` (`id` INTEGER NOT NULL, `username` TEXT NOT NULL, `password` TEXT NOT NULL, PRIMARY KEY (`id`, `username`))');
+            'CREATE TABLE IF NOT EXISTS `Users Credentials` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `username` TEXT NOT NULL, `password` TEXT NOT NULL)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -111,7 +111,7 @@ class _$User_Crededentials_Dao extends User_Crededentials_Dao {
         _users_CredentialsUpdateAdapter = UpdateAdapter(
             database,
             'Users Credentials',
-            ['id', 'username'],
+            ['id'],
             (Users_Credentials item) => <String, Object?>{
                   'id': item.id,
                   'username': item.username,
@@ -120,7 +120,7 @@ class _$User_Crededentials_Dao extends User_Crededentials_Dao {
         _users_CredentialsDeletionAdapter = DeletionAdapter(
             database,
             'Users Credentials',
-            ['id', 'username'],
+            ['id'],
             (Users_Credentials item) => <String, Object?>{
                   'id': item.id,
                   'username': item.username,
@@ -145,9 +145,13 @@ class _$User_Crededentials_Dao extends User_Crededentials_Dao {
   }
 
   @override
-  Future<String?> findUser(String username) async {
-    await _queryAdapter.queryNoReturn(
-        'SELECT username FROM Users_Credentialss WHERE username = ?1',
+  Future<Users_Credentials?> checkUser(String username) async {
+    return _queryAdapter.query(
+        'SELECT * FROM Users_Credentials WHERE username = ?1',
+        mapper: (Map<String, Object?> row) => Users_Credentials(
+            row['id'] as int,
+            row['username'] as String,
+            row['password'] as String),
         arguments: [username]);
   }
 
