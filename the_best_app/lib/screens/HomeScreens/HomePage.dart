@@ -69,7 +69,7 @@ Widget Back_Page(List<double> edge_insets, BuildContext context) {
           onPressed: (() async {
             final sp = await SharedPreferences.getInstance();
             sp.remove('username');
-            await Navigator.pushReplacementNamed(context, LoginPage.route);
+            Navigator.pushReplacementNamed(context, LoginPage.route);
           }),
           child: Icon(
             Icons.first_page,

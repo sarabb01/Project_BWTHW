@@ -59,9 +59,11 @@ class _log_in_settings extends State<LoginPage> {
 
   @override
   void initState() {
-    super.initState();
     _username = TextEditingController();
     _password = TextEditingController();
+    //Check if the user is already logged in before rendering the login page
+    _checkLogin();
+    super.initState();
   }
 
   @override
@@ -70,15 +72,6 @@ class _log_in_settings extends State<LoginPage> {
     _password.dispose();
     super.dispose();
   }
-
-  void _checkLogin() async {
-    //Get the SharedPreference instance and check if the value of the 'username' filed is set or not
-    final sp = await SharedPreferences.getInstance();
-    if (sp.getString('username') != null) {
-      //If 'username is set, push the HomePage
-      Navigator.pushNamed(context, HomePage.route);
-    } //if
-  } //_checkLogin
 
   void setInputData() {
     setState(() {
@@ -93,7 +86,7 @@ class _log_in_settings extends State<LoginPage> {
     });
   }
 
-  // Checking user credential Method => true if credentials are saved into the database,false otherwise
+  // Checking User Credentials  => true if credentials are saved into the database,false otherwise
   Future<bool> _User_LogIn(String data1, String data2) async {
     if (widget.users_credentials.Check_User(data1) &&
         widget.users_credentials.Check_User_Password(data2)) {
@@ -104,6 +97,17 @@ class _log_in_settings extends State<LoginPage> {
       return await Future<bool>.value(false);
     }
   }
+
+  //Get the SharedPreference instance and check if the value of the 'username' filed is set or not
+  void _checkLogin() async {
+    //Get the SharedPreference instance and check if the value of the 'username' filed is set or not
+    final sp = await SharedPreferences.getInstance();
+    if (sp.getString('username') != null) {
+      //If 'username is set, push the HomePage
+      Navigator.pushReplacementNamed(context, HomePage.route,
+          arguments: {'username': sp.getString('username')});
+    }
+  } //_checkLogin
 
   @override
   Widget build(BuildContext context) {
@@ -289,7 +293,7 @@ class _log_in_settings extends State<LoginPage> {
                     _password.text.isEmpty ? pass_submit() : null;
                   } else if (await _User_LogIn(
                       _username.text, _password.text)) {
-                    Navigator.pushNamed(context, HomePage.route,
+                    Navigator.pushReplacementNamed(context, HomePage.route,
                         arguments: {'username': _username.text});
                     setInputData();
                   } else {
@@ -341,7 +345,8 @@ class _log_in_settings extends State<LoginPage> {
                           return Colors.red; // <-- Splash color
                       })),
                   onPressed: (() {
-                    Navigator.pushNamed(context, ForgotPasswordPage.route);
+                    Navigator.pushReplacementNamed(
+                        context, ForgotPasswordPage.route);
                     ;
                   }),
                   child: Padding(

@@ -6,14 +6,33 @@ import 'package:prova_project/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:prova_project/Screens/LoginScreens/RegistrationPage.dart';
 // HomeScreens
 import 'package:prova_project/Screens/HomeScreens/HomePage.dart';
-
+// User Database
+import 'package:prova_project/Database/user_cred_database.dart';
+import 'package:prova_project/Repository/database_repository.dart';
+// Otger Screens
 import 'package:prova_project/Screens/experiencePage.dart';
 import 'package:prova_project/Screens/preferencesPage.dart';
 import 'package:prova_project/Screens/shoppingPage.dart';
+import 'package:provider/provider.dart';
 //TODO: import the homepage widget
 
-void main() {
-  runApp(MyApp());
+Future<void> main() async {
+  //This is a special method that use WidgetFlutterBinding to interact with the Flutter engine.
+  //This is needed when you need to interact with the native core of the app.
+  //Here, we need it since when need to initialize the DB before running the app.
+  WidgetsFlutterBinding.ensureInitialized();
+
+  //This opens the database.
+  final AppDatabase database =
+      await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+  //This creates a new DatabaseRepository from the AppDatabase instance just initialized
+  final usesr_database_repo = Users_Database_Repo(database: database);
+  //Here, we run the app and we provide to the whole widget tree the instance of the DatabaseRepository.
+  //That instance will be then shared through the platform and will be unique.
+  runApp(ChangeNotifierProvider<Users_Database_Repo>(
+    create: (context) => usesr_database_repo,
+    child: MyApp(),
+  ));
 } //main
 
 class MyApp extends StatelessWidget {
@@ -66,4 +85,4 @@ class MyApp extends StatelessWidget {
           }
         });
   } //build
-}//MyApp
+} //MyApp
