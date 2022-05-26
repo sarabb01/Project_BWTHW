@@ -1,3 +1,4 @@
+// PACKAGES
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -5,13 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 // import 'package:flutter_login/flutter_login.dart';
 //import 'package:prova_project/Screens/LoginScreens/RegistrationPage.dart';
+// APP SCREENS
 import 'package:prova_project/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:prova_project/Screens/HomeScreens/HomePage.dart';
 import 'package:prova_project/Screens/LoginScreens/ForgotPasswordPage.dart';
-import 'package:prova_project/Utils/Credentials_Form.dart';
-import 'package:prova_project/Database/Entities/User_Creds.dart';
-import 'package:prova_project/Repository/database_repository.dart';
+// CLASSES
 import 'package:prova_project/Classes/Users_Credential.dart';
+// DATA PERSISTENCE
+import 'package:prova_project/Database/Entities/UserCreds.dart';
+import 'package:prova_project/Repository/database_repository.dart';
 
 class LoginPage extends StatefulWidget {
   static const route = '/hellowordpage/loginpage';
@@ -103,9 +106,8 @@ class _log_in_settings extends State<LoginPage> {
   */
 
   Future<bool> _User_LogIn(String username, String password) async {
-    final result =
-        await Provider.of<Users_Database_Repo>(context, listen: false)
-            .findUser(username);
+    final result = await Provider.of<UsersDatabaseRepo>(context, listen: false)
+        .findUser(username);
     var _user = result?.username;
     var _password = result?.password;
     if (_user != null && _password != null && _password == password) {

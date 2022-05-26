@@ -26,11 +26,11 @@ Future<void> main() async {
   final AppDatabase database =
       await $FloorAppDatabase.databaseBuilder('app_database.db').build();
   //This creates a new DatabaseRepository from the AppDatabase instance just initialized
-  final usesr_database_repo = Users_Database_Repo(database: database);
+  final users_database_repo = UsersDatabaseRepo(database: database);
   //Here, we run the app and we provide to the whole widget tree the instance of the DatabaseRepository.
   //That instance will be then shared through the platform and will be unique.
-  runApp(ChangeNotifierProvider<Users_Database_Repo>(
-    create: (context) => usesr_database_repo,
+  runApp(ChangeNotifierProvider<UsersDatabaseRepo>(
+    create: (context) => users_database_repo,
     child: MyApp(),
   ));
 } //main

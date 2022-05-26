@@ -1,9 +1,16 @@
+// FLUTTER PACKAGES
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+// SCREENS
 import 'package:prova_project/Screens/HomeScreens/HomePage.dart';
+import 'package:prova_project/Screens/LoginScreens/LoginPage.dart';
+// UTILIS
 import 'package:prova_project/Utils/Form_Separator.dart';
 import 'package:prova_project/Utils/Registration_Form.dart';
-import 'package:prova_project/Screens/LoginScreens/LoginPage.dart';
+// DATA PERSISTENCE
+import 'package:prova_project/Database/Entities/UserCreds.dart';
+import 'package:prova_project/Repository/database_repository.dart';
 
 class RegistrationPage extends StatefulWidget {
   static const route = '/hellowordpage/registrationpage';
@@ -14,23 +21,22 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
-  final _formKey = GlobalKey<FormState>();
   late TextEditingController _name; // = TextEditingController();
   late TextEditingController _surname; // = TextEditingController();
   late TextEditingController _sex; // = TextEditingController();
   late TextEditingController _username; // = TextEditingController();
   late TextEditingController _password; // = TextEditingController();
-  late TextEditingController _age;
+  late TextEditingController _age; // = TextEditingController();
 
   @override
   void initState() {
-    super.initState();
     _name = TextEditingController();
     _surname = TextEditingController();
     _sex = TextEditingController();
     _username = TextEditingController();
     _password = TextEditingController();
     _age = TextEditingController();
+    super.initState();
   }
 
   @override
@@ -127,8 +133,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     return Colors.red; // <-- Splash color
                 })),
             onPressed: (() async {
-              await setInputData();
-              await Navigator.popAndPushNamed(context, LoginPage.route);
+              user_info_storing(_username.text, _password.text);
+              //setInputData();
+              await Navigator.pushReplacementNamed(context, LoginPage.route);
             }),
             child: Padding(
                 padding:
@@ -144,6 +151,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     style: TextStyle(color: Colors.black),
                   )
                 ]))));
+  }
+
+  void user_info_storing(String username, String password) async {
+    final users_credentials = UsersCredentials(1, username, password);
+    await Provider.of<UsersDatabaseRepo>(context, listen: false)
+        .addUser(users_credentials);
   }
 
   Widget Back_Page(List<double> edge_insets, BuildContext context) {

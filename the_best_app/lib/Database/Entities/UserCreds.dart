@@ -3,11 +3,11 @@ import 'package:floor/floor.dart';
 // TABLE STRUCTURE
 //     Table Name : Users Credentials
 // ID(int) USERNAME(String) PASSWORD(String)
-@Entity(tableName: 'Users Credentials')
-class Users_Credentials {
+@entity
+class UsersCredentials {
   @PrimaryKey(autoGenerate: true)
-  final int id;
+  final int? id;
   final String username;
   final String password;
-  Users_Credentials(this.id, this.username, this.password);
+  UsersCredentials(this.id, this.username, this.password);
 }

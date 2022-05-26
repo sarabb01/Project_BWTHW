@@ -61,7 +61,7 @@ class _$AppDatabase extends AppDatabase {
     changeListener = listener ?? StreamController<String>.broadcast();
   }
 
-  User_Crededentials_Dao? _user_crededentials_daoInstance;
+  UserCrededentialsDao? _user_crededentials_daoInstance;
 
   Future<sqflite.Database> open(String path, List<Migration> migrations,
       [Callback? callback]) async {
@@ -82,7 +82,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Users Credentials` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `username` TEXT NOT NULL, `password` TEXT NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `UsersCredentials` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `username` TEXT NOT NULL, `password` TEXT NOT NULL)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -91,37 +91,37 @@ class _$AppDatabase extends AppDatabase {
   }
 
   @override
-  User_Crededentials_Dao get user_crededentials_dao {
+  UserCrededentialsDao get user_crededentials_dao {
     return _user_crededentials_daoInstance ??=
-        _$User_Crededentials_Dao(database, changeListener);
+        _$UserCrededentialsDao(database, changeListener);
   }
 }
 
-class _$User_Crededentials_Dao extends User_Crededentials_Dao {
-  _$User_Crededentials_Dao(this.database, this.changeListener)
+class _$UserCrededentialsDao extends UserCrededentialsDao {
+  _$UserCrededentialsDao(this.database, this.changeListener)
       : _queryAdapter = QueryAdapter(database),
-        _users_CredentialsInsertionAdapter = InsertionAdapter(
+        _usersCredentialsInsertionAdapter = InsertionAdapter(
             database,
-            'Users Credentials',
-            (Users_Credentials item) => <String, Object?>{
+            'UsersCredentials',
+            (UsersCredentials item) => <String, Object?>{
                   'id': item.id,
                   'username': item.username,
                   'password': item.password
                 }),
-        _users_CredentialsUpdateAdapter = UpdateAdapter(
+        _usersCredentialsUpdateAdapter = UpdateAdapter(
             database,
-            'Users Credentials',
+            'UsersCredentials',
             ['id'],
-            (Users_Credentials item) => <String, Object?>{
+            (UsersCredentials item) => <String, Object?>{
                   'id': item.id,
                   'username': item.username,
                   'password': item.password
                 }),
-        _users_CredentialsDeletionAdapter = DeletionAdapter(
+        _usersCredentialsDeletionAdapter = DeletionAdapter(
             database,
-            'Users Credentials',
+            'UsersCredentials',
             ['id'],
-            (Users_Credentials item) => <String, Object?>{
+            (UsersCredentials item) => <String, Object?>{
                   'id': item.id,
                   'username': item.username,
                   'password': item.password
@@ -133,47 +133,47 @@ class _$User_Crededentials_Dao extends User_Crededentials_Dao {
 
   final QueryAdapter _queryAdapter;
 
-  final InsertionAdapter<Users_Credentials> _users_CredentialsInsertionAdapter;
+  final InsertionAdapter<UsersCredentials> _usersCredentialsInsertionAdapter;
 
-  final UpdateAdapter<Users_Credentials> _users_CredentialsUpdateAdapter;
+  final UpdateAdapter<UsersCredentials> _usersCredentialsUpdateAdapter;
 
-  final DeletionAdapter<Users_Credentials> _users_CredentialsDeletionAdapter;
+  final DeletionAdapter<UsersCredentials> _usersCredentialsDeletionAdapter;
 
   @override
   Future<List<String>?> findAllUsers() async {
-    await _queryAdapter.queryNoReturn('SELECT username FROM Users_Credentials');
+    await _queryAdapter.queryNoReturn('SELECT username FROM UsersCredentials');
   }
 
   @override
-  Future<Users_Credentials?> checkUser(String username) async {
+  Future<UsersCredentials?> checkUser(String username) async {
     return _queryAdapter.query(
-        'SELECT * FROM Users_Credentials WHERE username = ?1',
-        mapper: (Map<String, Object?> row) => Users_Credentials(
-            row['id'] as int,
+        'SELECT * FROM UsersCredentials WHERE username = ?1',
+        mapper: (Map<String, Object?> row) => UsersCredentials(
+            row['id'] as int?,
             row['username'] as String,
             row['password'] as String),
         arguments: [username]);
   }
 
   @override
-  Future<void> addUser(Users_Credentials user) async {
-    await _users_CredentialsInsertionAdapter.insert(
+  Future<void> addUser(UsersCredentials user) async {
+    await _usersCredentialsInsertionAdapter.insert(
         user, OnConflictStrategy.rollback);
   }
 
   @override
-  Future<void> updateUserPassword(Users_Credentials user) async {
-    await _users_CredentialsUpdateAdapter.update(
+  Future<void> updateUserPassword(UsersCredentials user) async {
+    await _usersCredentialsUpdateAdapter.update(
         user, OnConflictStrategy.replace);
   }
 
   @override
-  Future<void> deleteUser(Users_Credentials user) async {
-    await _users_CredentialsDeletionAdapter.delete(user);
+  Future<void> deleteUser(UsersCredentials user) async {
+    await _usersCredentialsDeletionAdapter.delete(user);
   }
 
   @override
-  Future<void> deleteAllUsers(List<Users_Credentials> users) async {
-    await _users_CredentialsDeletionAdapter.deleteList(users);
+  Future<void> deleteAllUsers(List<UsersCredentials> users) async {
+    await _usersCredentialsDeletionAdapter.deleteList(users);
   }
 }
