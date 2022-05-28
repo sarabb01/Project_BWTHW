@@ -7,9 +7,13 @@ import 'package:prova_project/Screens/LoginScreens/RegistrationPage.dart';
 // HomeScreens
 import 'package:prova_project/Screens/HomeScreens/HomePage.dart';
 
-import 'package:prova_project/Screens/experiencePage.dart';
-import 'package:prova_project/Screens/preferencesPage.dart';
-import 'package:prova_project/Screens/shoppingPage.dart';
+// Rewards screens
+import 'package:prova_project/screens/Rewards/selectPrefPage.dart';
+import 'package:prova_project/screens/Rewards/queryPage.dart';
+import 'package:prova_project/screens/Rewards/shoppingPage.dart';
+import 'package:prova_project/screens/Rewards/experiencePage.dart';
+import 'package:prova_project/screens/Rewards/QRcodePage.dart';
+
 //TODO: import the homepage widget
 
 void main() {
@@ -49,17 +53,25 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute(builder: (context) {
               return ForgotPasswordPage();
             });
-          } else if (settings.name == Opt2Page.route) {
+          } else if (settings.name == PreferencePage.route) {
             return MaterialPageRoute(builder: (context) {
-              return Opt2Page();
+              return PreferencePage();
             });
-          } else if (settings.name == Opt1Page.route) {
+          } else if (settings.name == QueryPage.route) {
             return MaterialPageRoute(builder: (context) {
-              return Opt1Page();
+              return QueryPage();
             });
-          } else if (settings.name == PrefPage.route) {
+          } else if (settings.name == ShoppingPage.route) {
             return MaterialPageRoute(builder: (context) {
-              return PrefPage();
+              return ShoppingPage();
+            });
+          } else if (settings.name == ExperiencePage.route) {
+            return MaterialPageRoute(builder: (context) {
+              return ExperiencePage();
+            });
+          } else if (settings.name == QRcodePage.route) {
+            return MaterialPageRoute(builder: (context) {
+              return QRcodePage();
             });
           } else {
             return null;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:prova_project/screens/Rewards/selectPrefPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:prova_project/Screens/LoginScreens/LoginPage.dart';
 import 'package:prova_project/Screens/LoginScreens/HelloWordPage.dart';
-import 'package:prova_project/screens/preferencesPage.dart';
 
 class HomePage extends StatelessWidget {
   static const route = '/hellowordpage/loginpage/homepage';
@@ -149,7 +149,7 @@ Widget Calendar_Area_Form(List<double> edge_insets, BuildContext context) {
                       return Colors.red; // <-- Splash color
                   })),
               onPressed: (() {
-                Navigator.pushNamed(context, PrefPage.route);
+                Navigator.pushNamed(context, PreferencePage.route);
               }),
               child: Padding(
                   padding:

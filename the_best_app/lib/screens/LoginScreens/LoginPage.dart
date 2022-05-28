@@ -156,7 +156,7 @@ class _log_in_settings extends State<LoginPage> {
                     showDialog<void>(
                         context: context,
                         builder: (BuildContext context) {
-                          Future.delayed(Duration(seconds: 10), () {
+                          Future.delayed(Duration(seconds: 5), () {
                             Navigator.of(context).pop(true);
                           });
                           return AlertDialog(
