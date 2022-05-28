@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:prova_project/screens/Rewards/selectPrefPage.dart';
+import 'package:the_best_app/screens/Rewards/selectPrefPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:prova_project/Screens/LoginScreens/LoginPage.dart';
-import 'package:prova_project/Screens/LoginScreens/HelloWordPage.dart';
+import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
+import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
 
 class HomePage extends StatelessWidget {
   static const route = '/hellowordpage/loginpage/homepage';

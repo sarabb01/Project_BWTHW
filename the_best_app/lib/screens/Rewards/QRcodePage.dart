@@ -18,10 +18,10 @@ class QRcodePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  width: 200,
-                  height: 200,
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  height: MediaQuery.of(context).size.height * 0.3,
                   child: Image.asset(
-                    'qrimge.png',
+                    'assets/Images/qrimge.png',
                     fit: BoxFit.contain,
                   ),
                 ),

@@ -3,12 +3,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 // import 'package:flutter_login/flutter_login.dart';
-//import 'package:prova_project/Screens/LoginScreens/RegistrationPage.dart';
-import 'package:prova_project/Screens/LoginScreens/HelloWordPage.dart';
-import 'package:prova_project/Screens/HomeScreens/HomePage.dart';
-import 'package:prova_project/Screens/LoginScreens/ForgotPasswordPage.dart';
-import 'package:prova_project/Utils/Credentials_Form.dart';
-import 'package:prova_project/Classes/Users_Credential.dart';
+//import 'package:the_best_app/Screens/LoginScreens/RegistrationPage.dart';
+import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
+import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
+import 'package:the_best_app/Screens/LoginScreens/ForgotPasswordPage.dart';
+import 'package:the_best_app/Utils/Credentials_Form.dart';
+import 'package:the_best_app/Classes/Users_Credential.dart';
 
 class LoginPage extends StatefulWidget {
   static const route = '/hellowordpage/loginpage';

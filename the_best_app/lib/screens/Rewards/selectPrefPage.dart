@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prova_project/screens/Rewards/queryPage.dart';
+import 'package:the_best_app/screens/Rewards/queryPage.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class PreferencePage extends StatelessWidget {
@@ -26,11 +26,13 @@ class PreferencePage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 10),
-              Text('How would you like to spend your points?',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      fontSize: 20)),
+              Text(
+                'How would you like to spend your points?',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontSize: 18),
+              ),
               Expanded(
                   child: GridView.count(
                       crossAxisCount: 2,
@@ -38,8 +40,8 @@ class PreferencePage extends StatelessWidget {
                       mainAxisSpacing: 10,
                       children: [
                     Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      child: Stack(
+                        alignment: Alignment.center,
                         children: [
                           Ink.image(
                               image: AssetImage('assets/Images/shopping.png'),
@@ -50,8 +52,8 @@ class PreferencePage extends StatelessWidget {
                                       arguments: selection);
                                 },
                               ),
-                              height: MediaQuery.of(context).size.height * 0.4,
-                              width: MediaQuery.of(context).size.width * 0.5,
+                              height: MediaQuery.of(context).size.height * 0.3,
+                              width: MediaQuery.of(context).size.width * 0.3,
                               fit: BoxFit.contain),
                           Text(
                             'Shopping',

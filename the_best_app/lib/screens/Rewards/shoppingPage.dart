@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:prova_project/models/shopList.dart';
-import 'package:prova_project/screens/Rewards/QRcodePage.dart';
+import 'package:the_best_app/models/shopList.dart';
+import 'package:the_best_app/screens/Rewards/QRcodePage.dart';
 
 class ShoppingPage extends StatelessWidget {
   //ShoppingPage({Key? key}) : super(key: key);

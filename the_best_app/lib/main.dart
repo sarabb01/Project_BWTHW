@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 //LoginScreens
-import 'package:prova_project/Screens/LoginScreens/LoginPage.dart';
-import 'package:prova_project/Screens/LoginScreens/ForgotPasswordPage.dart';
-import 'package:prova_project/Screens/LoginScreens/HelloWordPage.dart';
-import 'package:prova_project/Screens/LoginScreens/RegistrationPage.dart';
+import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
+import 'package:the_best_app/Screens/LoginScreens/ForgotPasswordPage.dart';
+import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
+import 'package:the_best_app/Screens/LoginScreens/RegistrationPage.dart';
 // HomeScreens
-import 'package:prova_project/Screens/HomeScreens/HomePage.dart';
+import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 
 // Rewards screens
-import 'package:prova_project/screens/Rewards/selectPrefPage.dart';
-import 'package:prova_project/screens/Rewards/queryPage.dart';
-import 'package:prova_project/screens/Rewards/shoppingPage.dart';
-import 'package:prova_project/screens/Rewards/experiencePage.dart';
-import 'package:prova_project/screens/Rewards/QRcodePage.dart';
+import 'package:the_best_app/screens/Rewards/selectPrefPage.dart';
+import 'package:the_best_app/screens/Rewards/queryPage.dart';
+import 'package:the_best_app/screens/Rewards/shoppingPage.dart';
+import 'package:the_best_app/screens/Rewards/experiencePage.dart';
+import 'package:the_best_app/screens/Rewards/QRcodePage.dart';
 
 //TODO: import the homepage widget
 

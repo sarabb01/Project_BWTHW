@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:prova_project/Screens/HomeScreens/HomePage.dart';
-import 'package:prova_project/Utils/Form_Separator.dart';
-import 'package:prova_project/Utils/Registration_Form.dart';
-import 'package:prova_project/Screens/LoginScreens/LoginPage.dart';
+import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
+import 'package:the_best_app/Utils/Form_Separator.dart';
+import 'package:the_best_app/Utils/Registration_Form.dart';
+import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
 
 class RegistrationPage extends StatefulWidget {
   static const route = '/hellowordpage/registrationpage';

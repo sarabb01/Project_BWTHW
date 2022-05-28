@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:prova_project/screens/Rewards/experiencePage.dart';
-import 'package:prova_project/screens/Rewards/shoppingPage.dart';
+import 'package:the_best_app/screens/Rewards/experiencePage.dart';
+import 'package:the_best_app/screens/Rewards/shoppingPage.dart';
 
 class QueryPage extends StatelessWidget {
   //QueryPage({Key? key}) : super(key: key);
