@@ -1,4 +1,6 @@
 // APP SCREENS
+import 'package:colours/colours.dart';
+
 import 'LoginPage.dart';
 import 'RegistrationPage.dart';
 // DATABASE
@@ -115,12 +117,12 @@ Widget WelcomePage_Form(
       height: screenSize.height / 15,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: Colors.blueAccent,
+          primary: Colours.mediumSeaGreen,
           textStyle: TextStyle(color: Colors.white),
           padding: EdgeInsets.only(top: 12, bottom: 12),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(25.0),
-              side: BorderSide(color: Colors.blueAccent)),
+              side: BorderSide(color: Colours.mediumSeaGreen)),
         ),
         child: Text(
           text,

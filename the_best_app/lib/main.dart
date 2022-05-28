@@ -1,3 +1,4 @@
+import 'package:colours/colours.dart';
 import 'package:flutter/material.dart';
 // LoginScreens
 import 'package:prova_project/Screens/LoginScreens/LoginPage.dart';
@@ -41,8 +42,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         theme: ThemeData(
-            scaffoldBackgroundColor: Colors.green[100],
-            primarySwatch: Colors.green),
+            scaffoldBackgroundColor: Colours.green[100],
+            primarySwatch: Colours.seaGreen),
         initialRoute: HelloWordPage.route,
         onGenerateRoute: (settings) {
           if (settings.name == HelloWordPage.route) {

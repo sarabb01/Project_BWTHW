@@ -1,4 +1,5 @@
 // FLUTTER PACKAGES
+import 'package:colours/colours.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -125,8 +126,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
             style: ButtonStyle(
                 shape: MaterialStateProperty.all(CircleBorder()),
                 padding: MaterialStateProperty.all(EdgeInsets.all(5)),
-                backgroundColor:
-                    MaterialStateProperty.all(Colors.blue), // <-- Button color
+                backgroundColor: MaterialStateProperty.all(
+                    Colours.mediumSeaGreen), // <-- Button color
                 overlayColor:
                     MaterialStateProperty.resolveWith<Color?>((states) {
                   if (states.contains(MaterialState.pressed))
@@ -166,8 +167,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
             style: ButtonStyle(
                 shape: MaterialStateProperty.all(CircleBorder()),
                 padding: MaterialStateProperty.all(EdgeInsets.all(5)),
-                backgroundColor:
-                    MaterialStateProperty.all(Colors.lime), // <-- Button color
+                backgroundColor: MaterialStateProperty.all(
+                    Colours.darkSeagreen), // <-- Button color
                 overlayColor:
                     MaterialStateProperty.resolveWith<Color?>((states) {
                   if (states.contains(MaterialState.pressed))

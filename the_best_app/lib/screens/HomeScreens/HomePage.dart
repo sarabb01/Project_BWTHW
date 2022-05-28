@@ -1,4 +1,5 @@
 // APP SCREENS
+import 'package:colours/colours.dart';
 import 'package:prova_project/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:prova_project/Screens/LoginScreens/LoginPage.dart';
 // FLUTTER PACKAGES
@@ -30,28 +31,38 @@ class HomePage extends StatelessWidget {
             Back_Page([5, 5, 5, 5], context),
           ]),
       drawer: Drawer(
-          child: ListView(
-              // Important: Remove any padding from the ListView.
-              padding: EdgeInsets.zero,
-              children: [
-            DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                ),
-                child: Center(
-                  child: Text('Drawer Header'),
-                )),
-            ListTile(
-              title: Text(
-                'Remove Profile',
-                textAlign: TextAlign.center,
+          child: ListView(children: [
+        Padding(
+          padding: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 5),
+          child: DrawerHeader(
+              decoration: BoxDecoration(
+                color: Theme.of(context).accentColor,
               ),
-              tileColor: Colors.red,
-              onTap: () async {
-                await remove_Profile(username, context);
-              },
+              child: Center(
+                child: Text(
+                  'Drawer Header',
+                  style: TextStyle(color: Colours.black),
+                ),
+              )),
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 10),
+          child: ListTile(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+                side: BorderSide(color: Colours.fireBrick)),
+            title: Text(
+              'Remove Profile',
+              style: TextStyle(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
             ),
-          ])),
+            tileColor: Colours.fireBrick,
+            onTap: () async {
+              await remove_Profile(username, context);
+            },
+          ),
+        )
+      ])),
       body: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -92,8 +103,8 @@ Widget Back_Page(List<double> edge_insets, BuildContext context) {
           style: ButtonStyle(
               shape: MaterialStateProperty.all(CircleBorder()),
               padding: MaterialStateProperty.all(EdgeInsets.all(5)),
-              backgroundColor:
-                  MaterialStateProperty.all(Colors.lime), // <-- Button color
+              backgroundColor: MaterialStateProperty.all(
+                  Colours.darkSeagreen), // <-- Button color
               overlayColor: MaterialStateProperty.resolveWith<Color?>((states) {
                 if (states.contains(MaterialState.pressed))
                   return Colors.red; // <-- Splash color

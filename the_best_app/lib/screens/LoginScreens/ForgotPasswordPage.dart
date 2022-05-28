@@ -106,7 +106,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             height: 300,
             width: 350,
             child: Card(
-              color: Colours.aliceBlue,
+              color: Colours.mediumSeaGreen,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15.0),
               ),
@@ -214,12 +214,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18.0),
-                                side: BorderSide(
-                                    color: Colours.lightGreenAccent)),
+                                side: BorderSide(color: Colours.darkSeagreen)),
                           ),
                           padding: MaterialStateProperty.all(EdgeInsets.all(5)),
                           backgroundColor: MaterialStateProperty.all(
-                              Colours.lightGreenAccent), // <-- Button color
+                              Colours.darkSeagreen), // <-- Button color
                           overlayColor:
                               MaterialStateProperty.resolveWith<Color?>(
                                   (states) {
@@ -362,8 +361,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             style: ButtonStyle(
                 shape: MaterialStateProperty.all(CircleBorder()),
                 padding: MaterialStateProperty.all(EdgeInsets.all(5)),
-                backgroundColor:
-                    MaterialStateProperty.all(Colors.lime), // <-- Button color
+                backgroundColor: MaterialStateProperty.all(
+                    Colours.darkSeagreen), // <-- Button color
                 overlayColor:
                     MaterialStateProperty.resolveWith<Color?>((states) {
                   if (states.contains(MaterialState.pressed))

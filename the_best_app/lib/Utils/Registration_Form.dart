@@ -85,17 +85,16 @@ class _Registration_Inputs_FormState extends State<Registration_Inputs_Form> {
               decoration: InputDecoration(
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
-                  borderSide:
-                      BorderSide(color: Colours.rebeccaPurple, width: 2.0),
+                  borderSide: BorderSide(color: Colours.black, width: 2.0),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide(color: Colours.dodgerBlue, width: 2.0),
+                  borderSide: BorderSide(
+                      color: Theme.of(context).accentColor, width: 2.0),
                 ),
                 errorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
-                  borderSide:
-                      BorderSide(color: Colours.rebeccaPurple, width: 2.0),
+                  borderSide: BorderSide(color: Colours.red, width: 2.0),
                 ),
                 errorText: _submitted ? _errorText : null,
                 hintText: widget.label,
@@ -104,7 +103,7 @@ class _Registration_Inputs_FormState extends State<Registration_Inputs_Form> {
                     fontWeight: FontWeight.bold,
                     fontSize: 15),
                 filled: true,
-                fillColor: Colours.aliceBlue,
+                fillColor: Colours.white,
               ),
             ),
           );

@@ -1,4 +1,5 @@
 // PACKAGES
+import 'package:colours/colours.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -161,7 +162,7 @@ class _log_in_settings extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                     elevation: 20,
-                    color: Colors.blue,
+                    color: Colours.darkSeagreen,
                     shadowColor: Colors.black,
                     margin: EdgeInsets.all(10),
                     child: Container(
@@ -175,18 +176,18 @@ class _log_in_settings extends State<LoginPage> {
                             child: TextField(
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  color: Colors.blue,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.bold),
                               autocorrect: false,
                               controller: _username,
-                              decoration: new InputDecoration(
+                              decoration: InputDecoration(
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                         color: Colors.black, width: 1.0),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.blue, width: 1.0),
+                                        color: Colors.black, width: 1.0),
                                   ),
                                   iconColor: Colors.black,
                                   labelText: 'Username',
@@ -229,7 +230,7 @@ class _log_in_settings extends State<LoginPage> {
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.blue, width: 1.0),
+                                        color: Colors.black, width: 1.0),
                                   ),
                                   iconColor: Colors.black,
                                   labelText: 'Password',
@@ -281,11 +282,11 @@ class _log_in_settings extends State<LoginPage> {
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18.0),
-                        side: BorderSide(color: Colors.lightBlue)),
+                        side: BorderSide(color: Colours.seaGreen)),
                   ),
                   padding: MaterialStateProperty.all(EdgeInsets.all(5)),
                   backgroundColor: MaterialStateProperty.all(
-                      Colors.blue), // <-- Button color
+                      Colours.seaGreen), // <-- Button color
                   overlayColor:
                       MaterialStateProperty.resolveWith<Color?>((states) {
                     if (states.contains(MaterialState.pressed))
@@ -353,11 +354,11 @@ class _log_in_settings extends State<LoginPage> {
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18.0),
-                            side: BorderSide(color: Colors.lightBlue)),
+                            side: BorderSide(color: Colours.seaGreen)),
                       ),
                       padding: MaterialStateProperty.all(EdgeInsets.all(5)),
                       backgroundColor: MaterialStateProperty.all(
-                          Colors.blue), // <-- Button color
+                          Colours.seaGreen), // <-- Button color
                       overlayColor:
                           MaterialStateProperty.resolveWith<Color?>((states) {
                         if (states.contains(MaterialState.pressed))
@@ -387,8 +388,8 @@ class _log_in_settings extends State<LoginPage> {
             style: ButtonStyle(
                 shape: MaterialStateProperty.all(CircleBorder()),
                 padding: MaterialStateProperty.all(EdgeInsets.all(5)),
-                backgroundColor:
-                    MaterialStateProperty.all(Colors.lime), // <-- Button color
+                backgroundColor: MaterialStateProperty.all(
+                    Colours.darkSeagreen), // <-- Button color
                 overlayColor:
                     MaterialStateProperty.resolveWith<Color?>((states) {
                   if (states.contains(MaterialState.pressed))
