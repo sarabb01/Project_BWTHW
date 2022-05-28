@@ -4,17 +4,20 @@ import 'package:prova_project/models/expList.dart';
 import 'package:prova_project/screens/Rewards/QRcodePage.dart';
 
 class ExperiencePage extends StatelessWidget {
-  ExperiencePage({Key? key}) : super(key: key);
+  // ExperiencePage({Key? key}) : super(key: key);
 
   static const route = '/experience';
   static const routename = 'Experiences';
+
+  String city;
+  ExperiencePage({required this.city});
 
   final expList explist = expList();
   final earnedPoints = 5520;
 
   @override
   Widget build(BuildContext context) {
-    final word = ModalRoute.of(context)!.settings.arguments! as String;
+    //final word = ModalRoute.of(context)!.settings.arguments! as String;
     print('${ExperiencePage.routename} built');
     return Scaffold(
       appBar: AppBar(
@@ -26,7 +29,7 @@ class ExperiencePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Here you can see the list of experiences near "$word" that you can buy with your points',
+                'Here you can see the list of experiences near "$city" that you can buy with your points',
                 style: TextStyle(fontSize: 15),
               ),
               SizedBox(height: 10),

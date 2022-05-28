@@ -58,16 +58,19 @@ class MyApp extends StatelessWidget {
               return PreferencePage();
             });
           } else if (settings.name == QueryPage.route) {
+            final args2 = settings.arguments as String;
             return MaterialPageRoute(builder: (context) {
-              return QueryPage();
+              return QueryPage(path: args2);
             });
           } else if (settings.name == ShoppingPage.route) {
+            final args3 = settings.arguments as String;
             return MaterialPageRoute(builder: (context) {
-              return ShoppingPage();
+              return ShoppingPage(city: args3);
             });
           } else if (settings.name == ExperiencePage.route) {
+            final args4 = settings.arguments as String;
             return MaterialPageRoute(builder: (context) {
-              return ExperiencePage();
+              return ExperiencePage(city: args4);
             });
           } else if (settings.name == QRcodePage.route) {
             return MaterialPageRoute(builder: (context) {

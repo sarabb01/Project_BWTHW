@@ -3,17 +3,21 @@ import 'package:prova_project/screens/Rewards/experiencePage.dart';
 import 'package:prova_project/screens/Rewards/shoppingPage.dart';
 
 class QueryPage extends StatelessWidget {
-  QueryPage({Key? key}) : super(key: key);
+  //QueryPage({Key? key}) : super(key: key);
 
-  static const route = '/query';
+  static const route = '/preference/query';
   static const routename = 'Query';
   final myController = TextEditingController();
+
+  String path;
+
+  QueryPage({required this.path});
 
   @override
   Widget build(BuildContext context) {
     print('${QueryPage.routename} built');
-    final path = ModalRoute.of(context)!.settings.arguments! as String;
-    print(path);
+    //final path = ModalRoute.of(context)!.settings.arguments! as String;
+    //print(ModalRoute.of(context)!.settings.arguments!);
     return Scaffold(
       appBar: AppBar(title: Text('Search')),
       body: Center(
@@ -42,6 +46,8 @@ class QueryPage extends StatelessWidget {
                       } else if (myController.text == '') {
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('LOCATION MISSING!')));
+                      } else {
+                        print('Error!');
                       }
                       ;
                     },

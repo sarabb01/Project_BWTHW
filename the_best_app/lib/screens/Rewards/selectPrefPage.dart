@@ -21,7 +21,7 @@ class PreferencePage extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.4,
                 height: MediaQuery.of(context).size.height * 0.3,
                 child: Image.asset(
-                  'picwish.png',
+                  'assets/Images/picwish.png',
                   fit: BoxFit.contain,
                 ),
               ),
@@ -42,7 +42,7 @@ class PreferencePage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Ink.image(
-                              image: AssetImage('shopping.png'),
+                              image: AssetImage('assets/Images/shopping.png'),
                               child: InkWell(
                                 onTap: () {
                                   String selection = 'shops';
@@ -66,7 +66,7 @@ class PreferencePage extends StatelessWidget {
                         alignment: Alignment.center,
                         children: [
                           Ink.image(
-                              image: AssetImage('sports.png'),
+                              image: AssetImage('assets/Images/sports.png'),
                               child: InkWell(
                                 onTap: () {
                                   String selection = 'experiences';
