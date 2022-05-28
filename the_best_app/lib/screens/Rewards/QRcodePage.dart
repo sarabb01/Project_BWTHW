@@ -21,7 +21,7 @@ class QRcodePage extends StatelessWidget {
                   width: 200,
                   height: 200,
                   child: Image.asset(
-                    'assets/qrimge.png',
+                    'qrimge.png',
                     fit: BoxFit.contain,
                   ),
                 ),
