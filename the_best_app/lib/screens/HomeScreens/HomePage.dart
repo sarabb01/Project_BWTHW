@@ -1,7 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:prova_project/Screens/LoginScreens/LoginPage.dart';
+// APP SCREENS
 import 'package:prova_project/Screens/LoginScreens/HelloWordPage.dart';
+import 'package:prova_project/Screens/LoginScreens/LoginPage.dart';
+// FLUTTER PACKAGES
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+// DATABASE
+import 'package:prova_project/Repository/database_repository.dart';
+import 'package:prova_project/Database/Entities/UserCreds.dart';
 
 class HomePage extends StatelessWidget {
   static const route = '/hellowordpage/loginpage/homepage';
@@ -13,49 +19,75 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('${HomePage.routename} built');
-
     return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
+      appBar: AppBar(
           title: username == null || username.isEmpty
               ? Text('ERROR !! (No username)',
                   style: TextStyle(fontWeight: FontWeight.bold))
               : Text(username.toUpperCase(),
                   style: TextStyle(fontWeight: FontWeight.bold)),
           actions: [
-            Back_Page([5, 10, 5, 5], context)
+            Back_Page([5, 5, 5, 5], context),
+          ]),
+      drawer: Drawer(
+          child: ListView(
+              // Important: Remove any padding from the ListView.
+              padding: EdgeInsets.zero,
+              children: [
+            DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                ),
+                child: Center(
+                  child: Text('Drawer Header'),
+                )),
+            ListTile(
+              title: Text(
+                'Remove Profile',
+                textAlign: TextAlign.center,
+              ),
+              tileColor: Colors.red,
+              onTap: () async {
+                await remove_Profile(username, context);
+              },
+            ),
+          ])),
+      body: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 20,
+            ),
+            Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+              Personal_Area_Form([5, 5, 5, 5], context),
+              SizedBox(height: 30),
+            ]),
+            SizedBox(
+              width: 10,
+            ),
+            Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+              Calendar_Area_Form([5, 5, 5, 5], context),
+              SizedBox(height: 30),
+            ]),
+            SizedBox(
+              width: 20,
+            ),
           ],
         ),
-        body: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 20,
-              ),
-              Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-                Personal_Area_Form([5, 5, 5, 5], context),
-                SizedBox(height: 30),
-              ]),
-              SizedBox(
-                width: 10,
-              ),
-              Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-                Calendar_Area_Form([5, 5, 5, 5], context),
-                SizedBox(height: 30),
-              ]),
-              SizedBox(
-                width: 20,
-              ),
-            ],
-          ),
-        ));
+      ),
+    );
   }
 }
 
 Widget Back_Page(List<double> edge_insets, BuildContext context) {
   return Padding(
-      padding: EdgeInsets.only(right: 5.0, bottom: 10, left: 5.0, top: 5),
+      padding: EdgeInsets.only(
+        left: edge_insets[0],
+        top: edge_insets[1],
+        right: edge_insets[2],
+        bottom: edge_insets[3],
+      ),
       child: ElevatedButton(
           style: ButtonStyle(
               shape: MaterialStateProperty.all(CircleBorder()),
@@ -81,10 +113,11 @@ Widget Back_Page(List<double> edge_insets, BuildContext context) {
 Widget Personal_Area_Form(List<double> edge_insets, BuildContext context) {
   return Padding(
       padding: EdgeInsets.only(
-          right: edge_insets[0],
-          bottom: edge_insets[1],
-          left: edge_insets[2],
-          top: edge_insets[3]),
+        left: edge_insets[0],
+        top: edge_insets[1],
+        right: edge_insets[2],
+        bottom: edge_insets[3],
+      ),
       child: Container(
           width: 150,
           child: ElevatedButton(
@@ -117,7 +150,8 @@ Widget Personal_Area_Form(List<double> edge_insets, BuildContext context) {
                       ),
                       Text(
                         'Personal Area',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.black),
                       ),
                     ],
                   )))));
@@ -126,10 +160,11 @@ Widget Personal_Area_Form(List<double> edge_insets, BuildContext context) {
 Widget Calendar_Area_Form(List<double> edge_insets, BuildContext context) {
   return Padding(
       padding: EdgeInsets.only(
-          right: edge_insets[0],
-          bottom: edge_insets[1],
-          left: edge_insets[2],
-          top: edge_insets[3]),
+        left: edge_insets[0],
+        top: edge_insets[1],
+        right: edge_insets[2],
+        bottom: edge_insets[3],
+      ),
       child: Container(
           width: 150,
           child: ElevatedButton(
@@ -162,8 +197,22 @@ Widget Calendar_Area_Form(List<double> edge_insets, BuildContext context) {
                       ),
                       Text(
                         'Calendar',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.black),
                       ),
                     ],
                   )))));
+}
+
+Future<void> remove_Profile(String username, BuildContext context) async {
+  final user = await Provider.of<UsersDatabaseRepo>(context, listen: false)
+      .findUser(username);
+  // Before deleting the current profile we check if is currently logged in and if is correctly signed in the database
+  if (user != null) {
+    final sp = await SharedPreferences.getInstance();
+    await sp.remove('username'); // Updating current Login session
+    await Provider.of<UsersDatabaseRepo>(context, listen: false)
+        .deleteUser(user); // Deleting User Profile
+    await Navigator.pushReplacementNamed(context, HelloWordPage.route);
+  }
 }

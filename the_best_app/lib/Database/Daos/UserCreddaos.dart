@@ -3,8 +3,8 @@ import 'package:prova_project/Database/Entities/UserCreds.dart';
 
 @dao
 abstract class UserCrededentialsDao {
-  @Query('SELECT username FROM UsersCredentials')
-  Future<List<String>?> findAllUsers();
+  @Query('SELECT * FROM UsersCredentials')
+  Future<List<UsersCredentials>> findAllUsers();
 
   @Query('SELECT * FROM UsersCredentials WHERE username = :username')
   Future<UsersCredentials?> checkUser(String username);

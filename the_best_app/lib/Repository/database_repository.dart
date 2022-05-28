@@ -13,7 +13,7 @@ class UsersDatabaseRepo extends ChangeNotifier {
 
   // ######### SHOWING ALL THE USERS #########
   //@Query('SELECT username FROM Users_Credentials')
-  Future<List<String>?> findAllUsers() async {
+  Future<List<UsersCredentials>> findAllUsers() async {
     final results = await database.user_crededentials_dao.findAllUsers();
     return results;
   }

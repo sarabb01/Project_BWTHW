@@ -140,8 +140,12 @@ class _$UserCrededentialsDao extends UserCrededentialsDao {
   final DeletionAdapter<UsersCredentials> _usersCredentialsDeletionAdapter;
 
   @override
-  Future<List<String>?> findAllUsers() async {
-    await _queryAdapter.queryNoReturn('SELECT username FROM UsersCredentials');
+  Future<List<UsersCredentials>> findAllUsers() async {
+    return _queryAdapter.queryList('SELECT * FROM UsersCredentials',
+        mapper: (Map<String, Object?> row) => UsersCredentials(
+            row['id'] as int?,
+            row['username'] as String,
+            row['password'] as String));
   }
 
   @override

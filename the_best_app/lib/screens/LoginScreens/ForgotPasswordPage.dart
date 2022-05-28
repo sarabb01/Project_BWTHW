@@ -344,9 +344,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     if (result != null) {
       // That means that this account is already siged in the application
       final edited_user =
-          UsersCredentials(result.id, result.username, result.password);
+          UsersCredentials(result.id, result.username, password);
       await Provider.of<UsersDatabaseRepo>(context, listen: false)
-          .updateUserPassword(result);
+          .updateUserPassword(edited_user);
       setInputData();
       await Navigator.pushReplacementNamed(context, LoginPage.route);
       return true;

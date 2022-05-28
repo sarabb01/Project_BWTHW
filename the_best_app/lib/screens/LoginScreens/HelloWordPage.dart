@@ -1,6 +1,14 @@
-import 'package:flutter/material.dart';
+// APP SCREENS
 import 'LoginPage.dart';
 import 'RegistrationPage.dart';
+// DATABASE
+import 'package:prova_project/Repository/database_repository.dart';
+import 'package:prova_project/Database/Daos/UserCreddaos.dart';
+import 'package:prova_project/Database/Entities/UserCreds.dart';
+// PACKAGES
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class HelloWordPage extends StatelessWidget {
   static const route = '/hellowordpage';
@@ -48,7 +56,53 @@ class HelloWordPage extends StatelessWidget {
             WelcomePage_Form(
                 screenSize, 'Sign In', context, RegistrationPage.route)
           ],
-        )));
+        )),
+        drawer: Drawer(
+            elevation: 5,
+            child: Center(
+              child:
+                  Consumer<UsersDatabaseRepo>(builder: (context, dbr, child) {
+                //The logic is to query the DB for the entire list of Meal using dbr.findAllMeals()
+                //and then populate the ListView accordingly.
+                //We need to use a FutureBuilder since the result of dbr.findAllMeals() is a Future.
+                return FutureBuilder(
+                  future: dbr.findAllUsers(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final data = snapshot.data as List<UsersCredentials>;
+                      //If the Meal table is empty, show a simple Text, otherwise show the list of meals using a ListView.
+                      return data.length == 0
+                          ? ElevatedButton(
+                              child: Text('No Users Registered Yet',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            )
+                          : ListView.builder(
+                              itemCount: data.length,
+                              itemBuilder: (context, i) {
+                                //Here, we are using a Card to show a Meal
+                                return Card(
+                                  elevation: 5,
+                                  child: ListTile(
+                                      leading: Icon(MdiIcons.account),
+                                      title: Text(
+                                          'Username : ${data[i].username}')),
+                                );
+                              });
+                    } //if
+                    else {
+                      return CircularProgressIndicator();
+                    } //else
+                  }, //FutureBuilder builder
+                );
+              } //Consumer-builder
+                      ),
+            )));
   }
 }
 

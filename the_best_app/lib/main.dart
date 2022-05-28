@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-//LoginScreens
+// LoginScreens
 import 'package:prova_project/Screens/LoginScreens/LoginPage.dart';
 import 'package:prova_project/Screens/LoginScreens/ForgotPasswordPage.dart';
 import 'package:prova_project/Screens/LoginScreens/HelloWordPage.dart';
@@ -9,7 +9,7 @@ import 'package:prova_project/Screens/HomeScreens/HomePage.dart';
 // User Database
 import 'package:prova_project/Database/user_cred_database.dart';
 import 'package:prova_project/Repository/database_repository.dart';
-// Otger Screens
+// Other Screens
 import 'package:prova_project/Screens/experiencePage.dart';
 import 'package:prova_project/Screens/preferencesPage.dart';
 import 'package:prova_project/Screens/shoppingPage.dart';
