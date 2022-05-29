@@ -73,8 +73,12 @@ class MyApp extends StatelessWidget {
               return ExperiencePage(city: args4);
             });
           } else if (settings.name == QRcodePage.route) {
+            final args5 = settings.arguments as Map;
             return MaterialPageRoute(builder: (context) {
-              return QRcodePage();
+              return QRcodePage(
+                item: args5['n'],
+                list: args5['type'],
+              );
             });
           } else {
             return null;
