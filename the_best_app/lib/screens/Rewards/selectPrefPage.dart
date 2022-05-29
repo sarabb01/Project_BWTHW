@@ -13,19 +13,19 @@ class PreferencePage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(title: Text('Rewards')),
         body: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.fromLTRB(5, 100, 5, 0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                width: MediaQuery.of(context).size.width * 0.4,
-                height: MediaQuery.of(context).size.height * 0.3,
+                //width: MediaQuery.of(context).size.width * 0.4,
+                height: 150, //MediaQuery.of(context).size.height * 0.3,
                 child: Image.asset(
                   'assets/Images/picwish.png',
-                  fit: BoxFit.contain,
+                  fit: BoxFit.cover,
                 ),
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 25),
               Text(
                 'How would you like to spend your points?',
                 style: TextStyle(
@@ -33,18 +33,27 @@ class PreferencePage extends StatelessWidget {
                     color: Colors.black,
                     fontSize: 18),
               ),
+              SizedBox(height: 50),
               Expanded(
                   child: GridView.count(
                       crossAxisCount: 2,
                       crossAxisSpacing: 5,
-                      mainAxisSpacing: 10,
+                      mainAxisSpacing: 1,
                       children: [
                     Container(
-                      child: Stack(
-                        alignment: Alignment.center,
+                      //height: double.infinity,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.green, width: 3),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Ink.image(
                               image: AssetImage('assets/Images/shopping.png'),
+                              height:
+                                  150, //MediaQuery.of(context).size.height * 0.4,
+                              width:
+                                  200, //MediaQuery.of(context).size.width * 0.4,
                               child: InkWell(
                                 onTap: () {
                                   String selection = 'shops';
@@ -52,9 +61,7 @@ class PreferencePage extends StatelessWidget {
                                       arguments: selection);
                                 },
                               ),
-                              height: MediaQuery.of(context).size.height * 0.3,
-                              width: MediaQuery.of(context).size.width * 0.3,
-                              fit: BoxFit.contain),
+                              fit: BoxFit.cover),
                           Text(
                             'Shopping',
                             style: TextStyle(
@@ -64,8 +71,12 @@ class PreferencePage extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      child: Stack(
-                        alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.green, width: 3),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Column(
+                        //alignment: Alignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Ink.image(
                               image: AssetImage('assets/Images/sports.png'),
@@ -76,14 +87,16 @@ class PreferencePage extends StatelessWidget {
                                       arguments: selection);
                                 },
                               ),
-                              height: MediaQuery.of(context).size.height * 0.5,
-                              width: MediaQuery.of(context).size.width * 0.5,
-                              fit: BoxFit.contain),
+                              height:
+                                  150, //MediaQuery.of(context).size.height * 0.4,
+                              width:
+                                  200, //MediaQuery.of(context).size.width * 0.5,
+                              fit: BoxFit.cover),
                           Text(
                             'Experience',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                                //color: Colors.white,
                                 fontSize: 20),
                           )
                         ],
