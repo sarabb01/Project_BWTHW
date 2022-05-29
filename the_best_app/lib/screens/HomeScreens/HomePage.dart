@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:the_best_app/screens/Rewards/selectPrefPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
@@ -42,7 +43,7 @@ class HomePage extends StatelessWidget {
                 width: 10,
               ),
               Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-                Calendar_Area_Form([5, 5, 5, 5], context),
+                Points_Area_Form([5, 5, 5, 5], context),
                 SizedBox(height: 30),
               ]),
               SizedBox(
@@ -124,7 +125,7 @@ Widget Personal_Area_Form(List<double> edge_insets, BuildContext context) {
                   )))));
 }
 
-Widget Calendar_Area_Form(List<double> edge_insets, BuildContext context) {
+Widget Points_Area_Form(List<double> edge_insets, BuildContext context) {
   return Padding(
       padding: EdgeInsets.only(
           right: edge_insets[0],
@@ -157,12 +158,12 @@ Widget Calendar_Area_Form(List<double> edge_insets, BuildContext context) {
                   child: Column(
                     children: [
                       Icon(
-                        Icons.calendar_month,
+                        MdiIcons.medal,
                         color: Colors.black,
                         size: 30,
                       ),
                       Text(
-                        'Calendar',
+                        'Awards',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
