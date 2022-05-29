@@ -1,13 +1,13 @@
 class shopList {
   static int _maxPoints = 1000;
-  Map<String, num> Catalog = {
-    'Decathlon': _maxPoints * 0.35,
-    'Non Solo Sport': _maxPoints * 0.5,
-    'Sportler': _maxPoints * 0.6,
-    'Cisalfa Sport': _maxPoints * 0.7,
-    'AW Lab': _maxPoints * 0.75,
-    'Foot Locker': _maxPoints * 0.85,
-    'Nike': _maxPoints * 0.9,
-    'Adidas': _maxPoints * 0.9,
+  Map<String, List> Catalog = {
+    'Decathlon': [_maxPoints * 0.35, 'Decathlon', '20% discount'],
+    'Non Solo Sport': [_maxPoints * 0.5, 'Non Solo Sport', '20% discount'],
+    'Sportler': [_maxPoints * 0.6, 'Sportler', '15% discount'],
+    'Cisalfa Sport': [_maxPoints * 0.7, 'Cisalfa Sport', '15% discount'],
+    'AW Lab': [_maxPoints * 0.75, '10% discount'],
+    'Foot Locker': [_maxPoints * 0.85, '10% discount'],
+    'Nike': [_maxPoints * 0.9, '10% discount'],
+    'Adidas': [_maxPoints * 0.9, '10% discount'],
   };
 }
