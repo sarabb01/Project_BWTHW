@@ -70,7 +70,11 @@ class ExperiencePage extends StatelessWidget {
                                     icon: Icon(MdiIcons.arrowRight),
                                     onPressed: () {
                                       Navigator.pushNamed(
-                                          context, QRcodePage.route);
+                                          context, QRcodePage.route,
+                                          arguments: {
+                                            'n': index,
+                                            'type': explist.Catalog
+                                          });
                                     },
                                   )),
                             )

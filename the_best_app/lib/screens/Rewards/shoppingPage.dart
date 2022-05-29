@@ -56,17 +56,21 @@ class ShoppingPage extends StatelessWidget {
                     itemCount: shoplist.Catalog.length,
                     itemBuilder: (_, index) {
                       String key = shoplist.Catalog.keys.elementAt(index);
-                      return earnedPoints >= shoplist.Catalog[key]!
+                      return earnedPoints >= shoplist.Catalog[key]![0]
                           ? Card(
                               child: ListTile(
                                   title: Text(key),
                                   subtitle: Text(
-                                      'Required points : ${shoplist.Catalog[key]}'),
+                                      'Required points : ${shoplist.Catalog[key]![0]}'),
                                   trailing: IconButton(
                                     icon: Icon(MdiIcons.arrowRight),
                                     onPressed: () {
                                       Navigator.pushNamed(
-                                          context, QRcodePage.route);
+                                          context, QRcodePage.route,
+                                          arguments: {
+                                            'n': index,
+                                            'type': shoplist.Catalog
+                                          });
                                     },
                                   )),
                             )
