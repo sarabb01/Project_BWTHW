@@ -4,6 +4,7 @@ import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Utils/Form_Separator.dart';
 import 'package:the_best_app/Utils/Registration_Form.dart';
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
+import 'package:select_form_field/select_form_field.dart';
 
 class RegistrationPage extends StatefulWidget {
   static const route = '/hellowordpage/registrationpage';
@@ -86,28 +87,39 @@ class _RegistrationPageState extends State<RegistrationPage> {
           FormSeparator(label: 'Name'),
           Inputs_Forms(
             controller: _name,
-            label: 'Enter your Name',
+            label: 'Enter your name',
             onSubmit: (value) => print(value),
           ),
           FormSeparator(label: 'Surname'),
           Inputs_Forms(
               controller: _surname,
-              label: 'Enter your Surname',
+              label: 'Enter your surname',
               onSubmit: (value) => print(value)),
-          FormSeparator(label: 'Sex'),
+          FormSeparator(label: 'Gender'),
+          // SelectFormField(
+          //     type: SelectFormFieldType.dropdown,
+          //     labelText: 'Enter your gender',
+          //     items: [
+          //       {'label': 'Male'},
+          //       {'label': 'Female'},
+          //       {'label': 'Genderqueer'},
+          //       {'label': 'Prefer not to disclose'}
+          //     ],
+          //     onChanged: (value) => print(value),
+          //     onSaved: (value) => print(value)),
           Inputs_Forms(
               controller: _sex,
-              label: 'Female or Male',
+              label: 'Enter your gender',
               onSubmit: (value) => print(value)),
           FormSeparator(label: 'Username'),
           Inputs_Forms(
               controller: _username,
-              label: 'Email Addres',
+              label: 'Enter your email addres',
               onSubmit: (value) => print(value)),
           FormSeparator(label: 'Password'),
           Inputs_Forms(
               controller: _password,
-              label: 'Enter your Password',
+              label: 'Enter your password',
               onSubmit: (value) => print(value)),
           Sign_In_Button(context, LoginPage.route),
         ])));
