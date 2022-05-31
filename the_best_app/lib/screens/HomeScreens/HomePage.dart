@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/Database/Entities/UserCreds.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   static const route = '/hellowordpage/loginpage/homepage';
   static const routename = 'HomePage';
   String username;
@@ -20,14 +20,19 @@ class HomePage extends StatelessWidget {
   HomePage({required this.username});
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
   Widget build(BuildContext context) {
     print('${HomePage.routename} built');
     return Scaffold(
       appBar: AppBar(
-          title: username == null || username.isEmpty
+          title: widget.username == null || widget.username.isEmpty
               ? Text('ERROR !! (No username)',
                   style: TextStyle(fontWeight: FontWeight.bold))
-              : Text(username.toUpperCase(),
+              : Text(widget.username.toUpperCase(),
                   style: TextStyle(fontWeight: FontWeight.bold)),
           actions: [
             Back_Page([5, 5, 5, 5], context),
@@ -60,7 +65,7 @@ class HomePage extends StatelessWidget {
             ),
             tileColor: Colours.fireBrick,
             onTap: () async {
-              await remove_Profile(username, context);
+              await remove_Profile(widget.username, context);
             },
           ),
         )
@@ -213,7 +218,8 @@ Widget Points_Area_Form(List<double> edge_insets, BuildContext context) {
                       ),
                       Text(
                         'Awards',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.black),
                       ),
                     ],
                   )))));
