@@ -1,11 +1,11 @@
 // APP SCREENS
-import 'package:prova_project/Screens/HomeScreens/HomePage.dart';
+import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'LoginPage.dart';
 import 'RegistrationPage.dart';
 // DATABASE
-import 'package:prova_project/Repository/database_repository.dart';
-import 'package:prova_project/Database/Daos/UserCreddaos.dart';
-import 'package:prova_project/Database/Entities/UserCreds.dart';
+import 'package:the_best_app/Repository/database_repository.dart';
+import 'package:the_best_app/Database/Daos/UserCreddaos.dart';
+import 'package:the_best_app/Database/Entities/UserCreds.dart';
 // PACKAGES
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

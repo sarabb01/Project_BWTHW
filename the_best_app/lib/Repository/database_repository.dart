@@ -1,5 +1,5 @@
-import 'package:prova_project/Database/user_cred_database.dart';
-import 'package:prova_project/Database/Entities/UserCreds.dart';
+import 'package:the_best_app/Database/user_cred_database.dart';
+import 'package:the_best_app/Database/Entities/UserCreds.dart';
 import 'package:flutter/material.dart';
 
 class UsersDatabaseRepo extends ChangeNotifier {
