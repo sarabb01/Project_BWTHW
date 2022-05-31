@@ -1,6 +1,5 @@
 // APP SCREENS
-import 'package:colours/colours.dart';
-
+import 'package:prova_project/Screens/HomeScreens/HomePage.dart';
 import 'LoginPage.dart';
 import 'RegistrationPage.dart';
 // DATABASE
@@ -11,10 +10,35 @@ import 'package:prova_project/Database/Entities/UserCreds.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:colours/colours.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class HelloWordPage extends StatelessWidget {
+class HelloWordPage extends StatefulWidget {
   static const route = '/hellowordpage';
   static const routename = 'Welcome Page';
+
+  @override
+  State<HelloWordPage> createState() => _HelloWordPageState();
+}
+
+class _HelloWordPageState extends State<HelloWordPage> {
+  @override
+  void initState() {
+    _checkLogin();
+    super.initState();
+  }
+
+  //Get the SharedPreference instance and check if the value of the 'username' filed is set or not
+  void _checkLogin() async {
+    //Get the SharedPreference instance and check if the value of the 'username' filed is set or not
+    final sp = await SharedPreferences.getInstance();
+    if (sp.getString('username') != null) {
+      //If 'username is set, push the HomePage
+      Navigator.pushReplacementNamed(context, HomePage.route,
+          arguments: {'username': sp.getString('username')});
+    }
+  } //_checkLogin
+
   @override
   Widget build(BuildContext context) {
     print('${HelloWordPage.routename} built');
@@ -22,7 +46,7 @@ class HelloWordPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            routename,
+            HelloWordPage.routename,
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
