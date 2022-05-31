@@ -1,5 +1,3 @@
-import 'dart:io';
-
 class User_Credentials {
   Map Users_Infos = Map<String, String>.fromIterables(
       ['leonardo.mufato@hotmail.it', 'bug@expert.com', 'abc'],

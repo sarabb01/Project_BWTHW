@@ -1,13 +1,18 @@
+// Packages
+import 'package:colours/colours.dart';
 import 'package:flutter/material.dart';
-//LoginScreens
+import 'package:provider/provider.dart';
+// Login Screens
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/ForgotPasswordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/RegistrationPage.dart';
-// HomeScreens
+// Home Screens
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
-
-// Rewards screens
+// User Database
+import 'package:the_best_app/Database/user_cred_database.dart';
+import 'package:the_best_app/Repository/database_repository.dart';
+// Rewards Screens
 import 'package:the_best_app/screens/Rewards/selectPrefPage.dart';
 import 'package:the_best_app/screens/Rewards/queryPage.dart';
 import 'package:the_best_app/screens/Rewards/shoppingPage.dart';
@@ -16,8 +21,23 @@ import 'package:the_best_app/screens/Rewards/QRcodePage.dart';
 
 //TODO: import the homepage widget
 
-void main() {
-  runApp(MyApp());
+Future<void> main() async {
+  //This is a special method that use WidgetFlutterBinding to interact with the Flutter engine.
+  //This is needed when you need to interact with the native core of the app.
+  //Here, we need it since when need to initialize the DB before running the app.
+  WidgetsFlutterBinding.ensureInitialized();
+
+  //This opens the database.
+  final AppDatabase database =
+      await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+  //This creates a new DatabaseRepository from the AppDatabase instance just initialized
+  final users_database_repo = UsersDatabaseRepo(database: database);
+  //Here, we run the app and we provide to the whole widget tree the instance of the DatabaseRepository.
+  //That instance will be then shared through the platform and will be unique.
+  runApp(ChangeNotifierProvider<UsersDatabaseRepo>(
+    create: (context) => users_database_repo,
+    child: MyApp(),
+  ));
 } //main
 
 class MyApp extends StatelessWidget {
@@ -26,8 +46,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         theme: ThemeData(
-            scaffoldBackgroundColor: Colors.green[100],
-            primarySwatch: Colors.green),
+            scaffoldBackgroundColor: Colours.green[100],
+            primarySwatch: Colours.seaGreen),
         initialRoute: HelloWordPage.route,
         onGenerateRoute: (settings) {
           if (settings.name == HelloWordPage.route) {
@@ -85,4 +105,4 @@ class MyApp extends StatelessWidget {
           }
         });
   } //build
-}//MyApp
+} //MyApp

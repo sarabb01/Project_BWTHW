@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:colours/colours.dart';
+import 'package:flutter/services.dart';
 
 class Inputs_Forms extends StatelessWidget {
   final controller;
   final label;
-  final ValueChanged<String> onSubmit;
+  final DataType;
 
   Inputs_Forms({
     required this.label,
     required this.controller,
-    required this.onSubmit,
+    required this.DataType,
   });
 
   @override
@@ -18,7 +19,7 @@ class Inputs_Forms extends StatelessWidget {
       child: Registration_Inputs_Form(
         controller: controller,
         label: label,
-        onSubmit: onSubmit,
+        DataType: DataType,
       ),
     );
   }
@@ -27,12 +28,12 @@ class Inputs_Forms extends StatelessWidget {
 class Registration_Inputs_Form extends StatefulWidget {
   final controller;
   final label;
-  final ValueChanged<String> onSubmit;
+  final DataType;
 
   Registration_Inputs_Form({
     required this.label,
     required this.controller,
-    required this.onSubmit,
+    required this.DataType,
   });
 
   @override
@@ -42,6 +43,7 @@ class Registration_Inputs_Form extends StatefulWidget {
 
 class _Registration_Inputs_FormState extends State<Registration_Inputs_Form> {
   bool _submitted = false;
+
   String? get _errorText {
     final text = widget.controller.value.text;
     if (text.isEmpty || text == null) {
@@ -53,9 +55,6 @@ class _Registration_Inputs_FormState extends State<Registration_Inputs_Form> {
     setState(() {
       _submitted = true;
     });
-    if (_errorText == null) {
-      widget.onSubmit(widget.controller.value.text);
-    }
   }
 
   @override
@@ -71,21 +70,31 @@ class _Registration_Inputs_FormState extends State<Registration_Inputs_Form> {
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.black),
               autocorrect: false,
-              keyboardType: TextInputType.text,
+              keyboardType: widget.DataType == 'NUM'
+                  ? TextInputType.number
+                  : TextInputType.text,
+              inputFormatters: widget.DataType == 'NUM'
+                  ? <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly]
+                  : null,
+              onChanged: (String value) {
+                if (widget.controller.value.text.isEmpty ||
+                    widget.controller.value.text == null) {
+                  _submit();
+                }
+              },
               decoration: InputDecoration(
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
-                  borderSide:
-                      BorderSide(color: Colours.rebeccaPurple, width: 2.0),
+                  borderSide: BorderSide(color: Colours.black, width: 2.0),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide(color: Colours.dodgerBlue, width: 2.0),
+                  borderSide: BorderSide(
+                      color: Theme.of(context).accentColor, width: 2.0),
                 ),
                 errorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
-                  borderSide:
-                      BorderSide(color: Colours.rebeccaPurple, width: 2.0),
+                  borderSide: BorderSide(color: Colours.red, width: 2.0),
                 ),
                 errorText: _submitted ? _errorText : null,
                 hintText: widget.label,
@@ -93,16 +102,8 @@ class _Registration_Inputs_FormState extends State<Registration_Inputs_Form> {
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 15),
-                suffixIcon: IconButton(
-                    onPressed: () {
-                      widget.controller.value.text.isEmpty ? _submit() : null;
-                    },
-                    icon: Icon(
-                      Icons.check,
-                      color: Colours.rebeccaPurple,
-                    )),
                 filled: true,
-                fillColor: Colours.aliceBlue,
+                fillColor: Colours.white,
               ),
             ),
           );

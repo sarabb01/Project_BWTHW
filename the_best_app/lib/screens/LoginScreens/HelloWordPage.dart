@@ -1,10 +1,44 @@
-import 'package:flutter/material.dart';
+// APP SCREENS
+import 'package:prova_project/Screens/HomeScreens/HomePage.dart';
 import 'LoginPage.dart';
 import 'RegistrationPage.dart';
+// DATABASE
+import 'package:prova_project/Repository/database_repository.dart';
+import 'package:prova_project/Database/Daos/UserCreddaos.dart';
+import 'package:prova_project/Database/Entities/UserCreds.dart';
+// PACKAGES
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:colours/colours.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class HelloWordPage extends StatelessWidget {
+class HelloWordPage extends StatefulWidget {
   static const route = '/hellowordpage';
   static const routename = 'Welcome Page';
+
+  @override
+  State<HelloWordPage> createState() => _HelloWordPageState();
+}
+
+class _HelloWordPageState extends State<HelloWordPage> {
+  @override
+  void initState() {
+    _checkLogin();
+    super.initState();
+  }
+
+  //Get the SharedPreference instance and check if the value of the 'username' filed is set or not
+  void _checkLogin() async {
+    //Get the SharedPreference instance and check if the value of the 'username' filed is set or not
+    final sp = await SharedPreferences.getInstance();
+    if (sp.getString('username') != null) {
+      //If 'username is set, push the HomePage
+      Navigator.pushReplacementNamed(context, HomePage.route,
+          arguments: {'username': sp.getString('username')});
+    }
+  } //_checkLogin
+
   @override
   Widget build(BuildContext context) {
     print('${HelloWordPage.routename} built');
@@ -12,7 +46,7 @@ class HelloWordPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            routename,
+            HelloWordPage.routename,
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
@@ -48,7 +82,53 @@ class HelloWordPage extends StatelessWidget {
             WelcomePage_Form(
                 screenSize, 'Sign In', context, RegistrationPage.route)
           ],
-        )));
+        )),
+        drawer: Drawer(
+            elevation: 5,
+            child: Center(
+              child:
+                  Consumer<UsersDatabaseRepo>(builder: (context, dbr, child) {
+                //The logic is to query the DB for the entire list of Meal using dbr.findAllMeals()
+                //and then populate the ListView accordingly.
+                //We need to use a FutureBuilder since the result of dbr.findAllMeals() is a Future.
+                return FutureBuilder(
+                  future: dbr.findAllUsers(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final data = snapshot.data as List<UsersCredentials>;
+                      //If the Meal table is empty, show a simple Text, otherwise show the list of meals using a ListView.
+                      return data.length == 0
+                          ? ElevatedButton(
+                              child: Text('No Users Registered Yet',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            )
+                          : ListView.builder(
+                              itemCount: data.length,
+                              itemBuilder: (context, i) {
+                                //Here, we are using a Card to show a Meal
+                                return Card(
+                                  elevation: 5,
+                                  child: ListTile(
+                                      leading: Icon(MdiIcons.account),
+                                      title: Text(
+                                          'Username : ${data[i].username}')),
+                                );
+                              });
+                    } //if
+                    else {
+                      return CircularProgressIndicator();
+                    } //else
+                  }, //FutureBuilder builder
+                );
+              } //Consumer-builder
+                      ),
+            )));
   }
 }
 
@@ -61,12 +141,12 @@ Widget WelcomePage_Form(
       height: screenSize.height / 15,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: Colors.blueAccent,
+          primary: Colours.mediumSeaGreen,
           textStyle: TextStyle(color: Colors.white),
           padding: EdgeInsets.only(top: 12, bottom: 12),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(25.0),
-              side: BorderSide(color: Colors.blueAccent)),
+              side: BorderSide(color: Colours.mediumSeaGreen)),
         ),
         child: Text(
           text,
