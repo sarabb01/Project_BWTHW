@@ -3,6 +3,7 @@ import 'package:colours/colours.dart';
 import 'package:prova_project/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:prova_project/Screens/LoginScreens/LoginPage.dart';
 // FLUTTER PACKAGES
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:prova_project/Repository/database_repository.dart';
 import 'package:prova_project/Database/Entities/UserCreds.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   static const route = '/hellowordpage/loginpage/homepage';
   static const routename = 'HomePage';
   String username;
@@ -18,76 +19,120 @@ class HomePage extends StatelessWidget {
   HomePage({required this.username});
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+  late AnimationController controller;
+  double puntiraccolti = 5000;
+  double obiettivo = 10000;
+
+  @override
+  void initState() {
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 15),
+    )..addListener(() {
+        setState(() {});
+      });
+    controller.repeat(reverse: false);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     print('${HomePage.routename} built');
     return Scaffold(
-      appBar: AppBar(
-          title: username == null || username.isEmpty
-              ? Text('ERROR !! (No username)',
-                  style: TextStyle(fontWeight: FontWeight.bold))
-              : Text(username.toUpperCase(),
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-          actions: [
-            Back_Page([5, 5, 5, 5], context),
-          ]),
-      drawer: Drawer(
-          child: ListView(children: [
-        Padding(
-          padding: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 5),
-          child: DrawerHeader(
-              decoration: BoxDecoration(
-                color: Theme.of(context).accentColor,
-              ),
-              child: Center(
-                child: Text(
-                  'Drawer Header',
-                  style: TextStyle(color: Colours.black),
+        appBar: AppBar(
+            title: widget.username == null || widget.username.isEmpty
+                ? Text('ERROR !! (No username)',
+                    style: TextStyle(fontWeight: FontWeight.bold))
+                : Text(widget.username.toUpperCase(),
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+            actions: [
+              Back_Page([5, 5, 5, 5], context),
+            ]),
+        drawer: Drawer(
+            child: ListView(children: [
+          Padding(
+            padding: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 5),
+            child: DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).accentColor,
                 ),
-              )),
-        ),
-        Padding(
-          padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 10),
-          child: ListTile(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-                side: BorderSide(color: Colours.fireBrick)),
-            title: Text(
-              'Remove Profile',
-              style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
-            tileColor: Colours.fireBrick,
-            onTap: () async {
-              await remove_Profile(username, context);
-            },
+                child: Center(
+                  child: Text(
+                    'Drawer Header',
+                    style: TextStyle(color: Colours.black),
+                  ),
+                )),
           ),
-        )
-      ])),
-      body: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 20,
+          Padding(
+            padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 10),
+            child: ListTile(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  side: BorderSide(color: Colours.fireBrick)),
+              title: Text(
+                'Remove Profile',
+                style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+              tileColor: Colours.fireBrick,
+              onTap: () async {
+                await remove_Profile(widget.username, context);
+              },
             ),
-            Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-              Personal_Area_Form([5, 5, 5, 5], context),
-              SizedBox(height: 30),
-            ]),
-            SizedBox(
-              width: 10,
-            ),
-            Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-              Calendar_Area_Form([5, 5, 5, 5], context),
-              SizedBox(height: 30),
-            ]),
-            SizedBox(
-              width: 20,
-            ),
-          ],
-        ),
-      ),
-    );
+          )
+        ])),
+        body: Center(
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+              Text('Punti raccolti : $puntiraccolti  obiettivo : $obiettivo '),
+              SizedBox(
+                child: CircularProgressIndicator(
+                  value: puntiraccolti / obiettivo,
+                  backgroundColor: Colors.grey,
+                  color: Colours.darkSeagreen,
+                  strokeWidth: 25.0,
+                ),
+                height: 150,
+                width: 150,
+              ),
+              CupertinoButton.filled(
+                  child: const Text('Gain Coupon'), onPressed: () {}),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+                    Personal_Area_Form([5, 5, 5, 5], context),
+                    SizedBox(height: 30),
+                  ]),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+                    Calendar_Area_Form([5, 5, 5, 5], context),
+                    SizedBox(height: 30),
+                  ]),
+                  SizedBox(
+                    width: 20,
+                  ),
+                ],
+              ),
+            ])));
   }
 }
 
