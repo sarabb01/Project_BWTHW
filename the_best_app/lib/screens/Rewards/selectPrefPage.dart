@@ -13,7 +13,7 @@ class PreferencePage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(title: Text('Rewards')),
         body: Padding(
-          padding: const EdgeInsets.fromLTRB(5, 100, 5, 0),
+          padding: const EdgeInsets.fromLTRB(10, 100, 10, 0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
