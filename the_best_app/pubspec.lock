@@ -271,7 +271,6 @@ packages:
       name: flutter_signin_button
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
     version: "2.0.6"
   flutter_svg:
     dependency: "direct main"
@@ -318,7 +317,7 @@ packages:
       name: font_awesome_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "9.2.0"
+    
     version: "2.1.6"
   graphs:
     dependency: transitive
@@ -867,6 +866,4 @@ sdks:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.1"
-sdks:
-  dart: ">=2.16.0 <3.0.0"
-  flutter: ">=2.8.0"
+
