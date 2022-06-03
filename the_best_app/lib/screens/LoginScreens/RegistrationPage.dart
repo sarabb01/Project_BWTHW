@@ -30,6 +30,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
   late TextEditingController _password; // = TextEditingController();
   late TextEditingController _age; // = TextEditingController();
 
+  Color text_color_name = Colors.black;
+  Color text_color_surname = Colors.black;
+  Color text_color_age = Colors.black;
+  Color text_color_sex = Colors.black;
+  Color text_color_username = Colors.black;
+  Color text_color_password = Colors.black;
+
   @override
   void initState() {
     _name = TextEditingController();
@@ -61,6 +68,74 @@ class _RegistrationPageState extends State<RegistrationPage> {
       _password.clear();
       _age.clear();
     });
+  }
+
+  field_check_name() {
+    if (_name.text.isEmpty || _name.text == null) {
+      setState(() {
+        text_color_name = Colors.red;
+      });
+    }
+  }
+
+  field_check_surname() {
+    if (_surname.text.isEmpty || _surname.text == null) {
+      setState(() {
+        text_color_surname = Colors.red;
+      });
+    }
+  }
+
+  field_check_age() {
+    if (_age.text.isEmpty || _age.text == null) {
+      setState(() {
+        text_color_age = Colors.red;
+      });
+    }
+  }
+
+  field_check_sex() {
+    if (_sex.text.isEmpty || _sex.text == null) {
+      setState(() {
+        text_color_sex = Colors.red;
+      });
+    }
+  }
+
+  field_check_username() {
+    if (_username.text.isEmpty || _username.text == null) {
+      setState(() {
+        text_color_username = Colors.red;
+      });
+    }
+  }
+
+  field_check_password() {
+    if (_password.text.isEmpty || _password.text == null) {
+      setState(() {
+        text_color_password = Colors.red;
+      });
+    }
+  }
+
+  bool input_fields_check(
+    TextEditingController controller1,
+    TextEditingController controller2,
+    TextEditingController controller3,
+    TextEditingController controller4,
+    TextEditingController controller5,
+    TextEditingController controller6,
+  ) {
+    if ((controller1.text.isNotEmpty || controller1.text != null) &&
+        (controller2.text.isNotEmpty || controller2.text != null) &&
+        (controller3.text.isNotEmpty || controller3.text != null) &&
+        (controller4.text.isNotEmpty || controller4.text != null) &&
+        (controller5.text.isNotEmpty || controller5.text != null) &&
+        (controller6.text.isNotEmpty || controller6.text != null)) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   @override
@@ -96,26 +171,35 @@ class _RegistrationPageState extends State<RegistrationPage> {
             ),
           ),
           FormSeparator(label: 'Name'),
-          Inputs_Forms(
-              controller: _name, label: 'Enter your Name', DataType: 'STR'),
+          Inp_Reg_Text(
+            controller: _name,
+            label: 'Enter your Name',
+          ),
           FormSeparator(label: 'Surname'),
-          Inputs_Forms(
-              controller: _surname,
-              label: 'Enter your Surname',
-              DataType: 'STR'),
+          Inp_Reg_Text(
+            controller: _surname,
+            label: 'Enter your Surname',
+          ),
           FormSeparator(label: 'Age'),
-          Inputs_Forms(controller: _age, label: 'Subject Age', DataType: 'NUM'),
+          Inp_Reg_Num(
+            controller: _age,
+            label: 'Subject Age',
+          ),
           FormSeparator(label: 'Sex'),
-          Inputs_Forms(
-              controller: _sex, label: 'Female or Male', DataType: 'STR'),
+          Inp_Reg_Text(
+            controller: _sex,
+            label: 'Female or Male',
+          ),
           FormSeparator(label: 'Username'),
-          Inputs_Forms(
-              controller: _username, label: 'Email Addres', DataType: 'STR'),
+          Inp_Reg_Text(
+            controller: _username,
+            label: 'Email Addres',
+          ),
           FormSeparator(label: 'Password'),
-          Inputs_Forms(
-              controller: _password,
-              label: 'Enter your Password',
-              DataType: 'STR'),
+          Inp_Reg_Text(
+            controller: _password,
+            label: 'Enter your Password',
+          ),
           Sign_In_Button(context, LoginPage.route),
         ])));
   }
@@ -135,9 +219,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     return Colors.red; // <-- Splash color
                 })),
             onPressed: (() async {
-              user_info_storing(_username.text, _password.text);
-              //setInputData();
-              await Navigator.pushReplacementNamed(context, LoginPage.route);
+              if (input_fields_check(
+                  _name, _surname, _age, _sex, _username, _password)) {
+                user_info_storing(_username.text, _password.text);
+                //setInputData();
+                await Navigator.pushReplacementNamed(context, LoginPage.route);
+              }
             }),
             child: Padding(
                 padding:
@@ -156,12 +243,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
   }
 
   void user_info_storing(String username, String password) async {
-    final users_credentials = UsersCredentials(1, username, password);
+    final usersCredentials = UsersCredentials(1, username, password);
     await Provider.of<UsersDatabaseRepo>(context, listen: false)
-        .addUser(users_credentials);
+        .addUser(usersCredentials);
   }
 
-  Widget Back_Page(List<double> edge_insets, BuildContext context) {
+  Widget Back_Page(List<double> edgeInsets, BuildContext context) {
     return Padding(
         padding: EdgeInsets.only(right: 5.0, bottom: 10, left: 5.0, top: 5),
         child: ElevatedButton(
