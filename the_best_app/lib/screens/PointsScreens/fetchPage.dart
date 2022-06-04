@@ -2,8 +2,11 @@ import 'package:fitbitter/fitbitter.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:provider/provider.dart';
+import 'package:the_best_app/Database/Entities/UserCreds.dart';
+import 'package:the_best_app/Repository/database_repository.dart';
 
 import 'package:the_best_app/Utils/dateFormatter.dart';
+import 'package:the_best_app/Utils/elaborateDataFunctions.dart';
 import 'package:the_best_app/Utils/stringsKeywords.dart';
 
 class FetchPage extends StatefulWidget {
@@ -52,56 +55,61 @@ class _FetchPageState extends State<FetchPage> {
                       }
                       ;
                     })),
-            // SizedBox(height: 10),
+            SizedBox(height: 10),
             // Padding(
             //   padding: const EdgeInsets.all(8.0),
             //   child: Text('${_downloads.values}'),
             // ),
-            // ElevatedButton(
-            //     onPressed: () async {
-            //       for (int i = 54; i >= 50; i--) {
-            //         print(i);
-            //         final result =
-            //             await _fetchSleepData(i) as List<FitbitSleepData>;
-            //         if (result.length > 0) {
-            //           int mins = elaborateData(result, _downloads);
-            //           setState(() {});
-            //           // setState(() {
-            //           //   if (sleepDurMins > 30) {
-            //           //     ++sleepDurHours;
-            //           //   }
-            //           //   _downloads['${result[0].entryDateTime}'] =
-            //           //       sleepDurHours;
-            //           // });
-            //           SleepData newdata =
-            //               SleepData(null, result[0].entryDateTime!, mins);
-            //           await Provider.of<DatabaseRepository>(context,
-            //                   listen: false)
-            //               .insertSleepData(newdata);
-            //         }
-            //       }
-            //     },
-            //     child: Text('Fetch Sleep Data')),
-            // Padding(
+            ElevatedButton(
+                onPressed: () async {
+                  //for (int i = 80; i >= 77; i--) {
+                  int reqDay = 1;
+                  print(
+                      '${DateTime.utc(2022, 1, 1).add(Duration(days: reqDay))}');
+                  final result =
+                      await _fetchSleepData(reqDay) as List<FitbitSleepData>;
+                  if (result.length > 0) {
+                    int mins = elaborateSleepData(result);
+                    //setState(() {});
+                    // setState(() {
+                    //   if (sleepDurMins > 30) {
+                    //     ++sleepDurHours;
+                    //   }
+                    //   _downloads['${result[0].entryDateTime}'] =
+                    //       sleepDurHours;
+                    // });
+                    SleepData newdata =
+                        SleepData(null, result[0].entryDateTime!, mins);
+                    await Provider.of<UsersDatabaseRepo>(context, listen: false)
+                        .insertSleepData(newdata);
+                  }
+                },
+                //},
+                child: Text('Fetch Sleep Data')),
+            //Padding(
             //   padding: const EdgeInsets.all(8.0),
             //   child: Text('${_activities.values} ${_activities.keys}'),
             // ),
-            // ElevatedButton(
-            //     onPressed: () async {
-            //       for (int i = 10; i >= 8; i--) {
-            //         // print(i);
-            //         final resultActivity =
-            //             await _fetchActivityData(i) as List<FitbitActivityData>;
-            //         if (resultActivity.length > 0) {
-            //           elaborateDataActivity(resultActivity, activities);
-            //           // }
-            //           setState(() {});
-            //         }
-            //         ; // if
-            //       } // for
-            //       ;
-            //     }, // onPressed
-            //     child: Text('Fetch Activity Data')),
+            ElevatedButton(
+                onPressed: () async {
+                  for (int i = 10; i >= 8; i--) {
+                    // print(i);
+                    final resultActivity =
+                        await _fetchActivityData(i) as List<FitbitActivityData>;
+                    if (resultActivity.length > 0) {
+                      int cals = elaborateActivityData(resultActivity);
+                      // }
+                      ActivityData newdata = ActivityData(
+                          null, resultActivity[0].dateOfMonitoring!, cals);
+                      await Provider.of<UsersDatabaseRepo>(context,
+                              listen: false)
+                          .insertActivityData(newdata);
+                    }
+                    ; // if
+                  } // for
+                  ;
+                }, // onPressed
+                child: Text('Fetch Activity Data')),
             // Padding(
             //   padding: const EdgeInsets.all(8.0),
             //   child: Text('${_activitiesTS.values}'),
@@ -115,7 +123,7 @@ class _FetchPageState extends State<FetchPage> {
             //             await _fetchActivityTSData(i, 'steps')
             //                 as List<FitbitActivityTimeseriesData>;
             //         if (resultTSActivity.length > 0) {
-            //           elaborateDataTSActivity(resultTSActivity, activitiesTS);
+            //           elaborateTSActivityData(resultTSActivity, activitiesTS);
             //           // }
             //           setState(() {});
             //         }
@@ -133,7 +141,7 @@ class _FetchPageState extends State<FetchPage> {
             //       final resultHR =
             //           await _fetchHeartData() as List<FitbitHeartData>;
             //       if (resultHR.length > 0) {
-            //         elaborateDataHR(resultHR, heart);
+            //         elaborateHRData(resultHR, heart);
             //         // }
             //         setState(() {});
             //       }
@@ -193,8 +201,8 @@ Future _fetchActivityTSData(int reqDay, String Type) async {
   );
 
   FitbitActivityTimeseriesAPIURL fitbitActivityApiUrl =
-      FitbitActivityTimeseriesAPIURL.dayWithResource(
-    date: DateTime.now().subtract(Duration(days: reqDay)),
+      FitbitActivityTimeseriesAPIURL.weekWithResource(
+    baseDate: DateTime.now().subtract(Duration(days: reqDay)),
     userID: '7ML2XV',
     resource: fitbitActivityTimeseriesDataManager.type,
   );
@@ -204,7 +212,7 @@ Future _fetchActivityTSData(int reqDay, String Type) async {
 
 ////////////////////
 
-Future _fetchHeartData() async {
+Future _fetchHeartData(int reqDay) async {
   // Heart Data
   FitbitHeartDataManager fitbitHeartDataManager = FitbitHeartDataManager(
     clientID: Strings.fitbitClientID,
@@ -212,7 +220,7 @@ Future _fetchHeartData() async {
   );
 
   FitbitHeartAPIURL fitbitHeartApiUrl = FitbitHeartAPIURL.weekWithUserID(
-    baseDate: DateTime.now(),
+    baseDate: DateTime.now().subtract(Duration(days: reqDay)),
     //date: DateTime.now().subtract(Duration(days: 5)),
     userID: '7ML2XV',
   );
