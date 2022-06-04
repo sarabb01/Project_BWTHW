@@ -80,7 +80,7 @@ class ShoppingPage extends StatelessWidget {
                                   title: Text(key,
                                       style: TextStyle(color: Colors.grey)),
                                   subtitle: Text(
-                                      'Required points : ${shoplist.Catalog[key]}')),
+                                      'Required points : ${shoplist.Catalog[key]![0]}')),
                             );
                     }),
               )
