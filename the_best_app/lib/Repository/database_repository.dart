@@ -56,4 +56,61 @@ class UsersDatabaseRepo extends ChangeNotifier {
   //
   //
   //
+  // METHODS TO MANAGE FITBIT DATA
+  //SLEEPDATA
+  //This method wraps the findAll..() method of the DAO
+  Future<List<SleepData>> findAllSleepData() async {
+    final results = await database.sleepDao.findAllSleepData();
+    return results;
+  } //findAll
+
+  //This method wraps the insert..() method of the DAO.
+  //Then, it notifies the listeners that something changed.
+  Future<void> insertSleepData(SleepData newdata) async {
+    await database.sleepDao.insertSleepData(newdata);
+    notifyListeners();
+  } //insertActivity
+
+// ACTIVITY (CALORIES)
+  //This method wraps the findAll..() method of the DAO
+  Future<List<ActivityData>> findAllActivityData() async {
+    final results = await database.activityDao.findAllActivityData();
+    return results;
+  } //findAllActivityData
+
+  //This method wraps the insert..() method of the DAO.
+  //Then, it notifies the listeners that something changed.
+  Future<void> insertActivityData(ActivityData newdata) async {
+    await database.activityDao.insertActivityData(newdata);
+    notifyListeners();
+  } //insertActivity
+
+// STEPS
+  //This method wraps the findAll..() method of the DAO
+  Future<List<StepsData>> findAllStepsData() async {
+    final results = await database.stepsDao.findAllStepsData();
+    return results;
+  } //findAllStepsData
+
+  //This method wraps the insert..() method of the DAO.
+  //Then, it notifies the listeners that something changed.
+  Future<void> insertStepsData(StepsData newdata) async {
+    await database.stepsDao.insertStepsData(newdata);
+    notifyListeners();
+  } //insertActivity
+
+// HEART
+  //This method wraps the findAll..() method of the DAO
+  Future<List<HeartData>> findAllHeartData() async {
+    final results = await database.heartDao.findAllHeartData();
+    return results;
+  } //findAllActivityData
+
+  //This method wraps the insert..() method of the DAO.
+  //Then, it notifies the listeners that something changed.
+  Future<void> insertHeartData(HeartData newdata) async {
+    await database.heartDao.insertHeartData(newdata);
+    notifyListeners();
+  } //insertActivity
+
 }
