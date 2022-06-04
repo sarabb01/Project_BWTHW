@@ -1,6 +1,6 @@
 class Strings {
   // App name
-  static const String appName = "Fitbit Example";
+  static const String appName = "The Best App";
 
   // Route names
   // static const String homeScreenRouteName = '/home';
