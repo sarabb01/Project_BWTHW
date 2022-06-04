@@ -1,5 +1,6 @@
 import 'package:fitbitter/fitbitter.dart';
 import 'package:flutter/material.dart';
+import 'package:the_best_app/screens/PointsScreens/fetchPage.dart';
 //import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class AuthPage extends StatelessWidget {
@@ -18,7 +19,7 @@ class AuthPage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.arrow_forward_ios),
             onPressed: () {
-              //Navigator.pushNamed(context, DataPage.route);
+              Navigator.pushNamed(context, FetchPage.route);
             },
           )
         ],
