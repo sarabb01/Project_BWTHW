@@ -1,6 +1,7 @@
 // APP SCREENS
 import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
+import 'package:the_best_app/screens/PointsScreens/fitbitAuthPage.dart';
 import 'package:the_best_app/screens/Rewards/selectPrefPage.dart';
 // FLUTTER PACKAGES
 import 'package:flutter/cupertino.dart';
@@ -58,7 +59,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 : Text(widget.username.toUpperCase(),
                     style: TextStyle(fontWeight: FontWeight.bold)),
             actions: [
-              Back_Page([5, 5, 5, 5], context),
+              Row(children: [
+                Back_Page([5, 5, 5, 5], context),
+                IconButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, AuthPage.route);
+                    },
+                    icon: Icon(Icons.lock_outline))
+              ]),
             ]),
         drawer: Drawer(
             child: ListView(children: [

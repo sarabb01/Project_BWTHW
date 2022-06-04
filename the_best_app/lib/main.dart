@@ -12,6 +12,7 @@ import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 // User Database
 import 'package:the_best_app/Database/user_cred_database.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
+import 'package:the_best_app/screens/PointsScreens/fitbitAuthPage.dart';
 // Rewards Screens
 import 'package:the_best_app/screens/Rewards/selectPrefPage.dart';
 import 'package:the_best_app/screens/Rewards/queryPage.dart';
@@ -72,6 +73,10 @@ class MyApp extends StatelessWidget {
           } else if (settings.name == ForgotPasswordPage.route) {
             return MaterialPageRoute(builder: (context) {
               return ForgotPasswordPage();
+            });
+          } else if (settings.name == AuthPage.route) {
+            return MaterialPageRoute(builder: (context) {
+              return AuthPage();
             });
           } else if (settings.name == PreferencePage.route) {
             return MaterialPageRoute(builder: (context) {
