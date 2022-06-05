@@ -8,6 +8,7 @@ import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/Utils/dateFormatter.dart';
 import 'package:the_best_app/Utils/elaborateDataFunctions.dart';
 import 'package:the_best_app/Utils/stringsKeywords.dart';
+import 'package:the_best_app/screens/PointsScreens/pointsPage.dart';
 
 class FetchPage extends StatefulWidget {
   FetchPage({Key? key}) : super(key: key);
@@ -30,7 +31,7 @@ class _FetchPageState extends State<FetchPage> {
           IconButton(
             icon: Icon(Icons.arrow_circle_right),
             onPressed: () {
-              //Navigator.pushNamed(context, PointsPage.route);
+              Navigator.pushNamed(context, PointsPage.route);
             },
           )
         ],
@@ -63,7 +64,7 @@ class _FetchPageState extends State<FetchPage> {
             ElevatedButton(
                 onPressed: () async {
                   //for (int i = 80; i >= 77; i--) {
-                  int reqDay = 1;
+                  int reqDay = 65;
                   print(
                       '${DateTime.utc(2022, 1, 1).add(Duration(days: reqDay))}');
                   final result =
