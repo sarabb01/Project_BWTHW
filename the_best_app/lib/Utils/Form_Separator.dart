@@ -26,6 +26,7 @@ class FormSeparator extends StatelessWidget {
                     child: Text(
               label,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              textAlign: TextAlign.center,
             ))),
             SizedBox(
               height: 2,

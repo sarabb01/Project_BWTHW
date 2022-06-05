@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:colours/colours.dart';
-import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
+//import 'package:flutter/services.dart';
+import 'package:select_form_field/select_form_field.dart';
 
 // FOR TEXT BOXES
 class Inp_Reg_Text extends StatefulWidget {
@@ -36,131 +38,108 @@ class Inp_Reg_TextState extends State<Inp_Reg_Text> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-        key: key,
-        child: Padding(
-          padding: EdgeInsets.only(right: 50.0, bottom: 5, left: 50.0, top: 5),
-          child: TextFormField(
-            controller: controller,
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.black),
-            autocorrect: false,
-            keyboardType: TextInputType.text,
-            autovalidateMode: _submitted
-                ? AutovalidateMode.onUserInteraction
-                : AutovalidateMode.disabled,
-            validator: (text) {
-              if (text == null || text.isEmpty) {
-                return 'Can\'t be empty';
-              } else {
-                return null;
-              }
-            },
-            onChanged: (value) {
-              if (value.isEmpty || value == null) {
-                _submit();
-              }
-              setState(() {
-                _ans = value;
-              });
-            },
-            onTap: () {
-              if (controller.text.isEmpty || controller.text == null) {
-                _submit();
-              }
-              setState(() {
-                _ans = controller.text;
-              });
-            },
-            decoration: inputDecoration(_submitted, widget.label, context),
-          ),
-        ));
+    return ListTile(
+        title: Form(
+            key: key,
+            child: Padding(
+              padding:
+                  EdgeInsets.only(right: 50.0, bottom: 5, left: 50.0, top: 5),
+              child: TextFormField(
+                controller: controller,
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.black),
+                autocorrect: false,
+                keyboardType: TextInputType.text,
+                autovalidateMode: _submitted
+                    ? AutovalidateMode.onUserInteraction
+                    : AutovalidateMode.disabled,
+                validator: (text) {
+                  if (text == null || text.isEmpty) {
+                    return 'Can\'t be empty';
+                  } else {
+                    return null;
+                  }
+                },
+                onChanged: (value) {
+                  if (value.isEmpty || value == null) {
+                    _submit();
+                  }
+                  setState(() {
+                    _ans = value;
+                  });
+                },
+                onTap: () {
+                  if (controller.text.isEmpty || controller.text == null) {
+                    _submit();
+                  }
+                  setState(() {
+                    _ans = controller.text;
+                  });
+                },
+                decoration: inputDecoration(_submitted, widget.label, context),
+              ),
+            )));
   }
 }
 
-// FOR NUMERIC BOXES
-class Inp_Reg_Num extends StatefulWidget {
-  final controller;
-  final label;
+class Inp_Reg_Mult_Choice extends StatefulWidget {
+  final value;
+  final items;
+  final labelText;
+  final icon;
+  final onChanged;
 
-  Inp_Reg_Num({
-    required this.label,
-    required this.controller,
-  });
-
+  Inp_Reg_Mult_Choice(
+      {required this.value,
+      required this.items,
+      required this.labelText,
+      required this.icon,
+      required this.onChanged});
   @override
-  State<Inp_Reg_Num> createState() => Inp_Reg_NumState(
-        controller: controller,
-        label: label,
-      );
+  State<Inp_Reg_Mult_Choice> createState() =>
+      _Inp_Reg_Mult_ChoiceState(value: value);
 }
 
-class Inp_Reg_NumState extends State<Inp_Reg_Num> {
-  final controller;
-  final label;
+class _Inp_Reg_Mult_ChoiceState extends State<Inp_Reg_Mult_Choice> {
+  String value; //  None
+  final items; // Male,Female,None
+  final icon;
 
-  Inp_Reg_NumState({
-    required this.label,
-    required this.controller,
+  ///Class that implement a custom-made [ListTile] to manage dropdown menus containing strings in a [Form].
+  ///You must provide a label that is shown as helper, the value to show, the items to show, a callback to define the behaviour of the field when it changes, and an icon.
+  ///The [DropdownButtonTileString] content is always valid since it is guaranteed by the fact that the values it can assumes are provided by the user.
+  _Inp_Reg_Mult_ChoiceState({
+    this.icon,
+    required this.value,
+    this.items,
   });
-
-  String _ans = '';
-  bool _submitted = false;
-  final key = GlobalKey<FormState>();
-
-  void _submit() {
-    setState(() => _submitted = true);
-    if (key.currentState!.validate()) {
-      print(controller.value.text);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-        key: key,
-        child: Padding(
-          padding: EdgeInsets.only(right: 50.0, bottom: 5, left: 50.0, top: 5),
-          child: TextFormField(
-            controller: widget.controller,
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.black),
-            autocorrect: false,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Can\'t be empty';
-              } else {
-                String? ret;
-                String pattern = r'^[0-9]{1,3}$';
-                RegExp regex = RegExp(pattern);
-                if (!regex.hasMatch(value)) {
-                  ret = 'Must be a number.';
-                  return ret;
-                }
-              }
-            },
-            keyboardType: TextInputType.numberWithOptions(signed: true),
-            onChanged: (value) {
-              if (value.isEmpty || value == null) {
-                _submit();
-              }
-              setState(() {
-                _ans = value;
-              });
-            },
-            onTap: () {
-              if (controller.text.isEmpty || controller.text == null) {
-                _submit();
-              }
-              setState(() {
-                _ans = controller.text;
-              });
-            },
-            decoration: inputDecoration(_submitted, widget.label, context),
-          ),
-        ));
-  }
-}
+    Size screenSize = MediaQuery.of(context).size;
+    return ListTile(
+      leading: Icon(icon, color: Theme.of(context).accentColor),
+      title: Container(
+        width: screenSize.width / 1.5,
+        child: DropdownButton<String>(
+          isExpanded: false,
+          value: value,
+          onChanged: (String? newValue) {
+            setState(() {
+              value = newValue!;
+            });
+          },
+          items: items.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text('$value'),
+            );
+          }).toList(),
+        ),
+      ),
+    );
+  } // build
+} // DropdownButtonTileString
 
 InputDecoration inputDecoration(
   submitted,
@@ -187,54 +166,3 @@ InputDecoration inputDecoration(
     fillColor: Colours.white,
   );
 }
-
-/*
-///Class that implement a custom-made [ListTile] to manage textboxes containing dates in a [Form].
-///You must provide a label that is shown as helper, the date to show, an icon, a callback to define the behaviour of the field when it is tapped, and a [DateFormat].
-///The [FormDateTile] content is always valid and it should be guaranteed via a DatePicker.
-class FormDateTile extends ListTile {
-  final labelText;
-  final date;
-  final icon;
-  final onPressed;
-  final DateFormat dateFormat;
-
-  FormDateTile(
-      {this.icon,
-      this.labelText,
-      this.date,
-      required this.dateFormat,
-      this.onPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
-    return ListTile(
-      leading: Icon(icon, color: Theme.of(context).accentColor),
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(width: 1),
-                top: BorderSide(width: 1),
-                left: BorderSide(width: 1),
-                right: BorderSide(width: 1),
-              ),
-            ),
-            child: Container(
-              alignment: Alignment.centerLeft,
-              width: screenSize.width / 1.5,
-              child: FlatButton(
-                child: Text(dateFormat.format(date)),
-                onPressed: onPressed,
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  } // build
-} // FormDateTile
-*/

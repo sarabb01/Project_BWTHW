@@ -7,9 +7,10 @@ import 'package:select_form_field/select_form_field.dart';
 // SCREENS
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
+import 'package:the_best_app/Utils/DateFormats.dart';
 // UTILIS
 import 'package:the_best_app/Utils/Form_Separator.dart';
-import 'package:the_best_app/Utils/Registration_Form.dart';
+import 'package:the_best_app/Utils/Reg_Form.dart';
 // DATA PERSISTENCE
 import 'package:the_best_app/Database/Entities/UserCreds.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
@@ -25,26 +26,20 @@ class RegistrationPage extends StatefulWidget {
 class _RegistrationPageState extends State<RegistrationPage> {
   late TextEditingController _name; // = TextEditingController();
   late TextEditingController _surname; // = TextEditingController();
-  late TextEditingController _sex; // = TextEditingController();
   late TextEditingController _username; // = TextEditingController();
   late TextEditingController _password; // = TextEditingController();
-  late TextEditingController _age; // = TextEditingController();
 
-  Color text_color_name = Colors.black;
-  Color text_color_surname = Colors.black;
-  Color text_color_age = Colors.black;
-  Color text_color_sex = Colors.black;
-  Color text_color_username = Colors.black;
-  Color text_color_password = Colors.black;
+  late DateTime _selectedDate;
+  //Form globalkey: this is required to validate the form fields.
+  final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     _name = TextEditingController();
     _surname = TextEditingController();
-    _sex = TextEditingController();
     _username = TextEditingController();
     _password = TextEditingController();
-    _age = TextEditingController();
+    _selectedDate = DateTime.now();
     super.initState();
   }
 
@@ -52,10 +47,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
   void dispose() {
     _name.dispose();
     _surname.dispose();
-    _sex.dispose();
     _username.dispose();
     _password.dispose();
-    _age.dispose();
     super.dispose();
   }
 
@@ -63,79 +56,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
     setState(() {
       _name.clear();
       _surname.clear();
-      _sex.clear();
       _username.clear();
       _password.clear();
-      _age.clear();
     });
-  }
-
-  field_check_name() {
-    if (_name.text.isEmpty || _name.text == null) {
-      setState(() {
-        text_color_name = Colors.red;
-      });
-    }
-  }
-
-  field_check_surname() {
-    if (_surname.text.isEmpty || _surname.text == null) {
-      setState(() {
-        text_color_surname = Colors.red;
-      });
-    }
-  }
-
-  field_check_age() {
-    if (_age.text.isEmpty || _age.text == null) {
-      setState(() {
-        text_color_age = Colors.red;
-      });
-    }
-  }
-
-  field_check_sex() {
-    if (_sex.text.isEmpty || _sex.text == null) {
-      setState(() {
-        text_color_sex = Colors.red;
-      });
-    }
-  }
-
-  field_check_username() {
-    if (_username.text.isEmpty || _username.text == null) {
-      setState(() {
-        text_color_username = Colors.red;
-      });
-    }
-  }
-
-  field_check_password() {
-    if (_password.text.isEmpty || _password.text == null) {
-      setState(() {
-        text_color_password = Colors.red;
-      });
-    }
-  }
-
-  bool input_fields_check(
-    TextEditingController controller1,
-    TextEditingController controller2,
-    TextEditingController controller3,
-    TextEditingController controller4,
-    TextEditingController controller5,
-    TextEditingController controller6,
-  ) {
-    if ((controller1.text.isNotEmpty || controller1.text != null) &&
-        (controller2.text.isNotEmpty || controller2.text != null) &&
-        (controller3.text.isNotEmpty || controller3.text != null) &&
-        (controller4.text.isNotEmpty || controller4.text != null) &&
-        (controller5.text.isNotEmpty || controller5.text != null) &&
-        (controller6.text.isNotEmpty || controller6.text != null)) {
-      return false;
-    } else {
-      return true;
-    }
   }
 
   @override
@@ -153,56 +76,93 @@ class _RegistrationPageState extends State<RegistrationPage> {
           ],
         ),
         body: Center(
-            child: ListView(children: [
-          Text(
-            'New Account',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 25.0),
-          ),
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: Container(
-              height: 100,
-              width: 100,
-              child: Image.asset('assets/Images/placeholder.jpg'),
-            ),
-          ),
-          FormSeparator(label: 'Name'),
-          Inp_Reg_Text(
-            controller: _name,
-            label: 'Enter your Name',
-          ),
-          FormSeparator(label: 'Surname'),
-          Inp_Reg_Text(
-            controller: _surname,
-            label: 'Enter your Surname',
-          ),
-          FormSeparator(label: 'Age'),
-          Inp_Reg_Num(
-            controller: _age,
-            label: 'Subject Age',
-          ),
-          FormSeparator(label: 'Sex'),
-          Inp_Reg_Text(
-            controller: _sex,
-            label: 'Female or Male',
-          ),
-          FormSeparator(label: 'Username'),
-          Inp_Reg_Text(
-            controller: _username,
-            label: 'Email Addres',
-          ),
-          FormSeparator(label: 'Password'),
-          Inp_Reg_Text(
-            controller: _password,
-            label: 'Enter your Password',
-          ),
-          Sign_In_Button(context, LoginPage.route),
-        ])));
+            child: Form(
+                key: formKey,
+                child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 10, bottom: 8, left: 20, right: 20),
+                    child: ListView(children: <Widget>[
+                      Text(
+                        'New Account',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25.0),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Container(
+                          height: 100,
+                          width: 100,
+                          child: Image.asset('assets/Images/placeholder.jpg'),
+                        ),
+                      ),
+                      FormSeparator(label: 'Name'),
+                      FormTextTile(
+                        controller: _name,
+                        labelText: 'Enter your Name',
+                      ),
+                      FormSeparator(label: 'Surname'),
+                      FormTextTile(
+                        controller: _surname,
+                        labelText: 'Enter your Surname',
+                      ),
+                      FormSeparator(label: 'Date of Birth'),
+                      FormDateTile(
+                        labelText: "Date of Birth",
+                        date: _selectedDate,
+                        dateFormat: Formats.fullDateFormatNoSeconds,
+                        onPressed: () {
+                          _selectDate(context);
+                        },
+                      ),
+                      FormSeparator(label: 'Sex'),
+                      DropdownButtonTileString(
+                        items: ['Female', 'Male', 'Ingegnere', 'None'],
+                        labelText: 'Female or Male',
+                      ),
+                      FormSeparator(label: 'Username'),
+                      FormTextTile(
+                        controller: _username,
+                        labelText: 'Email Addres',
+                      ),
+                      FormSeparator(label: 'Password'),
+                      FormTextTile(
+                        controller: _password,
+                        labelText: 'Enter your Password',
+                      ),
+                      Sign_In_Button(context, LoginPage.route),
+                    ])))));
   }
+
+  //Utility method that implements a Date+Time picker.
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+            context: context,
+            initialDate: _selectedDate,
+            firstDate: DateTime(1900),
+            lastDate: DateTime(2101))
+        .then((value) async {
+      if (value != null) {
+        TimeOfDay? pickedTime = await showTimePicker(
+          context: context,
+          initialTime:
+              TimeOfDay(hour: _selectedDate.hour, minute: _selectedDate.minute),
+        );
+        return pickedTime != null
+            ? value.add(
+                Duration(hours: pickedTime.hour, minutes: pickedTime.minute))
+            : null;
+      }
+      return null;
+    });
+    if (picked != null && picked != _selectedDate)
+      //Here, I'm using setState to update the _selectedDate field and rebuild the UI.
+      setState(() {
+        _selectedDate = picked;
+      });
+  } //_selectDate
 
   Widget Sign_In_Button(BuildContext context, String route) {
     return Padding(
@@ -219,9 +179,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     return Colors.red; // <-- Splash color
                 })),
             onPressed: (() async {
-              if (input_fields_check(
-                  _name, _surname, _age, _sex, _username, _password)) {
-                user_info_storing(_username.text, _password.text);
+              if (formKey.currentState!.validate()) {
+                //user_info_storing(_username.text, _password.text);
                 //setInputData();
                 await Navigator.pushReplacementNamed(context, LoginPage.route);
               }
