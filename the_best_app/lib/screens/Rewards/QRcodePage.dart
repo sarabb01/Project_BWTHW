@@ -2,10 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:random_string/random_string.dart';
 import 'package:the_best_app/Utils/checkBoxWidget.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:the_best_app/models/expList.dart';
 import 'package:the_best_app/models/shopList.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class QRcodePage extends StatelessWidget {
   //QRcodePage({Key? key}) : super(key: key);
@@ -23,7 +21,17 @@ class QRcodePage extends StatelessWidget {
     final place = list[key]![1];
     final prize = list[key]![2];
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+            // title: Text(''),
+            // actions: [
+            //   IconButton(
+            //       icon: Icon(Icons.backspace_outlined),
+            //       onPressed: () {
+            //         Navigator.popUntil(
+            //             context, ModalRoute.withName('/preference'));
+            //       })
+            // ],
+            ),
         body: Center(
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
