@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:random_string/random_string.dart';
+import 'package:the_best_app/Utils/checkBoxWidget.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:the_best_app/models/expList.dart';
 import 'package:the_best_app/models/shopList.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class QRcodePage extends StatelessWidget {
   //QRcodePage({Key? key}) : super(key: key);
@@ -26,29 +29,64 @@ class QRcodePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                    'CONGRATULATIONS!\nYou won $prize at "$place"\nUse the code below to get your reward!',
+                Text('CONGRATULATIONS!\n',
+                    style:
+                        TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+                Text('You won $prize at "$place"',
                     textAlign: TextAlign.center,
-                    style: TextStyle(height: 1.5, fontSize: 20)),
-                SizedBox(height: 10),
+                    style: TextStyle(height: 1, fontSize: 20)),
+                Text('Use the code below to get your prize!',
+                    style: TextStyle(height: 1.5, fontSize: 15)),
+                SizedBox(height: 30),
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.4,
-                  height: MediaQuery.of(context).size.height * 0.4,
+                  width: MediaQuery.of(context).size.width * 0.4, //156
+                  height: MediaQuery.of(context).size.height * 0.2, // 156
                   child: Image.asset(
                     'assets/Images/qrimge.png',
                     fit: BoxFit.contain,
                   ),
                 ),
-                //SizedBox(height: 8),
+                SizedBox(height: 10),
                 Text(
                   randomAlphaNumeric(10),
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
                 ),
-                SizedBox(height: 10),
-                Text(
-                    'Physical store: scan the QR code \nWebsite: use the numerical code',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(height: 1.5, fontSize: 15))
+                IconButton(
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                insetAnimationDuration: Duration(seconds: 2),
+                                //color: Colors.grey[100],
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12.0)),
+                                //margin: EdgeInsets.fromLTRB(50, 450, 50, 200),
+                                child: Container(
+                                  width: 200,
+                                  height: 100,
+                                  child: Center(
+                                    child: Text(
+                                        'Physical store: scan the QR code \nWebsite: use the numerical code',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            height: 1.5, fontSize: 15)),
+                                  ),
+                                ));
+                          });
+                    },
+                    icon: Icon(
+                      Icons.info,
+                      color: Colors.grey,
+                    )),
+                SizedBox(height: 20),
+                // ElevatedButton(
+                //     onPressed: () {
+                //       //This function will delete all points;
+                //     },
+                //     child:
+                Text('Voucher expired'),
+                checkboxWidget(),
               ]),
         ));
   }
