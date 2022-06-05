@@ -2,7 +2,7 @@ import 'package:floor/floor.dart';
 import 'package:the_best_app/Database/Entities/UserInfos.dart';
 
 @dao
-abstract class UserCrededentialsDao {
+abstract class UserInfosDao {
   @Query('SELECT * FROM UserInfos')
   Future<List<UserInfos>> findAllUsersInfos();
 

@@ -117,9 +117,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           _selectDate(context);
                         },
                       ),
-                      FormSeparator(label: 'Sex'),
+                      FormSeparator(label: 'Gender'),
                       DropdownButtonTileString(
                         items: ['Female', 'Male', 'Ingegnere', 'None'],
+                        labelText: 'Female or Male',
+                      ),
+                      FormSeparator(label: 'Target'),
+                      DropdownButtonTileString(
+                        items: ['Target1', 'Target2', 'Target3', 'None'],
                         labelText: 'Female or Male',
                       ),
                       FormSeparator(label: 'Username'),

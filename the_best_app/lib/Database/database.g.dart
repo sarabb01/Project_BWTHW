@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_cred_database.dart';
+part of 'database.dart';
 
 // **************************************************************************
 // FloorGenerator
@@ -63,6 +63,8 @@ class _$AppDatabase extends AppDatabase {
 
   UserCrededentialsDao? _user_crededentials_daoInstance;
 
+  UserInfosDao? _user_infos_daoInstance;
+
   Future<sqflite.Database> open(String path, List<Migration> migrations,
       [Callback? callback]) async {
     final databaseOptions = sqflite.OpenDatabaseOptions(
@@ -82,7 +84,9 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `UsersCredentials` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `username` TEXT NOT NULL, `password` TEXT NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `UsersCredentials` (`id` INTEGER, `username` TEXT NOT NULL, `password` TEXT NOT NULL, PRIMARY KEY (`id`, `username`))');
+        await database.execute(
+            'CREATE TABLE IF NOT EXISTS `User Informations` (`id` INTEGER, `userid` INTEGER NOT NULL, `username` TEXT NOT NULL, `name` TEXT NOT NULL, `surname` TEXT NOT NULL, `gender` TEXT NOT NULL, `dateofbirth` INTEGER NOT NULL, `usertarget` TEXT NOT NULL, FOREIGN KEY (`userid`, `username`) REFERENCES `UsersCredentials` (`id`, `username`) ON UPDATE NO ACTION ON DELETE CASCADE, PRIMARY KEY (`id`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -94,6 +98,11 @@ class _$AppDatabase extends AppDatabase {
   UserCrededentialsDao get user_crededentials_dao {
     return _user_crededentials_daoInstance ??=
         _$UserCrededentialsDao(database, changeListener);
+  }
+
+  @override
+  UserInfosDao get user_infos_dao {
+    return _user_infos_daoInstance ??= _$UserInfosDao(database, changeListener);
   }
 }
 
@@ -111,7 +120,7 @@ class _$UserCrededentialsDao extends UserCrededentialsDao {
         _usersCredentialsUpdateAdapter = UpdateAdapter(
             database,
             'UsersCredentials',
-            ['id'],
+            ['id', 'username'],
             (UsersCredentials item) => <String, Object?>{
                   'id': item.id,
                   'username': item.username,
@@ -120,7 +129,7 @@ class _$UserCrededentialsDao extends UserCrededentialsDao {
         _usersCredentialsDeletionAdapter = DeletionAdapter(
             database,
             'UsersCredentials',
-            ['id'],
+            ['id', 'username'],
             (UsersCredentials item) => <String, Object?>{
                   'id': item.id,
                   'username': item.username,
@@ -181,3 +190,113 @@ class _$UserCrededentialsDao extends UserCrededentialsDao {
     await _usersCredentialsDeletionAdapter.deleteList(users);
   }
 }
+
+class _$UserInfosDao extends UserInfosDao {
+  _$UserInfosDao(this.database, this.changeListener)
+      : _queryAdapter = QueryAdapter(database),
+        _userInfosInsertionAdapter = InsertionAdapter(
+            database,
+            'User Informations',
+            (UserInfos item) => <String, Object?>{
+                  'id': item.id,
+                  'userid': item.userId,
+                  'username': item.username,
+                  'name': item.name,
+                  'surname': item.surname,
+                  'gender': item.gender,
+                  'dateofbirth': _dateTimeConverter.encode(item.dateofbirth),
+                  'usertarget': item.usertarget
+                }),
+        _userInfosUpdateAdapter = UpdateAdapter(
+            database,
+            'User Informations',
+            ['id'],
+            (UserInfos item) => <String, Object?>{
+                  'id': item.id,
+                  'userid': item.userId,
+                  'username': item.username,
+                  'name': item.name,
+                  'surname': item.surname,
+                  'gender': item.gender,
+                  'dateofbirth': _dateTimeConverter.encode(item.dateofbirth),
+                  'usertarget': item.usertarget
+                }),
+        _userInfosDeletionAdapter = DeletionAdapter(
+            database,
+            'User Informations',
+            ['id'],
+            (UserInfos item) => <String, Object?>{
+                  'id': item.id,
+                  'userid': item.userId,
+                  'username': item.username,
+                  'name': item.name,
+                  'surname': item.surname,
+                  'gender': item.gender,
+                  'dateofbirth': _dateTimeConverter.encode(item.dateofbirth),
+                  'usertarget': item.usertarget
+                });
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  final InsertionAdapter<UserInfos> _userInfosInsertionAdapter;
+
+  final UpdateAdapter<UserInfos> _userInfosUpdateAdapter;
+
+  final DeletionAdapter<UserInfos> _userInfosDeletionAdapter;
+
+  @override
+  Future<List<UserInfos>> findAllUsersInfos() async {
+    return _queryAdapter.queryList('SELECT * FROM UserInfos',
+        mapper: (Map<String, Object?> row) => UserInfos(
+            row['id'] as int?,
+            row['userid'] as int,
+            row['username'] as String,
+            row['name'] as String,
+            row['surname'] as String,
+            row['gender'] as String,
+            _dateTimeConverter.decode(row['dateofbirth'] as int),
+            row['usertarget'] as String));
+  }
+
+  @override
+  Future<UserInfos?> checkUserInfos(String username) async {
+    return _queryAdapter.query('SELECT * FROM UserInfos WHERE username = ?1',
+        mapper: (Map<String, Object?> row) => UserInfos(
+            row['id'] as int?,
+            row['userid'] as int,
+            row['username'] as String,
+            row['name'] as String,
+            row['surname'] as String,
+            row['gender'] as String,
+            _dateTimeConverter.decode(row['dateofbirth'] as int),
+            row['usertarget'] as String),
+        arguments: [username]);
+  }
+
+  @override
+  Future<void> addUserInfos(UserInfos user) async {
+    await _userInfosInsertionAdapter.insert(user, OnConflictStrategy.rollback);
+  }
+
+  @override
+  Future<void> updateUserInfos(UserInfos user) async {
+    await _userInfosUpdateAdapter.update(user, OnConflictStrategy.replace);
+  }
+
+  @override
+  Future<void> deleteUserInfos(UserInfos user) async {
+    await _userInfosDeletionAdapter.delete(user);
+  }
+
+  @override
+  Future<void> deleteAllUsersInfos(List<UserInfos> users) async {
+    await _userInfosDeletionAdapter.deleteList(users);
+  }
+}
+
+// ignore_for_file: unused_element
+final _dateTimeConverter = DateTimeConverter();
