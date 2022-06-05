@@ -176,14 +176,11 @@ class _DropdownButtonTileNumberState extends State<DropdownButtonTileNumber> {
   }
 } // DropdownButtonTileNumber
 
-///Class that implement a custom-made [ListTile] to manage dropdown menus containing strings in a [Form].
-///You must provide a label that is shown as helper, the value to show, the items to show, a callback to define the behaviour of the field when it changes, and an icon.
-///The [DropdownButtonTileString] content is always valid since it is guaranteed by the fact that the values it can assumes are provided by the user.
 class DropdownButtonTileString extends StatefulWidget {
   final items;
   final labelText;
 
-  DropdownButtonTileString({this.items, this.labelText});
+  DropdownButtonTileString({required this.items, required this.labelText});
 
   @override
   State<DropdownButtonTileString> createState() =>
@@ -191,7 +188,7 @@ class DropdownButtonTileString extends StatefulWidget {
 }
 
 class _DropdownButtonTileStringState extends State<DropdownButtonTileString> {
-  String dropdownValue = 'None';
+  String dropdownValue = "None";
 
   @override
   Widget build(BuildContext context) {

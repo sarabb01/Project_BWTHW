@@ -30,6 +30,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   late TextEditingController _password; // = TextEditingController();
 
   late DateTime _selectedDate;
+
   //Form globalkey: this is required to validate the form fields.
   final formKey = GlobalKey<FormState>();
 
@@ -58,6 +59,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       _surname.clear();
       _username.clear();
       _password.clear();
+      _selectedDate = DateTime.now();
     });
   }
 
@@ -125,7 +127,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       FormSeparator(label: 'Target'),
                       DropdownButtonTileString(
                         items: ['Target1', 'Target2', 'Target3', 'None'],
-                        labelText: 'Female or Male',
+                        labelText: 'Personal Target',
                       ),
                       FormSeparator(label: 'Username'),
                       FormTextTile(

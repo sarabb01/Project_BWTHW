@@ -19,7 +19,7 @@ import 'UserCreds.dart';
       onDelete: ForeignKeyAction.cascade)
 ])
 class UserInfos {
-  @PrimaryKey(autoGenerate: false)
+  @PrimaryKey(autoGenerate: true)
   final int? id;
   @ColumnInfo(name: 'userid') //From Credentials Table
   final int userId;
