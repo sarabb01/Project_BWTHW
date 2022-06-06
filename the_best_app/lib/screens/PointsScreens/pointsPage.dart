@@ -63,7 +63,8 @@ class PointsPage extends StatelessWidget {
                       dbr.findAllSleepData(),
                       dbr.findAllActivityData(),
                       dbr.findAllStepsData(),
-                      dbr.findAllHeartData()
+                      dbr.findAllHeartData(),
+                      dbr.findAllFitbitData()
                     ]),
                     //future: dbr.findAllSleepData(),
                     builder: (context, snapshot) {
@@ -73,6 +74,7 @@ class PointsPage extends StatelessWidget {
                         final calories = data[1] as List<ActivityData>;
                         final steps = data[2] as List<StepsData>;
                         final heart = data[3] as List<HeartData>;
+                        final fitbit = data[4] as List<myFitbitData>;
 
                         final List total = [
                           ['Sleep', computeSum1(sleep)],
@@ -84,16 +86,21 @@ class PointsPage extends StatelessWidget {
                             ? Text('The list is currently empty')
                             : Expanded(
                                 child: ListView.builder(
-                                  itemCount: total.length,
+                                  itemCount: fitbit.length,
+                                  //itemCount: total.length,
                                   itemBuilder: (context, index) {
                                     //String key = input.keys.elementAt(index);
                                     return Card(
                                         elevation: 3,
                                         child: ListTile(
                                           leading: Icon(MdiIcons.note),
-                                          title: Text(
-                                              '${total[index][0]} (${data[index].length})'),
-                                          subtitle: Text('${total[index][1]}'),
+                                          title: Text('${fitbit[index].date}'),
+                                          subtitle: Text(
+                                              'Sleep: ${fitbit[index].sleepHours}'),
+                                          // title: Text(
+                                          //     '${total[index][0]} (${data[index].length})'),
+                                          // subtitle: Text('${total[index][1]}'),
+
                                           // onTap: () async {
                                           //   await Provider.of<DatabaseRepository>(
                                           //           context,

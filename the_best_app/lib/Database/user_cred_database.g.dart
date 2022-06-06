@@ -63,6 +63,8 @@ class _$AppDatabase extends AppDatabase {
 
   UserCrededentialsDao? _user_crededentials_daoInstance;
 
+  FitbitDao? _fitbitDaoInstance;
+
   SleepDao? _sleepDaoInstance;
 
   ActivityDao? _activityDaoInstance;
@@ -92,6 +94,8 @@ class _$AppDatabase extends AppDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `UsersCredentials` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `username` TEXT NOT NULL, `password` TEXT NOT NULL)');
         await database.execute(
+            'CREATE TABLE IF NOT EXISTS `myFitbitData` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `date` INTEGER NOT NULL, `sleepHours` INTEGER NOT NULL, `calories` INTEGER NOT NULL, `steps` INTEGER NOT NULL, `cardio` INTEGER NOT NULL)');
+        await database.execute(
             'CREATE TABLE IF NOT EXISTS `SleepData` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `date` INTEGER NOT NULL, `sleepHours` INTEGER NOT NULL)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `ActivityData` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `date` INTEGER NOT NULL, `calories` INTEGER NOT NULL)');
@@ -110,6 +114,11 @@ class _$AppDatabase extends AppDatabase {
   UserCrededentialsDao get user_crededentials_dao {
     return _user_crededentials_daoInstance ??=
         _$UserCrededentialsDao(database, changeListener);
+  }
+
+  @override
+  FitbitDao get fitbitDao {
+    return _fitbitDaoInstance ??= _$FitbitDao(database, changeListener);
   }
 
   @override
@@ -215,6 +224,86 @@ class _$UserCrededentialsDao extends UserCrededentialsDao {
   @override
   Future<void> deleteAllUsers(List<UsersCredentials> users) async {
     await _usersCredentialsDeletionAdapter.deleteList(users);
+  }
+}
+
+class _$FitbitDao extends FitbitDao {
+  _$FitbitDao(this.database, this.changeListener)
+      : _queryAdapter = QueryAdapter(database),
+        _myFitbitDataInsertionAdapter = InsertionAdapter(
+            database,
+            'myFitbitData',
+            (myFitbitData item) => <String, Object?>{
+                  'id': item.id,
+                  'date': _dateTimeConverter.encode(item.date),
+                  'sleepHours': item.sleepHours,
+                  'calories': item.calories,
+                  'steps': item.steps,
+                  'cardio': item.cardio
+                }),
+        _myFitbitDataUpdateAdapter = UpdateAdapter(
+            database,
+            'myFitbitData',
+            ['id'],
+            (myFitbitData item) => <String, Object?>{
+                  'id': item.id,
+                  'date': _dateTimeConverter.encode(item.date),
+                  'sleepHours': item.sleepHours,
+                  'calories': item.calories,
+                  'steps': item.steps,
+                  'cardio': item.cardio
+                }),
+        _myFitbitDataDeletionAdapter = DeletionAdapter(
+            database,
+            'myFitbitData',
+            ['id'],
+            (myFitbitData item) => <String, Object?>{
+                  'id': item.id,
+                  'date': _dateTimeConverter.encode(item.date),
+                  'sleepHours': item.sleepHours,
+                  'calories': item.calories,
+                  'steps': item.steps,
+                  'cardio': item.cardio
+                });
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  final InsertionAdapter<myFitbitData> _myFitbitDataInsertionAdapter;
+
+  final UpdateAdapter<myFitbitData> _myFitbitDataUpdateAdapter;
+
+  final DeletionAdapter<myFitbitData> _myFitbitDataDeletionAdapter;
+
+  @override
+  Future<List<myFitbitData>> findAllFitbitData() async {
+    return _queryAdapter.queryList('SELECT * FROM FitbitData',
+        mapper: (Map<String, Object?> row) => myFitbitData(
+            row['id'] as int?, _dateTimeConverter.decode(row['date'] as int),
+            sleepHours: row['sleepHours'] as int,
+            calories: row['calories'] as int,
+            steps: row['steps'] as int,
+            cardio: row['cardio'] as int));
+  }
+
+  @override
+  Future<void> insertFitbitData(myFitbitData newdata) async {
+    await _myFitbitDataInsertionAdapter.insert(
+        newdata, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<void> updateFitbitData(myFitbitData newdata) async {
+    await _myFitbitDataUpdateAdapter.update(
+        newdata, OnConflictStrategy.replace);
+  }
+
+  @override
+  Future<void> deleteAllFitbitData(List<myFitbitData> newdata) async {
+    await _myFitbitDataDeletionAdapter.deleteList(newdata);
   }
 }
 

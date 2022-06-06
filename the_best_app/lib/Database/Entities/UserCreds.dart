@@ -17,6 +17,23 @@ class UsersCredentials {
 // ID(int) Data del sonno(date) Ore di sonno(int)
 
 @entity
+class myFitbitData {
+  @PrimaryKey(autoGenerate: true)
+  final int? id;
+  final DateTime date;
+  final int sleepHours;
+  final int calories;
+  final int steps;
+  final int cardio;
+
+  myFitbitData(this.id, this.date,
+      {required this.sleepHours,
+      required this.calories,
+      required this.steps,
+      required this.cardio});
+}
+
+@entity
 class SleepData {
   @PrimaryKey(autoGenerate: true)
   final int? id;

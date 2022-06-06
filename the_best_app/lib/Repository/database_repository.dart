@@ -57,6 +57,30 @@ class UsersDatabaseRepo extends ChangeNotifier {
   //
   //
   // METHODS TO MANAGE FITBIT DATA
+  //myFitbitDATA
+  //This method wraps the findAll..() method of the DAO
+  Future<List<myFitbitData>> findAllFitbitData() async {
+    final results = await database.fitbitDao.findAllFitbitData();
+    return results;
+  } //findAll
+
+  //This method wraps the insert..() method of the DAO.
+  //Then, it notifies the listeners that something changed.
+  Future<void> insertFitbitData(myFitbitData newdata) async {
+    await database.fitbitDao.insertFitbitData(newdata);
+    notifyListeners();
+  } //insertActivity
+
+  Future<void> deleteAllFitbitData(List<myFitbitData> newdata) async {
+    await database.fitbitDao.deleteAllFitbitData(newdata);
+    notifyListeners();
+  } //insertActivity
+
+  Future<void> updateFitbitData(myFitbitData data) async {
+    await database.fitbitDao.updateFitbitData(data);
+    notifyListeners();
+  }
+
   //SLEEPDATA
   //This method wraps the findAll..() method of the DAO
   Future<List<SleepData>> findAllSleepData() async {
