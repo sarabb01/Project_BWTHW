@@ -29,15 +29,15 @@ int elaborateActivityData(List<FitbitActivityData> result) {
   //downloads['${result[0].dateOfMonitoring}'] = totCal;
 }
 
-void elaborateTSActivityData(
-    List<FitbitActivityTimeseriesData> result, Map downloads) {
+int elaborateTSActivityData(List<FitbitActivityTimeseriesData> result) {
   int totSteps = result[0].value!.round();
   print('ACTIVITY: ${result[0].type}\n TOTAL: $totSteps');
   // print('$j: ${resultActivity[j]}');
-  downloads['${result[0].dateOfMonitoring}'] = totSteps;
+  //downloads['${result[0].dateOfMonitoring}'] = totSteps;
+  return totSteps;
 }
 
-void elaborateHRData(List<FitbitHeartData> result, Map downloads) {
+int elaborateHRData(List<FitbitHeartData> result) {
   int minCardio = 0;
   for (int j = 0; j < result.length; j++) {
     minCardio += result[j].minutesCardio!;
@@ -45,5 +45,6 @@ void elaborateHRData(List<FitbitHeartData> result, Map downloads) {
         'On date: ${result[j].dateOfMonitoring}\nMinutes in cardio range: ${result[j].minutesCardio}');
   }
   print('Total minutes in cardio range: $minCardio');
-  downloads['${result[6].dateOfMonitoring}'] = minCardio;
+  return minCardio;
+  //downloads['${result[6].dateOfMonitoring}'] = minCardio;
 }

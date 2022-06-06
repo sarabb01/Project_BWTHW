@@ -1,5 +1,7 @@
 import 'package:fitbitter/fitbitter.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:the_best_app/screens/PointsScreens/fetchPage.dart';
 //import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -37,6 +39,13 @@ class AuthPage extends StatelessWidget {
                     clientSecret: '60a1978b8ab3f4d8a226fe238c88a81e',
                     redirectUri: 'thebestapp://fitbit/auth',
                     callbackUrlScheme: 'thebestapp');
+
+                // USELESS!
+                // final sp = await SharedPreferences.getInstance();
+                // final token = await FitbitConnector.storage.read(key: 'fitbitAccessToken') as String;
+                // final refreshToken =  await FitbitConnector.storage.read(key: 'fitbitRefreshToken') as String;
+                // sp.setString('fitbitAccessToken', token);
+                // sp.setString('fitbitResfreshToken', refreshToken);
               },
               child: Text('Tap to authorize'),
             ),

@@ -8,4 +8,7 @@ abstract class SleepDao {
 
   @insert
   Future<void> insertSleepData(SleepData newdata);
+
+  @delete
+  Future<void> deleteAllSleepData(List<SleepData> newdata);
 }

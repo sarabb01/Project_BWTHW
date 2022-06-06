@@ -13,7 +13,7 @@ class ExperiencePage extends StatelessWidget {
   ExperiencePage({required this.city});
 
   final expList explist = expList();
-  final earnedPoints = 5520;
+  final earnedPoints = 0;
 
   @override
   Widget build(BuildContext context) {

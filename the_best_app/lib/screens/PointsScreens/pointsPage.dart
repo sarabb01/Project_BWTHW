@@ -24,15 +24,14 @@ class PointsPage extends StatelessWidget {
           actions: [
             IconButton(
                 onPressed: () async {
-                  // List<SleepData> alldata =
-                  //     await Provider.of<UsersDatabaseRepo>(context,
-                  //             listen: false)
-                  //         .findAllSleepData();
-                  // print(alldata.length);
+                  List<SleepData> allSleepData =
+                      await Provider.of<UsersDatabaseRepo>(context,
+                              listen: false)
+                          .findAllSleepData();
+                  print(allSleepData.length);
                   // for (int j = 0; j < alldata.length; j++) {
-                  //   await Provider.of<UsersDatabaseRepo>(context,
-                  //           listen: false)
-                  //       .deleteSleepData(alldata[j]);
+                  await Provider.of<UsersDatabaseRepo>(context, listen: false)
+                      .deleteAllSleepData(allSleepData);
                   // }
                 },
                 icon: Icon(Icons.delete))
@@ -41,64 +40,121 @@ class PointsPage extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.smart_toy_outlined),
           onPressed: () async {
-            List<SleepData> alldata =
+            List<SleepData> allSleepData =
                 await Provider.of<UsersDatabaseRepo>(context, listen: false)
                     .findAllSleepData();
             int totalHours = 0;
-            for (int k = 0; k < alldata.length; k++) {
-              totalHours += alldata[k].sleepHours;
+            for (int k = 0; k < allSleepData.length; k++) {
+              totalHours += allSleepData[k].sleepHours;
             }
             print(totalHours);
           },
         ),
         body: Center(
-            child: Consumer<UsersDatabaseRepo>(builder: (context, dbr, child) {
-          return FutureBuilder(
-              initialData: null,
-              future: dbr.findAllSleepData(),
-              //future: dbr.findAllSleepData(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  final data = snapshot.data as List<SleepData>;
-                  return data.length == 0
-                      ? Text('The list is currently empty')
-                      : ListView.builder(
-                          itemCount: data.length,
-                          itemBuilder: (context, index) {
-                            //String key = input.keys.elementAt(index);
-                            return Card(
-                                elevation: 3,
-                                child: ListTile(
-                                  leading: Icon(MdiIcons.note),
-                                  title: Text('${data[index].sleepHours}'),
-                                  subtitle: Text(
-                                      '${Formats.fullDateFormatNoSeconds.format(data[index].date)}'),
-                                  // onTap: () async {
-                                  //   await Provider.of<DatabaseRepository>(
-                                  //           context,
-                                  //           listen: false)
-                                  //       .deleteSleepData(data[index]);
-                                  // }
-                                ));
-                          });
-                } else {
-                  return CircularProgressIndicator();
-                }
-              }
-              // child: ListView.builder(
-              //     itemCount: input.length,
-              //     itemBuilder: (context, index) {
-              //       String key = input.keys.elementAt(index);
-              //       return Card(
-              //           elevation: 3,
-              //           child: ListTile(
-              //             leading: Icon(MdiIcons.note),
-              //             title: Text('${input[key]}'),
-              //             subtitle: Text(key),
-              //           ));
-              //     }),
-              );
-        })));
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+              Text('TODAY\'S POINTS'),
+              Text('TOTAL POINTS'),
+              Consumer<UsersDatabaseRepo>(builder: (context, dbr, child) {
+                return FutureBuilder(
+                    initialData: null,
+                    future: Future.wait([
+                      dbr.findAllSleepData(),
+                      dbr.findAllActivityData(),
+                      dbr.findAllStepsData(),
+                      dbr.findAllHeartData()
+                    ]),
+                    //future: dbr.findAllSleepData(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        final data = snapshot.data as List<List<Object>>;
+                        final sleep = data[0] as List<SleepData>;
+                        final calories = data[1] as List<ActivityData>;
+                        final steps = data[2] as List<StepsData>;
+                        final heart = data[3] as List<HeartData>;
+
+                        final List total = [
+                          ['Sleep', computeSum1(sleep)],
+                          ['Calories', computeSum2(calories)],
+                          ['Steps', computeSum3(steps)],
+                          ['Minutes Cardio', computeSum4(heart)]
+                        ];
+                        return sleep.length == 0
+                            ? Text('The list is currently empty')
+                            : Expanded(
+                                child: ListView.builder(
+                                  itemCount: total.length,
+                                  itemBuilder: (context, index) {
+                                    //String key = input.keys.elementAt(index);
+                                    return Card(
+                                        elevation: 3,
+                                        child: ListTile(
+                                          leading: Icon(MdiIcons.note),
+                                          title: Text(
+                                              '${total[index][0]} (${data[index].length})'),
+                                          subtitle: Text('${total[index][1]}'),
+                                          // onTap: () async {
+                                          //   await Provider.of<DatabaseRepository>(
+                                          //           context,
+                                          //           listen: false)
+                                          //       .deleteSleepData(data[index]);
+                                          // }
+                                        ));
+                                  },
+                                ),
+                              );
+                      } else {
+                        return CircularProgressIndicator();
+                      }
+                    }
+                    // child: ListView.builder(
+                    //     itemCount: input.length,
+                    //     itemBuilder: (context, index) {
+                    //       String key = input.keys.elementAt(index);
+                    //       return Card(
+                    //           elevation: 3,
+                    //           child: ListTile(
+                    //             leading: Icon(MdiIcons.note),
+                    //             title: Text('${input[key]}'),
+                    //             subtitle: Text(key),
+                    //           ));
+                    //     }),
+                    );
+              }),
+            ])));
   } //build
 
 } //Page
+
+int computeSum1(List<SleepData> input) {
+  int tot = 0;
+  for (int k = 0; k < input.length; k++) {
+    tot += input[0].sleepHours;
+  }
+  return tot;
+}
+
+int computeSum2(List<ActivityData> input) {
+  int tot = 0;
+  for (int k = 0; k < input.length; k++) {
+    tot += input[0].calories;
+  }
+  return tot;
+}
+
+int computeSum3(List<StepsData> input) {
+  int tot = 0;
+  for (int k = 0; k < input.length; k++) {
+    tot += input[0].steps;
+  }
+  return tot;
+}
+
+int computeSum4(List<HeartData> input) {
+  int tot = 0;
+  for (int k = 0; k < input.length; k++) {
+    tot += input[0].cardio;
+  }
+  return tot;
+}

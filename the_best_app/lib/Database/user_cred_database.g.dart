@@ -228,6 +228,15 @@ class _$SleepDao extends SleepDao {
                   'id': item.id,
                   'date': _dateTimeConverter.encode(item.date),
                   'sleepHours': item.sleepHours
+                }),
+        _sleepDataDeletionAdapter = DeletionAdapter(
+            database,
+            'SleepData',
+            ['id'],
+            (SleepData item) => <String, Object?>{
+                  'id': item.id,
+                  'date': _dateTimeConverter.encode(item.date),
+                  'sleepHours': item.sleepHours
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -237,6 +246,8 @@ class _$SleepDao extends SleepDao {
   final QueryAdapter _queryAdapter;
 
   final InsertionAdapter<SleepData> _sleepDataInsertionAdapter;
+
+  final DeletionAdapter<SleepData> _sleepDataDeletionAdapter;
 
   @override
   Future<List<SleepData>> findAllSleepData() async {
@@ -250,6 +261,11 @@ class _$SleepDao extends SleepDao {
   @override
   Future<void> insertSleepData(SleepData newdata) async {
     await _sleepDataInsertionAdapter.insert(newdata, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<void> deleteAllSleepData(List<SleepData> newdata) async {
+    await _sleepDataDeletionAdapter.deleteList(newdata);
   }
 }
 

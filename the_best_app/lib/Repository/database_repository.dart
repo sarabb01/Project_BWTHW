@@ -71,6 +71,11 @@ class UsersDatabaseRepo extends ChangeNotifier {
     notifyListeners();
   } //insertActivity
 
+  Future<void> deleteAllSleepData(List<SleepData> newdata) async {
+    await database.sleepDao.deleteAllSleepData(newdata);
+    notifyListeners();
+  } //insertActivity
+
 // ACTIVITY (CALORIES)
   //This method wraps the findAll..() method of the DAO
   Future<List<ActivityData>> findAllActivityData() async {
