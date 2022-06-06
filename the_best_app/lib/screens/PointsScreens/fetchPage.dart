@@ -31,6 +31,11 @@ class _FetchPageState extends State<FetchPage> {
 
   @override
   Widget build(BuildContext context) {
+    late List<SleepData> result;
+    late List<ActivityData> resultActivity;
+    late List<StepsData> resultTSActivity;
+    late List<HeartData> resultHR;
+
     print('${FetchPage.routename} built');
     return Scaffold(
       appBar: AppBar(
@@ -59,44 +64,17 @@ class _FetchPageState extends State<FetchPage> {
                         //print('Token is............... ${token.runtimeType}');
                         if (token != null) {
                           return Text('Authorization succeded');
-                          // FutureBuilder(
-                          //     future: _fetchAccountData(),
-                          //     builder: (context, snapshot) {
-                          //       if (snapshot.hasData) {
-                          //         final data = snapshot.data as List;
-                          //         FitbitAccountData dataUser =
-                          //             data[0] as FitbitAccountData;
-
-                          //         return Text(
-                          //             '${dataUser.firstName} \'s birthday: ${dateFormatter(dataUser.dateOfBirth!)}');
-                          //       } else {
-                          //         return CircularProgressIndicator();
-                          //       }
-                          //     });
                         } else if (FitbitConnector.storage
                                 .read(key: 'fitbitRefreshToken') !=
                             null) {
                           return Text('Authorization succeded');
-                          // return FutureBuilder(
-                          //     future: _fetchAccountData(),
-                          //     builder: (context, snapshot) {
-                          //       if (snapshot.hasData) {
-                          //         final data = snapshot.data as List;
-                          //         FitbitAccountData dataUser =
-                          //             data[0] as FitbitAccountData;
-
-                          //         return Text(
-                          //             '${dataUser.firstName} \'s birthday: ${dateFormatter(dataUser.dateOfBirth!)}');
-                          //       } else {
-                          //         return CircularProgressIndicator();
-                          //       }
-                          //     });
                         } else {
                           return CircularProgressIndicator();
                         }
                         ;
                       } else {
-                        return (Text('Go to Authorization'));
+                        return (Text(
+                            'Authorization Denied!\nGo to Authorization'));
                       }
                     })),
 
@@ -124,11 +102,12 @@ class _FetchPageState extends State<FetchPage> {
             ElevatedButton(
                 onPressed: () async {
                   print('N of calls $daysToSubtract');
-                  for (int reqDay = daysToSubtract; reqDay > 1; reqDay--) {
+                  for (int reqDay = daysToSubtract; reqDay > 0; reqDay--) {
                     //for (int reqDay = 10; reqDay >= 8; reqDay--) {
                     //int reqDay = 1;
-                    print(
-                        'Query date: ${DateTime.now().subtract(Duration(days: reqDay))}');
+                    DateTime queryDate =
+                        DateTime.now().subtract(Duration(days: reqDay));
+                    print('Query date: $queryDate');
                     final result =
                         await _fetchSleepData(reqDay) as List<FitbitSleepData>;
                     final resultActivity = await _fetchActivityData(reqDay)
@@ -147,17 +126,24 @@ class _FetchPageState extends State<FetchPage> {
                     if (result.length > 0) {
                       time = elaborateSleepData(result);
                     }
+                    //print('Current time $time');
+
                     if (resultActivity.length > 0) {
                       cals = elaborateActivityData(resultActivity);
                     }
+                    //print('Current cals $cals');
+
                     if (resultTSActivity.length > 0) {
                       steps = elaborateTSActivityData(resultTSActivity);
                     }
+                    //print('Current cals $steps');
+
                     if (resultHR.length > 0) {
-                      int mins = elaborateHRData(resultHR);
+                      mins = elaborateHRData(resultHR);
                     }
-                    myFitbitData newdata = myFitbitData(
-                        null, result[0].entryDateTime!,
+                    //print('Current min $mins');
+
+                    myFitbitData newdata = myFitbitData(null, queryDate,
                         sleepHours: time,
                         calories: cals,
                         steps: steps,
