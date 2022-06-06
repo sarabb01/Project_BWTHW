@@ -280,7 +280,7 @@ class _$FitbitDao extends FitbitDao {
 
   @override
   Future<List<myFitbitData>> findAllFitbitData() async {
-    return _queryAdapter.queryList('SELECT * FROM FitbitData',
+    return _queryAdapter.queryList('SELECT * FROM myFitbitData',
         mapper: (Map<String, Object?> row) => myFitbitData(
             row['id'] as int?, _dateTimeConverter.decode(row['date'] as int),
             sleepHours: row['sleepHours'] as int,

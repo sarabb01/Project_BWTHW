@@ -3,7 +3,7 @@ import 'package:the_best_app/Database/Entities/UserCreds.dart';
 
 @dao
 abstract class FitbitDao {
-  @Query('SELECT * FROM FitbitData')
+  @Query('SELECT * FROM myFitbitData')
   Future<List<myFitbitData>> findAllFitbitData();
 
   @insert

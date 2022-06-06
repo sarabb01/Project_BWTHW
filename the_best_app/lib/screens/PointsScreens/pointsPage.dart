@@ -4,19 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:the_best_app/Database/Entities/UserCreds.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:the_best_app/Utils/dateFormatter.dart';
 import 'package:the_best_app/Utils/formats.dart';
 
 class PointsPage extends StatelessWidget {
-  // final Map input;
   static const route = '/points';
   static const routename = 'Points Page';
 
-  // PointsPage({Key? key, required this.input})
-  //     : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    //final input = ModalRoute.of(context)!.settings.arguments! as Map;
     print('${PointsPage.routename} built');
     return Scaffold(
         appBar: AppBar(
@@ -24,19 +20,19 @@ class PointsPage extends StatelessWidget {
           actions: [
             IconButton(
                 onPressed: () async {
-                  List<SleepData> allSleepData =
+                  List<myFitbitData> allData =
                       await Provider.of<UsersDatabaseRepo>(context,
                               listen: false)
-                          .findAllSleepData();
-                  print(allSleepData.length);
-                  // for (int j = 0; j < alldata.length; j++) {
+                          .findAllFitbitData();
+                  print(allData.length);
                   await Provider.of<UsersDatabaseRepo>(context, listen: false)
-                      .deleteAllSleepData(allSleepData);
-                  // }
+                      .deleteAllFitbitData(allData);
                 },
                 icon: Icon(Icons.delete))
           ],
         ),
+
+        // Questo bottone può servire per fetchare!!
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.smart_toy_outlined),
           onPressed: () async {
@@ -55,52 +51,58 @@ class PointsPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
               Text('TODAY\'S POINTS'),
+              Consumer<UsersDatabaseRepo>(builder: (context, dbr, child) {
+                return FutureBuilder(
+                    initialData: null,
+                    future: dbr.findAllFitbitData(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        final fitbit = snapshot.data as List<myFitbitData>;
+                        return fitbit.length == 0
+                            ? Text('The list is currently empty')
+                            : Card(
+                                child: ListTile(
+                                title: Text(
+                                    '${dateFormatter(fitbit[fitbit.length - 1].date)}'),
+                                subtitle: Text(
+                                    '${fitbit[fitbit.length - 1].sleepHours}'),
+                              ));
+                      } else {
+                        return CircularProgressIndicator();
+                      }
+                    });
+              }),
               Text('TOTAL POINTS'),
               Consumer<UsersDatabaseRepo>(builder: (context, dbr, child) {
                 return FutureBuilder(
                     initialData: null,
-                    future: Future.wait([
-                      dbr.findAllSleepData(),
-                      dbr.findAllActivityData(),
-                      dbr.findAllStepsData(),
-                      dbr.findAllHeartData(),
-                      dbr.findAllFitbitData()
-                    ]),
+                    future: dbr.findAllFitbitData(),
                     //future: dbr.findAllSleepData(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        final data = snapshot.data as List<List<Object>>;
-                        final sleep = data[0] as List<SleepData>;
-                        final calories = data[1] as List<ActivityData>;
-                        final steps = data[2] as List<StepsData>;
-                        final heart = data[3] as List<HeartData>;
-                        final fitbit = data[4] as List<myFitbitData>;
-
-                        final List total = [
-                          ['Sleep', computeSum1(sleep)],
-                          ['Calories', computeSum2(calories)],
-                          ['Steps', computeSum3(steps)],
-                          ['Minutes Cardio', computeSum4(heart)]
-                        ];
-                        return sleep.length == 0
+                        final fitbit = snapshot.data as List<myFitbitData>;
+                        final List total = computeSum(fitbit);
+                        print(total);
+                        return fitbit.length == 0
                             ? Text('The list is currently empty')
                             : Expanded(
                                 child: ListView.builder(
-                                  itemCount: fitbit.length,
-                                  //itemCount: total.length,
+                                  //itemCount: fitbit.length,
+                                  itemCount: 1,
                                   itemBuilder: (context, index) {
-                                    //String key = input.keys.elementAt(index);
                                     return Card(
                                         elevation: 3,
                                         child: ListTile(
+                                          isThreeLine: true,
                                           leading: Icon(MdiIcons.note),
-                                          title: Text('${fitbit[index].date}'),
-                                          subtitle: Text(
-                                              'Sleep: ${fitbit[index].sleepHours}'),
                                           // title: Text(
-                                          //     '${total[index][0]} (${data[index].length})'),
-                                          // subtitle: Text('${total[index][1]}'),
-
+                                          //     '${dateFormatter(fitbit[index].date)}'),
+                                          title: Text(
+                                              'SUMMARY of ${total.length} DAYS'),
+                                          // subtitle: Text(
+                                          //     'Sleep: ${fitbit[index].sleepHours}, Calories: ${fitbit[index].calories}, Steps: ${fitbit[index].steps}, Minutes Cardio: ${fitbit[index].cardio}'),
+                                          subtitle: Text(
+                                              'Sleep: ${total[0]}, Calories:${total[1]}, Steps: ${total[2]}, Minutes Cardio: ${total[3]},'),
                                           // onTap: () async {
                                           //   await Provider.of<DatabaseRepository>(
                                           //           context,
@@ -114,54 +116,23 @@ class PointsPage extends StatelessWidget {
                       } else {
                         return CircularProgressIndicator();
                       }
-                    }
-                    // child: ListView.builder(
-                    //     itemCount: input.length,
-                    //     itemBuilder: (context, index) {
-                    //       String key = input.keys.elementAt(index);
-                    //       return Card(
-                    //           elevation: 3,
-                    //           child: ListTile(
-                    //             leading: Icon(MdiIcons.note),
-                    //             title: Text('${input[key]}'),
-                    //             subtitle: Text(key),
-                    //           ));
-                    //     }),
-                    );
+                    });
               }),
             ])));
   } //build
 
 } //Page
 
-int computeSum1(List<SleepData> input) {
-  int tot = 0;
+List<int> computeSum(List<myFitbitData> input) {
+  int tot1 = 0;
+  int tot2 = 0;
+  int tot3 = 0;
+  int tot4 = 0;
   for (int k = 0; k < input.length; k++) {
-    tot += input[0].sleepHours;
+    tot1 += input[k].sleepHours;
+    tot2 += input[k].calories;
+    tot3 += input[k].steps;
+    tot4 += input[k].cardio;
   }
-  return tot;
-}
-
-int computeSum2(List<ActivityData> input) {
-  int tot = 0;
-  for (int k = 0; k < input.length; k++) {
-    tot += input[0].calories;
-  }
-  return tot;
-}
-
-int computeSum3(List<StepsData> input) {
-  int tot = 0;
-  for (int k = 0; k < input.length; k++) {
-    tot += input[0].steps;
-  }
-  return tot;
-}
-
-int computeSum4(List<HeartData> input) {
-  int tot = 0;
-  for (int k = 0; k < input.length; k++) {
-    tot += input[0].cardio;
-  }
-  return tot;
+  return [tot1, tot2, tot3, tot4];
 }
