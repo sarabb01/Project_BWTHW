@@ -177,10 +177,14 @@ class _DropdownButtonTileNumberState extends State<DropdownButtonTileNumber> {
 } // DropdownButtonTileNumber
 
 class DropdownButtonTileString extends StatefulWidget {
+  final Function(dynamic) notifyParent;
   final items;
   final labelText;
 
-  DropdownButtonTileString({required this.items, required this.labelText});
+  DropdownButtonTileString(
+      {required this.items,
+      required this.labelText,
+      required this.notifyParent});
 
   @override
   State<DropdownButtonTileString> createState() =>
@@ -212,6 +216,7 @@ class _DropdownButtonTileStringState extends State<DropdownButtonTileString> {
           value: dropdownValue,
           elevation: 16,
           onChanged: (String? value) {
+            widget.notifyParent(value);
             setState(() {
               dropdownValue = value!;
             });

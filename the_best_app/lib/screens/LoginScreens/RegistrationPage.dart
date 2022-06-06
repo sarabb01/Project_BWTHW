@@ -30,6 +30,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
   late TextEditingController _password; // = TextEditingController();
 
   late DateTime _selectedDate;
+  late String? _selectedGender;
+  late String? _selectedTarget;
 
   //Form globalkey: this is required to validate the form fields.
   final formKey = GlobalKey<FormState>();
@@ -41,6 +43,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
     _username = TextEditingController();
     _password = TextEditingController();
     _selectedDate = DateTime.now();
+    _selectedGender = 'None';
+    _selectedTarget = 'None';
     super.initState();
   }
 
@@ -60,6 +64,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
       _username.clear();
       _password.clear();
       _selectedDate = DateTime.now();
+      _selectedGender = 'None';
+      _selectedTarget = 'None';
     });
   }
 
@@ -123,11 +129,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       DropdownButtonTileString(
                         items: ['Female', 'Male', 'Ingegnere', 'None'],
                         labelText: 'Female or Male',
+                        notifyParent: selectGender,
                       ),
                       FormSeparator(label: 'Target'),
                       DropdownButtonTileString(
                         items: ['Target1', 'Target2', 'Target3', 'None'],
                         labelText: 'Personal Target',
+                        notifyParent: selectTarget,
                       ),
                       FormSeparator(label: 'Username'),
                       FormTextTile(
@@ -172,6 +180,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
   } //_selectDate
 
   Widget Sign_In_Button(BuildContext context, String route) {
+    print(_selectedGender);
+    print(_selectedTarget);
     return Padding(
         padding: EdgeInsets.only(right: 5.0, bottom: 15, left: 5.0, top: 10),
         child: ElevatedButton(
@@ -206,6 +216,18 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     style: TextStyle(color: Colors.black),
                   )
                 ]))));
+  }
+
+  dynamic selectGender(_currentchoice) {
+    setState(() {
+      _selectedGender = _currentchoice;
+    });
+  }
+
+  dynamic selectTarget(_currentchoice) {
+    setState(() {
+      _selectedTarget = _currentchoice;
+    });
   }
 
   void user_info_storing(String username, String password) async {
