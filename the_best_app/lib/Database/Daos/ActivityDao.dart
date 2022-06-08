@@ -1,5 +1,5 @@
 import 'package:floor/floor.dart';
-import 'package:the_best_app/Database/Entities/UserCreds.dart';
+import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 
 @dao
 abstract class ActivityDao {

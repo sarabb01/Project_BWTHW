@@ -11,6 +11,7 @@ import 'package:the_best_app/Database/Daos/activityDao.dart';
 import 'package:the_best_app/Database/Daos/heartDao.dart';
 import 'package:the_best_app/Database/Daos/sleepDao.dart';
 import 'package:the_best_app/Database/Daos/stepsDao.dart';
+import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'Entities/UserCreds.dart';
 
 //The generated code will be in database.g.dart

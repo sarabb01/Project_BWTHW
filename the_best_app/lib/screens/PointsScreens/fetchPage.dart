@@ -5,7 +5,7 @@ import 'dart:math';
 import 'package:provider/provider.dart';
 
 //Import DB things
-import 'package:the_best_app/Database/Entities/UserCreds.dart';
+import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
 //Import Screens
 import 'package:the_best_app/screens/PointsScreens/pointsPage.dart';

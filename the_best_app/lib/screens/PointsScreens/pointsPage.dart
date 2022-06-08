@@ -1,7 +1,7 @@
 import 'package:floor/floor.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-import 'package:the_best_app/Database/Entities/UserCreds.dart';
+import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:the_best_app/Utils/dateFormatter.dart';
