@@ -5,17 +5,18 @@ import 'package:sqflite/sqflite.dart' as sqflite;
 import 'package:the_best_app/Database/typeConverters/dateTimeConverter.dart';
 
 //Here, we are importing the entities and the daos of the database
-import 'package:the_best_app/Database/Daos/activityDao.dart';
-import 'package:the_best_app/Database/Daos/heartDao.dart';
-import 'package:the_best_app/Database/Daos/sleepDao.dart';
-import 'package:the_best_app/Database/Daos/stepsDao.dart';
+import 'package:the_best_app/Database/Daos/ActivityDao.dart';
+import 'package:the_best_app/Database/Daos/fitbitDao.dart';
+import 'package:the_best_app/Database/Daos/HeartDao.dart';
+import 'package:the_best_app/Database/Daos/SleepDao.dart';
+import 'package:the_best_app/Database/Daos/StepsDao.dart';
+
 import 'package:the_best_app/Database/Daos/UserCreddaos.dart';
 import 'package:the_best_app/Database/Daos/UserInfosdaos.dart';
 
 import 'package:the_best_app/Database/Entities/UserCreds.dart';
 import 'package:the_best_app/Database/Entities/UserInfos.dart';
 import 'package:the_best_app/Database/Entities/FitbitTables.dart';
-import 'package:the_best_app/Database/Daos/fitbitDao.dart';
 
 //The generated code will be in database.g.dart
 part 'database.g.dart';
