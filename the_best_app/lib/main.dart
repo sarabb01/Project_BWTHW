@@ -12,7 +12,7 @@ import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/screens/PointsScreens/fetchPage.dart';
 import 'package:the_best_app/screens/PointsScreens/fitbitAuthPage.dart';
 // User Database
-import 'package:the_best_app/Database/user_cred_database.dart';
+import 'package:the_best_app/Database/database.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/screens/PointsScreens/pointsPage.dart';
 // Rewards Screens
@@ -21,8 +21,6 @@ import 'package:the_best_app/screens/Rewards/queryPage.dart';
 import 'package:the_best_app/screens/Rewards/shoppingPage.dart';
 import 'package:the_best_app/screens/Rewards/experiencePage.dart';
 import 'package:the_best_app/screens/Rewards/QRcodePage.dart';
-
-//TODO: import the homepage widget
 
 Future<void> main() async {
   //This is a special method that use WidgetFlutterBinding to interact with the Flutter engine.

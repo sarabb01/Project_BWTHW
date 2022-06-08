@@ -18,7 +18,6 @@ class LoginPage extends StatefulWidget {
   static const route = '/hellowordpage/loginpage';
   static const routename = 'LoginPage';
 
-  User_Credentials users_credentials = User_Credentials();
   @override
   State<LoginPage> createState() => _log_in_settings();
 }

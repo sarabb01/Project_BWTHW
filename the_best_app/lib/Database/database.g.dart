@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_cred_database.dart';
+part of 'database.dart';
 
 // **************************************************************************
 // FloorGenerator
@@ -65,13 +65,7 @@ class _$AppDatabase extends AppDatabase {
 
   FitbitDao? _fitbitDaoInstance;
 
-  SleepDao? _sleepDaoInstance;
-
-  ActivityDao? _activityDaoInstance;
-
-  StepsDao? _stepsDaoInstance;
-
-  HeartDao? _heartDaoInstance;
+  UserInfosDao? _user_infos_daoInstance;
 
   Future<sqflite.Database> open(String path, List<Migration> migrations,
       [Callback? callback]) async {
@@ -93,6 +87,8 @@ class _$AppDatabase extends AppDatabase {
       onCreate: (database, version) async {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `UsersCredentials` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `username` TEXT NOT NULL, `password` TEXT NOT NULL)');
+        await database.execute(
+            'CREATE TABLE IF NOT EXISTS `User Informations` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `userid` INTEGER NOT NULL, `name` TEXT NOT NULL, `surname` TEXT NOT NULL, `gender` TEXT NOT NULL, `dateofbirth` INTEGER NOT NULL, `usertarget` TEXT NOT NULL, FOREIGN KEY (`userid`) REFERENCES `UsersCredentials` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `myFitbitData` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `date` INTEGER NOT NULL, `sleepHours` INTEGER NOT NULL, `calories` INTEGER NOT NULL, `steps` INTEGER NOT NULL, `cardio` INTEGER NOT NULL)');
         await database.execute(
@@ -122,23 +118,8 @@ class _$AppDatabase extends AppDatabase {
   }
 
   @override
-  SleepDao get sleepDao {
-    return _sleepDaoInstance ??= _$SleepDao(database, changeListener);
-  }
-
-  @override
-  ActivityDao get activityDao {
-    return _activityDaoInstance ??= _$ActivityDao(database, changeListener);
-  }
-
-  @override
-  StepsDao get stepsDao {
-    return _stepsDaoInstance ??= _$StepsDao(database, changeListener);
-  }
-
-  @override
-  HeartDao get heartDao {
-    return _heartDaoInstance ??= _$HeartDao(database, changeListener);
+  UserInfosDao get user_infos_dao {
+    return _user_infos_daoInstance ??= _$UserInfosDao(database, changeListener);
   }
 }
 
@@ -307,67 +288,46 @@ class _$FitbitDao extends FitbitDao {
   }
 }
 
-class _$SleepDao extends SleepDao {
-  _$SleepDao(this.database, this.changeListener)
+class _$UserInfosDao extends UserInfosDao {
+  _$UserInfosDao(this.database, this.changeListener)
       : _queryAdapter = QueryAdapter(database),
-        _sleepDataInsertionAdapter = InsertionAdapter(
+        _userInfosInsertionAdapter = InsertionAdapter(
             database,
-            'SleepData',
-            (SleepData item) => <String, Object?>{
+            'User Informations',
+            (UserInfos item) => <String, Object?>{
                   'id': item.id,
-                  'date': _dateTimeConverter.encode(item.date),
-                  'sleepHours': item.sleepHours
+                  'userid': item.userId,
+                  'name': item.name,
+                  'surname': item.surname,
+                  'gender': item.gender,
+                  'dateofbirth': _dateTimeConverter.encode(item.dateofbirth),
+                  'usertarget': item.usertarget
                 }),
-        _sleepDataDeletionAdapter = DeletionAdapter(
+        _userInfosUpdateAdapter = UpdateAdapter(
             database,
-            'SleepData',
+            'User Informations',
             ['id'],
-            (SleepData item) => <String, Object?>{
+            (UserInfos item) => <String, Object?>{
                   'id': item.id,
-                  'date': _dateTimeConverter.encode(item.date),
-                  'sleepHours': item.sleepHours
-                });
-
-  final sqflite.DatabaseExecutor database;
-
-  final StreamController<String> changeListener;
-
-  final QueryAdapter _queryAdapter;
-
-  final InsertionAdapter<SleepData> _sleepDataInsertionAdapter;
-
-  final DeletionAdapter<SleepData> _sleepDataDeletionAdapter;
-
-  @override
-  Future<List<SleepData>> findAllSleepData() async {
-    return _queryAdapter.queryList('SELECT * FROM SleepData',
-        mapper: (Map<String, Object?> row) => SleepData(
-            row['id'] as int?,
-            _dateTimeConverter.decode(row['date'] as int),
-            row['sleepHours'] as int));
-  }
-
-  @override
-  Future<void> insertSleepData(SleepData newdata) async {
-    await _sleepDataInsertionAdapter.insert(newdata, OnConflictStrategy.abort);
-  }
-
-  @override
-  Future<void> deleteAllSleepData(List<SleepData> newdata) async {
-    await _sleepDataDeletionAdapter.deleteList(newdata);
-  }
-}
-
-class _$ActivityDao extends ActivityDao {
-  _$ActivityDao(this.database, this.changeListener)
-      : _queryAdapter = QueryAdapter(database),
-        _activityDataInsertionAdapter = InsertionAdapter(
+                  'userid': item.userId,
+                  'name': item.name,
+                  'surname': item.surname,
+                  'gender': item.gender,
+                  'dateofbirth': _dateTimeConverter.encode(item.dateofbirth),
+                  'usertarget': item.usertarget
+                }),
+        _userInfosDeletionAdapter = DeletionAdapter(
             database,
-            'ActivityData',
-            (ActivityData item) => <String, Object?>{
+            'User Informations',
+            ['id'],
+            (UserInfos item) => <String, Object?>{
                   'id': item.id,
-                  'date': _dateTimeConverter.encode(item.date),
-                  'calories': item.calories
+                  'userid': item.userId,
+                  'name': item.name,
+                  'surname': item.surname,
+                  'gender': item.gender,
+                  'dateofbirth': _dateTimeConverter.encode(item.dateofbirth),
+                  'usertarget': item.usertarget
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -376,91 +336,57 @@ class _$ActivityDao extends ActivityDao {
 
   final QueryAdapter _queryAdapter;
 
-  final InsertionAdapter<ActivityData> _activityDataInsertionAdapter;
+  final InsertionAdapter<UserInfos> _userInfosInsertionAdapter;
+
+  final UpdateAdapter<UserInfos> _userInfosUpdateAdapter;
+
+  final DeletionAdapter<UserInfos> _userInfosDeletionAdapter;
 
   @override
-  Future<List<ActivityData>> findAllActivityData() async {
-    return _queryAdapter.queryList('SELECT * FROM ActivityData',
-        mapper: (Map<String, Object?> row) => ActivityData(
+  Future<List<UserInfos>> findAllUsersInfos() async {
+    return _queryAdapter.queryList('SELECT * FROM UserInfos',
+        mapper: (Map<String, Object?> row) => UserInfos(
             row['id'] as int?,
-            _dateTimeConverter.decode(row['date'] as int),
-            row['calories'] as int));
+            row['userid'] as int,
+            row['name'] as String,
+            row['surname'] as String,
+            row['gender'] as String,
+            _dateTimeConverter.decode(row['dateofbirth'] as int),
+            row['usertarget'] as String));
   }
 
   @override
-  Future<void> insertActivityData(ActivityData newdata) async {
-    await _activityDataInsertionAdapter.insert(
-        newdata, OnConflictStrategy.abort);
-  }
-}
-
-class _$StepsDao extends StepsDao {
-  _$StepsDao(this.database, this.changeListener)
-      : _queryAdapter = QueryAdapter(database),
-        _stepsDataInsertionAdapter = InsertionAdapter(
-            database,
-            'StepsData',
-            (StepsData item) => <String, Object?>{
-                  'id': item.id,
-                  'date': _dateTimeConverter.encode(item.date),
-                  'steps': item.steps
-                });
-
-  final sqflite.DatabaseExecutor database;
-
-  final StreamController<String> changeListener;
-
-  final QueryAdapter _queryAdapter;
-
-  final InsertionAdapter<StepsData> _stepsDataInsertionAdapter;
-
-  @override
-  Future<List<StepsData>> findAllStepsData() async {
-    return _queryAdapter.queryList('SELECT * FROM StepsData',
-        mapper: (Map<String, Object?> row) => StepsData(
+  Future<UserInfos?> checkUserInfos(String username) async {
+    return _queryAdapter.query('SELECT * FROM UserInfos WHERE username = ?1',
+        mapper: (Map<String, Object?> row) => UserInfos(
             row['id'] as int?,
-            _dateTimeConverter.decode(row['date'] as int),
-            row['steps'] as int));
+            row['userid'] as int,
+            row['name'] as String,
+            row['surname'] as String,
+            row['gender'] as String,
+            _dateTimeConverter.decode(row['dateofbirth'] as int),
+            row['usertarget'] as String),
+        arguments: [username]);
   }
 
   @override
-  Future<void> insertStepsData(StepsData newdata) async {
-    await _stepsDataInsertionAdapter.insert(newdata, OnConflictStrategy.abort);
-  }
-}
-
-class _$HeartDao extends HeartDao {
-  _$HeartDao(this.database, this.changeListener)
-      : _queryAdapter = QueryAdapter(database),
-        _heartDataInsertionAdapter = InsertionAdapter(
-            database,
-            'HeartData',
-            (HeartData item) => <String, Object?>{
-                  'id': item.id,
-                  'date': _dateTimeConverter.encode(item.date),
-                  'cardio': item.cardio
-                });
-
-  final sqflite.DatabaseExecutor database;
-
-  final StreamController<String> changeListener;
-
-  final QueryAdapter _queryAdapter;
-
-  final InsertionAdapter<HeartData> _heartDataInsertionAdapter;
-
-  @override
-  Future<List<HeartData>> findAllHeartData() async {
-    return _queryAdapter.queryList('SELECT * FROM HeartData',
-        mapper: (Map<String, Object?> row) => HeartData(
-            row['id'] as int?,
-            _dateTimeConverter.decode(row['date'] as int),
-            row['cardio'] as int));
+  Future<void> addUserInfos(UserInfos user) async {
+    await _userInfosInsertionAdapter.insert(user, OnConflictStrategy.rollback);
   }
 
   @override
-  Future<void> insertHeartData(HeartData newdata) async {
-    await _heartDataInsertionAdapter.insert(newdata, OnConflictStrategy.abort);
+  Future<void> updateUserInfos(UserInfos user) async {
+    await _userInfosUpdateAdapter.update(user, OnConflictStrategy.replace);
+  }
+
+  @override
+  Future<void> deleteUserInfos(UserInfos user) async {
+    await _userInfosDeletionAdapter.delete(user);
+  }
+
+  @override
+  Future<void> deleteAllUsersInfos(List<UserInfos> users) async {
+    await _userInfosDeletionAdapter.deleteList(users);
   }
 }
 

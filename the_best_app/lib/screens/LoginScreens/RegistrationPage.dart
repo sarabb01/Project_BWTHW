@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:select_form_field/select_form_field.dart';
+import 'package:the_best_app/Database/Entities/UserInfos.dart';
 // SCREENS
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
+import 'package:the_best_app/Utils/DateFormats.dart';
 // UTILIS
 import 'package:the_best_app/Utils/Form_Separator.dart';
-import 'package:the_best_app/Utils/Registration_Form.dart';
+import 'package:the_best_app/Utils/Reg_Form.dart';
 // DATA PERSISTENCE
 import 'package:the_best_app/Database/Entities/UserCreds.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
@@ -25,19 +27,26 @@ class RegistrationPage extends StatefulWidget {
 class _RegistrationPageState extends State<RegistrationPage> {
   late TextEditingController _name; // = TextEditingController();
   late TextEditingController _surname; // = TextEditingController();
-  late TextEditingController _sex; // = TextEditingController();
   late TextEditingController _username; // = TextEditingController();
   late TextEditingController _password; // = TextEditingController();
-  late TextEditingController _age; // = TextEditingController();
+
+  late DateTime _selectedDate;
+  late String? _selectedGender;
+  late String? _selectedTarget;
+
+  //Form globalkey: this is required to validate the form fields.
+  final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     _name = TextEditingController();
     _surname = TextEditingController();
-    _sex = TextEditingController();
     _username = TextEditingController();
     _password = TextEditingController();
-    _age = TextEditingController();
+    _selectedDate = DateTime(
+        (DateTime.now()).year, (DateTime.now()).month, (DateTime.now()).day);
+    _selectedGender = 'None';
+    _selectedTarget = 'None';
     super.initState();
   }
 
@@ -45,10 +54,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
   void dispose() {
     _name.dispose();
     _surname.dispose();
-    _sex.dispose();
     _username.dispose();
     _password.dispose();
-    _age.dispose();
     super.dispose();
   }
 
@@ -56,10 +63,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
     setState(() {
       _name.clear();
       _surname.clear();
-      _sex.clear();
       _username.clear();
       _password.clear();
-      _age.clear();
+      _selectedDate = DateTime(
+          (DateTime.now()).year, (DateTime.now()).month, (DateTime.now()).day);
+      _selectedGender = 'None';
+      _selectedTarget = 'None';
     });
   }
 
@@ -78,47 +87,87 @@ class _RegistrationPageState extends State<RegistrationPage> {
           ],
         ),
         body: Center(
-            child: ListView(children: [
-          Text(
-            'New Account',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 25.0),
-          ),
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: Container(
-              height: 100,
-              width: 100,
-              child: Image.asset('assets/Images/placeholder.jpg'),
-            ),
-          ),
-          FormSeparator(label: 'Name'),
-          Inputs_Forms(
-              controller: _name, label: 'Enter your Name', DataType: 'STR'),
-          FormSeparator(label: 'Surname'),
-          Inputs_Forms(
-              controller: _surname,
-              label: 'Enter your Surname',
-              DataType: 'STR'),
-          FormSeparator(label: 'Age'),
-          Inputs_Forms(controller: _age, label: 'Subject Age', DataType: 'NUM'),
-          FormSeparator(label: 'Sex'),
-          Inputs_Forms(
-              controller: _sex, label: 'Female or Male', DataType: 'STR'),
-          FormSeparator(label: 'Username'),
-          Inputs_Forms(
-              controller: _username, label: 'Email Addres', DataType: 'STR'),
-          FormSeparator(label: 'Password'),
-          Inputs_Forms(
-              controller: _password,
-              label: 'Enter your Password',
-              DataType: 'STR'),
-          Sign_In_Button(context, LoginPage.route),
-        ])));
+            child: Form(
+                key: formKey,
+                child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 10, bottom: 8, left: 20, right: 20),
+                    child: ListView(children: <Widget>[
+                      Text(
+                        'New Account',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25.0),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Container(
+                          height: 100,
+                          width: 100,
+                          child: Image.asset('assets/Images/placeholder.jpg'),
+                        ),
+                      ),
+                      FormSeparator(label: 'Name'),
+                      FormTextTile(
+                        controller: _name,
+                        labelText: 'Enter your Name',
+                      ),
+                      FormSeparator(label: 'Surname'),
+                      FormTextTile(
+                        controller: _surname,
+                        labelText: 'Enter your Surname',
+                      ),
+                      FormSeparator(label: 'Date of Birth'),
+                      FormDateTile(
+                        labelText: "Date of Birth",
+                        date: _selectedDate,
+                        dateFormat: Formats.onlyDayDateFormat,
+                        onPressed: () {
+                          _selectDate(context);
+                        },
+                      ),
+                      FormSeparator(label: 'Gender'),
+                      DropdownButtonTileString(
+                        items: ['Female', 'Male', 'Ingegnere', 'None'],
+                        labelText: 'Female or Male',
+                        notifyParent: selectGender,
+                      ),
+                      FormSeparator(label: 'Target'),
+                      DropdownButtonTileString(
+                        items: ['Target1', 'Target2', 'Target3', 'None'],
+                        labelText: 'Personal Target',
+                        notifyParent: selectTarget,
+                      ),
+                      FormSeparator(label: 'Username'),
+                      FormTextTile(
+                        controller: _username,
+                        labelText: 'Email Addres',
+                      ),
+                      FormSeparator(label: 'Password'),
+                      FormTextTile(
+                        controller: _password,
+                        labelText: 'Enter your Password',
+                      ),
+                      Sign_In_Button(context, LoginPage.route),
+                    ])))));
   }
+
+  //Utility method that implements a Date+Time picker.
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: _selectedDate,
+        firstDate: DateTime(1900),
+        lastDate: DateTime(2101));
+
+    if (picked != null && picked != _selectedDate)
+      //Here, I'm using setState to update the _selectedDate field and rebuild the UI.
+      setState(() {
+        _selectedDate = picked;
+      });
+  } //_selectDate
 
   Widget Sign_In_Button(BuildContext context, String route) {
     return Padding(
@@ -135,9 +184,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     return Colors.red; // <-- Splash color
                 })),
             onPressed: (() async {
-              user_info_storing(_username.text, _password.text);
-              //setInputData();
-              await Navigator.pushReplacementNamed(context, LoginPage.route);
+              if (formKey.currentState!.validate()) {
+                user_cred_storing(_username.text, _password.text);
+                user_info_storing(_username.text, _name.text, _surname.text,
+                    _selectedGender!, _selectedDate, _selectedTarget!);
+                //setInputData();
+                await Navigator.pushReplacementNamed(context, LoginPage.route);
+              }
             }),
             child: Padding(
                 padding:
@@ -155,13 +208,41 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 ]))));
   }
 
-  void user_info_storing(String username, String password) async {
-    final users_credentials = UsersCredentials(1, username, password);
-    await Provider.of<UsersDatabaseRepo>(context, listen: false)
-        .addUser(users_credentials);
+  dynamic selectGender(_currentchoice) {
+    setState(() {
+      _selectedGender = _currentchoice;
+    });
   }
 
-  Widget Back_Page(List<double> edge_insets, BuildContext context) {
+  dynamic selectTarget(_currentchoice) {
+    setState(() {
+      _selectedTarget = _currentchoice;
+    });
+  }
+
+  void user_cred_storing(String username, String password) async {
+    final usersCredentials = UsersCredentials(null, username, password);
+    if (await Provider.of<UsersDatabaseRepo>(context, listen: false)
+            .findUser(username) ==
+        null) {
+      await Provider.of<UsersDatabaseRepo>(context, listen: false)
+          .addUser(usersCredentials);
+    }
+  }
+
+  void user_info_storing(String username, String name, String surname,
+      String gender, DateTime dateofbirth, String target) async {
+    final user = await Provider.of<UsersDatabaseRepo>(context, listen: false)
+        .findUser(username);
+    if (user != null) {
+      final user_infos =
+          UserInfos(null, user.id!, name, surname, gender, dateofbirth, target);
+      await Provider.of<UsersDatabaseRepo>(context, listen: false)
+          .addUserInfos(user_infos);
+    }
+  }
+
+  Widget Back_Page(List<double> edgeInsets, BuildContext context) {
     return Padding(
         padding: EdgeInsets.only(right: 5.0, bottom: 10, left: 5.0, top: 5),
         child: ElevatedButton(

@@ -115,9 +115,22 @@ class _HelloWordPageState extends State<HelloWordPage> {
                                 return Card(
                                   elevation: 5,
                                   child: ListTile(
-                                      leading: Icon(MdiIcons.account),
-                                      title: Text(
-                                          'Username : ${data[i].username}')),
+                                    leading: Icon(MdiIcons.account),
+                                    title: Text(
+                                      'Username : ${data[i].username}',
+                                      textAlign: TextAlign.start,
+                                    ),
+                                    subtitle: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text('Automatic ID : ${data[i].id}',
+                                              textAlign: TextAlign.center),
+                                          Text(
+                                              'Password  : ${data[i].password}',
+                                              textAlign: TextAlign.center)
+                                        ]),
+                                  ),
                                 );
                               });
                     } //if
