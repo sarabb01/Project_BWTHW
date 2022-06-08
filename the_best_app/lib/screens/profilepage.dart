@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:the_best_app/screens/profiledatapage.dart';
 
 class Profilepage extends StatelessWidget {
   Profilepage({Key? key}) : super(key: key);
 
-  static const route = '/Profilepage';
+  static const route = '/hellowordpage/loginpage/homepage/profilepage';
   static const routename = 'Profilepage';
 
   @override
@@ -15,45 +16,79 @@ class Profilepage extends StatelessWidget {
           actions: <Widget>[
             IconButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/Profiledatapage');
+                  Navigator.pushNamed(context, Profiledatapage.route);
                 },
                 icon: Icon(Icons.account_box))
           ],
         ),
         body: Center(
-            child: ListView(
+            child: SizedBox(
+                child: ListView(
           children: <Widget>[
             ListTile(
-              title: Text('Dati Anagrafici'),
+              title: const Text('Personal Data'),
             ),
             ListTile(
-              title: Text('Nome'),
-              subtitle: Text(''),
+                title: Text('Name'),
+                subtitle: TextField(
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: '',
+                  ),
+                )),
+            ListTile(
+              title: Text('Surname'),
+              subtitle: TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: '',
+                ),
+              ),
             ),
             ListTile(
-              title: Text('Cognome'),
-              subtitle: Text(''),
+              title: Text('Sex'),
+              subtitle: TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: '',
+                ),
+              ),
             ),
             ListTile(
-              title: Text('Sesso'),
-              subtitle: Text(''),
+              title: Text('Height'),
+              subtitle: TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: '',
+                ),
+              ),
             ),
             ListTile(
-              title: Text('Altezza'),
-              subtitle: Text(''),
+              title: Text('Weight'),
+              subtitle: TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: '',
+                ),
+              ),
             ),
             ListTile(
-              title: Text('Peso'),
-              subtitle: Text(''),
-            ),
-            ListTile(
-              title: Text('Malattie Diagnosticate'),
-            ),
-            ListTile(
-              title: Text(''),
+              title: Text('Diseases'),
+              subtitle: TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: '',
+                ),
+              ),
             ),
           ],
-        )));
+        ))));
   } //build
 
 } //Profilepage

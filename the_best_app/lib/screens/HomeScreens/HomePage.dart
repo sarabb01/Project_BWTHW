@@ -13,33 +13,36 @@ import 'package:provider/provider.dart';
 // DATABASE
 import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/Database/Entities/UserCreds.dart';
+import 'package:the_best_app/screens/infopage.dart';
+import 'package:the_best_app/screens/profilepage.dart';
 
-class HomePage extends StatefulWidget {
+class Homepage extends StatefulWidget {
+  const Homepage({Key? key}) : super(key: key);
+
   static const route = '/hellowordpage/loginpage/homepage';
-  static const routename = 'HomePage';
-  String username;
-
-  HomePage({required this.username});
+  static const routename = 'Homepage';
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  _HomepageState createState() => _HomepageState();
 }
 
-class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  late AnimationController controller;
-  double puntiraccolti = 5000;
-  double obiettivo = 10000;
+class _HomepageState extends State<Homepage>
+    with SingleTickerProviderStateMixin {
+  late AnimationController
+      controller; // per controllare animazione di circular progress indicator, ho messo late perchè inizializzo dopo la variabile
+  double puntiottenuti = 7000; //puntiottenuti ricavati da conversione punti
+  double obiettivo = 10000; //obiettivo fissato pagina preference
 
   @override
   void initState() {
-    controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 15),
-    )..addListener(() {
-        setState(() {});
-      });
-    controller.repeat(reverse: false);
     super.initState();
+
+    controller = AnimationController(
+      duration: const Duration(seconds: 10),
+      vsync: this,
+    );
+
+    controller.repeat();
   }
 
   @override
@@ -50,235 +53,168 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    print('${HomePage.routename} built');
+    print('${Homepage.routename} built');
     return Scaffold(
         appBar: AppBar(
-            title: widget.username == null || widget.username.isEmpty
-                ? Text('ERROR !! (No username)',
-                    style: TextStyle(fontWeight: FontWeight.bold))
-                : Text(widget.username.toUpperCase(),
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-            actions: [
-              Row(children: [
-                Back_Page([5, 5, 5, 5], context),
-                IconButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, AuthPage.route);
-                    },
-                    icon: Icon(Icons.lock_outline))
-              ]),
-            ]),
+          title: const Text(Homepage.routename),
+          actions: [
+            FloatingActionButton(
+                child: Icon(Icons.info),
+                onPressed: () {
+                  Navigator.pop(context, Infopage.route);
+                })
+          ],
+        ),
         drawer: Drawer(
             child: ListView(children: [
           Padding(
-            padding: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 5),
-            child: DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Theme.of(context).accentColor,
+              padding:
+                  EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+              child: Container(
+                //decoration: BoxDecoration(
+                //color: Theme.of(context).accentColor,
+                //),
+                //child:
+                // Center(
+                child: Text(
+                  'Settings',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colours.black,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold),
                 ),
-                child: Center(
-                  child: Text(
-                    'Drawer Header',
-                    style: TextStyle(color: Colours.black),
-                  ),
-                )),
+              )),
+          //),
+          Padding(
+            padding: EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 10),
+            child: ListTile(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+                //side: BorderSide(color: Colours.azure)
+              ),
+              title: Text(
+                'Personal Area',
+                style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.start,
+              ),
+              trailing: Icon(Icons.account_circle),
+              tileColor: Colors.green[100],
+              onTap: () {
+                Navigator.pushNamed(context, Profilepage.route);
+              },
+            ),
           ),
           Padding(
             padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 10),
             child: ListTile(
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  side: BorderSide(color: Colours.fireBrick)),
-              title: Text(
-                'Remove Profile',
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
+                borderRadius: BorderRadius.circular(10),
+                // side: BorderSide(color: Colours.azure)
               ),
-              tileColor: Colours.fireBrick,
+              title: Text(
+                'My Voucher',
+                style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.start,
+              ),
+              trailing: Icon(Icons.more_vert),
+              tileColor: Colors.green[100],
               onTap: () async {
-                await remove_Profile(widget.username, context);
+                //await remove_Profile(widget.username, context);
               },
             ),
-          )
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 10, right: 10, top: 400, bottom: 10),
+            child: ListTile(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+                // side: BorderSide(color: Colours.azure)
+              ),
+              title: Text(
+                'Delete my points',
+                style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.start,
+              ),
+              trailing: Icon(Icons.remove),
+              tileColor: Colors.green[100],
+              onTap: () async {
+                //await remove_Profile(widget.username, context);
+              },
+            ),
+          ),
+          //BottomNavigationBar(items: const <BottomNavigationBarItem>[
+          //BottomNavigationBarItem(
+          //icon: Icons.remove_circle,
+          //label: Text('Delete my Profile')),
+          //])
         ])),
         body: Center(
+            //TweenAnimationBuilder(
+            //tween: Tween(begin: 0.0, end: 1.0),
+            //duration: Duration(seconds: 10),
+            //builder: (context, value, _) =>
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-              Text('Punti raccolti : $puntiraccolti  obiettivo : $obiettivo '),
-              SizedBox(
-                child: CircularProgressIndicator(
-                  value: puntiraccolti / obiettivo,
-                  backgroundColor: Colors.grey,
-                  color: Colours.darkSeagreen,
-                  strokeWidth: 25.0,
-                ),
-                height: 150,
-                width: 150,
-              ),
-              CupertinoButton.filled(
-                  child: const Text('Gain Coupon'), onPressed: () {}),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-                    Personal_Area_Form([5, 5, 5, 5], context),
-                    SizedBox(height: 30),
-                  ]),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-                    Points_Area_Form([5, 5, 5, 5], context),
-                    SizedBox(height: 30),
-                  ]),
-                  SizedBox(
-                    width: 20,
-                  ),
-                ],
+              const Text(
+                'Points for the AWARD :',
+                style: TextStyle(fontSize: 25),
               ),
+              SizedBox(
+                width: 200,
+                height: 200,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    CircularProgressIndicator(
+                      value: puntiottenuti / obiettivo,
+                      backgroundColor: Colors.grey,
+                      color: Colours.darkSeagreen,
+                      strokeWidth: 25,
+                    ),
+                    Center(
+                      child: buildprogress(),
+                    ),
+                  ],
+                ),
+              ),
+              //Text(
+              //'You are far'
+              //' ${(obiettivo - puntiottenuti)}'
+              //' points from the AWARD, GO AND GET IT',
+              //style: TextStyle(fontSize: 20),
+              //)
+              CupertinoButton.filled(
+                  child: const Text('Gain your Award'),
+                  onPressed: () {
+                    //Navigator.pushNamed(context, /preferencePage)
+                  })
             ])));
+  } //build
+
+  Widget buildprogress() {
+    if (puntiottenuti / obiettivo == 1) {
+      return const Icon(Icons.done, color: Colors.green, size: 56);
+    } else {
+      return Text(
+        '${(puntiottenuti)}' '/' '${(obiettivo).toStringAsFixed(1)}',
+        style: TextStyle(fontSize: 20),
+      );
+    }
   }
-}
+} //Homepage
 
-Widget Back_Page(List<double> edge_insets, BuildContext context) {
-  return Padding(
-      padding: EdgeInsets.only(
-        left: edge_insets[0],
-        top: edge_insets[1],
-        right: edge_insets[2],
-        bottom: edge_insets[3],
-      ),
-      child: ElevatedButton(
-          style: ButtonStyle(
-              shape: MaterialStateProperty.all(CircleBorder()),
-              padding: MaterialStateProperty.all(EdgeInsets.all(5)),
-              backgroundColor: MaterialStateProperty.all(
-                  Colours.darkSeagreen), // <-- Button color
-              overlayColor: MaterialStateProperty.resolveWith<Color?>((states) {
-                if (states.contains(MaterialState.pressed))
-                  return Colors.red; // <-- Splash color
-              })),
-          onPressed: (() async {
-            final sp = await SharedPreferences.getInstance();
-            sp.remove('username');
-            Navigator.pushReplacementNamed(context, LoginPage.route);
-          }),
-          child: Icon(
-            Icons.first_page,
-            color: Colors.black,
-            size: 30,
-          )));
-}
-
-Widget Personal_Area_Form(List<double> edge_insets, BuildContext context) {
-  return Padding(
-      padding: EdgeInsets.only(
-        left: edge_insets[0],
-        top: edge_insets[1],
-        right: edge_insets[2],
-        bottom: edge_insets[3],
-      ),
-      child: Container(
-          width: 150,
-          child: ElevatedButton(
-              style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                        side: BorderSide(color: Colors.lightBlue)),
-                  ),
-                  padding: MaterialStateProperty.all(EdgeInsets.all(5)),
-                  backgroundColor: MaterialStateProperty.all(
-                      Colors.blue), // <-- Button color
-                  overlayColor:
-                      MaterialStateProperty.resolveWith<Color?>((states) {
-                    if (states.contains(MaterialState.pressed))
-                      return Colors.red; // <-- Splash color
-                  })),
-              onPressed: (() {
-                //Navigator.pushNamed(context, ProfilePage.route);
-              }),
-              child: Padding(
-                  padding:
-                      EdgeInsets.only(right: 5, bottom: 5, left: 5, top: 5),
-                  child: Column(
-                    children: [
-                      Icon(
-                        Icons.account_circle,
-                        color: Colors.black,
-                        size: 30,
-                      ),
-                      Text(
-                        'Personal Area',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.black),
-                      ),
-                    ],
-                  )))));
-}
-
-Widget Points_Area_Form(List<double> edge_insets, BuildContext context) {
-  return Padding(
-      padding: EdgeInsets.only(
-        left: edge_insets[0],
-        top: edge_insets[1],
-        right: edge_insets[2],
-        bottom: edge_insets[3],
-      ),
-      child: Container(
-          width: 150,
-          child: ElevatedButton(
-              style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                        side: BorderSide(color: Colors.orange)),
-                  ),
-                  padding: MaterialStateProperty.all(EdgeInsets.all(5)),
-                  backgroundColor: MaterialStateProperty.all(
-                      Colors.orange), // <-- Button color
-                  overlayColor:
-                      MaterialStateProperty.resolveWith<Color?>((states) {
-                    if (states.contains(MaterialState.pressed))
-                      return Colors.red; // <-- Splash color
-                  })),
-              onPressed: (() {
-                Navigator.pushNamed(context, PreferencePage.route);
-              }),
-              child: Padding(
-                  padding:
-                      EdgeInsets.only(right: 5, bottom: 5, left: 5, top: 5),
-                  child: Column(
-                    children: [
-                      Icon(
-                        MdiIcons.medal,
-                        color: Colors.black,
-                        size: 30,
-                      ),
-                      Text(
-                        'Awards',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.black),
-                      ),
-                    ],
-                  )))));
-}
-
-Future<void> remove_Profile(String username, BuildContext context) async {
-  final user = await Provider.of<UsersDatabaseRepo>(context, listen: false)
-      .findUser(username);
-  // Before deleting the current profile we check if is currently logged in and if is correctly signed in the database
-  if (user != null) {
-    final sp = await SharedPreferences.getInstance();
-    await sp.remove('username'); // Updating current Login session
-    await Provider.of<UsersDatabaseRepo>(context, listen: false)
-        .deleteUser(user); // Deleting User Profile
-    await Navigator.pushReplacementNamed(context, HelloWordPage.route);
-  }
-}
+//Future<void> remove_Profile(String username, BuildContext context) async {
+//final user = await Provider.of<UsersDatabaseRepo>(context, listen: false)
+// .findUser(username);
+// Before deleting the current profile we check if is currently logged in and if is correctly signed in the database
+//if (user != null) {
+//final sp = await SharedPreferences.getInstance();
+//await sp.remove('username'); // Updating current Login session
+//await Provider.of<UsersDatabaseRepo>(context, listen: false)
+//.deleteUser(user); // Deleting User Profile
+//await Navigator.pushReplacementNamed(context, HelloWordPage.route);
+//}
+//}
