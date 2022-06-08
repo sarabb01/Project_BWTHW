@@ -16,17 +16,19 @@ import 'package:the_best_app/Database/Entities/UserCreds.dart';
 import 'package:the_best_app/screens/infopage.dart';
 import 'package:the_best_app/screens/profilepage.dart';
 
-class Homepage extends StatefulWidget {
-  const Homepage({Key? key}) : super(key: key);
-
+class HomePage extends StatefulWidget {
   static const route = '/hellowordpage/loginpage/homepage';
   static const routename = 'Homepage';
+
+  String username;
+
+  HomePage({required this.username});
 
   @override
   _HomepageState createState() => _HomepageState();
 }
 
-class _HomepageState extends State<Homepage>
+class _HomepageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   late AnimationController
       controller; // per controllare animazione di circular progress indicator, ho messo late perchè inizializzo dopo la variabile
@@ -53,10 +55,14 @@ class _HomepageState extends State<Homepage>
 
   @override
   Widget build(BuildContext context) {
-    print('${Homepage.routename} built');
+    print('${HomePage.routename} built');
     return Scaffold(
         appBar: AppBar(
-          title: const Text(Homepage.routename),
+          title: widget.username == null || widget.username.isEmpty
+              ? Text('ERROR !! (No username)',
+                  style: TextStyle(fontWeight: FontWeight.bold))
+              : Text(widget.username.toUpperCase(),
+                  style: TextStyle(fontWeight: FontWeight.bold)),
           actions: [
             FloatingActionButton(
                 child: Icon(Icons.info),

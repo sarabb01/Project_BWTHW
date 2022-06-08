@@ -20,7 +20,7 @@ class Infopage extends StatelessWidget {
           Container(
             padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
             child: const Text(
-              'This application was thought to enhance sports made by users, to do this we decided to allow to the users to fix some target and once these targets get reached the users can obtain an award. This award can be a coupon ready to be used for a discount in a shop, chosen from a list, or ready to be used for an experience related to your preference. Obviously if you decide to gain your coupon you will choose the shop from the ones near your city.',
+              'The fitter you are, the moThis application was thought to encourage users to do more sports activity by gienhance sports made by users, to do this we decided to allow to the users to fix some target and once these targets get reached the users can obtain an award. This award can be a coupon ready to be used for a discount in a shop, chosen from a list, or ready to be used for an experience related to your preference. Obviously if you decide to gain your coupon you will choose the shop from the ones near your city.',
               style: TextStyle(fontSize: 20),
             ),
           ),
@@ -30,7 +30,8 @@ class Infopage extends StatelessWidget {
           ),
           FloatingActionButton(
               onPressed: () {
-                Navigator.pushNamed(context, Homepage.route);
+                Navigator.pushNamed(context, HomePage.route,
+                    arguments: {'username': 'Pippo'});
               },
               child: Icon(Icons.done))
         ],
