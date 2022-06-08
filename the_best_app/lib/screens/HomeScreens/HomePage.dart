@@ -67,7 +67,7 @@ class _HomepageState extends State<HomePage>
             FloatingActionButton(
                 child: Icon(Icons.info),
                 onPressed: () {
-                  Navigator.pop(context, Infopage.route);
+                  Navigator.pop(context, AuthPage.route);
                 })
           ],
         ),
@@ -195,7 +195,7 @@ class _HomepageState extends State<HomePage>
               CupertinoButton.filled(
                   child: const Text('Gain your Award'),
                   onPressed: () {
-                    //Navigator.pushNamed(context, /preferencePage)
+                    Navigator.pushNamed(context, PreferencePage.route);
                   })
             ])));
   } //build
