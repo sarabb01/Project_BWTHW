@@ -1,4 +1,6 @@
 // PACKAGES
+import 'dart:ui';
+
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -88,6 +90,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -272,12 +275,13 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                           children: [
                                             Padding(
                                               padding: EdgeInsets.only(
-                                                  right: 10.0,
+                                                  right: 5.0,
                                                   bottom: 10,
                                                   left: 10.0,
                                                   top: 10),
                                               child: ElevatedButton(
-                                                child: Padding(
+                                                child: Container(
+                                                  width: screenSize.width / 4,
                                                   padding: EdgeInsets.only(
                                                       right: 10.0,
                                                       bottom: 10,
@@ -285,7 +289,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                                       top: 10),
                                                   child: Column(children: [
                                                     Icon(Icons.close),
-                                                    Text('Retry')
+                                                    Text('Retry',
+                                                        style: TextStyle(
+                                                            fontSize: 10))
                                                   ]),
                                                 ),
                                                 onPressed: () {
@@ -297,10 +303,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                               padding: EdgeInsets.only(
                                                   right: 10.0,
                                                   bottom: 10,
-                                                  left: 10.0,
+                                                  left: 5.0,
                                                   top: 10),
                                               child: ElevatedButton(
-                                                child: Padding(
+                                                child: Container(
+                                                  width: screenSize.width / 4,
                                                   padding: EdgeInsets.only(
                                                       right: 10.0,
                                                       bottom: 10,
@@ -309,7 +316,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                                   child: Column(children: [
                                                     Icon(
                                                         Icons.app_registration),
-                                                    Text('New Account')
+                                                    Text(
+                                                      'New Account',
+                                                      style: TextStyle(
+                                                          fontSize: 10),
+                                                    )
                                                   ]),
                                                 ),
                                                 onPressed: () {

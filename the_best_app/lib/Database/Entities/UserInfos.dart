@@ -13,8 +13,8 @@ import 'UserCreds.dart';
 //           User Target (String)
 @Entity(tableName: "User Informations", foreignKeys: [
   ForeignKey(
-      childColumns: ['userid', 'username'],
-      parentColumns: ['id', 'username'],
+      childColumns: ['userid'],
+      parentColumns: ['id'],
       entity: UsersCredentials,
       onDelete: ForeignKeyAction.cascade)
 ])
@@ -23,13 +23,13 @@ class UserInfos {
   final int? id;
   @ColumnInfo(name: 'userid') //From Credentials Table
   final int userId;
-  @ColumnInfo(name: 'username') //From Credentials Table
-  final String username;
+  //@ColumnInfo(name: 'username') //From Credentials Table
+  //final String username;
   final String name;
   final String surname;
   final String gender;
   final DateTime dateofbirth;
   final String usertarget;
-  UserInfos(this.id, this.userId, this.username, this.name, this.surname,
+  UserInfos(this.id, this.userId /*,this.username*/, this.name, this.surname,
       this.gender, this.dateofbirth, this.usertarget);
 }

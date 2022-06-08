@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:select_form_field/select_form_field.dart';
+import 'package:the_best_app/Database/Entities/UserInfos.dart';
 // SCREENS
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
@@ -42,7 +43,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
     _surname = TextEditingController();
     _username = TextEditingController();
     _password = TextEditingController();
-    _selectedDate = DateTime.now();
+    _selectedDate = DateTime(
+        (DateTime.now()).year, (DateTime.now()).month, (DateTime.now()).day);
     _selectedGender = 'None';
     _selectedTarget = 'None';
     super.initState();
@@ -63,7 +65,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
       _surname.clear();
       _username.clear();
       _password.clear();
-      _selectedDate = DateTime.now();
+      _selectedDate = DateTime(
+          (DateTime.now()).year, (DateTime.now()).month, (DateTime.now()).day);
       _selectedGender = 'None';
       _selectedTarget = 'None';
     });
@@ -120,7 +123,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       FormDateTile(
                         labelText: "Date of Birth",
                         date: _selectedDate,
-                        dateFormat: Formats.fullDateFormatNoSeconds,
+                        dateFormat: Formats.onlyDayDateFormat,
                         onPressed: () {
                           _selectDate(context);
                         },
@@ -154,24 +157,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
   //Utility method that implements a Date+Time picker.
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
-            context: context,
-            initialDate: _selectedDate,
-            firstDate: DateTime(1900),
-            lastDate: DateTime(2101))
-        .then((value) async {
-      if (value != null) {
-        TimeOfDay? pickedTime = await showTimePicker(
-          context: context,
-          initialTime:
-              TimeOfDay(hour: _selectedDate.hour, minute: _selectedDate.minute),
-        );
-        return pickedTime != null
-            ? value.add(
-                Duration(hours: pickedTime.hour, minutes: pickedTime.minute))
-            : null;
-      }
-      return null;
-    });
+        context: context,
+        initialDate: _selectedDate,
+        firstDate: DateTime(1900),
+        lastDate: DateTime(2101));
+
     if (picked != null && picked != _selectedDate)
       //Here, I'm using setState to update the _selectedDate field and rebuild the UI.
       setState(() {
@@ -180,8 +170,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
   } //_selectDate
 
   Widget Sign_In_Button(BuildContext context, String route) {
-    print(_selectedGender);
-    print(_selectedTarget);
     return Padding(
         padding: EdgeInsets.only(right: 5.0, bottom: 15, left: 5.0, top: 10),
         child: ElevatedButton(
@@ -197,7 +185,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 })),
             onPressed: (() async {
               if (formKey.currentState!.validate()) {
-                //user_info_storing(_username.text, _password.text);
+                user_cred_storing(_username.text, _password.text);
+                user_info_storing(_username.text, _name.text, _surname.text,
+                    _selectedGender!, _selectedDate, _selectedTarget!);
                 //setInputData();
                 await Navigator.pushReplacementNamed(context, LoginPage.route);
               }
@@ -230,10 +220,26 @@ class _RegistrationPageState extends State<RegistrationPage> {
     });
   }
 
-  void user_info_storing(String username, String password) async {
-    final usersCredentials = UsersCredentials(1, username, password);
-    await Provider.of<UsersDatabaseRepo>(context, listen: false)
-        .addUser(usersCredentials);
+  void user_cred_storing(String username, String password) async {
+    final usersCredentials = UsersCredentials(null, username, password);
+    if (await Provider.of<UsersDatabaseRepo>(context, listen: false)
+            .findUser(username) ==
+        null) {
+      await Provider.of<UsersDatabaseRepo>(context, listen: false)
+          .addUser(usersCredentials);
+    }
+  }
+
+  void user_info_storing(String username, String name, String surname,
+      String gender, DateTime dateofbirth, String target) async {
+    final user = await Provider.of<UsersDatabaseRepo>(context, listen: false)
+        .findUser(username);
+    if (user != null) {
+      final user_infos =
+          UserInfos(null, user.id!, name, surname, gender, dateofbirth, target);
+      await Provider.of<UsersDatabaseRepo>(context, listen: false)
+          .addUserInfos(user_infos);
+    }
   }
 
   Widget Back_Page(List<double> edgeInsets, BuildContext context) {

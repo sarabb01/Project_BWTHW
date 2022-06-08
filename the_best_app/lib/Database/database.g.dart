@@ -84,9 +84,9 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `UsersCredentials` (`id` INTEGER, `username` TEXT NOT NULL, `password` TEXT NOT NULL, PRIMARY KEY (`id`, `username`))');
+            'CREATE TABLE IF NOT EXISTS `UsersCredentials` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `username` TEXT NOT NULL, `password` TEXT NOT NULL)');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `User Informations` (`id` INTEGER, `userid` INTEGER NOT NULL, `username` TEXT NOT NULL, `name` TEXT NOT NULL, `surname` TEXT NOT NULL, `gender` TEXT NOT NULL, `dateofbirth` INTEGER NOT NULL, `usertarget` TEXT NOT NULL, FOREIGN KEY (`userid`, `username`) REFERENCES `UsersCredentials` (`id`, `username`) ON UPDATE NO ACTION ON DELETE CASCADE, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `User Informations` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `userid` INTEGER NOT NULL, `name` TEXT NOT NULL, `surname` TEXT NOT NULL, `gender` TEXT NOT NULL, `dateofbirth` INTEGER NOT NULL, `usertarget` TEXT NOT NULL, FOREIGN KEY (`userid`) REFERENCES `UsersCredentials` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -120,7 +120,7 @@ class _$UserCrededentialsDao extends UserCrededentialsDao {
         _usersCredentialsUpdateAdapter = UpdateAdapter(
             database,
             'UsersCredentials',
-            ['id', 'username'],
+            ['id'],
             (UsersCredentials item) => <String, Object?>{
                   'id': item.id,
                   'username': item.username,
@@ -129,7 +129,7 @@ class _$UserCrededentialsDao extends UserCrededentialsDao {
         _usersCredentialsDeletionAdapter = DeletionAdapter(
             database,
             'UsersCredentials',
-            ['id', 'username'],
+            ['id'],
             (UsersCredentials item) => <String, Object?>{
                   'id': item.id,
                   'username': item.username,
@@ -200,7 +200,6 @@ class _$UserInfosDao extends UserInfosDao {
             (UserInfos item) => <String, Object?>{
                   'id': item.id,
                   'userid': item.userId,
-                  'username': item.username,
                   'name': item.name,
                   'surname': item.surname,
                   'gender': item.gender,
@@ -214,7 +213,6 @@ class _$UserInfosDao extends UserInfosDao {
             (UserInfos item) => <String, Object?>{
                   'id': item.id,
                   'userid': item.userId,
-                  'username': item.username,
                   'name': item.name,
                   'surname': item.surname,
                   'gender': item.gender,
@@ -228,7 +226,6 @@ class _$UserInfosDao extends UserInfosDao {
             (UserInfos item) => <String, Object?>{
                   'id': item.id,
                   'userid': item.userId,
-                  'username': item.username,
                   'name': item.name,
                   'surname': item.surname,
                   'gender': item.gender,
@@ -254,7 +251,6 @@ class _$UserInfosDao extends UserInfosDao {
         mapper: (Map<String, Object?> row) => UserInfos(
             row['id'] as int?,
             row['userid'] as int,
-            row['username'] as String,
             row['name'] as String,
             row['surname'] as String,
             row['gender'] as String,
@@ -268,7 +264,6 @@ class _$UserInfosDao extends UserInfosDao {
         mapper: (Map<String, Object?> row) => UserInfos(
             row['id'] as int?,
             row['userid'] as int,
-            row['username'] as String,
             row['name'] as String,
             row['surname'] as String,
             row['gender'] as String,
