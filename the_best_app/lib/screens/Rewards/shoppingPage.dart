@@ -8,7 +8,7 @@ class ShoppingPage extends StatelessWidget {
   static const route = '/shop';
   static const routename = 'Shopping';
   final shopList shoplist = shopList();
-  final earnedPoints = 0;
+  final earnedPoints = 500;
 
   String city;
   ShoppingPage({required this.city});

@@ -3,6 +3,7 @@ import 'package:fitbitter/fitbitter.dart';
 
 //https://www.verywellfit.com/target-heart-rate-calculator-3878160
 //https://blog.fitbit.com/heart-rate-zones/
+
 int elaborateSleepData(List<FitbitSleepData> result) {
   DateTime? endTime = result[result.length - 1].entryDateTime;
   DateTime? startTime = result[0].entryDateTime;
