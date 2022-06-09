@@ -2,7 +2,7 @@
 import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
 import 'package:the_best_app/screens/PointsScreens/fitbitAuthPage.dart';
-import 'package:the_best_app/screens/RewardScreenscreens/selectPrefPage.dart';
+import 'package:the_best_app/screens/RewardScreens/selectPrefPage.dart';
 import 'package:the_best_app/screens/infopage.dart';
 import 'package:the_best_app/screens/profilepage.dart';
 // FLUTTER PACKAGES
