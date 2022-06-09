@@ -21,6 +21,7 @@ import 'package:the_best_app/screens/RewardScreens/queryPage.dart';
 import 'package:the_best_app/screens/RewardScreens/shoppingPage.dart';
 import 'package:the_best_app/screens/RewardScreens/experiencePage.dart';
 import 'package:the_best_app/screens/RewardScreens/QRcodePage.dart';
+import 'package:the_best_app/screens/infopage.dart';
 
 Future<void> main() async {
   //This is a special method that use WidgetFlutterBinding to interact with the Flutter engine.
@@ -73,6 +74,10 @@ class MyApp extends StatelessWidget {
           } else if (settings.name == ForgotPasswordPage.route) {
             return MaterialPageRoute(builder: (context) {
               return ForgotPasswordPage();
+            });
+          } else if (settings.name == Infopage.route) {
+            return MaterialPageRoute(builder: (context) {
+              return Infopage();
             });
           } else if (settings.name == AuthPage.route) {
             return MaterialPageRoute(builder: (context) {
