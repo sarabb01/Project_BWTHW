@@ -63,7 +63,7 @@ class PointsPage extends StatelessWidget {
                     if (snapshot.hasData) {
                       final fitbit = snapshot.data as List<myFitbitData>;
                       final today = fitbit[fitbit.length - 1];
-                      //final todayPoints = elaboratePoints(today);
+                      final todayPoints = elaboratePoints(today);
                       // QUI CI VUOLE ELABORAZIONE PERCENTUALI
                       final List<ChartData> chartData = [
                         ChartData('Steps', today.steps * 100 / 10000),
@@ -71,6 +71,7 @@ class PointsPage extends StatelessWidget {
                         ChartData('Cardio', today.cardio * 100 / 15),
                         ChartData('Sleep', today.sleepHours * 100 / 7)
                       ];
+
                       return fitbit.length == 0
                           ? Text('No activity recorded today')
                           // : Container(child: RadialChart(chartData));
@@ -78,8 +79,7 @@ class PointsPage extends StatelessWidget {
                               child: ListTile(
                               title: Text(
                                   '${dateFormatter(DateTime.fromMillisecondsSinceEpoch((fitbit[fitbit.length - 1].keyDate) * Duration.millisecondsPerDay))}'),
-                              subtitle: Text(
-                                  '${fitbit[fitbit.length - 1].sleepHours}'),
+                              subtitle: Text('$todayPoints'),
                             ));
                     } else {
                       return CircularProgressIndicator();

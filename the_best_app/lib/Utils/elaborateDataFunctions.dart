@@ -52,9 +52,9 @@ int elaborateHRData(List<FitbitHeartData> result) {
 List<double> elaboratePoints(myFitbitData data) {
   List<double> result = [];
   List<String> result2 = ['Steps', 'Calories', 'Minutes cardio', 'Sleep'];
-  result.add(data.steps * 100 / 10000);
-  result.add(data.calories * 100 / 600);
-  result.add(data.cardio * 100 / 15);
-  result.add(data.sleepHours * 100 / 7);
+  result.add(double.parse((data.steps / 10000).toStringAsFixed(2)));
+  result.add(double.parse((data.calories / 600).toStringAsFixed(2)));
+  result.add(double.parse((data.cardio / 15).toStringAsFixed(2)));
+  result.add(double.parse((data.sleepHours / 7).toStringAsFixed(2)));
   return result;
 }
