@@ -88,13 +88,45 @@ class QRcodePage extends StatelessWidget {
                       color: Colors.grey,
                     )),
                 SizedBox(height: 20),
-                // ElevatedButton(
-                //     onPressed: () {
-                //       //This function will delete all points;
-                //     },
-                //     child:
-                Text('Voucher expired'),
-                checkboxWidget(),
+                ElevatedButton(
+                  onPressed: () {
+                    //This function will subtract points;
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text('Confirmation required'),
+                            content: Text(
+                                'After confirmation, the required points will be subtracted from your total score.\nYou will find your available vouchers in the Home page'),
+                            //color: Colors.grey[100],
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.0)),
+                            //margin: EdgeInsets.fromLTRB(50, 450, 50, 200),
+                            actions: [
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    IconButton(
+                                        onPressed: () {},
+                                        icon: Icon(
+                                          Icons.check_circle,
+                                          color: Theme.of(context).primaryColor,
+                                        )),
+                                    IconButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        icon: Icon(Icons.cancel_rounded,
+                                            color: Colors.red)),
+                                  ])
+                            ],
+                            actionsAlignment: MainAxisAlignment.center,
+                          );
+                        });
+                  },
+                  child: Text('Use voucher'),
+                )
+                //checkboxWidget(),
               ]),
         ));
   }

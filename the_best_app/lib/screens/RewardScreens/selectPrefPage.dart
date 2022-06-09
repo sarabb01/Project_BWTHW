@@ -6,7 +6,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 class PreferencePage extends StatelessWidget {
   PreferencePage({Key? key}) : super(key: key);
 
-  static const route = '/preference';
+  static const route = 'helloworld/login/homepage/preference';
   static const routename = 'Preference Page';
 
   @override
@@ -14,9 +14,9 @@ class PreferencePage extends StatelessWidget {
     Size screenSize = MediaQuery.of(context).size;
     //print(screenSize.width); // Width = 392; Height = 781
     return Scaffold(
-      appBar: AppBar(title: Text('RewardScreens')),
+      appBar: AppBar(title: Text('Rewards')),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 100, 10, 0),
+        padding: const EdgeInsets.fromLTRB(20, 100, 20, 0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -38,13 +38,13 @@ class PreferencePage extends StatelessWidget {
             ),
             SizedBox(height: 50),
             Expanded(
-                child: GridView.count(crossAxisCount: 2, crossAxisSpacing: 8,
+                child: GridView.count(crossAxisCount: 2, crossAxisSpacing: 15,
                     //mainAxisSpacing: 4,
                     children: [
-                  cardWidget(context, AssetImage('assets/Images/shopping.png'),
-                      'Shopping', 'shops'),
-                  cardWidget(context, AssetImage('assets/Images/sports.png'),
-                      'Experience', 'experiences')
+                  cardWidget(context, 'assets/Images/shopping.png', 'Shopping',
+                      'shops'),
+                  cardWidget(context, 'assets/Images/sports.png', 'Experience',
+                      'experiences')
                 ]))
           ],
         ),
