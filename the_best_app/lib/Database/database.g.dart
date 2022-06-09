@@ -98,7 +98,7 @@ class _$AppDatabase extends AppDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `User Informations` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `userid` INTEGER NOT NULL, `name` TEXT NOT NULL, `surname` TEXT NOT NULL, `gender` TEXT NOT NULL, `dateofbirth` INTEGER NOT NULL, `usertarget` TEXT NOT NULL, FOREIGN KEY (`userid`) REFERENCES `UsersCredentials` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE)');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `myFitbitData` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `date` INTEGER NOT NULL, `sleepHours` INTEGER NOT NULL, `calories` INTEGER NOT NULL, `steps` INTEGER NOT NULL, `cardio` INTEGER NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `myFitbitData` (`keyDate` INTEGER NOT NULL, `sleepHours` INTEGER NOT NULL, `calories` INTEGER NOT NULL, `steps` INTEGER NOT NULL, `cardio` INTEGER NOT NULL, PRIMARY KEY (`keyDate`))');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `SleepData` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `date` INTEGER NOT NULL, `sleepHours` INTEGER NOT NULL)');
         await database.execute(
@@ -243,8 +243,7 @@ class _$FitbitDao extends FitbitDao {
             database,
             'myFitbitData',
             (myFitbitData item) => <String, Object?>{
-                  'id': item.id,
-                  'date': _dateTimeConverter.encode(item.date),
+                  'keyDate': item.keyDate,
                   'sleepHours': item.sleepHours,
                   'calories': item.calories,
                   'steps': item.steps,
@@ -253,10 +252,9 @@ class _$FitbitDao extends FitbitDao {
         _myFitbitDataUpdateAdapter = UpdateAdapter(
             database,
             'myFitbitData',
-            ['id'],
+            ['keyDate'],
             (myFitbitData item) => <String, Object?>{
-                  'id': item.id,
-                  'date': _dateTimeConverter.encode(item.date),
+                  'keyDate': item.keyDate,
                   'sleepHours': item.sleepHours,
                   'calories': item.calories,
                   'steps': item.steps,
@@ -265,10 +263,9 @@ class _$FitbitDao extends FitbitDao {
         _myFitbitDataDeletionAdapter = DeletionAdapter(
             database,
             'myFitbitData',
-            ['id'],
+            ['keyDate'],
             (myFitbitData item) => <String, Object?>{
-                  'id': item.id,
-                  'date': _dateTimeConverter.encode(item.date),
+                  'keyDate': item.keyDate,
                   'sleepHours': item.sleepHours,
                   'calories': item.calories,
                   'steps': item.steps,
@@ -291,7 +288,7 @@ class _$FitbitDao extends FitbitDao {
   Future<List<myFitbitData>> findAllFitbitData() async {
     return _queryAdapter.queryList('SELECT * FROM myFitbitData',
         mapper: (Map<String, Object?> row) => myFitbitData(
-            row['id'] as int?, _dateTimeConverter.decode(row['date'] as int),
+            row['keyDate'] as int,
             sleepHours: row['sleepHours'] as int,
             calories: row['calories'] as int,
             steps: row['steps'] as int,
@@ -301,7 +298,7 @@ class _$FitbitDao extends FitbitDao {
   @override
   Future<void> insertFitbitData(myFitbitData newdata) async {
     await _myFitbitDataInsertionAdapter.insert(
-        newdata, OnConflictStrategy.abort);
+        newdata, OnConflictStrategy.ignore);
   }
 
   @override

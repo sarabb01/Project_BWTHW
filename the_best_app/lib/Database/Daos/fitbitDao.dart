@@ -6,7 +6,9 @@ abstract class FitbitDao {
   @Query('SELECT * FROM myFitbitData')
   Future<List<myFitbitData>> findAllFitbitData();
 
-  @insert
+  @Insert(
+      onConflict: OnConflictStrategy
+          .ignore) // In ordert to avoid duplicates within the users
   Future<void> insertFitbitData(myFitbitData newdata);
 
   @delete

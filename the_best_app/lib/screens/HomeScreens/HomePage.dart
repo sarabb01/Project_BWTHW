@@ -64,11 +64,20 @@ class _HomepageState extends State<HomePage>
               : Text(widget.username.toUpperCase(),
                   style: TextStyle(fontWeight: FontWeight.bold)),
           actions: [
-            FloatingActionButton(
-                child: Icon(Icons.info),
-                onPressed: () {
-                  Navigator.pop(context, AuthPage.route);
-                })
+            Row(
+              children: [
+                IconButton(
+                    icon: Icon(Icons.info),
+                    onPressed: () {
+                      Navigator.pushNamed(context, Infopage.route);
+                    }),
+                IconButton(
+                    icon: Icon(Icons.show_chart_outlined),
+                    onPressed: () {
+                      Navigator.pushNamed(context, AuthPage.route);
+                    })
+              ],
+            )
           ],
         ),
         drawer: Drawer(

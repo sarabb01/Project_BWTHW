@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 //Import DB things
 import 'package:the_best_app/Database/Entities/FitbitTables.dart';
+import 'package:the_best_app/Database/typeConverters/dateTimeConverter.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
 //Import Screens
 import 'package:the_best_app/screens/PointsScreens/pointsPage.dart';
@@ -27,7 +28,7 @@ class FetchPage extends StatefulWidget {
 
 class _FetchPageState extends State<FetchPage> {
   int daysToSubtract =
-      DateTime.now().difference(DateTime.utc(2022, 6, 1)).inDays;
+      DateTime.now().difference(DateTime.utc(2022, 6, 6, 1, 1, 1, 1, 1)).inDays;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +38,7 @@ class _FetchPageState extends State<FetchPage> {
     late List<HeartData> resultHR;
 
     print('${FetchPage.routename} built');
+    print(daysToSubtract);
     return Scaffold(
       appBar: AppBar(
         title: Text(FetchPage.routename),
@@ -107,16 +109,19 @@ class _FetchPageState extends State<FetchPage> {
                     //int reqDay = 1;
                     DateTime queryDate =
                         DateTime.now().subtract(Duration(days: reqDay));
+                    int tableKey = queryDate.millisecondsSinceEpoch ~/ 86400000;
+                    print(Duration.millisecondsPerDay);
                     print('Query date: $queryDate');
-                    final result =
-                        await _fetchSleepData(reqDay) as List<FitbitSleepData>;
-                    final resultActivity = await _fetchActivityData(reqDay)
+                    print('INT: $tableKey');
+                    final result = await _fetchSleepData(queryDate)
+                        as List<FitbitSleepData>;
+                    final resultActivity = await _fetchActivityData(queryDate)
                         as List<FitbitActivityData>;
                     final resultTSActivity =
-                        await _fetchActivityTSData(reqDay, 'steps')
+                        await _fetchActivityTSData(queryDate, 'steps')
                             as List<FitbitActivityTimeseriesData>;
-                    final resultHR =
-                        await _fetchHeartData(reqDay) as List<FitbitHeartData>;
+                    final resultHR = await _fetchHeartData(queryDate)
+                        as List<FitbitHeartData>;
 
                     int time = 0;
                     int cals = 0;
@@ -143,7 +148,7 @@ class _FetchPageState extends State<FetchPage> {
                     }
                     //print('Current min $mins');
 
-                    myFitbitData newdata = myFitbitData(null, queryDate,
+                    myFitbitData newdata = myFitbitData(tableKey,
                         sleepHours: time,
                         calories: cals,
                         steps: steps,
@@ -153,6 +158,7 @@ class _FetchPageState extends State<FetchPage> {
                   }
                 },
                 child: Text('Fetch Data')),
+
             //   SleepData newdata = SleepData(null,
             //       result[0].entryDateTime!, elaborateSleepData(result));
             //   await Provider.of<UsersDatabaseRepo>(context,
@@ -307,7 +313,7 @@ Future _fetchAccountData() async {
 
 ///////////////////////////
 
-Future _fetchActivityData(int reqDay) async {
+Future _fetchActivityData(DateTime reqDay) async {
   // Activity Data
   FitbitActivityDataManager fitbitActivityDataManager =
       FitbitActivityDataManager(
@@ -316,7 +322,8 @@ Future _fetchActivityData(int reqDay) async {
   );
 
   FitbitActivityAPIURL fitbitActivityApiUrl = FitbitActivityAPIURL.day(
-    date: DateTime.now().subtract(Duration(days: reqDay)),
+    // date: DateTime.now().subtract(Duration(days: reqDay)),
+    date: reqDay,
     userID: '7ML2XV',
   );
 
@@ -325,7 +332,7 @@ Future _fetchActivityData(int reqDay) async {
 
 /////////////////
 
-Future _fetchActivityTSData(int reqDay, String Type) async {
+Future _fetchActivityTSData(DateTime reqDay, String Type) async {
   // Activity Timeseries data
   FitbitActivityTimeseriesDataManager fitbitActivityTimeseriesDataManager =
       FitbitActivityTimeseriesDataManager(
@@ -337,7 +344,8 @@ Future _fetchActivityTSData(int reqDay, String Type) async {
   FitbitActivityTimeseriesAPIURL fitbitActivityApiUrl =
       FitbitActivityTimeseriesAPIURL.dayWithResource(
     // if you use week, you use less calls maybe!
-    date: DateTime.now().subtract(Duration(days: reqDay)),
+    date: reqDay,
+    // date: DateTime.now().subtract(Duration(days: reqDay)),
     userID: '7ML2XV',
     resource: fitbitActivityTimeseriesDataManager.type,
   );
@@ -347,7 +355,7 @@ Future _fetchActivityTSData(int reqDay, String Type) async {
 
 ////////////////////
 
-Future _fetchHeartData(int reqDay) async {
+Future _fetchHeartData(DateTime reqDay) async {
   // Heart Data
   FitbitHeartDataManager fitbitHeartDataManager = FitbitHeartDataManager(
     clientID: Strings.fitbitClientID,
@@ -357,7 +365,8 @@ Future _fetchHeartData(int reqDay) async {
   // FitbitHeartAPIURL fitbitHeartApiUrl = FitbitHeartAPIURL.weekWithUserID(
   //   baseDate: DateTime.now().subtract(Duration(days: reqDay)),
   FitbitHeartAPIURL fitbitHeartApiUrl = FitbitHeartAPIURL.dayWithUserID(
-    date: DateTime.now().subtract(Duration(days: reqDay)),
+    date: reqDay,
+    // date: DateTime.now().subtract(Duration(days: reqDay)),
     //date: DateTime.now().subtract(Duration(days: 5)),
     userID: '7ML2XV',
   );
@@ -367,7 +376,7 @@ Future _fetchHeartData(int reqDay) async {
 
 ////////////////////
 
-Future _fetchSleepData(int reqDay) async {
+Future _fetchSleepData(DateTime reqDay) async {
   // Heart Data
   FitbitSleepDataManager fitbitSleepDataManager = FitbitSleepDataManager(
     clientID: Strings.fitbitClientID,
@@ -375,7 +384,8 @@ Future _fetchSleepData(int reqDay) async {
   );
 
   FitbitSleepAPIURL fitbitSleepApiUrl = FitbitSleepAPIURL.withUserIDAndDay(
-    date: DateTime.now().subtract(Duration(days: reqDay)),
+    date: reqDay,
+    // date: DateTime.now().subtract(Duration(days: reqDay)),
     //afterDate: DateTime(2022, 15, 10),
     userID: '7ML2XV',
     //limit: 10

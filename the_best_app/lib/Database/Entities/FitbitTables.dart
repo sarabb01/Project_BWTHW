@@ -5,15 +5,19 @@ import 'package:floor/floor.dart';
 
 @entity
 class myFitbitData {
-  @PrimaryKey(autoGenerate: true)
-  final int? id;
-  final DateTime date;
+  //   @PrimaryKey(autoGenerate: true)
+  // final int? id;
+  @PrimaryKey(autoGenerate: false)
+  final int keyDate;
+
+  //final DateTime date;
   final int sleepHours;
   final int calories;
   final int steps;
   final int cardio;
 
-  myFitbitData(this.id, this.date,
+  myFitbitData(this.keyDate,
+      /* this.date,*/
       {required this.sleepHours,
       required this.calories,
       required this.steps,

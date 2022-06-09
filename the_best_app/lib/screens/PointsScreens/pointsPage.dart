@@ -1,11 +1,14 @@
 import 'package:floor/floor.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+import 'package:the_best_app/Utils/dateFormatter.dart';
+import 'package:the_best_app/Utils/elaborateDataFunctions.dart';
+import 'package:the_best_app/Utils/formats.dart';
 import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:the_best_app/Utils/dateFormatter.dart';
-import 'package:the_best_app/Utils/formats.dart';
 
 class PointsPage extends StatelessWidget {
   static const route = '/points';
@@ -47,78 +50,90 @@ class PointsPage extends StatelessWidget {
           },
         ),
         body: Center(
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-              Text('TODAY\'S POINTS'),
-              Consumer<UsersDatabaseRepo>(builder: (context, dbr, child) {
-                return FutureBuilder(
-                    initialData: null,
-                    future: dbr.findAllFitbitData(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        final fitbit = snapshot.data as List<myFitbitData>;
-                        return fitbit.length == 0
-                            ? Text('The list is currently empty')
-                            : Card(
-                                child: ListTile(
-                                title: Text(
-                                    '${dateFormatter(fitbit[fitbit.length - 1].date)}'),
-                                subtitle: Text(
-                                    '${fitbit[fitbit.length - 1].sleepHours}'),
-                              ));
-                      } else {
-                        return CircularProgressIndicator();
-                      }
-                    });
-              }),
-              Text('TOTAL POINTS'),
-              Consumer<UsersDatabaseRepo>(builder: (context, dbr, child) {
-                return FutureBuilder(
-                    initialData: null,
-                    future: dbr.findAllFitbitData(),
-                    //future: dbr.findAllSleepData(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        final fitbit = snapshot.data as List<myFitbitData>;
-                        final List total = computeSum(fitbit);
-                        print(total);
-                        return fitbit.length == 0
-                            ? Text('The list is currently empty')
-                            : Expanded(
-                                child: ListView.builder(
-                                  //itemCount: fitbit.length,
-                                  itemCount: 1,
-                                  itemBuilder: (context, index) {
-                                    return Card(
-                                        elevation: 3,
-                                        child: ListTile(
-                                          isThreeLine: true,
-                                          leading: Icon(MdiIcons.note),
-                                          // title: Text(
-                                          //     '${dateFormatter(fitbit[index].date)}'),
-                                          title: Text(
-                                              'SUMMARY of ${total.length} DAYS'),
-                                          // subtitle: Text(
-                                          //     'Sleep: ${fitbit[index].sleepHours}, Calories: ${fitbit[index].calories}, Steps: ${fitbit[index].steps}, Minutes Cardio: ${fitbit[index].cardio}'),
-                                          subtitle: Text(
-                                              'Sleep: ${total[0]}, Calories:${total[1]}, Steps: ${total[2]}, Minutes Cardio: ${total[3]},'),
-                                          // onTap: () async {
-                                          //   await Provider.of<DatabaseRepository>(
-                                          //           context,
-                                          //           listen: false)
-                                          //       .deleteSleepData(data[index]);
-                                          // }
-                                        ));
-                                  },
-                                ),
-                              );
-                      } else {
-                        return CircularProgressIndicator();
-                      }
-                    });
-              }),
-            ])));
+            child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            Text('TODAY\'S POINTS'),
+            Consumer<UsersDatabaseRepo>(builder: (context, dbr, child) {
+              return FutureBuilder(
+                  initialData: null,
+                  future: dbr.findAllFitbitData(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final fitbit = snapshot.data as List<myFitbitData>;
+                      final today = fitbit[fitbit.length - 1];
+                      //final todayPoints = elaboratePoints(today);
+                      // QUI CI VUOLE ELABORAZIONE PERCENTUALI
+                      final List<ChartData> chartData = [
+                        ChartData('Steps', today.steps * 100 / 10000),
+                        ChartData('Calories', today.calories * 100 / 600),
+                        ChartData('Cardio', today.cardio * 100 / 15),
+                        ChartData('Sleep', today.sleepHours * 100 / 7)
+                      ];
+                      return fitbit.length == 0
+                          ? Text('No activity recorded today')
+                          : Container(child: RadialChart(chartData));
+                      // Card(
+                      //     child: ListTile(
+                      //     title: Text(
+                      //         '${dateFormatter(DateTime.fromMillisecondsSinceEpoch((fitbit[fitbit.length - 1].keyDate) * Duration.millisecondsPerDay))}'),
+                      //     subtitle: Text(
+                      //         '${fitbit[fitbit.length - 1].sleepHours}'),
+                      //   ));
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  });
+            }),
+            Text('TOTAL POINTS'),
+            Consumer<UsersDatabaseRepo>(builder: (context, dbr, child) {
+              return FutureBuilder(
+                  initialData: null,
+                  future: dbr.findAllFitbitData(),
+                  //future: dbr.findAllSleepData(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final fitbit = snapshot.data as List<myFitbitData>;
+                      final List total = computeSum(fitbit);
+                      print(total);
+                      return fitbit.length == 0
+                          ? Text('The list is currently empty')
+                          : Expanded(
+                              child: ListView.builder(
+                                //itemCount: fitbit.length,
+                                itemCount: 1,
+                                itemBuilder: (context, index) {
+                                  return Card(
+                                      elevation: 3,
+                                      child: ListTile(
+                                        isThreeLine: true,
+                                        leading: Icon(MdiIcons.note),
+                                        // title: Text(
+                                        //     '${dateFormatter(fitbit[index].date)}'),
+                                        title: Text(
+                                            'SUMMARY of ${fitbit.length} DAYS'),
+                                        // subtitle: Text(
+                                        //     'Sleep: ${fitbit[index].sleepHours}, Calories: ${fitbit[index].calories}, Steps: ${fitbit[index].steps}, Minutes Cardio: ${fitbit[index].cardio}'),
+                                        subtitle: Text(
+                                            'Sleep: ${total[0]}, Calories:${total[1]}, Steps: ${total[2]}, Minutes Cardio: ${total[3]},'),
+                                        // onTap: () async {
+                                        //   await Provider.of<DatabaseRepository>(
+                                        //           context,
+                                        //           listen: false)
+                                        //       .deleteSleepData(data[index]);
+                                        // }
+                                      ));
+                                },
+                              ),
+                            );
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  });
+            }),
+          ]),
+        )));
   } //build
 
 } //Page
@@ -135,4 +150,26 @@ List<int> computeSum(List<myFitbitData> input) {
     tot4 += input[k].cardio;
   }
   return [tot1, tot2, tot3, tot4];
+}
+
+class RadialChart extends StatelessWidget {
+  final List<ChartData> chartData;
+  RadialChart(this.chartData);
+
+  @override
+  Widget build(BuildContext context) {
+    return SfCircularChart(series: <CircularSeries>[
+      // Renders radial bar chart
+      RadialBarSeries<ChartData, String>(
+          dataSource: chartData,
+          xValueMapper: (ChartData data, _) => data.x,
+          yValueMapper: (ChartData data, _) => data.y)
+    ]);
+  }
+}
+
+class ChartData {
+  ChartData(this.x, this.y);
+  final String x;
+  final double y;
 }

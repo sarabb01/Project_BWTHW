@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:fitbitter/fitbitter.dart';
+import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 
 //https://www.verywellfit.com/target-heart-rate-calculator-3878160
 //https://blog.fitbit.com/heart-rate-zones/
@@ -46,4 +47,14 @@ int elaborateHRData(List<FitbitHeartData> result) {
   //print('Total minutes in cardio range: $minCardio');
   return minCardio;
   //downloads['${result[6].dateOfMonitoring}'] = minCardio;
+}
+
+List<double> elaboratePoints(myFitbitData data) {
+  List<double> result = [];
+  List<String> result2 = ['Steps', 'Calories', 'Minutes cardio', 'Sleep'];
+  result.add(data.steps * 100 / 10000);
+  result.add(data.calories * 100 / 600);
+  result.add(data.cardio * 100 / 15);
+  result.add(data.sleepHours * 100 / 7);
+  return result;
 }
