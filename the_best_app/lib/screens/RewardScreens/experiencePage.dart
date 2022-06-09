@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:the_best_app/models/shopList.dart';
-import 'package:the_best_app/screens/Rewards/QRcodePage.dart';
+import 'package:the_best_app/models/expList.dart';
+import 'package:the_best_app/screens/RewardScreens/QRcodePage.dart';
 
-class ShoppingPage extends StatelessWidget {
-  //ShoppingPage({Key? key}) : super(key: key);
-  static const route = '/shop';
-  static const routename = 'Shopping';
-  final shopList shoplist = shopList();
-  final earnedPoints = 500;
+class ExperiencePage extends StatelessWidget {
+  // ExperiencePage({Key? key}) : super(key: key);
+
+  static const route = '/experience';
+  static const routename = 'Experiences';
 
   String city;
-  ShoppingPage({required this.city});
+  ExperiencePage({required this.city});
+
+  final expList explist = expList();
+  final earnedPoints = 0;
 
   @override
   Widget build(BuildContext context) {
-    print('${ShoppingPage.routename} built');
+    //final word = ModalRoute.of(context)!.settings.arguments! as String;
+    print('${ExperiencePage.routename} built');
     return Scaffold(
       appBar: AppBar(
-        title: Text(ShoppingPage.routename),
+        title: Text(ExperiencePage.routename),
       ),
       body: Container(
           padding: EdgeInsets.all(20),
@@ -26,12 +29,12 @@ class ShoppingPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Here you can see the list of shops near "$city" where you can spend your points',
+                'Here you can see the list of experiences near "$city" that you can buy with your points',
                 style: TextStyle(fontSize: 15),
               ),
               SizedBox(height: 10),
               Text(
-                'Only the eligible shops are active',
+                'Only eligible locations are active',
                 style: TextStyle(fontSize: 13, color: Colors.grey),
               ),
               SizedBox(height: 20),
@@ -53,15 +56,16 @@ class ShoppingPage extends StatelessWidget {
               SizedBox(height: 20),
               Expanded(
                 child: ListView.builder(
-                    itemCount: shoplist.Catalog.length,
+                    itemCount: explist.Catalog.length,
                     itemBuilder: (_, index) {
-                      String key = shoplist.Catalog.keys.elementAt(index);
-                      return earnedPoints >= shoplist.Catalog[key]![0]
+                      String key = explist.Catalog.keys.elementAt(index);
+                      return earnedPoints >= explist.Catalog[key]![0]
                           ? Card(
                               child: ListTile(
+                                  isThreeLine: true,
                                   title: Text(key),
                                   subtitle: Text(
-                                      'Required points : ${shoplist.Catalog[key]![0]}'),
+                                      'Location: ${explist.Catalog[key]![1]}\nRequired points : ${explist.Catalog[key]![0]}'),
                                   trailing: IconButton(
                                     icon: Icon(MdiIcons.arrowRight),
                                     onPressed: () {
@@ -69,7 +73,7 @@ class ShoppingPage extends StatelessWidget {
                                           context, QRcodePage.route,
                                           arguments: {
                                             'n': index,
-                                            'type': shoplist.Catalog
+                                            'type': explist.Catalog
                                           });
                                     },
                                   )),
@@ -77,10 +81,11 @@ class ShoppingPage extends StatelessWidget {
                           : Card(
                               color: Colors.grey[350],
                               child: ListTile(
+                                  isThreeLine: true,
                                   title: Text(key,
                                       style: TextStyle(color: Colors.grey)),
                                   subtitle: Text(
-                                      'Required points : ${shoplist.Catalog[key]![0]}')),
+                                      'Location: ${explist.Catalog[key]![1]}\nRequired points : ${explist.Catalog[key]![0]}')),
                             );
                     }),
               )
@@ -90,3 +95,4 @@ class ShoppingPage extends StatelessWidget {
   } //build
 
 } //Page
+

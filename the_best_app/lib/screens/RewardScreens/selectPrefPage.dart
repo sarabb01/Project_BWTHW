@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:the_best_app/Utils/cardWidget.dart';
-import 'package:the_best_app/screens/Rewards/queryPage.dart';
+import 'package:the_best_app/screens/RewardScreens/queryPage.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class PreferencePage extends StatelessWidget {
@@ -14,7 +14,7 @@ class PreferencePage extends StatelessWidget {
     Size screenSize = MediaQuery.of(context).size;
     //print(screenSize.width); // Width = 392; Height = 781
     return Scaffold(
-      appBar: AppBar(title: Text('Rewards')),
+      appBar: AppBar(title: Text('RewardScreens')),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(10, 100, 10, 0),
         child: Column(

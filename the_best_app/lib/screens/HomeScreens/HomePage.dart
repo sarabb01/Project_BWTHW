@@ -2,7 +2,9 @@
 import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
 import 'package:the_best_app/screens/PointsScreens/fitbitAuthPage.dart';
-import 'package:the_best_app/screens/Rewards/selectPrefPage.dart';
+import 'package:the_best_app/screens/RewardScreenscreens/selectPrefPage.dart';
+import 'package:the_best_app/screens/infopage.dart';
+import 'package:the_best_app/screens/profilepage.dart';
 // FLUTTER PACKAGES
 import 'package:flutter/cupertino.dart';
 import 'package:colours/colours.dart';
@@ -13,8 +15,6 @@ import 'package:provider/provider.dart';
 // DATABASE
 import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/Database/Entities/UserCreds.dart';
-import 'package:the_best_app/screens/infopage.dart';
-import 'package:the_best_app/screens/profilepage.dart';
 
 class HomePage extends StatefulWidget {
   static const route = '/hellowordpage/loginpage/homepage';
