@@ -20,8 +20,9 @@ class Infopage extends StatelessWidget {
           Container(
             padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
             child: const Text(
-              'The fitter you are, the moThis application was thought to encourage users to do more sports activity by gienhance sports made by users, to do this we decided to allow to the users to fix some target and once these targets get reached the users can obtain an award. This award can be a coupon ready to be used for a discount in a shop, chosen from a list, or ready to be used for an experience related to your preference. Obviously if you decide to gain your coupon you will choose the shop from the ones near your city.',
-              style: TextStyle(fontSize: 20),
+              'This application is thought to encourage you to maintain a healthy lifestyle and keep yourself fit by doing some sport activity, but also by having the necessary rest.\nThe better you perform, in terms of number of steps, burnt calories, minutes in active heart ratio range and duration of sleep, the higher score you will be given.\nYour points will sum up day-by-day and you will be given the possibility to get a reward proportional to you effort!\nThe reward can be a voucher to get a discount by some affiliated sport shops or affiliated organizations that offer sport experiences.\nYou can also decide to just set your own target and to put effort into reaching it as soon as possible',
+              style: TextStyle(fontSize: 10),
+              textAlign: TextAlign.center,
             ),
           ),
           SizedBox(
