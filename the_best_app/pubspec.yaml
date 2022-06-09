@@ -25,7 +25,7 @@ dependencies:
   colours: ^0.0.2
   #google_maps_flutter: ^2.1.5
   random_string: ^2.3.1 
-  syncfusion_flutter_charts: ^20.1.59
+  #syncfusion_flutter_charts: ^20.1.55 
 
   select_form_field: ^2.2.0
   #google_maps_flutter: ^2.1.5

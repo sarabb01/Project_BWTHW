@@ -2,8 +2,8 @@ import 'package:floor/floor.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+// import 'package:syncfusion_flutter_charts/charts.dart';
+// import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'package:the_best_app/Utils/dateFormatter.dart';
 import 'package:the_best_app/Utils/elaborateDataFunctions.dart';
 import 'package:the_best_app/Utils/formats.dart';
@@ -73,14 +73,14 @@ class PointsPage extends StatelessWidget {
                       ];
                       return fitbit.length == 0
                           ? Text('No activity recorded today')
-                          : Container(child: RadialChart(chartData));
-                      // Card(
-                      //     child: ListTile(
-                      //     title: Text(
-                      //         '${dateFormatter(DateTime.fromMillisecondsSinceEpoch((fitbit[fitbit.length - 1].keyDate) * Duration.millisecondsPerDay))}'),
-                      //     subtitle: Text(
-                      //         '${fitbit[fitbit.length - 1].sleepHours}'),
-                      //   ));
+                          // : Container(child: RadialChart(chartData));
+                          : Card(
+                              child: ListTile(
+                              title: Text(
+                                  '${dateFormatter(DateTime.fromMillisecondsSinceEpoch((fitbit[fitbit.length - 1].keyDate) * Duration.millisecondsPerDay))}'),
+                              subtitle: Text(
+                                  '${fitbit[fitbit.length - 1].sleepHours}'),
+                            ));
                     } else {
                       return CircularProgressIndicator();
                     }
@@ -152,21 +152,21 @@ List<int> computeSum(List<myFitbitData> input) {
   return [tot1, tot2, tot3, tot4];
 }
 
-class RadialChart extends StatelessWidget {
-  final List<ChartData> chartData;
-  RadialChart(this.chartData);
+// class RadialChart extends StatelessWidget {
+//   final List<ChartData> chartData;
+//   RadialChart(this.chartData);
 
-  @override
-  Widget build(BuildContext context) {
-    return SfCircularChart(series: <CircularSeries>[
-      // Renders radial bar chart
-      RadialBarSeries<ChartData, String>(
-          dataSource: chartData,
-          xValueMapper: (ChartData data, _) => data.x,
-          yValueMapper: (ChartData data, _) => data.y)
-    ]);
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return SfCircularChart(series: <CircularSeries>[
+//       // Renders radial bar chart
+//       RadialBarSeries<ChartData, String>(
+//           dataSource: chartData,
+//           xValueMapper: (ChartData data, _) => data.x,
+//           yValueMapper: (ChartData data, _) => data.y)
+//     ]);
+//   }
+// }
 
 class ChartData {
   ChartData(this.x, this.y);
