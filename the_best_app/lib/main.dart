@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         theme: ThemeData(
-            scaffoldBackgroundColor: Colours.green[100],
+            scaffoldBackgroundColor: Colours.green[50],
             primarySwatch: Colours.seaGreen),
         initialRoute: HelloWordPage.route,
         onGenerateRoute: (settings) {

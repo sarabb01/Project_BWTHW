@@ -56,5 +56,6 @@ List<double> elaboratePoints(myFitbitData data) {
   result.add(double.parse((data.calories / 600).toStringAsFixed(2)));
   result.add(double.parse((data.cardio / 15).toStringAsFixed(2)));
   result.add(double.parse((data.sleepHours / 7).toStringAsFixed(2)));
+  print(result);
   return result;
 }

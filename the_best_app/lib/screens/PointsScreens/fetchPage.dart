@@ -28,7 +28,7 @@ class FetchPage extends StatefulWidget {
 
 class _FetchPageState extends State<FetchPage> {
   int daysToSubtract =
-      DateTime.now().difference(DateTime.utc(2022, 6, 6, 1, 1, 1, 1, 1)).inDays;
+      DateTime.now().difference(DateTime.utc(2022, 6, 8, 1, 1, 1, 1, 1)).inDays;
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +104,7 @@ class _FetchPageState extends State<FetchPage> {
             ElevatedButton(
                 onPressed: () async {
                   print('N of calls $daysToSubtract');
-                  for (int reqDay = daysToSubtract; reqDay > 0; reqDay--) {
+                  for (int reqDay = daysToSubtract; reqDay >= 0; reqDay--) {
                     //for (int reqDay = 10; reqDay >= 8; reqDay--) {
                     //int reqDay = 1;
                     DateTime queryDate =

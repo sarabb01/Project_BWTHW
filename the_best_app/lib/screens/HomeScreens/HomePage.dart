@@ -1,4 +1,5 @@
 // APP SCREENS
+import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
 import 'package:the_best_app/screens/PointsScreens/fitbitAuthPage.dart';
@@ -128,7 +129,7 @@ class _HomepageState extends State<HomePage>
                 // side: BorderSide(color: Colours.azure)
               ),
               title: Text(
-                'My Voucher',
+                'My Vouchers',
                 style: TextStyle(fontWeight: FontWeight.bold),
                 textAlign: TextAlign.start,
               ),
@@ -147,13 +148,57 @@ class _HomepageState extends State<HomePage>
                 // side: BorderSide(color: Colours.azure)
               ),
               title: Text(
-                'Delete my points',
+                'Delete all points',
                 style: TextStyle(fontWeight: FontWeight.bold),
                 textAlign: TextAlign.start,
               ),
               trailing: Icon(Icons.remove),
               tileColor: Colors.green[100],
-              onTap: () async {
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                          title: Text('Confirmation required'),
+                          content: Text(
+                              'WARNING!\nIf you continue, all your progress will be deleted and you will have to start again from zero!\nDo you want to proceed?'),
+                          //color: Colors.grey[100],
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0)),
+                          //margin: EdgeInsets.fromLTRB(50, 450, 50, 200),
+                          actions: [
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  IconButton(
+                                      onPressed: () async {
+                                        List<myFitbitData> allData =
+                                            await Provider.of<
+                                                        UsersDatabaseRepo>(
+                                                    context,
+                                                    listen: false)
+                                                .findAllFitbitData();
+                                        print(allData.length);
+                                        await Provider.of<UsersDatabaseRepo>(
+                                                context,
+                                                listen: false)
+                                            .deleteAllFitbitData(allData);
+                                        Navigator.pop(context);
+                                      }, // TO BE IMPLEMENTED
+                                      icon: Icon(
+                                        Icons.check_circle,
+                                        color: Theme.of(context).primaryColor,
+                                      )),
+                                  IconButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      icon: Icon(Icons.cancel_rounded,
+                                          color: Colors.red)),
+                                ])
+                          ],
+                          actionsAlignment: MainAxisAlignment.center);
+                    });
                 //await remove_Profile(widget.username, context);
               },
             ),

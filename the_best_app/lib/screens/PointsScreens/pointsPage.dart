@@ -1,14 +1,26 @@
+//PACKAGES
+import 'package:awesome_circular_chart/awesome_circular_chart.dart';
+import 'package:colours/colours.dart';
 import 'package:floor/floor.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-// import 'package:syncfusion_flutter_charts/charts.dart';
-// import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+
+//Functions
+import 'package:the_best_app/Utils/createchartdata.dart';
 import 'package:the_best_app/Utils/dateFormatter.dart';
 import 'package:the_best_app/Utils/elaborateDataFunctions.dart';
 import 'package:the_best_app/Utils/formats.dart';
+
+//WIDGETS
+import 'package:the_best_app/Utils/radial_chart.dart';
+
+//DATABASE AND REPO
 import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
+
+// import 'package:syncfusion_flutter_charts/charts.dart';
+// import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 class PointsPage extends StatelessWidget {
   static const route = '/points';
@@ -51,7 +63,7 @@ class PointsPage extends StatelessWidget {
         ),
         body: Center(
             child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.all(25.0),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
             Text('TODAY\'S POINTS'),
@@ -65,28 +77,84 @@ class PointsPage extends StatelessWidget {
                       final today = fitbit[fitbit.length - 1];
                       final todayPoints = elaboratePoints(today);
                       // QUI CI VUOLE ELABORAZIONE PERCENTUALI
-                      final List<ChartData> chartData = [
-                        ChartData('Steps', today.steps * 100 / 10000),
-                        ChartData('Calories', today.calories * 100 / 600),
-                        ChartData('Cardio', today.cardio * 100 / 15),
-                        ChartData('Sleep', today.sleepHours * 100 / 7)
-                      ];
+                      final List<CircularStackEntry> chartData =
+                          createChartData(today);
 
                       return fitbit.length == 0
                           ? Text('No activity recorded today')
-                          // : Container(child: RadialChart(chartData));
-                          : Card(
-                              child: ListTile(
-                              title: Text(
-                                  '${dateFormatter(DateTime.fromMillisecondsSinceEpoch((fitbit[fitbit.length - 1].keyDate) * Duration.millisecondsPerDay))}'),
-                              subtitle: Text('$todayPoints'),
+                          : Container(
+                              child: GestureDetector(
+                              onLongPress: () {
+                                //This function will subtract points;
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: Text(
+                                          'POINTS SUMMARY',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        titleTextStyle: TextStyle(
+                                            color: Colours.darkGreen,
+                                            fontSize: 25),
+                                        content: Text(
+                                          'Steps ${(todayPoints[0] * 100).toStringAsFixed(1)}%\n${today.steps} / 10000 \n\nCalories ${todayPoints[1] * 100}%\n${today.calories} / 600 \n\nCardio ${todayPoints[2] * 100}%\n${today.cardio} / 15 \n\nSleep ${(todayPoints[3] * 100).toStringAsFixed(1)}%\n${today.sleepHours} / 7',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              fontStyle: FontStyle.italic),
+                                        ),
+                                        backgroundColor: Colours.antiqueWhite,
+                                        // Text(
+                                        //     'Calories ${todayPoints[1] * 100}%\n${today.calories} / 600'),
+                                        // Text(
+                                        //     'Cardio ${todayPoints[2] * 100}%\n${today.cardio} / 15'),
+                                        // Text(
+                                        //     'Sleep ${(todayPoints[3] * 100).toStringAsFixed(3)}%\n${today.sleepHours} / 7')),
+
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12.0)),
+                                        //margin: EdgeInsets.fromLTRB(50, 450, 50, 200),
+                                        actions: [
+                                          IconButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              }, // TO BE IMPLEMENTED
+                                              icon: Icon(
+                                                Icons.check_circle,
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                              )),
+                                        ],
+                                        actionsAlignment:
+                                            MainAxisAlignment.center,
+                                      );
+                                    });
+                              },
+                              child: Column(children: [
+                                Text(
+                                  '${dateFormatter(DateTime.fromMillisecondsSinceEpoch((today.keyDate) * Duration.millisecondsPerDay), opt: 2)}',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                RadialChart(
+                                    chartData: chartData,
+                                    pointsData: todayPoints),
+                              ]),
                             ));
+                      // : Card(
+                      //     child: ListTile(
+                      //     title: Text(
+                      //         '${dateFormatter(DateTime.fromMillisecondsSinceEpoch((fitbit[fitbit.length - 1].keyDate) * Duration.millisecondsPerDay))}'),
+                      //     subtitle: Text('$todayPoints'),
+                      //   ));
                     } else {
                       return CircularProgressIndicator();
                     }
                   });
             }),
-            Text('TOTAL POINTS'),
+            Text('TOTAL POINTS: COLORI DA SISTEMARE!!'),
             Consumer<UsersDatabaseRepo>(builder: (context, dbr, child) {
               return FutureBuilder(
                   initialData: null,
@@ -150,26 +218,4 @@ List<int> computeSum(List<myFitbitData> input) {
     tot4 += input[k].cardio;
   }
   return [tot1, tot2, tot3, tot4];
-}
-
-// class RadialChart extends StatelessWidget {
-//   final List<ChartData> chartData;
-//   RadialChart(this.chartData);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return SfCircularChart(series: <CircularSeries>[
-//       // Renders radial bar chart
-//       RadialBarSeries<ChartData, String>(
-//           dataSource: chartData,
-//           xValueMapper: (ChartData data, _) => data.x,
-//           yValueMapper: (ChartData data, _) => data.y)
-//     ]);
-//   }
-// }
-
-class ChartData {
-  ChartData(this.x, this.y);
-  final String x;
-  final double y;
 }

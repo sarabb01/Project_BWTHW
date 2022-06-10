@@ -107,7 +107,7 @@ class QRcodePage extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     IconButton(
-                                        onPressed: () {},
+                                        onPressed: () {}, // TO BE IMPLEMENTED
                                         icon: Icon(
                                           Icons.check_circle,
                                           color: Theme.of(context).primaryColor,
