@@ -7,10 +7,15 @@ import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/ForgotPasswordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/RegistrationPage.dart';
+import 'package:the_best_app/screens/infopage.dart';
 // Home Screens
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/screens/PointsScreens/fetchPage.dart';
 import 'package:the_best_app/screens/PointsScreens/fitbitAuthPage.dart';
+import 'package:the_best_app/screens/profiledatapage.dart';
+
+//Profile Screens
+import 'package:the_best_app/screens/profilepage.dart';
 // User Database
 import 'package:the_best_app/Database/database.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
@@ -21,7 +26,6 @@ import 'package:the_best_app/screens/RewardScreens/queryPage.dart';
 import 'package:the_best_app/screens/RewardScreens/shoppingPage.dart';
 import 'package:the_best_app/screens/RewardScreens/experiencePage.dart';
 import 'package:the_best_app/screens/RewardScreens/QRcodePage.dart';
-import 'package:the_best_app/screens/infopage.dart';
 
 Future<void> main() async {
   //This is a special method that use WidgetFlutterBinding to interact with the Flutter engine.
@@ -82,6 +86,14 @@ class MyApp extends StatelessWidget {
           } else if (settings.name == AuthPage.route) {
             return MaterialPageRoute(builder: (context) {
               return AuthPage();
+            });
+          } else if (settings.name == Profilepage.route) {
+            return MaterialPageRoute(builder: (context) {
+              return Profilepage();
+            });
+          } else if (settings.name == Profiledatapage.route) {
+            MaterialPageRoute(builder: (context) {
+              return Profiledatapage();
             });
           } else if (settings.name == FetchPage.route) {
             return MaterialPageRoute(builder: (context) {

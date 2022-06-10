@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:the_best_app/screens/RewardScreens/selectPrefPage.dart';
 import 'package:the_best_app/screens/profiledatapage.dart';
 
 class Profilepage extends StatelessWidget {
   Profilepage({Key? key}) : super(key: key);
 
-  static const route = '/hellowordpage/loginpage/homepage/profilepage';
+  static const route = '/helloworldpage/loginpage/homepage/profilepage';
+  //static const route = '/profilepage';
   static const routename = 'Profilepage';
 
   @override

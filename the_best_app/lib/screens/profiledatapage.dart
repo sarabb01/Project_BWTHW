@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:the_best_app/screens/LoginScreens/HelloWordPage.dart';
+import 'package:the_best_app/screens/LoginScreens/RegistrationPage.dart';
 
 class Profiledatapage extends StatelessWidget {
   Profiledatapage({Key? key}) : super(key: key);
 
   static const route =
-      '/hellowordpage/loginpage/homepage/profilepage/profiledatapage';
-  static const routename = 'Profile data';
+      '/helloworldpage/loginpage/homepage/profilepage/profiledatapage';
+  static const routename = 'Profile Data data';
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +34,7 @@ class Profiledatapage extends StatelessWidget {
                           icon: Icon(Icons.more_vert),
                           //heroTag: 'btn1',
                           onPressed: () {
-                            Navigator.pop(
-                                context, '/hellowordpage/registrationpage');
+                            Navigator.pop(context, RegistrationPage.route);
                           },
                         ),
                         tileColor: Colors.green[100],
@@ -70,7 +71,7 @@ class Profiledatapage extends StatelessWidget {
 
                           //heroTag: 'btn3',
                           onPressed: () {
-                            Navigator.pop(context, '/hellowordpage');
+                            Navigator.pop(context, HelloWordPage.route);
                           },
                         ),
                         tileColor: Colors.green[100],

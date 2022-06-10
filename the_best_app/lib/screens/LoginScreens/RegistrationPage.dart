@@ -121,16 +121,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       ),
                       FormSeparator(label: 'Date of Birth'),
                       FormDateTile(
-                        labelText: "Date of Birth",
+                        labelText: "Select your Date of Birth",
                         date: _selectedDate,
                         dateFormat: Formats.onlyDayDateFormat,
                         onPressed: () {
                           _selectDate(context);
                         },
                       ),
-                      FormSeparator(label: 'Gender'),
+                      FormSeparator(label: 'Select your Gender'),
                       DropdownButtonTileString(
-                        items: ['Female', 'Male', 'Ingegnere', 'None'],
+                        items: ['Female', 'Male', 'Genderqueer', '-'],
                         labelText: 'Female or Male',
                         notifyParent: selectGender,
                       ),
@@ -143,7 +143,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       FormSeparator(label: 'Username'),
                       FormTextTile(
                         controller: _username,
-                        labelText: 'Email Addres',
+                        labelText: 'Enter your Email Addres',
                       ),
                       FormSeparator(label: 'Password'),
                       FormTextTile(
