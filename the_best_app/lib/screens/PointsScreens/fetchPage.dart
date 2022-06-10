@@ -12,8 +12,8 @@ import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/screens/PointsScreens/pointsPage.dart';
 
 //Import Functions and Useful things
-import 'package:the_best_app/Utils/dateFormatter.dart';
-import 'package:the_best_app/Utils/elaborateDataFunctions.dart';
+import 'package:the_best_app/functions/dateFormatter.dart';
+import 'package:the_best_app/functions/elaborateDataFunctions.dart';
 import 'package:the_best_app/Utils/stringsKeywords.dart';
 
 class FetchPage extends StatefulWidget {

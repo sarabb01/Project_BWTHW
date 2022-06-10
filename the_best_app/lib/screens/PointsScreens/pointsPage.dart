@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 //Functions
-import 'package:the_best_app/Utils/createchartdata.dart';
-import 'package:the_best_app/Utils/dateFormatter.dart';
-import 'package:the_best_app/Utils/elaborateDataFunctions.dart';
+import 'package:the_best_app/functions/createchartdata.dart';
+import 'package:the_best_app/functions/dateFormatter.dart';
+import 'package:the_best_app/functions/elaborateDataFunctions.dart';
 import 'package:the_best_app/Utils/formats.dart';
 
 //WIDGETS
