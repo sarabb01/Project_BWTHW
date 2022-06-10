@@ -5,6 +5,7 @@ import 'package:floor/floor.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 //Functions
 import 'package:the_best_app/functions/createchartdata.dart';
@@ -14,6 +15,7 @@ import 'package:the_best_app/Utils/formats.dart';
 
 //WIDGETS
 import 'package:the_best_app/Utils/radial_chart.dart';
+import 'package:the_best_app/Utils/bar_chart.dart';
 
 //DATABASE AND REPO
 import 'package:the_best_app/Database/Entities/FitbitTables.dart';
@@ -155,6 +157,11 @@ class PointsPage extends StatelessWidget {
                   });
             }),
             Text('TOTAL POINTS: COLORI DA SISTEMARE!!'),
+
+            // Container(
+            //     child: StackedBarChart(
+            //         createSampleData(), charts.BarGroupingType.stacked,
+            //         animate: false))
             Consumer<UsersDatabaseRepo>(builder: (context, dbr, child) {
               return FutureBuilder(
                   initialData: null,
