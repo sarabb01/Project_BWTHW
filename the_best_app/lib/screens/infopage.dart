@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:the_best_app/screens/HomeScreens/HomePage.dart';
+import 'package:the_best_app/screens/LoginScreens/LoginPage.dart';
 
 class Infopage extends StatelessWidget {
   Infopage({Key? key}) : super(key: key);
@@ -38,8 +39,9 @@ class Infopage extends StatelessWidget {
       ])),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.pushNamed(context, HomePage.route,
-                arguments: {'username': 'Pippo'});
+            Navigator.pushNamed(context, LoginPage.route);
+            // Navigator.pushNamed(context, HomePage.route,
+            //     arguments: {'username': 'Pippo'});
           },
           child: Icon(Icons.done)),
       floatingActionButtonLocation:

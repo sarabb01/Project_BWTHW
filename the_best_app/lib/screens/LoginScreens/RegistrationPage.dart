@@ -159,8 +159,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
     final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: _selectedDate,
-        firstDate: DateTime(1900),
-        lastDate: DateTime(2101));
+        firstDate: DateTime(1960),
+        lastDate: DateTime(2060));
 
     if (picked != null && picked != _selectedDate)
       //Here, I'm using setState to update the _selectedDate field and rebuild the UI.
