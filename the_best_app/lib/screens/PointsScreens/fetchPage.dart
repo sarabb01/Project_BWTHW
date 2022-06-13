@@ -27,12 +27,15 @@ class FetchPage extends StatefulWidget {
 }
 
 class _FetchPageState extends State<FetchPage> {
-  int daysToSubtract =
-      DateTime.now().difference(DateTime.utc(2022, 6, 8, 1, 1, 1, 1, 1)).inDays;
-
   @override
   Widget build(BuildContext context) {
-    late List<SleepData> result;
+    DateTime startDate = DateTime.utc(2022, 5, 20);
+    DateTime endDate = DateTime.utc(2022, 5, 31);
+    int daysToSubtract =
+        // DateTime.now().difference(DateTime.utc(2022, 6, 8, 1, 1, 1, 1, 1)).inDays;
+        endDate.difference(startDate).inDays;
+
+    List<SleepData>? result;
     late List<ActivityData> resultActivity;
     late List<StepsData> resultTSActivity;
     late List<HeartData> resultHR;
@@ -80,37 +83,20 @@ class _FetchPageState extends State<FetchPage> {
                       }
                     })),
 
-            // Old Version
-            // child: FutureBuilder(
-            //     future: _fetchAccountData(),
-            //     builder: (context, snapshot) {
-            //       if (snapshot.hasData) {
-            //         final data = snapshot.data as List;
-            //         FitbitAccountData dataUser =
-            //             data[0] as FitbitAccountData;
-
-            //         return Text(
-            //             '${dataUser.firstName} \'s birthday: ${dateFormatter(dataUser.dateOfBirth!)}');
-            //       } else {
-            //         return CircularProgressIndicator();
-            //       }
-            //       ;
-            //     })),
             SizedBox(height: 10),
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: Text('${_downloads.values}'),
-            // ),
+
             ElevatedButton(
                 onPressed: () async {
                   print('N of calls $daysToSubtract');
                   for (int reqDay = daysToSubtract; reqDay >= 0; reqDay--) {
                     //for (int reqDay = 10; reqDay >= 8; reqDay--) {
                     //int reqDay = 1;
+                    // DateTime queryDate =
+                    //     DateTime.now().subtract(Duration(days: reqDay));
                     DateTime queryDate =
-                        DateTime.now().subtract(Duration(days: reqDay));
+                        endDate.subtract(Duration(days: reqDay));
+
                     int tableKey = queryDate.millisecondsSinceEpoch ~/ 86400000;
-                    print(Duration.millisecondsPerDay);
                     print('Query date: $queryDate');
                     print('INT: $tableKey');
                     final result = await _fetchSleepData(queryDate)

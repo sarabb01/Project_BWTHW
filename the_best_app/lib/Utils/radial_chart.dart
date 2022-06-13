@@ -21,7 +21,7 @@ class _RadialChartState extends State<RadialChart> {
     print(sum);
     return AnimatedCircularChart(
         key: _chartKey,
-        size: const Size(350.0, 350.0),
+        size: const Size(300.0, 300.0),
         initialChartData: widget.chartData,
         chartType: CircularChartType.Radial,
         edgeStyle: SegmentEdgeStyle.round,
