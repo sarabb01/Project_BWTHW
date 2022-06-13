@@ -25,7 +25,7 @@ import 'package:the_best_app/Repository/database_repository.dart';
 // import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 class PointsPage extends StatelessWidget {
-  static const route = '/points';
+  static const route = '/hellowordpage/loginpage/homepage/pointspage';
   static const routename = 'Points Page';
 
   @override

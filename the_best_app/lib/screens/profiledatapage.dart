@@ -5,8 +5,9 @@ import 'package:the_best_app/screens/LoginScreens/RegistrationPage.dart';
 class Profiledatapage extends StatelessWidget {
   Profiledatapage({Key? key}) : super(key: key);
 
-  static var route = '/profilepage/profiledatapage';
-  static const routename = 'Profile Data data';
+  static const route =
+      '/hellowordpage/loginpage/homepage/profilepage/profiledatapage';
+  static const routename = 'Profile Data Page';
 
   @override
   Widget build(BuildContext context) {

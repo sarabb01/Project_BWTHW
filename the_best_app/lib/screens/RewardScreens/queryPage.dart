@@ -5,7 +5,8 @@ import 'package:the_best_app/screens/RewardScreens/shoppingPage.dart';
 class QueryPage extends StatelessWidget {
   //QueryPage({Key? key}) : super(key: key);
 
-  static const route = '/preference/query';
+  static const route =
+      '/hellowordpage/loginpage/homepage/preferencepage/querypage/';
   static const routename = 'Query';
   final myController = TextEditingController();
 

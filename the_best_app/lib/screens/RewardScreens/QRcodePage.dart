@@ -11,8 +11,9 @@ class QRcodePage extends StatelessWidget {
   Map list;
   QRcodePage({required this.item, required this.list});
 
-  static const route = '/qr';
-  static const routename = 'QR CODE PAGE';
+  static const route =
+      '/hellowordpage/loginpage/homepage/preferencepage/querypage/shoppingpage/voucherpage';
+  static const routename = 'VOUCHER PAGE';
 
   @override
   Widget build(BuildContext context) {

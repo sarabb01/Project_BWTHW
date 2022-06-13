@@ -5,7 +5,8 @@ import 'package:the_best_app/screens/RewardScreens/QRcodePage.dart';
 
 class ShoppingPage extends StatelessWidget {
   //ShoppingPage({Key? key}) : super(key: key);
-  static const route = '/shop';
+  static const route =
+      '/hellowordpage/loginpage/homepage/preferencepage/querypage/shoppingpage';
   static const routename = 'Shopping';
   final shopList shoplist = shopList();
   final earnedPoints = 500;

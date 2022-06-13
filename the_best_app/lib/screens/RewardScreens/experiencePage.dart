@@ -6,7 +6,8 @@ import 'package:the_best_app/screens/RewardScreens/QRcodePage.dart';
 class ExperiencePage extends StatelessWidget {
   // ExperiencePage({Key? key}) : super(key: key);
 
-  static const route = '/experience';
+  static const route =
+      '/hellowordpage/loginpage/homepage/preferencepage/querypage/experience';
   static const routename = 'Experiences';
 
   String city;
