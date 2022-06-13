@@ -35,6 +35,7 @@ class _HomepageState extends State<HomePage>
       controller; // per controllare animazione di circular progress indicator, ho messo late perchè inizializzo dopo la variabile
   double puntiottenuti = 7000; //puntiottenuti ricavati da conversione punti
   double obiettivo = 10000; //obiettivo fissato pagina preference
+  // double? points;
 
   @override
   void initState() {
@@ -46,7 +47,15 @@ class _HomepageState extends State<HomePage>
     );
 
     controller.repeat();
+    // _loadPoints();
   }
+
+  // void _loadPoints() async {
+  //   final sp = await SharedPreferences.getInstance();
+  //   setState(() {
+  //     points = sp.getDouble('Points') ?? 0;
+  //   });
+  // }
 
   @override
   void dispose() {
@@ -81,6 +90,15 @@ class _HomepageState extends State<HomePage>
             )
           ],
         ),
+        floatingActionButton: FloatingActionButton(
+            onPressed: () async {
+              final sp = await SharedPreferences.getInstance();
+              if (sp.getDouble('Points') != null) {
+                double? score = sp.getDouble('Points');
+                print(score);
+              }
+            },
+            child: Icon(Icons.update)),
         drawer: Drawer(
             child: ListView(children: [
           Padding(
