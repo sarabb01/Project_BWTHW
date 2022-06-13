@@ -85,196 +85,65 @@ class _FetchPageState extends State<FetchPage> {
 
             SizedBox(height: 10),
 
-            ElevatedButton(
-                onPressed: () async {
-                  print('N of calls $daysToSubtract');
-                  for (int reqDay = daysToSubtract; reqDay >= 0; reqDay--) {
-                    //for (int reqDay = 10; reqDay >= 8; reqDay--) {
-                    //int reqDay = 1;
-                    // DateTime queryDate =
-                    //     DateTime.now().subtract(Duration(days: reqDay));
-                    DateTime queryDate =
-                        endDate.subtract(Duration(days: reqDay));
-
-                    int tableKey = queryDate.millisecondsSinceEpoch ~/ 86400000;
-                    print('Query date: $queryDate');
-                    print('INT: $tableKey');
-                    final result = await _fetchSleepData(queryDate)
-                        as List<FitbitSleepData>;
-                    final resultActivity = await _fetchActivityData(queryDate)
-                        as List<FitbitActivityData>;
-                    final resultTSActivity =
-                        await _fetchActivityTSData(queryDate, 'steps')
-                            as List<FitbitActivityTimeseriesData>;
-                    final resultHR = await _fetchHeartData(queryDate)
-                        as List<FitbitHeartData>;
-
-                    int time = 0;
-                    int cals = 0;
-                    int steps = 0;
-                    int mins = 0;
-
-                    if (result.length > 0) {
-                      time = elaborateSleepData(result);
-                    }
-                    //print('Current time $time');
-
-                    if (resultActivity.length > 0) {
-                      cals = elaborateActivityData(resultActivity);
-                    }
-                    //print('Current cals $cals');
-
-                    if (resultTSActivity.length > 0) {
-                      steps = elaborateTSActivityData(resultTSActivity);
-                    }
-                    //print('Current cals $steps');
-
-                    if (resultHR.length > 0) {
-                      mins = elaborateHRData(resultHR);
-                    }
-                    //print('Current min $mins');
-
-                    myFitbitData newdata = myFitbitData(tableKey,
-                        sleepHours: time,
-                        calories: cals,
-                        steps: steps,
-                        cardio: mins);
-                    await Provider.of<UsersDatabaseRepo>(context, listen: false)
-                        .insertFitbitData(newdata);
-                  }
-                },
-                child: Text('Fetch Data')),
-
-            //   SleepData newdata = SleepData(null,
-            //       result[0].entryDateTime!, elaborateSleepData(result));
-            //   await Provider.of<UsersDatabaseRepo>(context,
-            //           listen: false)
-            //       .insertSleepData(newdata);
-            // } else {
-            //   SleepData newdata = SleepData(
-            //       null,
-            //       DateTime.utc(2022, 3, 1).add(Duration(days: reqDay)),
-            //       0);
-            //   await Provider.of<UsersDatabaseRepo>(context,
-            //           listen: false)
-            //       .insertSleepData(newdata);
-            // }
-            //     if (resultActivity.length > 0) {
-            //       //int cals = elaborateActivityData(resultActivity);
-            //       // int date = resultActivity[0]
-            //       //     .dateOfMonitoring!
-            //       //     .microsecondsSinceEpoch;
-            //       ActivityData newdata = ActivityData(
-            //           null,
-            //           resultActivity[0].dateOfMonitoring!,
-            //           elaborateActivityData(resultActivity));
-            //       await Provider.of<UsersDatabaseRepo>(context,
-            //               listen: false)
-            //           .insertActivityData(newdata);
-            //     }
-            //     if (resultTSActivity.length > 0) {
-            //       //int steps = elaborateTSActivityData(resultTSActivity);
-            //       StepsData newdata = StepsData(
-            //           null,
-            //           resultTSActivity[0].dateOfMonitoring!,
-            //           elaborateTSActivityData(resultTSActivity));
-            //       await Provider.of<UsersDatabaseRepo>(context,
-            //               listen: false)
-            //           .insertStepsData(newdata);
-            //     }
-            //     if (resultHR.length > 0) {
-            //       //int minCardio = elaborateHRData(resultHR);
-            //       HeartData newdata = HeartData(
-            //           null,
-            //           resultHR[0].dateOfMonitoring!,
-            //           elaborateHRData(resultHR));
-            //       await Provider.of<UsersDatabaseRepo>(context,
-            //               listen: false)
-            //           .insertHeartData(newdata);
-            //     }
-            //   }
-            //   ;
-            // },
-            // child: Text('Fetch Data')),
-
-            // //Padding(
-            // //   padding: const EdgeInsets.all(8.0),
-            // //   child: Text('${_activities.values} ${_activities.keys}'),
-            // // ),
             // ElevatedButton(
             //     onPressed: () async {
-            //       for (int reqDay = daysToSubtract; reqDay > 1; reqDay--) {
-            //         //for (int i = 10; i >= 8; i--) {
-            //         // print(i);
-            //         final resultActivity = await _fetchActivityData(reqDay)
+            //       print('N of calls $daysToSubtract');
+            //       for (int reqDay = daysToSubtract; reqDay >= 0; reqDay--) {
+            //         //for (int reqDay = 10; reqDay >= 8; reqDay--) {
+            //         //int reqDay = 1;
+            //         // DateTime queryDate =
+            //         //     DateTime.now().subtract(Duration(days: reqDay));
+            //         DateTime queryDate =
+            //             endDate.subtract(Duration(days: reqDay));
+
+            //         int tableKey = queryDate.millisecondsSinceEpoch ~/ 86400000;
+            //         print('Query date: $queryDate');
+            //         print('INT: $tableKey');
+            //         final result = await _fetchSleepData(queryDate)
+            //             as List<FitbitSleepData>;
+            //         final resultActivity = await _fetchActivityData(queryDate)
             //             as List<FitbitActivityData>;
-            //         if (resultActivity.length > 0) {
-            //           int cals = elaborateActivityData(resultActivity);
-            //           // }
-            //           ActivityData newdata = ActivityData(
-            //               null, resultActivity[0].dateOfMonitoring!, cals);
-            //           await Provider.of<UsersDatabaseRepo>(context,
-            //                   listen: false)
-            //               .insertActivityData(newdata);
-            //         }
-
-            //         ; // if
-            //       } // for
-            //       ;
-            //     }, // onPressed
-            //     child: Text('Fetch Activity Data')),
-            // // Padding(
-            // //   padding: const EdgeInsets.all(8.0),
-            // //   child: Text('${_activitiesTS.values}'),
-            // // ),
-            // ElevatedButton(
-            //     onPressed: () async {
-            //       for (int reqDay = daysToSubtract; reqDay > 1; reqDay--) {
-            //         //for (int i = 10; i >= 8; i--) {
-            //         // print(i);
-            //         //  //'calories', 'steps', 'distance', 'floors', 'minutesVeryActive', 'activityCalories',etc
             //         final resultTSActivity =
-            //             await _fetchActivityTSData(reqDay, 'steps')
+            //             await _fetchActivityTSData(queryDate, 'steps')
             //                 as List<FitbitActivityTimeseriesData>;
+            //         final resultHR = await _fetchHeartData(queryDate)
+            //             as List<FitbitHeartData>;
+
+            //         int time = 0;
+            //         int cals = 0;
+            //         int steps = 0;
+            //         int mins = 0;
+
+            //         if (result.length > 0) {
+            //           time = elaborateSleepData(result);
+            //         }
+            //         //print('Current time $time');
+
+            //         if (resultActivity.length > 0) {
+            //           cals = elaborateActivityData(resultActivity);
+            //         }
+            //         //print('Current cals $cals');
+
             //         if (resultTSActivity.length > 0) {
-            //           int steps = elaborateTSActivityData(resultTSActivity);
-            //           // }
-            //           //setState(() {});
-            //           StepsData newdata = StepsData(
-            //               null, resultTSActivity[0].dateOfMonitoring!, steps);
-            //           await Provider.of<UsersDatabaseRepo>(context,
-            //                   listen: false)
-            //               .insertStepsData(newdata);
+            //           steps = elaborateTSActivityData(resultTSActivity);
             //         }
-            //         ; // if
-            //       } // for
-            //       ;
-            //     }, // onPressed
-            //     child: Text('Fetch Steps Data')),
-            // // Padding(
-            // //   padding: const EdgeInsets.all(8.0),
-            // //   child: Text('${_heart.values}'),
-            // // ),
-            // ElevatedButton(
-            //     onPressed: () async {
-            //       for (int reqDay = daysToSubtract; reqDay > 1; reqDay--) {
-            //         final resultHR =
-            //             await _fetchHeartData(reqDay) as List<FitbitHeartData>;
+            //         //print('Current cals $steps');
+
             //         if (resultHR.length > 0) {
-            //           int minCardio = elaborateHRData(resultHR);
-            //           // }
-            //           //setState(() {});
-            //           HeartData newdata = HeartData(
-            //               null, resultHR[0].dateOfMonitoring!, minCardio);
-            //           await Provider.of<UsersDatabaseRepo>(context,
-            //                   listen: false)
-            //               .insertHeartData(newdata);
+            //           mins = elaborateHRData(resultHR);
             //         }
-            //         // for
-            //         ;
+            //         //print('Current min $mins');
+
+            //         myFitbitData newdata = myFitbitData(tableKey,
+            //             sleepHours: time,
+            //             calories: cals,
+            //             steps: steps,
+            //             cardio: mins);
+            //         await Provider.of<UsersDatabaseRepo>(context, listen: false)
+            //             .insertFitbitData(newdata);
             //       }
-            //     }, // onPressed
-            //     child: Text('Fetch Heart Data')),
+            //     },
+            //     child: Text('Fetch Data')),
           ],
         ),
       ),

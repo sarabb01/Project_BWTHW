@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:the_best_app/Utils/points_displayer.dart';
 import 'package:the_best_app/models/expList.dart';
 import 'package:the_best_app/screens/RewardScreens/QRcodePage.dart';
 
@@ -11,10 +12,11 @@ class ExperiencePage extends StatelessWidget {
   static const routename = 'Experiences';
 
   String city;
-  ExperiencePage({required this.city});
+  double earnedPoints;
+  ExperiencePage({required this.city, required this.earnedPoints});
 
   final expList explist = expList();
-  final earnedPoints = 0;
+  //final earnedPoints = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -39,21 +41,7 @@ class ExperiencePage extends StatelessWidget {
                 style: TextStyle(fontSize: 13, color: Colors.grey),
               ),
               SizedBox(height: 20),
-              Center(
-                child: Container(
-                  width: 150,
-                  height: 22,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.green, width: 3),
-                      borderRadius: BorderRadius.circular(10)),
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Your points: $earnedPoints',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.green),
-                  ),
-                ),
-              ),
+              Center(child: Points_displayer()),
               SizedBox(height: 20),
               Expanded(
                 child: ListView.builder(

@@ -7,8 +7,8 @@ import 'package:the_best_app/Utils/stringsKeywords.dart';
 import 'package:the_best_app/functions/elaborateDataFunctions.dart';
 
 Future<void> fetchData(BuildContext context) async {
-  DateTime startDate = DateTime.utc(2022, 5, 10);
-  DateTime endDate = DateTime.utc(2022, 5, 14);
+  DateTime startDate = DateTime.utc(2022, 4, 10);
+  DateTime endDate = DateTime.utc(2022, 4, 14);
   int daysToSubtract =
       // DateTime.now().difference(DateTime.utc(2022, 6, 8, 1, 1, 1, 1, 1)).inDays;
       endDate.difference(startDate).inDays;

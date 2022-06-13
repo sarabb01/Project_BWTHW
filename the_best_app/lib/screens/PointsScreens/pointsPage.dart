@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:shared_preferences/shared_preferences.dart';
 
 //Functions
 import 'package:the_best_app/functions/createchartdata.dart';
@@ -42,11 +43,12 @@ class PointsPage extends StatelessWidget {
                       await Provider.of<UsersDatabaseRepo>(context,
                               listen: false)
                           .findAllFitbitData();
-                  print(allData.length);
-                  await Provider.of<UsersDatabaseRepo>(context, listen: false)
-                      .deleteAllFitbitData(allData);
+                  final sp = await SharedPreferences.getInstance();
+                  final double score = computeTotalPoints(allData);
+                  sp.setDouble('Points', score);
+                  print('${allData.length}, ${sp.getDouble('Points')}');
                 },
-                icon: Icon(Icons.delete))
+                icon: Icon(Icons.update))
           ],
         ),
 
@@ -246,5 +248,5 @@ double computeTotalPoints(List<myFitbitData> input) {
     score +=
         elaboratePoints(input[i]).fold(0, (prev, element) => prev + element);
   }
-  return score;
+  return double.parse(score.toStringAsFixed(2));
 }

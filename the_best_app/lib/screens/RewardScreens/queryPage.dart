@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_best_app/screens/RewardScreens/experiencePage.dart';
 import 'package:the_best_app/screens/RewardScreens/shoppingPage.dart';
 
@@ -36,14 +37,22 @@ class QueryPage extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
                 ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      final sp = await SharedPreferences.getInstance();
+                      double score = sp.getDouble('Points') ?? 0;
                       if (myController.text != '' && path == 'shops') {
                         Navigator.pushNamed(context, ShoppingPage.route,
-                            arguments: myController.text);
+                            arguments: {
+                              'city': myController.text,
+                              'points': score
+                            });
                       } else if (myController.text != '' &&
                           path == 'experiences') {
                         Navigator.pushNamed(context, ExperiencePage.route,
-                            arguments: myController.text);
+                            arguments: {
+                              'city': myController.text,
+                              'points': score
+                            });
                       } else if (myController.text == '') {
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('LOCATION MISSING!')));
