@@ -84,7 +84,7 @@ class PointsPage extends StatelessWidget {
 
                       print(
                           '${dateFormatter(DateTime.fromMillisecondsSinceEpoch((fitbit[fitbit.length - 1].keyDate) * Duration.millisecondsPerDay))}');
-                      final today = fitbit[fitbit.length - 1];
+                      final today = fitbit[fitbit.length - 5];
                       final todayPoints = elaboratePoints(today);
                       // QUI CI VUOLE ELABORAZIONE PERCENTUALI
                       final List<CircularStackEntry> chartData =
@@ -184,10 +184,13 @@ class PointsPage extends StatelessWidget {
                               children: [
                                   Text(
                                       'SUMMARY of ${fitbit.length} DAYS: ${score.toStringAsFixed(2)} POINTS'),
-                                  Container(
-                                      height: 300,
-                                      child: StackedBarChart(
-                                          createBarData(fitbit)))
+                                  GestureDetector(
+                                    onLongPress: () {},
+                                    child: Container(
+                                        height: 300,
+                                        child: StackedBarChart(
+                                            createBarData(fitbit))),
+                                  )
                                 ]);
 
                       // : Expanded(

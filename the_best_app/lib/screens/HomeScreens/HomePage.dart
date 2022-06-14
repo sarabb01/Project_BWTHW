@@ -33,9 +33,8 @@ class _HomepageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   late AnimationController
       controller; // per controllare animazione di circular progress indicator, ho messo late perchè inizializzo dopo la variabile
-  double puntiottenuti = 7000; //puntiottenuti ricavati da conversione punti
-  double obiettivo = 10000; //obiettivo fissato pagina preference
-  // double? points;
+  //double puntiottenuti = 70; //puntiottenuti ricavati da conversione punti
+  double obiettivo = 300; //obiettivo fissato pagina preference
 
   @override
   void initState() {
@@ -47,15 +46,7 @@ class _HomepageState extends State<HomePage>
     );
 
     controller.repeat();
-    // _loadPoints();
   }
-
-  // void _loadPoints() async {
-  //   final sp = await SharedPreferences.getInstance();
-  //   setState(() {
-  //     points = sp.getDouble('Points') ?? 0;
-  //   });
-  // }
 
   @override
   void dispose() {
@@ -66,6 +57,7 @@ class _HomepageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     print('${HomePage.routename} built');
+    // _loadPoints();
     return Scaffold(
         appBar: AppBar(
           title: widget.username == null || widget.username.isEmpty
@@ -233,52 +225,77 @@ class _HomepageState extends State<HomePage>
             //tween: Tween(begin: 0.0, end: 1.0),
             //duration: Duration(seconds: 10),
             //builder: (context, value, _) =>
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-              const Text(
-                'Points for the AWARD :',
-                style: TextStyle(fontSize: 25),
-              ),
-              SizedBox(
-                width: 200,
-                height: 200,
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    CircularProgressIndicator(
-                      value: puntiottenuti / obiettivo,
-                      backgroundColor: Colors.grey,
-                      color: Colours.darkSeagreen,
-                      strokeWidth: 25,
-                    ),
-                    Center(
-                      child: buildprogress(),
-                    ),
-                  ],
+            child: Padding(
+          padding: const EdgeInsets.only(top: 10, bottom: 30),
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  //width: width * 0.4,
+                  height: MediaQuery.of(context).size.height / 4,
+                  child: Image.asset(
+                    'assets/Images/logo4.png',
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              ),
-              //Text(
-              //'You are far'
-              //' ${(obiettivo - puntiottenuti)}'
-              //' points from the AWARD, GO AND GET IT',
-              //style: TextStyle(fontSize: 20),
-              //)
-              CupertinoButton.filled(
-                  child: const Text('Gain your Award'),
-                  onPressed: () {
-                    Navigator.pushNamed(context, PreferencePage.route);
-                  })
-            ])));
+                SizedBox(height: 10),
+                const Text(
+                  'Your points:',
+                  style: TextStyle(fontSize: 20),
+                ),
+                SizedBox(height: 20),
+                Container(
+                    width: 200,
+                    height: 200,
+                    child: FutureBuilder(
+                      future: SharedPreferences.getInstance(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          final result = snapshot.data as SharedPreferences;
+                          final score = result.getDouble('Points');
+
+                          return Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              CircularProgressIndicator(
+                                value: score! / obiettivo,
+                                backgroundColor: Colors.grey[400],
+                                color: Colors.greenAccent[700],
+                                strokeWidth: 25,
+                              ),
+                              Center(
+                                child: buildprogress(score),
+                              ),
+                            ],
+                          );
+                        } else {
+                          return CircularProgressIndicator();
+                        }
+                      },
+                    )),
+                //Text(
+                //'You are far'
+                //' ${(obiettivo - puntiottenuti)}'
+                //' points from the AWARD, GO AND GET IT',
+                //style: TextStyle(fontSize: 20),
+                //),
+                SizedBox(height: 100),
+                CupertinoButton.filled(
+                    child: const Text('Gain your Award'),
+                    onPressed: () {
+                      Navigator.pushNamed(context, PreferencePage.route);
+                    })
+              ]),
+        )));
   } //build
 
-  Widget buildprogress() {
-    if (puntiottenuti / obiettivo == 1) {
+  Widget buildprogress(double score) {
+    if (score / obiettivo == 1) {
       return const Icon(Icons.done, color: Colors.green, size: 56);
     } else {
       return Text(
-        '${(puntiottenuti)}' '/' '${(obiettivo).toStringAsFixed(1)}',
+        '${(score)}' '/' '${(obiettivo).toStringAsFixed(0)}',
         style: TextStyle(fontSize: 20),
       );
     }
