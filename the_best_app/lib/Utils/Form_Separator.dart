@@ -9,7 +9,7 @@ class FormSeparator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: EdgeInsets.only(right: 50, bottom: 5, left: 50, top: 5),
+        padding: EdgeInsets.only(right: 30, bottom: 5, left: 30, top: 5),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,

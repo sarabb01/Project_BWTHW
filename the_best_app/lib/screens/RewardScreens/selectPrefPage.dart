@@ -38,6 +38,7 @@ class PreferencePage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                   fontSize: 18),
+              textAlign: TextAlign.center,
             ),
             SizedBox(height: 50),
             Expanded(

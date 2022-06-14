@@ -29,8 +29,9 @@ class FetchPage extends StatefulWidget {
 class _FetchPageState extends State<FetchPage> {
   @override
   Widget build(BuildContext context) {
-    DateTime startDate = DateTime.utc(2022, 5, 20);
-    DateTime endDate = DateTime.utc(2022, 5, 31);
+    DateTime startDate = DateTime.utc(2022, 6, 12);
+    //DateTime endDate = DateTime.utc(2022, 5, 31);
+    DateTime endDate = DateTime.now();
     int daysToSubtract =
         // DateTime.now().difference(DateTime.utc(2022, 6, 8, 1, 1, 1, 1, 1)).inDays;
         endDate.difference(startDate).inDays;
@@ -82,68 +83,66 @@ class _FetchPageState extends State<FetchPage> {
                             'Authorization Denied!\nGo to Authorization'));
                       }
                     })),
-
             SizedBox(height: 10),
+            ElevatedButton(
+                onPressed: () async {
+                  print('N of calls $daysToSubtract');
+                  for (int reqDay = daysToSubtract; reqDay >= 0; reqDay--) {
+                    //for (int reqDay = 10; reqDay >= 8; reqDay--) {
+                    //int reqDay = 1;
+                    // DateTime queryDate =
+                    //     DateTime.now().subtract(Duration(days: reqDay));
+                    DateTime queryDate =
+                        endDate.subtract(Duration(days: reqDay));
 
-            // ElevatedButton(
-            //     onPressed: () async {
-            //       print('N of calls $daysToSubtract');
-            //       for (int reqDay = daysToSubtract; reqDay >= 0; reqDay--) {
-            //         //for (int reqDay = 10; reqDay >= 8; reqDay--) {
-            //         //int reqDay = 1;
-            //         // DateTime queryDate =
-            //         //     DateTime.now().subtract(Duration(days: reqDay));
-            //         DateTime queryDate =
-            //             endDate.subtract(Duration(days: reqDay));
+                    int tableKey = queryDate.millisecondsSinceEpoch ~/ 86400000;
+                    print('Query date: $queryDate');
+                    print('INT: $tableKey');
+                    final result = await _fetchSleepData(queryDate)
+                        as List<FitbitSleepData>;
+                    final resultActivity = await _fetchActivityData(queryDate)
+                        as List<FitbitActivityData>;
+                    final resultTSActivity =
+                        await _fetchActivityTSData(queryDate, 'steps')
+                            as List<FitbitActivityTimeseriesData>;
+                    final resultHR = await _fetchHeartData(queryDate)
+                        as List<FitbitHeartData>;
 
-            //         int tableKey = queryDate.millisecondsSinceEpoch ~/ 86400000;
-            //         print('Query date: $queryDate');
-            //         print('INT: $tableKey');
-            //         final result = await _fetchSleepData(queryDate)
-            //             as List<FitbitSleepData>;
-            //         final resultActivity = await _fetchActivityData(queryDate)
-            //             as List<FitbitActivityData>;
-            //         final resultTSActivity =
-            //             await _fetchActivityTSData(queryDate, 'steps')
-            //                 as List<FitbitActivityTimeseriesData>;
-            //         final resultHR = await _fetchHeartData(queryDate)
-            //             as List<FitbitHeartData>;
+                    int time = 0;
+                    int cals = 0;
+                    int steps = 0;
+                    int mins = 0;
 
-            //         int time = 0;
-            //         int cals = 0;
-            //         int steps = 0;
-            //         int mins = 0;
+                    if (result.length > 0) {
+                      time = elaborateSleepData(result);
+                    }
+                    //print('Current time $time');
 
-            //         if (result.length > 0) {
-            //           time = elaborateSleepData(result);
-            //         }
-            //         //print('Current time $time');
+                    if (resultActivity.length > 0) {
+                      cals = elaborateActivityData(resultActivity);
+                    }
+                    //print('Current cals $cals');
 
-            //         if (resultActivity.length > 0) {
-            //           cals = elaborateActivityData(resultActivity);
-            //         }
-            //         //print('Current cals $cals');
+                    if (resultTSActivity.length > 0) {
+                      steps = elaborateTSActivityData(resultTSActivity);
+                    }
+                    //print('Current cals $steps');
 
-            //         if (resultTSActivity.length > 0) {
-            //           steps = elaborateTSActivityData(resultTSActivity);
-            //         }
-            //         //print('Current cals $steps');
+                    if (resultHR.length > 0) {
+                      mins = elaborateHRData(resultHR);
+                    }
+                    //print('Current min $mins');
 
-            //         if (resultHR.length > 0) {
-            //           mins = elaborateHRData(resultHR);
-            //         }
-            //         //print('Current min $mins');
-
-            //         myFitbitData newdata = myFitbitData(tableKey,
-            //             sleepHours: time,
-            //             calories: cals,
-            //             steps: steps,
-            //             cardio: mins);
-            //         await Provider.of<UsersDatabaseRepo>(context, listen: false)
-            //             .insertFitbitData(newdata);
-            //       }
-            //     },
-            //     child: Text('Fetch Data')),
+                    myFitbitData newdata = myFitbitData(tableKey,
+                        sleepHours: time,
+                        calories: cals,
+                        steps: steps,
+                        cardio: mins);
+                    await Provider.of<UsersDatabaseRepo>(context, listen: false)
+                        .insertFitbitData(newdata);
+                  }
+                },
+                child: Text('Fetch Data')),
           ],
         ),
       ),

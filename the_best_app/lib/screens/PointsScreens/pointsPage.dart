@@ -81,6 +81,9 @@ class PointsPage extends StatelessWidget {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       final fitbit = snapshot.data as List<myFitbitData>;
+
+                      print(
+                          '${dateFormatter(DateTime.fromMillisecondsSinceEpoch((fitbit[fitbit.length - 1].keyDate) * Duration.millisecondsPerDay))}');
                       final today = fitbit[fitbit.length - 1];
                       final todayPoints = elaboratePoints(today);
                       // QUI CI VUOLE ELABORAZIONE PERCENTUALI
