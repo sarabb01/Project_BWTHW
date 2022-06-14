@@ -128,9 +128,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           _selectDate(context);
                         },
                       ),
-                      FormSeparator(label: 'Select your Gender'),
+                      FormSeparator(label: 'Gender'),
                       DropdownButtonTileString(
-                        items: ['Female', 'Male', 'Genderqueer', '-'],
+                        items: ['Female', 'Male', 'None'],
                         labelText: 'Female or Male',
                         notifyParent: selectGender,
                       ),
