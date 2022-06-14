@@ -16,6 +16,7 @@ import 'package:the_best_app/screens/profiledatapage.dart';
 
 //Profile Screens
 import 'package:the_best_app/screens/profilepage.dart';
+
 // User Database
 import 'package:the_best_app/Database/database.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
@@ -92,7 +93,7 @@ class MyApp extends StatelessWidget {
               return Profilepage();
             });
           } else if (settings.name == Profiledatapage.route) {
-            MaterialPageRoute(builder: (context) {
+            return MaterialPageRoute(builder: (context) {
               return Profiledatapage();
             });
           } else if (settings.name == FetchPage.route) {
