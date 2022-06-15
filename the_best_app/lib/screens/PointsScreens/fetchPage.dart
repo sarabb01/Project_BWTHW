@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'package:the_best_app/Database/typeConverters/dateTimeConverter.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
+import 'package:the_best_app/models/fitbitDataTypes.dart';
 //Import Screens
 import 'package:the_best_app/screens/PointsScreens/pointsPage.dart';
 
@@ -29,17 +30,17 @@ class FetchPage extends StatefulWidget {
 class _FetchPageState extends State<FetchPage> {
   @override
   Widget build(BuildContext context) {
-    DateTime startDate = DateTime.utc(2022, 6, 12);
+    DateTime startDate = DateTime.utc(2022, 6, 13);
     //DateTime endDate = DateTime.utc(2022, 5, 31);
     DateTime endDate = DateTime.now();
     int daysToSubtract =
         // DateTime.now().difference(DateTime.utc(2022, 6, 8, 1, 1, 1, 1, 1)).inDays;
         endDate.difference(startDate).inDays;
 
-    List<SleepData>? result;
-    List<ActivityData>? resultActivity;
-    List<StepsData>? resultTSActivity;
-    List<HeartData>? resultHR;
+    // List<SleepData>? result;
+    // List<ActivityData>? resultActivity;
+    // List<StepsData>? resultTSActivity;
+    // List<HeartData>? resultHR;
 
     print('${FetchPage.routename} built');
     print(daysToSubtract);
@@ -94,7 +95,7 @@ class _FetchPageState extends State<FetchPage> {
                     //     DateTime.now().subtract(Duration(days: reqDay));
                     DateTime queryDate =
                         endDate.subtract(Duration(days: reqDay));
-
+                    int detail = queryDate.millisecondsSinceEpoch ~/ 60000;
                     int tableKey = queryDate.millisecondsSinceEpoch ~/ 86400000;
                     print('Query date: $queryDate');
                     print('INT: $tableKey');
@@ -137,7 +138,8 @@ class _FetchPageState extends State<FetchPage> {
                         sleepHours: time,
                         calories: cals,
                         steps: steps,
-                        cardio: mins);
+                        cardio: mins,
+                        detailDate: detail);
                     await Provider.of<UsersDatabaseRepo>(context, listen: false)
                         .insertFitbitData(newdata);
                   }

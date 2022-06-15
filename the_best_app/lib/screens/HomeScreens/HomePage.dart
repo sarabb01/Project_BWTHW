@@ -226,7 +226,7 @@ class _HomepageState extends State<HomePage>
             //duration: Duration(seconds: 10),
             //builder: (context, value, _) =>
             child: Padding(
-          padding: const EdgeInsets.only(top: 6, bottom: 30),
+          padding: const EdgeInsets.only(top: 15, bottom: 30),
           child: Column(crossAxisAlignment: CrossAxisAlignment.center,
               //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -238,13 +238,15 @@ class _HomepageState extends State<HomePage>
                   decoration:
                       BoxDecoration(border: Border.all(color: Colors.black)),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 50),
                 const Text(
                   'Your points:',
                   style: TextStyle(fontSize: 20),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 40),
                 Container(
+                    decoration:
+                        BoxDecoration(border: Border.all(color: Colors.black)),
                     width: 200,
                     height: 200,
                     child: FutureBuilder(
@@ -252,22 +254,39 @@ class _HomepageState extends State<HomePage>
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           final result = snapshot.data as SharedPreferences;
-                          final score = result.getDouble('Points');
-
-                          return Stack(
-                            fit: StackFit.expand,
-                            children: [
-                              CircularProgressIndicator(
-                                value: score! / obiettivo,
-                                backgroundColor: Colors.grey[400],
-                                color: Colors.greenAccent[700],
-                                strokeWidth: 25,
-                              ),
-                              Center(
-                                child: buildprogress(score),
-                              ),
-                            ],
-                          );
+                          if (result.getDouble('Points') != null) {
+                            final score = result.getDouble('Points');
+                            return Stack(
+                              fit: StackFit.expand,
+                              children: [
+                                CircularProgressIndicator(
+                                  value: score! / obiettivo,
+                                  backgroundColor: Colors.grey[400],
+                                  color: Colors.greenAccent[700],
+                                  strokeWidth: 25,
+                                ),
+                                Center(
+                                  child: buildprogress(score),
+                                ),
+                              ],
+                            );
+                          } else {
+                            final score = 0.0;
+                            return Stack(
+                              fit: StackFit.expand,
+                              children: [
+                                CircularProgressIndicator(
+                                  value: score / obiettivo,
+                                  backgroundColor: Colors.grey[400],
+                                  color: Colors.greenAccent[700],
+                                  strokeWidth: 25,
+                                ),
+                                Center(
+                                  child: buildprogress(score),
+                                ),
+                              ],
+                            );
+                          }
                         } else {
                           return CircularProgressIndicator();
                         }
@@ -279,7 +298,7 @@ class _HomepageState extends State<HomePage>
                 //' points from the AWARD, GO AND GET IT',
                 //style: TextStyle(fontSize: 20),
                 //),
-                SizedBox(height: 50),
+                SizedBox(height: 80),
                 CupertinoButton.filled(
                     child: const Text('Gain your Award'),
                     onPressed: () {

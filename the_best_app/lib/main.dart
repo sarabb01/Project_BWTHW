@@ -7,6 +7,7 @@ import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/ForgotPasswordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/RegistrationPage.dart';
+import 'package:the_best_app/screens/PointsScreens/summaryPage.dart';
 import 'package:the_best_app/screens/infopage.dart';
 // Home Screens
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
@@ -103,6 +104,10 @@ class MyApp extends StatelessWidget {
           } else if (settings.name == PointsPage.route) {
             return MaterialPageRoute(builder: (context) {
               return PointsPage();
+            });
+          } else if (settings.name == SummaryPage.route) {
+            return MaterialPageRoute(builder: (context) {
+              return SummaryPage();
             });
           } else if (settings.name == PreferencePage.route) {
             return MaterialPageRoute(builder: (context) {
