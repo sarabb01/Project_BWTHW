@@ -226,18 +226,17 @@ class _HomepageState extends State<HomePage>
             //duration: Duration(seconds: 10),
             //builder: (context, value, _) =>
             child: Padding(
-          padding: const EdgeInsets.only(top: 10, bottom: 30),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          padding: const EdgeInsets.only(top: 6, bottom: 30),
+          child: Column(crossAxisAlignment: CrossAxisAlignment.center,
+              //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
-                  //width: width * 0.4,
-                  height: MediaQuery.of(context).size.height / 4,
-                  child: Image.asset(
-                    'assets/Images/logo4.png',
-                    fit: BoxFit.cover,
-                  ),
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  height: MediaQuery.of(context).size.height / 6,
+                  child: Image.asset('assets/Images/logoblack.png',
+                      fit: BoxFit.contain),
+                  decoration:
+                      BoxDecoration(border: Border.all(color: Colors.black)),
                 ),
                 SizedBox(height: 10),
                 const Text(
@@ -280,7 +279,7 @@ class _HomepageState extends State<HomePage>
                 //' points from the AWARD, GO AND GET IT',
                 //style: TextStyle(fontSize: 20),
                 //),
-                SizedBox(height: 100),
+                SizedBox(height: 50),
                 CupertinoButton.filled(
                     child: const Text('Gain your Award'),
                     onPressed: () {
