@@ -60,9 +60,10 @@ class _HelloWordPageState extends State<HelloWordPage> {
                   EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 10),
               child: Center(
                 child: Image.asset(
-                  'assets/Images/logo5.png',
-                  width: screenSize.width / 1.5,
+                  'assets/Images/logoblack.png',
+                  width: screenSize.width / 1.2,
                   height: 200,
+                  fit: BoxFit.contain,
                 ),
               ),
             ),
