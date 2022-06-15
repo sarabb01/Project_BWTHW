@@ -1,70 +1,121 @@
 import 'package:fitbitter/fitbitter.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/Utils/stringsKeywords.dart';
+import 'package:the_best_app/functions/dateFormatter.dart';
 import 'package:the_best_app/functions/elaborateDataFunctions.dart';
+import 'package:the_best_app/models/fitbitDataTypes.dart';
 
 Future<void> fetchData(BuildContext context) async {
-  DateTime startDate = DateTime.utc(2022, 4, 10);
-  DateTime endDate = DateTime.utc(2022, 4, 14);
+  List<myFitbitData> allData =
+      await Provider.of<UsersDatabaseRepo>(context, listen: false)
+          .findAllFitbitData();
+  DateTime lastInsertion = myDate(allData[allData.length - 1].detailDate);
+  int intlastInsertion = (allData[allData.length - 1].detailDate);
+  int threshold =
+      (DateTime.now().millisecondsSinceEpoch ~/ 60000) - intlastInsertion;
+
+  //debug
+  // print(threshold);
+  // print(DateTime.now().millisecondsSinceEpoch ~/ 60000);
+  // print(intlastInsertion);
+  // print(allData[allData.length - 1].keyDate);
+  //print(threshold);
+
+  DateTime startDate = DateTime.utc(2022, 5, 15);
+  DateTime endDate = DateTime.utc(2022, 5, 18);
+  //DateTime endDate = DateTime.now();
+
   int daysToSubtract =
       // DateTime.now().difference(DateTime.utc(2022, 6, 8, 1, 1, 1, 1, 1)).inDays;
       endDate.difference(startDate).inDays;
   print('N of calls $daysToSubtract');
+  print(endDate);
 
-  // late List<SleepData> result;
-  // late List<ActivityData> resultActivity;
-  // late List<StepsData> resultTSActivity;
-  // late List<HeartData> resultHR;
-  for (int reqDay = daysToSubtract; reqDay >= 0; reqDay--) {
-    //for (int reqDay = 10; reqDay >= 8; reqDay--) {
-    //int reqDay = 1;
-    DateTime queryDate = endDate.subtract(Duration(days: reqDay));
-    int tableKey = queryDate.millisecondsSinceEpoch ~/ 86400000;
-    print('Query date: $queryDate');
-    print('INT: $tableKey');
-    final result = await fetchSleepData(queryDate) as List<FitbitSleepData>;
-    final resultActivity =
-        await fetchActivityData(queryDate) as List<FitbitActivityData>;
-    final resultTSActivity = await fetchActivityTSData(queryDate, 'steps')
-        as List<FitbitActivityTimeseriesData>;
-    final resultHR = await fetchHeartData(queryDate) as List<FitbitHeartData>;
+  // List<FitbitSleepData>? result;
+  // List<FitbitActivityData> resultActivity;
+  // List<FitbitActivityTimeseriesData> resultTSActivity;
+  // List<FitbitHeartData> resultHR;
 
-    int time = 0;
-    int cals = 0;
-    int steps = 0;
-    int mins = 0;
+  // late List<FitbitSleepData> result;
+  // late List<FitbitActivityData> resultActivity;
+  // late List<FitbitActivityTimeseriesData> resultTSActivity;
+  // late List<FitbitHeartData> resultHR;
 
-    if (result.length > 0) {
-      time = elaborateSleepData(result);
+  if (threshold > 5) {
+    for (int reqDay = daysToSubtract; reqDay >= 0; reqDay--) {
+      //for (int reqDay = 10; reqDay >= 8; reqDay--) {
+      //int reqDay = 1;
+      DateTime queryDate = endDate.subtract(Duration(days: reqDay));
+      int detail = queryDate.millisecondsSinceEpoch ~/
+          60000; //MILLISECONDS IN A MINUTE --> NUMBER OF MINUTES SINCHE EPOCH
+      int tableKey = queryDate.millisecondsSinceEpoch ~/
+          86400000; // MILLISECONDS IN A DAY --> NUMBER OF DAYS SINCE EPOCH.
+
+      print('Query date: $queryDate');
+      print('INT: $tableKey, DETAIL: $detail');
+
+      final result = await fetchSleepData(queryDate) as List<FitbitSleepData>;
+      final resultActivity =
+          await fetchActivityData(queryDate) as List<FitbitActivityData>;
+      final resultTSActivity = await fetchActivityTSData(queryDate, 'steps')
+          as List<FitbitActivityTimeseriesData>;
+      final resultHR = await fetchHeartData(queryDate) as List<FitbitHeartData>;
+
+      int time = 0;
+      int cals = 0;
+      int steps = 0;
+      int mins = 0;
+
+      if (result.length > 0) {
+        time = elaborateSleepData(result);
+      }
+      //print('Current time $time');
+
+      if (resultActivity.length > 0) {
+        cals = elaborateActivityData(resultActivity);
+      }
+      //print('Current cals $cals');
+
+      if (resultTSActivity.length > 0) {
+        steps = elaborateTSActivityData(resultTSActivity);
+      }
+      //print('Current cals $steps');
+
+      if (resultHR.length > 0) {
+        mins = elaborateHRData(resultHR);
+      }
+      //print('Current min $mins');
+      myFitbitData newdata = myFitbitData(tableKey,
+          sleepHours: time,
+          calories: cals,
+          steps: steps,
+          cardio: mins,
+          detailDate: detail);
+      await Provider.of<UsersDatabaseRepo>(context, listen: false)
+          .insertFitbitData(newdata);
     }
-    //print('Current time $time');
-
-    if (resultActivity.length > 0) {
-      cals = elaborateActivityData(resultActivity);
-    }
-    //print('Current cals $cals');
-
-    if (resultTSActivity.length > 0) {
-      steps = elaborateTSActivityData(resultTSActivity);
-    }
-    //print('Current cals $steps');
-
-    if (resultHR.length > 0) {
-      mins = elaborateHRData(resultHR);
-    }
-    //print('Current min $mins');
-
-    myFitbitData newdata = myFitbitData(tableKey,
-        sleepHours: time, calories: cals, steps: steps, cardio: mins);
-    await Provider.of<UsersDatabaseRepo>(context, listen: false)
-        .insertFitbitData(newdata);
+  } else {
+    print('Data alreay updated');
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text(
+          '\nData alreay updated\n',
+          style: TextStyle(color: Colors.black, fontSize: 20),
+          textAlign: TextAlign.center,
+        ),
+        backgroundColor: Colors.yellow));
   }
 }
 
 ///////////////////////////
+///
+DateTime myDate(int date) {
+  return DateTime.fromMillisecondsSinceEpoch(
+      date * Duration.millisecondsPerMinute);
+}
 
 Future fetchActivityData(DateTime reqDay) async {
   // Activity Data
