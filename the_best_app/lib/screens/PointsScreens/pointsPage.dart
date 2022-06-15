@@ -22,6 +22,7 @@ import 'package:the_best_app/Utils/bar_chart.dart';
 import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/functions/fetchdata.dart';
+import 'package:the_best_app/screens/PointsScreens/summaryPage.dart';
 
 // import 'package:syncfusion_flutter_charts/charts.dart';
 // import 'package:syncfusion_flutter_charts/sparkcharts.dart';
@@ -82,8 +83,8 @@ class PointsPage extends StatelessWidget {
                     if (snapshot.hasData) {
                       final fitbit = snapshot.data as List<myFitbitData>;
 
-                      print(
-                          '${dateFormatter(DateTime.fromMillisecondsSinceEpoch((fitbit[fitbit.length - 1].keyDate) * Duration.millisecondsPerDay))}');
+                      //print(
+                      //    '${dateFormatter(DateTime.fromMillisecondsSinceEpoch((fitbit[fitbit.length - 1].keyDate) * Duration.millisecondsPerDay))}');
                       final today = fitbit[fitbit.length - 1];
                       final todayPoints = elaboratePoints(today);
                       // QUI CI VUOLE ELABORAZIONE PERCENTUALI
@@ -172,8 +173,8 @@ class PointsPage extends StatelessWidget {
                       //       .fold(0, (prev, element) => prev + element);
                       // }
                       final List total = computeSum(fitbit);
-                      print(total);
-                      print(score.toStringAsFixed(2));
+                      //print(total);
+                      //print(score.toStringAsFixed(2));
 
                       // List<charts.Series<DailyScore, String>> chartData =
                       //     createBarData(fitbit);
@@ -185,7 +186,10 @@ class PointsPage extends StatelessWidget {
                                   Text(
                                       'SUMMARY of ${fitbit.length} DAYS: ${score.toStringAsFixed(2)} POINTS'),
                                   GestureDetector(
-                                    onLongPress: () {},
+                                    onLongPress: () {
+                                      Navigator.pushNamed(
+                                          context, SummaryPage.route);
+                                    },
                                     child: Container(
                                         height: 300,
                                         child: StackedBarChart(
