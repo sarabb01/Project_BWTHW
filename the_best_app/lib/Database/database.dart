@@ -5,11 +5,7 @@ import 'package:sqflite/sqflite.dart' as sqflite;
 import 'package:the_best_app/Database/typeConverters/dateTimeConverter.dart';
 
 //Here, we are importing the entities and the daos of the database
-import 'package:the_best_app/Database/Daos/ActivityDao.dart';
 import 'package:the_best_app/Database/Daos/fitbitDao.dart';
-import 'package:the_best_app/Database/Daos/HeartDao.dart';
-import 'package:the_best_app/Database/Daos/SleepDao.dart';
-import 'package:the_best_app/Database/Daos/StepsDao.dart';
 
 import 'package:the_best_app/Database/Daos/UserCreddaos.dart';
 import 'package:the_best_app/Database/Daos/UserInfosdaos.dart';
@@ -27,18 +23,10 @@ part 'database.g.dart';
   UsersCredentials,
   UserInfos,
   myFitbitData,
-  SleepData,
-  ActivityData,
-  StepsData,
-  HeartData
 ])
 abstract class AppDatabase extends FloorDatabase {
   //Add all the daos as getters here
   UserCrededentialsDao get user_crededentials_dao;
   FitbitDao get fitbitDao;
-  SleepDao get sleepDao;
-  ActivityDao get activityDao;
-  StepsDao get stepsDao;
-  HeartDao get heartDao;
   UserInfosDao get user_infos_dao;
 }//AppDatabase
