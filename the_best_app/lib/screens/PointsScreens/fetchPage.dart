@@ -37,9 +37,9 @@ class _FetchPageState extends State<FetchPage> {
         endDate.difference(startDate).inDays;
 
     List<SleepData>? result;
-    late List<ActivityData> resultActivity;
-    late List<StepsData> resultTSActivity;
-    late List<HeartData> resultHR;
+    List<ActivityData>? resultActivity;
+    List<StepsData>? resultTSActivity;
+    List<HeartData>? resultHR;
 
     print('${FetchPage.routename} built');
     print(daysToSubtract);
