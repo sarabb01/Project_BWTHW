@@ -30,17 +30,16 @@ class FetchPage extends StatefulWidget {
 class _FetchPageState extends State<FetchPage> {
   @override
   Widget build(BuildContext context) {
-    DateTime startDate = DateTime.utc(2022, 6, 13);
-    //DateTime endDate = DateTime.utc(2022, 5, 31);
-    DateTime endDate = DateTime.now();
+    DateTime startDate = DateTime.utc(2022, 5, 29);
+    DateTime endDate = DateTime.utc(2022, 5, 31);
+    //DateTime endDate = DateTime.now();
     int daysToSubtract =
         // DateTime.now().difference(DateTime.utc(2022, 6, 8, 1, 1, 1, 1, 1)).inDays;
         endDate.difference(startDate).inDays;
-
-    // List<SleepData>? result;
-    // List<ActivityData>? resultActivity;
-    // List<StepsData>? resultTSActivity;
-    // List<HeartData>? resultHR;
+    List<FitbitSleepData>? result;
+    List<FitbitActivityData> resultActivity;
+    List<FitbitActivityTimeseriesData> resultTSActivity;
+    List<FitbitHeartData> resultHR;
 
     print('${FetchPage.routename} built');
     print(daysToSubtract);

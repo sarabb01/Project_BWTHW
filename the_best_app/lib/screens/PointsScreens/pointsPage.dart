@@ -45,6 +45,7 @@ class PointsPage extends StatelessWidget {
                               listen: false)
                           .findAllFitbitData();
                   final sp = await SharedPreferences.getInstance();
+
                   final double score = computeTotalPoints(allData);
                   sp.setDouble('Points', score);
                   print('${allData.length}, ${sp.getDouble('Points')}');
@@ -58,17 +59,7 @@ class PointsPage extends StatelessWidget {
             child: Icon(Icons.smart_toy_outlined),
             onPressed: () async {
               fetchData(context);
-            }
-            //   List<SleepData> allSleepData =
-            //       await Provider.of<UsersDatabaseRepo>(context, listen: false)
-            //           .findAllSleepData();
-            //   int totalHours = 0;
-            //   for (int k = 0; k < allSleepData.length; k++) {
-            //     totalHours += allSleepData[k].sleepHours;
-            //   }
-            //   print(totalHours);
-            // },
-            ),
+            }),
         body: SingleChildScrollView(
             child: Padding(
           padding: const EdgeInsets.all(25.0),
@@ -85,74 +76,97 @@ class PointsPage extends StatelessWidget {
 
                       //print(
                       //    '${dateFormatter(DateTime.fromMillisecondsSinceEpoch((fitbit[fitbit.length - 1].keyDate) * Duration.millisecondsPerDay))}');
-                      final today = fitbit[fitbit.length - 1];
-                      final todayPoints = elaboratePoints(today);
-                      // QUI CI VUOLE ELABORAZIONE PERCENTUALI
-                      final List<CircularStackEntry> chartData =
-                          createChartData(today);
+                      if (fitbit.length > 0) {
+                        final today = fitbit[fitbit.length - 1];
+                        final todayPoints = elaboratePoints(today);
+                        // QUI CI VUOLE ELABORAZIONE PERCENTUALI
+                        final List<CircularStackEntry> chartData =
+                            createChartData(today);
 
-                      return fitbit.length == 0
-                          ? Text('No activity recorded today')
-                          : Container(
-                              child: GestureDetector(
-                              onLongPress: () {
-                                //This function will subtract points;
-                                showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        title: Text(
-                                          'POINTS SUMMARY',
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        titleTextStyle: TextStyle(
-                                            color: Colours.darkGreen,
-                                            fontSize: 25),
-                                        content: Text(
-                                          'Steps ${(todayPoints[0] * 100).toStringAsFixed(1)}%\n${today.steps} / 10000 \n\nCalories ${todayPoints[1] * 100}%\n${today.calories} / 600 \n\nCardio ${todayPoints[2] * 100}%\n${today.cardio} / 15 \n\nSleep ${(todayPoints[3] * 100).toStringAsFixed(1)}%\n${today.sleepHours} / 7',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              fontStyle: FontStyle.italic),
-                                        ),
-                                        backgroundColor: Colours.whiteSmoke,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(12.0)),
-                                        //margin: EdgeInsets.fromLTRB(50, 450, 50, 200),
-                                        actions: [
-                                          IconButton(
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              }, // TO BE IMPLEMENTED
-                                              icon: Icon(
-                                                Icons.check_circle,
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                              )),
-                                        ],
-                                        actionsAlignment:
-                                            MainAxisAlignment.center,
-                                      );
-                                    });
-                              },
-                              child: Column(children: [
-                                Text(
-                                  '${dateFormatter(DateTime.fromMillisecondsSinceEpoch((today.keyDate) * Duration.millisecondsPerDay), opt: 2)}',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                RadialChart(
-                                    chartData: chartData,
-                                    pointsData: todayPoints),
-                              ]),
-                            ));
-                      // : Card(
-                      //     child: ListTile(
-                      //     title: Text(
-                      //         '${dateFormatter(DateTime.fromMillisecondsSinceEpoch((fitbit[fitbit.length - 1].keyDate) * Duration.millisecondsPerDay))}'),
-                      //     subtitle: Text('$todayPoints'),
-                      //   ));
+                        return fitbit.length == 0
+                            ? Text('No activity recorded today')
+                            : Container(
+                                child: GestureDetector(
+                                onLongPress: () {
+                                  //This function will subtract points;
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          title: Text(
+                                            'POINTS SUMMARY',
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          titleTextStyle: TextStyle(
+                                              color: Colours.darkGreen,
+                                              fontSize: 25),
+                                          content: Column(
+                                            children: [
+                                              Text(
+                                                  'Steps ${(todayPoints[0] * 100).toStringAsFixed(1)}%\n${today.steps} / 10000 '),
+                                              Text(
+                                                  '\nCalories ${todayPoints[1] * 100}%\n${today.calories} / 600'),
+                                              Text(
+                                                  '\nCardio ${todayPoints[2] * 100}%\n${today.cardio} / 15'),
+                                              Text(
+                                                  '\n\nSleep ${(todayPoints[3] * 100).toStringAsFixed(1)}%\n${today.sleepHours} / 7'),
+                                            ],
+                                          ),
+                                          backgroundColor: Colours.whiteSmoke,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12.0)),
+                                          //margin: EdgeInsets.fromLTRB(50, 450, 50, 200),
+                                          actions: [
+                                            IconButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                }, // TO BE IMPLEMENTED
+                                                icon: Icon(
+                                                  Icons.check_circle,
+                                                  color: Theme.of(context)
+                                                      .primaryColor,
+                                                )),
+                                          ],
+                                          actionsAlignment:
+                                              MainAxisAlignment.center,
+                                        );
+                                      });
+                                },
+                                child: Column(children: [
+                                  Text(
+                                    '${dateFormatter(DateTime.fromMillisecondsSinceEpoch((today.keyDate) * Duration.millisecondsPerDay), opt: 2)}',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  RadialChart(
+                                      chartData: chartData,
+                                      pointsData: todayPoints),
+                                ]),
+                              ));
+                      } else {
+                        return Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                '${dateFormatter(DateTime.now(), opt: 2)}',
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
+                              Text('No points gained yet',
+                                  textAlign: TextAlign.center),
+                              RadialChart(chartData: [
+                                CircularStackEntry([
+                                  CircularSegmentEntry(100.0, Colors.grey,
+                                      rankKey: 'Empty'),
+                                  CircularSegmentEntry(0.0, Colors.grey)
+                                ])
+                              ], pointsData: [
+                                0.0
+                              ])
+                            ]);
+                      }
                     } else {
                       return CircularProgressIndicator();
                     }
@@ -167,64 +181,32 @@ class PointsPage extends StatelessWidget {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       final fitbit = snapshot.data as List<myFitbitData>;
-                      final double score = computeTotalPoints(fitbit);
-                      // for (int i = 0; i < fitbit.length; i++) {
-                      //   score += elaboratePoints(fitbit[i])
-                      //       .fold(0, (prev, element) => prev + element);
-                      // }
-                      final List total = computeSum(fitbit);
-                      //print(total);
-                      //print(score.toStringAsFixed(2));
-
-                      // List<charts.Series<DailyScore, String>> chartData =
-                      //     createBarData(fitbit);
-                      return fitbit.length == 0
-                          ? Text('The list is currently empty')
-                          : Column(
-                              //height:250,
-                              children: [
-                                  Text(
-                                      'SUMMARY of ${fitbit.length} DAYS: ${score.toStringAsFixed(2)} POINTS'),
-                                  GestureDetector(
-                                    onLongPress: () {
-                                      Navigator.pushNamed(
-                                          context, SummaryPage.route);
-                                    },
-                                    child: Container(
-                                        height: 300,
-                                        child: StackedBarChart(
-                                            createBarData(fitbit))),
-                                  )
-                                ]);
-
-                      // : Expanded(
-                      //     child: ListView.builder(
-                      //       //itemCount: fitbit.length,
-                      //       itemCount: 1,
-                      //       itemBuilder: (context, index) {
-                      //         return Card(
-                      //             elevation: 3,
-                      //             child: ListTile(
-                      //               isThreeLine: true,
-                      //               leading: Icon(MdiIcons.note),
-                      //               // title: Text(
-                      //               //     '${dateFormatter(fitbit[index].date)}'),
-                      //               title: Text(
-                      //                   'SUMMARY of ${fitbit.length} DAYS'),
-                      //               // subtitle: Text(
-                      //               //     'Sleep: ${fitbit[index].sleepHours}, Calories: ${fitbit[index].calories}, Steps: ${fitbit[index].steps}, Minutes Cardio: ${fitbit[index].cardio}'),
-                      //               subtitle: Text(
-                      //                   'Sleep: ${total[0]}, Calories:${total[1]}, Steps: ${total[2]}, Minutes Cardio: ${total[3]},'),
-                      //               // onTap: () async {
-                      //               //   await Provider.of<DatabaseRepository>(
-                      //               //           context,
-                      //               //           listen: false)
-                      //               //       .deleteSleepData(data[index]);
-                      //               // }
-                      //             ));
-                      //       },
-                      //     ),
-                      //   );
+                      if (fitbit.length > 0) {
+                        final double score = computeTotalPoints(fitbit);
+                        final List total = computeSum(fitbit);
+                        //print(total);
+                        //print(score.toStringAsFixed(2));
+                        return fitbit.length == 0
+                            ? Text('The list is currently empty')
+                            : Column(
+                                //height:250,
+                                children: [
+                                    Text(
+                                        'SUMMARY of ${fitbit.length} DAYS: ${score.toStringAsFixed(2)} POINTS'),
+                                    GestureDetector(
+                                      onLongPress: () {
+                                        Navigator.pushNamed(
+                                            context, SummaryPage.route);
+                                      },
+                                      child: Container(
+                                          height: 300,
+                                          child: StackedBarChart(
+                                              createBarData(fitbit))),
+                                    )
+                                  ]);
+                      } else {
+                        return Text('No data');
+                      }
                     } else {
                       return CircularProgressIndicator();
                     }

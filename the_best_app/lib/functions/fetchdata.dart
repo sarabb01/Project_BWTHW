@@ -13,21 +13,26 @@ Future<void> fetchData(BuildContext context) async {
   List<myFitbitData> allData =
       await Provider.of<UsersDatabaseRepo>(context, listen: false)
           .findAllFitbitData();
-  DateTime lastInsertion = myDate(allData[allData.length - 1].detailDate);
-  int intlastInsertion = (allData[allData.length - 1].detailDate);
-  int threshold =
-      (DateTime.now().millisecondsSinceEpoch ~/ 60000) - intlastInsertion;
+  final fitbit2 = allData.reversed.toList();
 
+  int threshold = 6;
+  if (fitbit2.length > 0) {
+    DateTime lastInsertion = myDate(fitbit2[fitbit2.length - 1].detailDate);
+    int intlastInsertion = (fitbit2[fitbit2.length - 1].detailDate);
+    int threshold =
+        (DateTime.now().millisecondsSinceEpoch ~/ 60000) - intlastInsertion;
+    print(intlastInsertion);
+  }
   //debug
   // print(threshold);
   // print(DateTime.now().millisecondsSinceEpoch ~/ 60000);
-  // print(intlastInsertion);
+
   // print(allData[allData.length - 1].keyDate);
   //print(threshold);
 
   DateTime startDate = DateTime.utc(2022, 5, 15);
-  DateTime endDate = DateTime.utc(2022, 5, 18);
-  //DateTime endDate = DateTime.now();
+  //DateTime endDate = DateTime.utc(2022, 5, 25);
+  DateTime endDate = DateTime.now();
 
   int daysToSubtract =
       // DateTime.now().difference(DateTime.utc(2022, 6, 8, 1, 1, 1, 1, 1)).inDays;
@@ -57,46 +62,97 @@ Future<void> fetchData(BuildContext context) async {
 
       print('Query date: $queryDate');
       print('INT: $tableKey, DETAIL: $detail');
+      try {
+        final result = await fetchSleepData(queryDate) as List<FitbitSleepData>;
+        final resultActivity =
+            await fetchActivityData(queryDate) as List<FitbitActivityData>;
+        final resultTSActivity = await fetchActivityTSData(queryDate, 'steps')
+            as List<FitbitActivityTimeseriesData>;
+        final resultHR =
+            await fetchHeartData(queryDate) as List<FitbitHeartData>;
 
-      final result = await fetchSleepData(queryDate) as List<FitbitSleepData>;
-      final resultActivity =
-          await fetchActivityData(queryDate) as List<FitbitActivityData>;
-      final resultTSActivity = await fetchActivityTSData(queryDate, 'steps')
-          as List<FitbitActivityTimeseriesData>;
-      final resultHR = await fetchHeartData(queryDate) as List<FitbitHeartData>;
+        int time = 0;
+        int cals = 0;
+        int steps = 0;
+        int mins = 0;
 
-      int time = 0;
-      int cals = 0;
-      int steps = 0;
-      int mins = 0;
+        if (result.length > 0) {
+          time = elaborateSleepData(result);
+        }
+        //print('Current time $time');
 
-      if (result.length > 0) {
-        time = elaborateSleepData(result);
+        if (resultActivity.length > 0) {
+          cals = elaborateActivityData(resultActivity);
+        }
+        //print('Current cals $cals');
+
+        if (resultTSActivity.length > 0) {
+          steps = elaborateTSActivityData(resultTSActivity);
+        }
+        //print('Current cals $steps');
+
+        if (resultHR.length > 0) {
+          mins = elaborateHRData(resultHR);
+        }
+        //print('Current min $mins');
+        myFitbitData newdata = myFitbitData(tableKey,
+            sleepHours: time,
+            calories: cals,
+            steps: steps,
+            cardio: mins,
+            detailDate: detail);
+        await Provider.of<UsersDatabaseRepo>(context, listen: false)
+            .insertFitbitData(newdata);
+      } catch (FitbitRateLimitExceededException) {
+        print('Catch error');
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text(
+              'YOU HAVE TO WAIT!',
+              style: TextStyle(color: Colors.black, fontSize: 20),
+              textAlign: TextAlign.center,
+            ),
+            backgroundColor: Colors.red));
+        break;
       }
-      //print('Current time $time');
+      // final result = await fetchSleepData(queryDate) as List<FitbitSleepData>;
+      // final resultActivity =
+      //     await fetchActivityData(queryDate) as List<FitbitActivityData>;
+      // final resultTSActivity = await fetchActivityTSData(queryDate, 'steps')
+      //     as List<FitbitActivityTimeseriesData>;
+      // final resultHR = await fetchHeartData(queryDate) as List<FitbitHeartData>;
 
-      if (resultActivity.length > 0) {
-        cals = elaborateActivityData(resultActivity);
-      }
-      //print('Current cals $cals');
+      // int time = 0;
+      // int cals = 0;
+      // int steps = 0;
+      // int mins = 0;
 
-      if (resultTSActivity.length > 0) {
-        steps = elaborateTSActivityData(resultTSActivity);
-      }
-      //print('Current cals $steps');
+      // if (result.length > 0) {
+      //   time = elaborateSleepData(result);
+      // }
+      // //print('Current time $time');
 
-      if (resultHR.length > 0) {
-        mins = elaborateHRData(resultHR);
-      }
-      //print('Current min $mins');
-      myFitbitData newdata = myFitbitData(tableKey,
-          sleepHours: time,
-          calories: cals,
-          steps: steps,
-          cardio: mins,
-          detailDate: detail);
-      await Provider.of<UsersDatabaseRepo>(context, listen: false)
-          .insertFitbitData(newdata);
+      // if (resultActivity.length > 0) {
+      //   cals = elaborateActivityData(resultActivity);
+      // }
+      // //print('Current cals $cals');
+
+      // if (resultTSActivity.length > 0) {
+      //   steps = elaborateTSActivityData(resultTSActivity);
+      // }
+      // //print('Current cals $steps');
+
+      // if (resultHR.length > 0) {
+      //   mins = elaborateHRData(resultHR);
+      // }
+      // //print('Current min $mins');
+      // myFitbitData newdata = myFitbitData(tableKey,
+      //     sleepHours: time,
+      //     calories: cals,
+      //     steps: steps,
+      //     cardio: mins,
+      //     detailDate: detail);
+      // await Provider.of<UsersDatabaseRepo>(context, listen: false)
+      //     .insertFitbitData(newdata);
     }
   } else {
     print('Data alreay updated');
