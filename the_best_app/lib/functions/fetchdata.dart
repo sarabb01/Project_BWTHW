@@ -27,7 +27,7 @@ Future<void> fetchData(BuildContext context) async {
   // }
 
   print('Last insertion $lastInsertion');
-  DateTime startDate = DateTime.utc(2022, 6, 10);
+  DateTime startDate = DateTime.utc(2022, 6, 17);
   //DateTime startDate = lastInsertion;
   //DateTime endDate = DateTime.utc(2022, 6, 10);
   DateTime endDate = DateTime.now();
