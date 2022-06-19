@@ -13,42 +13,34 @@ Future<void> fetchData(BuildContext context) async {
   List<myFitbitData> allData =
       await Provider.of<UsersDatabaseRepo>(context, listen: false)
           .findAllFitbitData();
-  final fitbit2 = allData.reversed.toList();
 
-  int threshold = 6;
-  if (fitbit2.length > 0) {
-    DateTime lastInsertion = myDate(fitbit2[fitbit2.length - 1].detailDate);
-    int intlastInsertion = (fitbit2[fitbit2.length - 1].detailDate);
-    int threshold =
-        (DateTime.now().millisecondsSinceEpoch ~/ 60000) - intlastInsertion;
-    print(intlastInsertion);
-  }
-  //debug
-  // print(threshold);
-  // print(DateTime.now().millisecondsSinceEpoch ~/ 60000);
+  DateTime lastInsertion = (allData.length > 0)
+      ? myDate(allData[allData.length - 1].detailDate)
+      : DateTime.utc(2022, 6, 17);
 
-  // print(allData[allData.length - 1].keyDate);
-  //print(threshold);
+  // if (allData.length > 0) {
+  //   DateTime lastInsertion = myDate(allData[allData.length - 1].detailDate);
+  //   int intlastInsertion = (allData[allData.length - 1].detailDate);
+  //   final threshold =
+  //       (DateTime.now().millisecondsSinceEpoch ~/ 60000) - intlastInsertion;
+  //   print('met1 $intlastInsertion');;
+  // }
 
-  DateTime startDate = DateTime.utc(2022, 5, 15);
-  //DateTime endDate = DateTime.utc(2022, 5, 25);
+  print('Last insertion $lastInsertion');
+  DateTime startDate = DateTime.utc(2022, 6, 10);
+  //DateTime startDate = lastInsertion;
+  //DateTime endDate = DateTime.utc(2022, 6, 10);
   DateTime endDate = DateTime.now();
+
+  int threshold = calculateThreshold(allData, endDate);
+  print('Threshold mins $threshold');
 
   int daysToSubtract =
       // DateTime.now().difference(DateTime.utc(2022, 6, 8, 1, 1, 1, 1, 1)).inDays;
       endDate.difference(startDate).inDays;
+
   print('N of calls $daysToSubtract');
   print(endDate);
-
-  // List<FitbitSleepData>? result;
-  // List<FitbitActivityData> resultActivity;
-  // List<FitbitActivityTimeseriesData> resultTSActivity;
-  // List<FitbitHeartData> resultHR;
-
-  // late List<FitbitSleepData> result;
-  // late List<FitbitActivityData> resultActivity;
-  // late List<FitbitActivityTimeseriesData> resultTSActivity;
-  // late List<FitbitHeartData> resultHR;
 
   if (threshold > 5) {
     for (int reqDay = daysToSubtract; reqDay >= 0; reqDay--) {
@@ -62,17 +54,23 @@ Future<void> fetchData(BuildContext context) async {
 
       print('Query date: $queryDate');
       print('INT: $tableKey, DETAIL: $detail');
+
       try {
         final result = await fetchSleepData(queryDate) as List<FitbitSleepData>;
         final resultActivity =
             await fetchActivityData(queryDate) as List<FitbitActivityData>;
         final resultTSActivity = await fetchActivityTSData(queryDate, 'steps')
             as List<FitbitActivityTimeseriesData>;
+
+        final resultBMRCal = await fetchActivityTSData(queryDate, 'caloriesBMR')
+            as List<FitbitActivityTimeseriesData>;
+
         final resultHR =
             await fetchHeartData(queryDate) as List<FitbitHeartData>;
 
         int time = 0;
         int cals = 0;
+        int activeCals = 0;
         int steps = 0;
         int mins = 0;
 
@@ -83,6 +81,7 @@ Future<void> fetchData(BuildContext context) async {
 
         if (resultActivity.length > 0) {
           cals = elaborateActivityData(resultActivity);
+          print('$queryDate Metodo 1 TOt: $cals');
         }
         //print('Current cals $cals');
 
@@ -91,9 +90,22 @@ Future<void> fetchData(BuildContext context) async {
         }
         //print('Current cals $steps');
 
+        if (resultBMRCal.length > 0) {
+          int bmrCals = elaborateTSCalories(resultBMRCal);
+          print('BMR $bmrCals');
+          int totCals = elaborateTSActiveCalories(
+              await fetchActivityTSData(queryDate, 'calories')
+                  as List<FitbitActivityTimeseriesData>);
+          print('Active $totCals');
+          print('$queryDate Metodi 2 TOT ${totCals - bmrCals}');
+          activeCals = totCals - bmrCals;
+        }
+
         if (resultHR.length > 0) {
           mins = elaborateHRData(resultHR);
         }
+
+        cals = activeCals > 0 ? activeCals : cals;
         //print('Current min $mins');
         myFitbitData newdata = myFitbitData(tableKey,
             sleepHours: time,
@@ -104,61 +116,22 @@ Future<void> fetchData(BuildContext context) async {
         await Provider.of<UsersDatabaseRepo>(context, listen: false)
             .insertFitbitData(newdata);
       } catch (FitbitRateLimitExceededException) {
-        print('Catch error');
+        print('Catched error');
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text(
-              'YOU HAVE TO WAIT!',
+              'Too many requests! YOU HAVE TO WAIT!',
               style: TextStyle(color: Colors.black, fontSize: 20),
               textAlign: TextAlign.center,
             ),
             backgroundColor: Colors.red));
         break;
       }
-      // final result = await fetchSleepData(queryDate) as List<FitbitSleepData>;
-      // final resultActivity =
-      //     await fetchActivityData(queryDate) as List<FitbitActivityData>;
-      // final resultTSActivity = await fetchActivityTSData(queryDate, 'steps')
-      //     as List<FitbitActivityTimeseriesData>;
-      // final resultHR = await fetchHeartData(queryDate) as List<FitbitHeartData>;
-
-      // int time = 0;
-      // int cals = 0;
-      // int steps = 0;
-      // int mins = 0;
-
-      // if (result.length > 0) {
-      //   time = elaborateSleepData(result);
-      // }
-      // //print('Current time $time');
-
-      // if (resultActivity.length > 0) {
-      //   cals = elaborateActivityData(resultActivity);
-      // }
-      // //print('Current cals $cals');
-
-      // if (resultTSActivity.length > 0) {
-      //   steps = elaborateTSActivityData(resultTSActivity);
-      // }
-      // //print('Current cals $steps');
-
-      // if (resultHR.length > 0) {
-      //   mins = elaborateHRData(resultHR);
-      // }
-      // //print('Current min $mins');
-      // myFitbitData newdata = myFitbitData(tableKey,
-      //     sleepHours: time,
-      //     calories: cals,
-      //     steps: steps,
-      //     cardio: mins,
-      //     detailDate: detail);
-      // await Provider.of<UsersDatabaseRepo>(context, listen: false)
-      //     .insertFitbitData(newdata);
     }
   } else {
     print('Data alreay updated');
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text(
-          '\nData alreay updated\n',
+          'Data alreay updated',
           style: TextStyle(color: Colors.black, fontSize: 20),
           textAlign: TextAlign.center,
         ),
@@ -171,6 +144,19 @@ Future<void> fetchData(BuildContext context) async {
 DateTime myDate(int date) {
   return DateTime.fromMillisecondsSinceEpoch(
       date * Duration.millisecondsPerMinute);
+}
+
+int calculateThreshold(List<myFitbitData> input, DateTime endDate) {
+  if (input.length > 0) {
+    DateTime lastInsertion = myDate(input[input.length - 1].detailDate);
+    int intlastInsertion = (input[input.length - 1].detailDate);
+    final threshold =
+        (endDate.millisecondsSinceEpoch ~/ 60000) - intlastInsertion;
+    return threshold;
+  } else {
+    final threshold = 6;
+    return threshold;
+  }
 }
 
 Future fetchActivityData(DateTime reqDay) async {
