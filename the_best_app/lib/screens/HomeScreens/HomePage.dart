@@ -237,67 +237,72 @@ class _HomepageState extends State<HomePage>
                   height: MediaQuery.of(context).size.height / 6,
                   child: Image.asset('assets/Images/logoblack.png',
                       fit: BoxFit.contain),
-                  decoration:
-                      BoxDecoration(border: Border.all(color: Colors.black)),
+                  //decoration:
+                  //BoxDecoration(border: Border.all(color: Colors.black)),
                 ),
-                SizedBox(height: 50),
+                SizedBox(height: 40),
                 const Text(
                   'Your points:',
                   style: TextStyle(fontSize: 20),
                 ),
-                SizedBox(height: 40),
+                SizedBox(height: 30),
                 GestureDetector(
                   onDoubleTap: () {
                     Navigator.pushNamed(context, PointsPage.route);
                   },
                   child: Container(
                       decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black)),
+                          color: Colours.paleGreen,
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                              color: Colors.green, style: BorderStyle.solid)),
                       width: 200,
                       height: 200,
-                      //child: FutureBuilder()
-                      child: Consumer<PointsModel>(
-                        //future: SharedPreferences.getInstance(),
-                        builder: (context, score, child) {
-                          //if (snapshot.hasData) {
-                          //final result = snapshot.data as SharedPreferences;
-                          //if (result.getDouble('Points') != null) {
-                          //final score = result.getDouble('Points');
-                          //final score = score.
-                          return Stack(
-                            fit: StackFit.expand,
-                            children: [
-                              CircularProgressIndicator(
-                                value: score.totalScore / obiettivo,
-                                backgroundColor: Colors.grey[400],
-                                color: Colors.greenAccent[700],
-                                strokeWidth: 25,
-                              ),
-                              Center(
-                                child: buildprogress(score.totalScore),
-                              ),
-                            ],
-                          );
-                          //   } else {
-                          //     final score = 0.0;
-                          //     return Stack(
-                          //       fit: StackFit.expand,
-                          //       children: [
-                          //         CircularProgressIndicator(
-                          //           value: score / obiettivo,
-                          //           backgroundColor: Colors.grey[400],
-                          //           color: Colors.greenAccent[700],
-                          //           strokeWidth: 25,
-                          //         ),
-                          //         Center(
-                          //           child: buildprogress(score),
-                          //         ),
-                          //       ],
-                          //     );
-                          //   }
-                          // } else {
-                          //   return CircularProgressIndicator();
-                          // }
+                      child: FutureBuilder(
+                        //child: Consumer<PointsModel>(
+                        future: SharedPreferences.getInstance(),
+                        builder: (context, snapshot) {
+                          //builder: (context, score, child) {
+                          if (snapshot.hasData) {
+                            final result = snapshot.data as SharedPreferences;
+                            if (result.getDouble('Points') != null) {
+                              final score = result.getDouble('Points');
+                              return Stack(
+                                fit: StackFit.expand,
+                                children: [
+                                  CircularProgressIndicator(
+                                    value: score! / obiettivo,
+                                    //value: score.totalScore / obiettivo,
+                                    backgroundColor: Colors.grey[400],
+                                    color: Colors.greenAccent[700],
+                                    strokeWidth: 25,
+                                  ),
+                                  Center(
+                                    child: buildprogress(score),
+                                    //child: buildprogress(score.totalScore),
+                                  ),
+                                ],
+                              );
+                            } else {
+                              final score = 0.0;
+                              return Stack(
+                                fit: StackFit.expand,
+                                children: [
+                                  CircularProgressIndicator(
+                                    value: score / obiettivo,
+                                    backgroundColor: Colors.grey[400],
+                                    color: Colors.greenAccent[700],
+                                    strokeWidth: 25,
+                                  ),
+                                  Center(
+                                    child: buildprogress(score),
+                                  ),
+                                ],
+                              );
+                            }
+                          } else {
+                            return CircularProgressIndicator();
+                          }
                         },
                       )),
                 ),
@@ -307,12 +312,20 @@ class _HomepageState extends State<HomePage>
                 //' points from the AWARD, GO AND GET IT',
                 //style: TextStyle(fontSize: 20),
                 //),
-                SizedBox(height: 80),
+                SizedBox(height: 50),
                 CupertinoButton.filled(
                     child: const Text('Gain your Award'),
                     onPressed: () {
                       Navigator.pushNamed(context, PreferencePage.route);
-                    })
+                    }),
+                Container(
+                  //width: MediaQuery.of(context).size.width * 0.4,
+                  height: MediaQuery.of(context).size.height / 6,
+                  child: Image.asset(
+                    'assets/Images/present.png',
+                    fit: BoxFit.cover,
+                  ),
+                )
               ]),
         )));
   } //build
@@ -321,10 +334,19 @@ class _HomepageState extends State<HomePage>
     if (score / obiettivo == 1) {
       return const Icon(Icons.done, color: Colors.green, size: 56);
     } else {
-      return Text(
-        '${(score)}' '/' '${(obiettivo).toStringAsFixed(0)}',
-        style: TextStyle(fontSize: 20),
-      );
+      return Container(
+          width: 120,
+          height: 50,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.rectangle,
+              border: Border.all(color: Colors.green, width: 3),
+              borderRadius: BorderRadius.circular(20)),
+          alignment: Alignment.center,
+          child: Text(
+            '${(score)}' '/' '${(obiettivo).toStringAsFixed(0)}',
+            style: TextStyle(fontSize: 20),
+          ));
     }
   }
 } //Homepage
