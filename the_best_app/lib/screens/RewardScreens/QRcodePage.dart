@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:random_string/random_string.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_best_app/Utils/checkBoxWidget.dart';
 import 'package:the_best_app/models/expList.dart';
+import 'package:the_best_app/models/pointsModel.dart';
 import 'package:the_best_app/models/shopList.dart';
 
 class QRcodePage extends StatelessWidget {
@@ -107,12 +110,24 @@ class QRcodePage extends StatelessWidget {
                               Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    IconButton(
-                                        onPressed: () {}, // TO BE IMPLEMENTED
-                                        icon: Icon(
-                                          Icons.check_circle,
-                                          color: Theme.of(context).primaryColor,
-                                        )),
+                                    Consumer<PointsModel>(
+                                      builder: (context, totscore, child) {
+                                        return IconButton(
+                                            onPressed: () async {
+                                              totscore
+                                                  .subtractScore(list[key]![0]);
+                                              final sp = await SharedPreferences
+                                                  .getInstance();
+                                              sp.setDouble('Points',
+                                                  totscore.totalScore);
+                                            }, // TO BE IMPLEMENTED
+                                            icon: Icon(
+                                              Icons.check_circle,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                            ));
+                                      },
+                                    ),
                                     IconButton(
                                         onPressed: () {
                                           Navigator.pop(context);
