@@ -2,6 +2,7 @@
 import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
+import 'package:the_best_app/models/pointsModel.dart';
 import 'package:the_best_app/screens/PointsScreens/fitbitAuthPage.dart';
 import 'package:the_best_app/screens/PointsScreens/pointsPage.dart';
 import 'package:the_best_app/screens/RewardScreens/selectPrefPage.dart';
@@ -254,47 +255,49 @@ class _HomepageState extends State<HomePage>
                           border: Border.all(color: Colors.black)),
                       width: 200,
                       height: 200,
-                      child: FutureBuilder(
-                        future: SharedPreferences.getInstance(),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            final result = snapshot.data as SharedPreferences;
-                            if (result.getDouble('Points') != null) {
-                              final score = result.getDouble('Points');
-                              return Stack(
-                                fit: StackFit.expand,
-                                children: [
-                                  CircularProgressIndicator(
-                                    value: score! / obiettivo,
-                                    backgroundColor: Colors.grey[400],
-                                    color: Colors.greenAccent[700],
-                                    strokeWidth: 25,
-                                  ),
-                                  Center(
-                                    child: buildprogress(score),
-                                  ),
-                                ],
-                              );
-                            } else {
-                              final score = 0.0;
-                              return Stack(
-                                fit: StackFit.expand,
-                                children: [
-                                  CircularProgressIndicator(
-                                    value: score / obiettivo,
-                                    backgroundColor: Colors.grey[400],
-                                    color: Colors.greenAccent[700],
-                                    strokeWidth: 25,
-                                  ),
-                                  Center(
-                                    child: buildprogress(score),
-                                  ),
-                                ],
-                              );
-                            }
-                          } else {
-                            return CircularProgressIndicator();
-                          }
+                      //child: FutureBuilder()
+                      child: Consumer<PointsModel>(
+                        //future: SharedPreferences.getInstance(),
+                        builder: (context, score, child) {
+                          //if (snapshot.hasData) {
+                          //final result = snapshot.data as SharedPreferences;
+                          //if (result.getDouble('Points') != null) {
+                          //final score = result.getDouble('Points');
+                          //final score = score.
+                          return Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              CircularProgressIndicator(
+                                value: score.totalScore / obiettivo,
+                                backgroundColor: Colors.grey[400],
+                                color: Colors.greenAccent[700],
+                                strokeWidth: 25,
+                              ),
+                              Center(
+                                child: buildprogress(score.totalScore),
+                              ),
+                            ],
+                          );
+                          //   } else {
+                          //     final score = 0.0;
+                          //     return Stack(
+                          //       fit: StackFit.expand,
+                          //       children: [
+                          //         CircularProgressIndicator(
+                          //           value: score / obiettivo,
+                          //           backgroundColor: Colors.grey[400],
+                          //           color: Colors.greenAccent[700],
+                          //           strokeWidth: 25,
+                          //         ),
+                          //         Center(
+                          //           child: buildprogress(score),
+                          //         ),
+                          //       ],
+                          //     );
+                          //   }
+                          // } else {
+                          //   return CircularProgressIndicator();
+                          // }
                         },
                       )),
                 ),
