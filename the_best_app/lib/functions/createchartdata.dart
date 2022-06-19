@@ -55,7 +55,7 @@ List<charts.Series<DailyScore, String>> createBarData(
         // colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
         fillColorFn: (_, __) {
           if (today_score.any((item) => item < 1)) {
-            return charts.MaterialPalette.gray.shade400;
+            return charts.MaterialPalette.red.shadeDefault.lighter;
           } else {
             return charts.MaterialPalette.green.shadeDefault.lighter;
           }

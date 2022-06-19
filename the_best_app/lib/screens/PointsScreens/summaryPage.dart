@@ -45,15 +45,33 @@ class SummaryPage extends StatelessWidget {
                             child: ListView.builder(
                                 itemCount: fitbit2.length,
                                 itemBuilder: (_, index) {
-                                  return Card(
-                                    child: ListTile(
-                                      isThreeLine: true,
-                                      title: Text(
-                                          '${myDate(fitbit2[index].keyDate)}'),
-                                      subtitle: Text(
-                                          'Steps: ${fitbit2[index].steps}, Calories: ${fitbit2[index].calories}, Cardio: ${fitbit2[index].cardio},  Sleep: ${fitbit2[index].sleepHours}'),
-                                    ),
-                                  );
+                                  if (fitbit2[index].steps > 10000 &&
+                                      fitbit2[index].calories > 600 &&
+                                      fitbit2[index].cardio > 15 &&
+                                      fitbit2[index].sleepHours > 7) {
+                                    return Card(
+                                      child: ListTile(
+                                        isThreeLine: true,
+                                        title: Text(
+                                            '${myDate(fitbit2[index].keyDate)}'),
+                                        subtitle: Text(
+                                            'Steps: ${fitbit2[index].steps}, Calories: ${fitbit2[index].calories}, Cardio: ${fitbit2[index].cardio},  Sleep: ${fitbit2[index].sleepHours}'),
+                                      ),
+                                      color: Colors.green[200],
+                                    );
+                                  } else {
+                                    return Card(
+                                      child: ListTile(
+                                        isThreeLine: true,
+                                        title: Text(
+                                            '${myDate(fitbit2[index].keyDate)}'),
+                                        subtitle: Text(
+                                            'Steps: ${fitbit2[index].steps}, Calories: ${fitbit2[index].calories}, Cardio: ${fitbit2[index].cardio},  Sleep: ${fitbit2[index].sleepHours}'),
+                                      ),
+                                      color: Colors.red[100],
+                                    );
+                                  }
+                                  ;
                                 }),
                           );
                         } else {
