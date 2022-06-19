@@ -23,6 +23,7 @@ import 'package:the_best_app/Utils/bar_chart.dart';
 import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/functions/fetchdata.dart';
+import 'package:the_best_app/models/pointsModel.dart';
 import 'package:the_best_app/screens/PointsScreens/summaryPage.dart';
 
 // import 'package:syncfusion_flutter_charts/charts.dart';
@@ -39,39 +40,52 @@ class PointsPage extends StatelessWidget {
         appBar: AppBar(title: Text(PointsPage.routename), actions: [
           Row(
             children: [
-              IconButton(
-                  // Questo bottone serve per avere le informazioni!!
-                  iconSize: 40,
-                  tooltip: 'Info',
-                  icon: Icon(Icons.info),
-                  color: Colors.green[100],
-                  onPressed: () async {
-                    List<myFitbitData> allData =
-                        await Provider.of<UsersDatabaseRepo>(context,
-                                listen: false)
-                            .findAllFitbitData();
-                    final sp = await SharedPreferences.getInstance();
+              Consumer<PointsModel>(builder: (context, totscore, child) {
+                return IconButton(
+                    // Questo bottone serve per avere le informazioni!!
+                    iconSize: 40,
+                    tooltip: 'Info',
+                    icon: Icon(Icons.info),
+                    color: Colors.green[100],
+                    onPressed: () async {
+                      List<myFitbitData> allData =
+                          await Provider.of<UsersDatabaseRepo>(context,
+                                  listen: false)
+                              .findAllFitbitData();
+                      final sp = await SharedPreferences.getInstance();
 
-                    final double score = computeTotalPoints(allData);
-                    sp.setDouble('Points', score);
-                    print('${allData.length}, ${sp.getDouble('Points')}');
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                              content: SingleChildScrollView(
-                                  child: ListBody(children: [
-                            Text(
-                                '-To see further information, tap on the graph\n\n-To refresh data click on the REFRESH button top right')
-                          ])));
-                        });
-                  }),
-              IconButton(
-                  // Questo bottone serve per fetchare!!
-                  onPressed: () async {
-                    fetchData(context);
-                  },
-                  icon: Icon(Icons.update))
+                      final double score = computeTotalPoints(allData);
+                      sp.setDouble('Points', score);
+                      print('${allData.length}, ${sp.getDouble('Points')}');
+
+                      totscore.updateScore(score);
+
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                                content: SingleChildScrollView(
+                                    child: ListBody(children: [
+                              Text(
+                                  '-To see further information, tap on the graph\n\n-To refresh data click on the REFRESH button top right')
+                            ])));
+                          });
+                    });
+              }),
+              Consumer<PointsModel>(builder: (context, totscore, child) {
+                return IconButton(
+                    // Questo bottone serve per fetchare!!
+                    onPressed: () async {
+                      fetchData(context);
+                      List<myFitbitData> allData =
+                          await Provider.of<UsersDatabaseRepo>(context,
+                                  listen: false)
+                              .findAllFitbitData();
+                      final double score = computeTotalPoints(allData);
+                      totscore.updateScore(score);
+                    },
+                    icon: Icon(Icons.update));
+              })
             ],
           )
         ]),
@@ -221,6 +235,7 @@ class PointsPage extends StatelessWidget {
                       final fitbit = snapshot.data as List<myFitbitData>;
                       if (fitbit.length > 0) {
                         final double score = computeTotalPoints(fitbit);
+
                         final List total = computeSum(fitbit);
                         //print(total);
                         //print(score.toStringAsFixed(2));
@@ -232,7 +247,7 @@ class PointsPage extends StatelessWidget {
                                     Text(
                                         'SUMMARY of ${fitbit.length} DAYS: ${score.toStringAsFixed(2)} POINTS'),
                                     GestureDetector(
-                                      onTap: () {
+                                      onLongPress: () {
                                         Navigator.pushNamed(
                                             context, SummaryPage.route);
                                       },
