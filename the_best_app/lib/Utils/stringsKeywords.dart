@@ -2,14 +2,6 @@ class Strings {
   // App name
   static const String appName = "The Best App";
 
-  // Route names
-  // static const String homeScreenRouteName = '/home';
-  // static const String fitbitSettingsScreenRouteName = '/home/fitbitSettings';
-
-  // Screen names
-  // static const String homeScreenName = "Fitbitter Example";
-  // static const String fitbitSettingsScreenName = "Fitbit Account";
-
   // Fitbit Client ID
   static const String fitbitClientID = '238L93';
 
@@ -21,4 +13,10 @@ class Strings {
 
   /// Callback scheme
   static const String fitbitCallbackScheme = 'thebestapp';
+
+  // Targets
+  static const int targetSteps = 10000;
+  static const int targetCals = 600;
+  static const int targetCardio = 15;
+  static const int targetSleep = 7;
 }
