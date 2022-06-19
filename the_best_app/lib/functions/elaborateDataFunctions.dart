@@ -38,6 +38,22 @@ int elaborateTSActivityData(List<FitbitActivityTimeseriesData> result) {
   return totSteps;
 }
 
+int elaborateTSCalories(List<FitbitActivityTimeseriesData> result) {
+  int totCals = result[0].value!.round();
+  //print('ACTIVITY: ${result[0].type}\n TOTAL: $totSteps');
+  // print('$j: ${resultActivity[j]}');
+  //downloads['${result[0].dateOfMonitoring}'] = totSteps;
+  return totCals;
+}
+
+int elaborateTSActiveCalories(List<FitbitActivityTimeseriesData> result) {
+  int totCalsAct = result[0].value!.round();
+  //print('ACTIVITY: ${result[0].type}\n TOTAL: $totSteps');
+  // print('$j: ${resultActivity[j]}');
+  //downloads['${result[0].dateOfMonitoring}'] = totSteps;
+  return totCalsAct;
+}
+
 int elaborateHRData(List<FitbitHeartData> result) {
   int minCardio = 0;
   for (int j = 0; j < result.length; j++) {
