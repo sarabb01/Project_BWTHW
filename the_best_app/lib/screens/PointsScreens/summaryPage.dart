@@ -60,7 +60,7 @@ class SummaryPage extends StatelessWidget {
                                       createChartData(fitbit2[index]);
                                   final todayPoints =
                                       elaboratePoints(fitbit2[index]);
-                                  print(todayPoints);
+                                  //print(todayPoints);
                                   if (fitbit2[index].steps > 10000 &&
                                       fitbit2[index].calories > 600 &&
                                       fitbit2[index].cardio > 15 &&
