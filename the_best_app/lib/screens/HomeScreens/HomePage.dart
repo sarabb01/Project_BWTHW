@@ -3,6 +3,7 @@ import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
 import 'package:the_best_app/screens/PointsScreens/fitbitAuthPage.dart';
+import 'package:the_best_app/screens/PointsScreens/pointsPage.dart';
 import 'package:the_best_app/screens/RewardScreens/selectPrefPage.dart';
 import 'package:the_best_app/screens/infopage.dart';
 // FLUTTER PACKAGES
@@ -244,54 +245,59 @@ class _HomepageState extends State<HomePage>
                   style: TextStyle(fontSize: 20),
                 ),
                 SizedBox(height: 40),
-                Container(
-                    decoration:
-                        BoxDecoration(border: Border.all(color: Colors.black)),
-                    width: 200,
-                    height: 200,
-                    child: FutureBuilder(
-                      future: SharedPreferences.getInstance(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          final result = snapshot.data as SharedPreferences;
-                          if (result.getDouble('Points') != null) {
-                            final score = result.getDouble('Points');
-                            return Stack(
-                              fit: StackFit.expand,
-                              children: [
-                                CircularProgressIndicator(
-                                  value: score! / obiettivo,
-                                  backgroundColor: Colors.grey[400],
-                                  color: Colors.greenAccent[700],
-                                  strokeWidth: 25,
-                                ),
-                                Center(
-                                  child: buildprogress(score),
-                                ),
-                              ],
-                            );
+                GestureDetector(
+                  onDoubleTap: () {
+                    Navigator.pushNamed(context, PointsPage.route);
+                  },
+                  child: Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black)),
+                      width: 200,
+                      height: 200,
+                      child: FutureBuilder(
+                        future: SharedPreferences.getInstance(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            final result = snapshot.data as SharedPreferences;
+                            if (result.getDouble('Points') != null) {
+                              final score = result.getDouble('Points');
+                              return Stack(
+                                fit: StackFit.expand,
+                                children: [
+                                  CircularProgressIndicator(
+                                    value: score! / obiettivo,
+                                    backgroundColor: Colors.grey[400],
+                                    color: Colors.greenAccent[700],
+                                    strokeWidth: 25,
+                                  ),
+                                  Center(
+                                    child: buildprogress(score),
+                                  ),
+                                ],
+                              );
+                            } else {
+                              final score = 0.0;
+                              return Stack(
+                                fit: StackFit.expand,
+                                children: [
+                                  CircularProgressIndicator(
+                                    value: score / obiettivo,
+                                    backgroundColor: Colors.grey[400],
+                                    color: Colors.greenAccent[700],
+                                    strokeWidth: 25,
+                                  ),
+                                  Center(
+                                    child: buildprogress(score),
+                                  ),
+                                ],
+                              );
+                            }
                           } else {
-                            final score = 0.0;
-                            return Stack(
-                              fit: StackFit.expand,
-                              children: [
-                                CircularProgressIndicator(
-                                  value: score / obiettivo,
-                                  backgroundColor: Colors.grey[400],
-                                  color: Colors.greenAccent[700],
-                                  strokeWidth: 25,
-                                ),
-                                Center(
-                                  child: buildprogress(score),
-                                ),
-                              ],
-                            );
+                            return CircularProgressIndicator();
                           }
-                        } else {
-                          return CircularProgressIndicator();
-                        }
-                      },
-                    )),
+                        },
+                      )),
+                ),
                 //Text(
                 //'You are far'
                 //' ${(obiettivo - puntiottenuti)}'
