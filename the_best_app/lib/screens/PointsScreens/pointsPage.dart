@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:the_best_app/Utils/legends.dart';
 
 //Functions
 import 'package:the_best_app/functions/createchartdata.dart';
@@ -40,15 +41,7 @@ class PointsPage extends StatelessWidget {
           actions: [
             IconButton(
                 onPressed: () async {
-                  List<myFitbitData> allData =
-                      await Provider.of<UsersDatabaseRepo>(context,
-                              listen: false)
-                          .findAllFitbitData();
-                  final sp = await SharedPreferences.getInstance();
-
-                  final double score = computeTotalPoints(allData);
-                  sp.setDouble('Points', score);
-                  print('${allData.length}, ${sp.getDouble('Points')}');
+                  fetchData(context);
                 },
                 icon: Icon(Icons.update))
           ],
@@ -56,9 +49,18 @@ class PointsPage extends StatelessWidget {
 
         // Questo bottone può servire per fetchare!!
         floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.smart_toy_outlined),
+            child: Icon(Icons.smart_toy_outlined, color: Colors.white),
             onPressed: () async {
-              fetchData(context);
+              List<myFitbitData> allData =
+                  await Provider.of<UsersDatabaseRepo>(context, listen: false)
+                      .findAllFitbitData();
+              final sp = await SharedPreferences.getInstance();
+
+              final double score = computeTotalPoints(allData);
+              sp.setDouble('Points', score);
+              print('${allData.length}, ${sp.getDouble('Points')}');
+
+              ;
             }),
         body: SingleChildScrollView(
             child: Padding(
@@ -87,7 +89,7 @@ class PointsPage extends StatelessWidget {
                             ? Text('No activity recorded today')
                             : Container(
                                 child: GestureDetector(
-                                onLongPress: () {
+                                onTap: () {
                                   //This function will subtract points;
                                   showDialog(
                                       context: context,
@@ -98,19 +100,38 @@ class PointsPage extends StatelessWidget {
                                             textAlign: TextAlign.center,
                                           ),
                                           titleTextStyle: TextStyle(
-                                              color: Colours.darkGreen,
-                                              fontSize: 25),
-                                          content: Column(
-                                            children: [
+                                              color: Colors.black,
+                                              fontSize: 20),
+                                          content: SingleChildScrollView(
+                                            child: ListBody(children: [
                                               Text(
-                                                  'Steps ${(todayPoints[0] * 100).toStringAsFixed(1)}%\n${today.steps} / 10000 '),
+                                                'Steps ${(todayPoints[0] * 100).toStringAsFixed(1)}% (${today.steps} / 10000)',
+                                                style: TextStyle(
+                                                    color: Colors.blue[600],
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
                                               Text(
-                                                  '\nCalories ${todayPoints[1] * 100}%\n${today.calories} / 600'),
+                                                  'Calories ${todayPoints[1] * 100}% (${today.calories} / 600)',
+                                                  style: TextStyle(
+                                                      color: Colors
+                                                          .yellowAccent[700],
+                                                      fontWeight:
+                                                          FontWeight.bold)),
                                               Text(
-                                                  '\nCardio ${todayPoints[2] * 100}%\n${today.cardio} / 15'),
+                                                  'Cardio ${todayPoints[2] * 100}% (${today.cardio} / 15)',
+                                                  style: TextStyle(
+                                                      color: Colors
+                                                          .greenAccent[400],
+                                                      fontWeight:
+                                                          FontWeight.bold)),
                                               Text(
-                                                  '\n\nSleep ${(todayPoints[3] * 100).toStringAsFixed(1)}%\n${today.sleepHours} / 7'),
-                                            ],
+                                                  'Sleep ${(todayPoints[3] * 100).toStringAsFixed(1)}% (${today.sleepHours} / 7)',
+                                                  style: TextStyle(
+                                                      color: Colors.redAccent,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                            ]),
                                           ),
                                           backgroundColor: Colours.whiteSmoke,
                                           shape: RoundedRectangleBorder(
@@ -172,6 +193,10 @@ class PointsPage extends StatelessWidget {
                     }
                   });
             }),
+            // SizedBox(height: 5),
+            Legend_rad(),
+            SizedBox(height: 15),
+            Divider(color: Colors.black),
             // Text('SUMMARY of  DAYS'),
             Consumer<UsersDatabaseRepo>(builder: (context, dbr, child) {
               return FutureBuilder(
@@ -194,7 +219,7 @@ class PointsPage extends StatelessWidget {
                                     Text(
                                         'SUMMARY of ${fitbit.length} DAYS: ${score.toStringAsFixed(2)} POINTS'),
                                     GestureDetector(
-                                      onLongPress: () {
+                                      onTap: () {
                                         Navigator.pushNamed(
                                             context, SummaryPage.route);
                                       },
@@ -212,6 +237,8 @@ class PointsPage extends StatelessWidget {
                     }
                   });
             }),
+            SizedBox(height: 10),
+            Legend_bar()
           ]),
         )
             //),
