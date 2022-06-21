@@ -71,7 +71,7 @@ class _HelloWordPageState extends State<HelloWordPage> {
               padding:
                   EdgeInsets.only(left: 16, top: 10, right: 16, bottom: 10),
               child: Text(
-                'Say Hello To Your New App!',
+                'Welcome!',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Colors.black,
@@ -157,7 +157,7 @@ Widget WelcomePage_Form(
         style: ElevatedButton.styleFrom(
           primary: Colours.mediumSeaGreen,
           textStyle: TextStyle(color: Colors.white),
-          padding: EdgeInsets.only(top: 12, bottom: 12),
+          padding: EdgeInsets.only(top: 5, bottom: 5),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(25.0),
               side: BorderSide(color: Colours.mediumSeaGreen)),
