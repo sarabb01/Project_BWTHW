@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:the_best_app/Database/Entities/UserCreds.dart';
+import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/screens/LoginScreens/RegistrationPage.dart';
 
@@ -76,7 +79,23 @@ class Profiledatapage extends StatelessWidget {
                           icon: Icon(Icons.delete),
 
                           //heroTag: 'btn3',
-                          onPressed: () {},
+                          onPressed: () async {
+                            final sp = await SharedPreferences.getInstance();
+                            final name = sp.getString('username');
+                            print(name);
+                            final result = await Provider.of<UsersDatabaseRepo>(
+                                    context,
+                                    listen: false)
+                                .findUser(name!);
+                            var _user = result?.username;
+
+                            print(_user);
+                            // await Provider.of<UsersDatabaseRepo>(context,
+                            //         listen: false)
+                            //     .deleteUser(result!);
+                            await Navigator.pushReplacementNamed(
+                                context, HelloWordPage.route);
+                          },
                         ),
                         tileColor: Colors.green[100],
                       ),
