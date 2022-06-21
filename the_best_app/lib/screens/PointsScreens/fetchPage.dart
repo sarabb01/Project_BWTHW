@@ -87,6 +87,8 @@ class _FetchPageState extends State<FetchPage> {
             ElevatedButton(
                 onPressed: () async {
                   print('N of calls $daysToSubtract');
+
+                  // OPTION A
                   for (int reqDay = daysToSubtract; reqDay >= 0; reqDay--) {
                     //for (int reqDay = 10; reqDay >= 8; reqDay--) {
                     //int reqDay = 1;
@@ -142,6 +144,22 @@ class _FetchPageState extends State<FetchPage> {
                     await Provider.of<UsersDatabaseRepo>(context, listen: false)
                         .insertFitbitData(newdata);
                   }
+
+                  // OPTION B
+                  // DateTime queryDate =
+                  //     endDate.subtract(Duration(days: daysToSubtract));
+                  // int detail = queryDate.millisecondsSinceEpoch ~/ 60000;
+                  // int tableKey = queryDate.millisecondsSinceEpoch ~/ 86400000;
+                  // print('Query date: $queryDate');
+                  // print('INT: $tableKey');
+                  // final result =
+                  //     await _fetchSleepDatarange(queryDate) as List<FitbitSleepData>;
+                  // print(result.length);
+
+                  // final resultTSActivity =
+                  //     await _fetchActivityTSDatarange(queryDate, 'steps')
+                  //         as List<FitbitActivityTimeseriesData>;
+                  // print(resultTSActivity[0]);
                 },
                 child: Text('Fetch Data')),
           ],
@@ -248,3 +266,45 @@ Future _fetchSleepData(DateTime reqDay) async {
 
   return fitbitSleepDataManager.fetch(fitbitSleepApiUrl);
 }
+
+// Future _fetchSleepDatarange(DateTime reqDay) async {
+//   // Heart Data
+//   FitbitSleepDataManager fitbitSleepDataManager = FitbitSleepDataManager(
+//     clientID: Strings.fitbitClientID,
+//     clientSecret: Strings.fitbitClientSecret,
+//   );
+
+//   FitbitSleepAPIURL fitbitSleepApiUrl =
+//       FitbitSleepAPIURL.withUserIDAndDateRange(
+//     startDate: reqDay,
+//     endDate: reqDay.add(Duration(days: 10)),
+//     // date: DateTime.now().subtract(Duration(days: reqDay)),
+//     //afterDate: DateTime(2022, 15, 10),
+//     userID: '7ML2XV',
+//     //limit: 10
+//   );
+
+//   return fitbitSleepDataManager.fetch(fitbitSleepApiUrl);
+// }
+
+// Future _fetchActivityTSDatarange(DateTime reqDay, String Type) async {
+// Activity Timeseries data
+//  FitbitActivityTimeseriesDataManager fitbitActivityTimeseriesDataManager =
+//       FitbitActivityTimeseriesDataManager(
+//     clientID: Strings.fitbitClientID,
+//     clientSecret: Strings.fitbitClientSecret,
+//     type: Type,
+//   );
+
+//   FitbitActivityTimeseriesAPIURL fitbitActivityApiUrl =
+//       FitbitActivityTimeseriesAPIURL.dateRangeWithResource(
+//     // if you use week, you use less calls maybe!
+//     startDate: reqDay,
+//     endDate: reqDay.add(Duration(days: 3)),
+//     // date: DateTime.now().subtract(Duration(days: reqDay)),
+//     userID: '7ML2XV',
+//     resource: fitbitActivityTimeseriesDataManager.type,
+//   );
+
+//   return fitbitActivityTimeseriesDataManager.fetch(fitbitActivityApiUrl);
+// }
