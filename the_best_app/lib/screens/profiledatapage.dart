@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_best_app/screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/screens/LoginScreens/RegistrationPage.dart';
 
@@ -52,7 +53,12 @@ class Profiledatapage extends StatelessWidget {
                         trailing: IconButton(
                           icon: Icon(Icons.logout),
                           //heroTag: 'btn2',
-                          onPressed: () {},
+                          onPressed: () async {
+                            final sp = await SharedPreferences.getInstance();
+                            sp.remove('username');
+                            await Navigator.pushReplacementNamed(
+                                context, HelloWordPage.route);
+                          },
                         ),
                         tileColor: Colors.green[100],
                       ),
@@ -70,9 +76,7 @@ class Profiledatapage extends StatelessWidget {
                           icon: Icon(Icons.delete),
 
                           //heroTag: 'btn3',
-                          onPressed: () {
-                            Navigator.pop(context, HelloWordPage.route);
-                          },
+                          onPressed: () {},
                         ),
                         tileColor: Colors.green[100],
                       ),
