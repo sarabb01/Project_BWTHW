@@ -228,7 +228,7 @@ class _HomepageState extends State<HomePage>
             //duration: Duration(seconds: 10),
             //builder: (context, value, _) =>
             child: Padding(
-          padding: const EdgeInsets.only(top: 15, bottom: 30),
+          padding: const EdgeInsets.only(top: 10, bottom: 30),
           child: Column(crossAxisAlignment: CrossAxisAlignment.center,
               //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -240,12 +240,12 @@ class _HomepageState extends State<HomePage>
                   //decoration:
                   //BoxDecoration(border: Border.all(color: Colors.black)),
                 ),
-                SizedBox(height: 40),
+                SizedBox(height: 20),
                 const Text(
                   'Your points:',
                   style: TextStyle(fontSize: 20),
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 20),
                 GestureDetector(
                   onDoubleTap: () {
                     Navigator.pushNamed(context, PointsPage.route);
@@ -312,7 +312,7 @@ class _HomepageState extends State<HomePage>
                 //' points from the AWARD, GO AND GET IT',
                 //style: TextStyle(fontSize: 20),
                 //),
-                SizedBox(height: 50),
+                SizedBox(height: 30),
                 CupertinoButton.filled(
                     child: const Text('Gain your Award'),
                     onPressed: () {
