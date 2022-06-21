@@ -27,6 +27,7 @@ import 'package:the_best_app/screens/RewardScreens/queryPage.dart';
 import 'package:the_best_app/screens/RewardScreens/shoppingPage.dart';
 import 'package:the_best_app/screens/RewardScreens/experiencePage.dart';
 import 'package:the_best_app/screens/RewardScreens/QRcodePage.dart';
+import 'package:the_best_app/Screens/RewardScreens/MyVoucherPage.dart';
 
 Future<void> main() async {
   //This is a special method that use WidgetFlutterBinding to interact with the Flutter engine.
