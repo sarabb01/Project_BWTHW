@@ -88,7 +88,7 @@ class _$AppDatabase extends AppDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `UsersCredentials` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `username` TEXT NOT NULL, `password` TEXT NOT NULL)');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `User Informations` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `userid` INTEGER NOT NULL, `name` TEXT NOT NULL, `surname` TEXT NOT NULL, `gender` TEXT NOT NULL, `dateofbirth` INTEGER NOT NULL, `usertarget` TEXT NOT NULL, FOREIGN KEY (`userid`) REFERENCES `UsersCredentials` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE)');
+            'CREATE TABLE IF NOT EXISTS `User Informations` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT NOT NULL, `surname` TEXT NOT NULL, `gender` TEXT NOT NULL, `dateofbirth` INTEGER NOT NULL, `usertarget` TEXT NOT NULL)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `myFitbitData` (`keyDate` INTEGER NOT NULL, `sleepHours` INTEGER NOT NULL, `calories` INTEGER NOT NULL, `steps` INTEGER NOT NULL, `cardio` INTEGER NOT NULL, `detailDate` INTEGER NOT NULL, PRIMARY KEY (`keyDate`))');
 
@@ -289,7 +289,6 @@ class _$UserInfosDao extends UserInfosDao {
             'User Informations',
             (UserInfos item) => <String, Object?>{
                   'id': item.id,
-                  'userid': item.userId,
                   'name': item.name,
                   'surname': item.surname,
                   'gender': item.gender,
@@ -302,7 +301,6 @@ class _$UserInfosDao extends UserInfosDao {
             ['id'],
             (UserInfos item) => <String, Object?>{
                   'id': item.id,
-                  'userid': item.userId,
                   'name': item.name,
                   'surname': item.surname,
                   'gender': item.gender,
@@ -315,7 +313,6 @@ class _$UserInfosDao extends UserInfosDao {
             ['id'],
             (UserInfos item) => <String, Object?>{
                   'id': item.id,
-                  'userid': item.userId,
                   'name': item.name,
                   'surname': item.surname,
                   'gender': item.gender,
@@ -340,26 +337,11 @@ class _$UserInfosDao extends UserInfosDao {
     return _queryAdapter.queryList('SELECT * FROM UserInfos',
         mapper: (Map<String, Object?> row) => UserInfos(
             row['id'] as int?,
-            row['userid'] as int,
             row['name'] as String,
             row['surname'] as String,
             row['gender'] as String,
             _dateTimeConverter.decode(row['dateofbirth'] as int),
             row['usertarget'] as String));
-  }
-
-  @override
-  Future<UserInfos?> checkUserInfos(String username) async {
-    return _queryAdapter.query('SELECT * FROM UserInfos WHERE username = ?1',
-        mapper: (Map<String, Object?> row) => UserInfos(
-            row['id'] as int?,
-            row['userid'] as int,
-            row['name'] as String,
-            row['surname'] as String,
-            row['gender'] as String,
-            _dateTimeConverter.decode(row['dateofbirth'] as int),
-            row['usertarget'] as String),
-        arguments: [username]);
   }
 
   @override
