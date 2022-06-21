@@ -27,10 +27,10 @@ Future<void> fetchData(BuildContext context) async {
   // }
 
   print('Last insertion $lastInsertion');
-  DateTime startDate = DateTime.utc(2022, 6, 17);
+  DateTime startDate = DateTime.utc(2022, 6, 19);
   //DateTime startDate = lastInsertion;
-  //DateTime endDate = DateTime.utc(2022, 6, 10);
-  DateTime endDate = DateTime.now();
+  DateTime endDate = DateTime.utc(2022, 6, 21);
+  //DateTime endDate = DateTime.now();
 
   int threshold = calculateThreshold(allData, endDate);
   print('Threshold mins $threshold');
@@ -57,6 +57,7 @@ Future<void> fetchData(BuildContext context) async {
 
       try {
         final result = await fetchSleepData(queryDate) as List<FitbitSleepData>;
+
         final resultActivity =
             await fetchActivityData(queryDate) as List<FitbitActivityData>;
         final resultTSActivity = await fetchActivityTSData(queryDate, 'steps')
