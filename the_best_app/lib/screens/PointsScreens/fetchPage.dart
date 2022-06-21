@@ -27,15 +27,19 @@ class FetchPage extends StatefulWidget {
 }
 
 class _FetchPageState extends State<FetchPage> {
-  int daysToSubtract =
-      DateTime.now().difference(DateTime.utc(2022, 6, 8, 1, 1, 1, 1, 1)).inDays;
-
   @override
   Widget build(BuildContext context) {
-    late List<SleepData> result;
-    late List<ActivityData> resultActivity;
-    late List<StepsData> resultTSActivity;
-    late List<HeartData> resultHR;
+    DateTime startDate = DateTime.utc(2022, 6, 12);
+    //DateTime endDate = DateTime.utc(2022, 5, 31);
+    DateTime endDate = DateTime.now();
+    int daysToSubtract =
+        // DateTime.now().difference(DateTime.utc(2022, 6, 8, 1, 1, 1, 1, 1)).inDays;
+        endDate.difference(startDate).inDays;
+
+    List<SleepData>? result;
+    List<ActivityData>? resultActivity;
+    List<StepsData>? resultTSActivity;
+    List<HeartData>? resultHR;
 
     print('${FetchPage.routename} built');
     print(daysToSubtract);
@@ -79,38 +83,19 @@ class _FetchPageState extends State<FetchPage> {
                             'Authorization Denied!\nGo to Authorization'));
                       }
                     })),
-
-            // Old Version
-            // child: FutureBuilder(
-            //     future: _fetchAccountData(),
-            //     builder: (context, snapshot) {
-            //       if (snapshot.hasData) {
-            //         final data = snapshot.data as List;
-            //         FitbitAccountData dataUser =
-            //             data[0] as FitbitAccountData;
-
-            //         return Text(
-            //             '${dataUser.firstName} \'s birthday: ${dateFormatter(dataUser.dateOfBirth!)}');
-            //       } else {
-            //         return CircularProgressIndicator();
-            //       }
-            //       ;
-            //     })),
             SizedBox(height: 10),
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: Text('${_downloads.values}'),
-            // ),
             ElevatedButton(
                 onPressed: () async {
                   print('N of calls $daysToSubtract');
                   for (int reqDay = daysToSubtract; reqDay >= 0; reqDay--) {
                     //for (int reqDay = 10; reqDay >= 8; reqDay--) {
                     //int reqDay = 1;
+                    // DateTime queryDate =
+                    //     DateTime.now().subtract(Duration(days: reqDay));
                     DateTime queryDate =
-                        DateTime.now().subtract(Duration(days: reqDay));
+                        endDate.subtract(Duration(days: reqDay));
+
                     int tableKey = queryDate.millisecondsSinceEpoch ~/ 86400000;
-                    print(Duration.millisecondsPerDay);
                     print('Query date: $queryDate');
                     print('INT: $tableKey');
                     final result = await _fetchSleepData(queryDate)
@@ -158,137 +143,6 @@ class _FetchPageState extends State<FetchPage> {
                   }
                 },
                 child: Text('Fetch Data')),
-
-            //   SleepData newdata = SleepData(null,
-            //       result[0].entryDateTime!, elaborateSleepData(result));
-            //   await Provider.of<UsersDatabaseRepo>(context,
-            //           listen: false)
-            //       .insertSleepData(newdata);
-            // } else {
-            //   SleepData newdata = SleepData(
-            //       null,
-            //       DateTime.utc(2022, 3, 1).add(Duration(days: reqDay)),
-            //       0);
-            //   await Provider.of<UsersDatabaseRepo>(context,
-            //           listen: false)
-            //       .insertSleepData(newdata);
-            // }
-            //     if (resultActivity.length > 0) {
-            //       //int cals = elaborateActivityData(resultActivity);
-            //       // int date = resultActivity[0]
-            //       //     .dateOfMonitoring!
-            //       //     .microsecondsSinceEpoch;
-            //       ActivityData newdata = ActivityData(
-            //           null,
-            //           resultActivity[0].dateOfMonitoring!,
-            //           elaborateActivityData(resultActivity));
-            //       await Provider.of<UsersDatabaseRepo>(context,
-            //               listen: false)
-            //           .insertActivityData(newdata);
-            //     }
-            //     if (resultTSActivity.length > 0) {
-            //       //int steps = elaborateTSActivityData(resultTSActivity);
-            //       StepsData newdata = StepsData(
-            //           null,
-            //           resultTSActivity[0].dateOfMonitoring!,
-            //           elaborateTSActivityData(resultTSActivity));
-            //       await Provider.of<UsersDatabaseRepo>(context,
-            //               listen: false)
-            //           .insertStepsData(newdata);
-            //     }
-            //     if (resultHR.length > 0) {
-            //       //int minCardio = elaborateHRData(resultHR);
-            //       HeartData newdata = HeartData(
-            //           null,
-            //           resultHR[0].dateOfMonitoring!,
-            //           elaborateHRData(resultHR));
-            //       await Provider.of<UsersDatabaseRepo>(context,
-            //               listen: false)
-            //           .insertHeartData(newdata);
-            //     }
-            //   }
-            //   ;
-            // },
-            // child: Text('Fetch Data')),
-
-            // //Padding(
-            // //   padding: const EdgeInsets.all(8.0),
-            // //   child: Text('${_activities.values} ${_activities.keys}'),
-            // // ),
-            // ElevatedButton(
-            //     onPressed: () async {
-            //       for (int reqDay = daysToSubtract; reqDay > 1; reqDay--) {
-            //         //for (int i = 10; i >= 8; i--) {
-            //         // print(i);
-            //         final resultActivity = await _fetchActivityData(reqDay)
-            //             as List<FitbitActivityData>;
-            //         if (resultActivity.length > 0) {
-            //           int cals = elaborateActivityData(resultActivity);
-            //           // }
-            //           ActivityData newdata = ActivityData(
-            //               null, resultActivity[0].dateOfMonitoring!, cals);
-            //           await Provider.of<UsersDatabaseRepo>(context,
-            //                   listen: false)
-            //               .insertActivityData(newdata);
-            //         }
-
-            //         ; // if
-            //       } // for
-            //       ;
-            //     }, // onPressed
-            //     child: Text('Fetch Activity Data')),
-            // // Padding(
-            // //   padding: const EdgeInsets.all(8.0),
-            // //   child: Text('${_activitiesTS.values}'),
-            // // ),
-            // ElevatedButton(
-            //     onPressed: () async {
-            //       for (int reqDay = daysToSubtract; reqDay > 1; reqDay--) {
-            //         //for (int i = 10; i >= 8; i--) {
-            //         // print(i);
-            //         //  //'calories', 'steps', 'distance', 'floors', 'minutesVeryActive', 'activityCalories',etc
-            //         final resultTSActivity =
-            //             await _fetchActivityTSData(reqDay, 'steps')
-            //                 as List<FitbitActivityTimeseriesData>;
-            //         if (resultTSActivity.length > 0) {
-            //           int steps = elaborateTSActivityData(resultTSActivity);
-            //           // }
-            //           //setState(() {});
-            //           StepsData newdata = StepsData(
-            //               null, resultTSActivity[0].dateOfMonitoring!, steps);
-            //           await Provider.of<UsersDatabaseRepo>(context,
-            //                   listen: false)
-            //               .insertStepsData(newdata);
-            //         }
-            //         ; // if
-            //       } // for
-            //       ;
-            //     }, // onPressed
-            //     child: Text('Fetch Steps Data')),
-            // // Padding(
-            // //   padding: const EdgeInsets.all(8.0),
-            // //   child: Text('${_heart.values}'),
-            // // ),
-            // ElevatedButton(
-            //     onPressed: () async {
-            //       for (int reqDay = daysToSubtract; reqDay > 1; reqDay--) {
-            //         final resultHR =
-            //             await _fetchHeartData(reqDay) as List<FitbitHeartData>;
-            //         if (resultHR.length > 0) {
-            //           int minCardio = elaborateHRData(resultHR);
-            //           // }
-            //           //setState(() {});
-            //           HeartData newdata = HeartData(
-            //               null, resultHR[0].dateOfMonitoring!, minCardio);
-            //           await Provider.of<UsersDatabaseRepo>(context,
-            //                   listen: false)
-            //               .insertHeartData(newdata);
-            //         }
-            //         // for
-            //         ;
-            //       }
-            //     }, // onPressed
-            //     child: Text('Fetch Heart Data')),
           ],
         ),
       ),

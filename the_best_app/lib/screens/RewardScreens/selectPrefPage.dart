@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:the_best_app/Utils/cardWidget.dart';
+import 'package:the_best_app/Utils/points_displayer.dart';
 import 'package:the_best_app/screens/RewardScreens/queryPage.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -16,10 +17,12 @@ class PreferencePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Rewards')),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 100, 20, 0),
+        padding: const EdgeInsets.fromLTRB(20, 60, 20, 0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Points_displayer(),
+            SizedBox(height: 20),
             Container(
               //width: MediaQuery.of(context).size.width * 0.4,
               height: screenSize.height / 5,
@@ -35,6 +38,7 @@ class PreferencePage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                   fontSize: 18),
+              textAlign: TextAlign.center,
             ),
             SizedBox(height: 50),
             Expanded(

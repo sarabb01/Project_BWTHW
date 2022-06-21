@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:the_best_app/Utils/points_displayer.dart';
 import 'package:the_best_app/models/shopList.dart';
 import 'package:the_best_app/screens/RewardScreens/QRcodePage.dart';
 
@@ -9,10 +10,10 @@ class ShoppingPage extends StatelessWidget {
       '/hellowordpage/loginpage/homepage/preferencepage/querypage/shoppingpage';
   static const routename = 'Shopping';
   final shopList shoplist = shopList();
-  final earnedPoints = 500;
 
   String city;
-  ShoppingPage({required this.city});
+  double earnedPoints;
+  ShoppingPage({required this.city, required this.earnedPoints});
 
   @override
   Widget build(BuildContext context) {
@@ -36,21 +37,7 @@ class ShoppingPage extends StatelessWidget {
                 style: TextStyle(fontSize: 13, color: Colors.grey),
               ),
               SizedBox(height: 20),
-              Center(
-                child: Container(
-                  width: 150,
-                  height: 22,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.green, width: 3),
-                      borderRadius: BorderRadius.circular(10)),
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Your points: $earnedPoints',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.green),
-                  ),
-                ),
-              ),
+              Center(child: Points_displayer()),
               SizedBox(height: 20),
               Expanded(
                 child: ListView.builder(

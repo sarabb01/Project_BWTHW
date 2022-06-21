@@ -60,7 +60,7 @@ class _HelloWordPageState extends State<HelloWordPage> {
                   EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 10),
               child: Center(
                 child: Image.asset(
-                  'assets/Images/flutter-logo.png',
+                  'assets/Images/logo5.png',
                   width: screenSize.width / 1.5,
                   height: 200,
                 ),
