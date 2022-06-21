@@ -67,7 +67,7 @@ class PointsPage extends StatelessWidget {
                                 content: SingleChildScrollView(
                                     child: ListBody(children: [
                               Text(
-                                  '-To see further information, tap on the graph\n\n-To refresh data click on the REFRESH button top right')
+                                  '-To see further information, double tap on the graph\n\n-To refresh data click on the REFRESH button top right')
                             ])));
                           });
                     });
@@ -116,7 +116,7 @@ class PointsPage extends StatelessWidget {
                             ? Text('No activity recorded today')
                             : Container(
                                 child: GestureDetector(
-                                onTap: () {
+                                onDoubleTap: () {
                                   //This function will subtract points;
                                   showDialog(
                                       context: context,
@@ -247,7 +247,7 @@ class PointsPage extends StatelessWidget {
                                     Text(
                                         'SUMMARY of ${fitbit.length} DAYS: ${score.toStringAsFixed(2)} POINTS'),
                                     GestureDetector(
-                                      onLongPress: () {
+                                      onDoubleTap: () {
                                         Navigator.pushNamed(
                                             context, SummaryPage.route);
                                       },

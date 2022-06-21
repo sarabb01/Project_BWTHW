@@ -67,26 +67,32 @@ class SummaryPage extends StatelessWidget {
                                       fitbit2[index].sleepHours > 7) {
                                     return Card(
                                       child: ListTile(
-                                          isThreeLine: true,
-                                          title: myText,
-                                          subtitle: myText2,
-                                          onTap: () {
+                                        isThreeLine: true,
+                                        title: myText,
+                                        subtitle: myText2,
+                                        trailing: IconButton(
+                                          icon: Icon(Icons.arrow_right),
+                                          onPressed: () {
                                             showDialog(
                                                 context: context,
                                                 builder: (context) {
                                                   return myAlert(chartData,
                                                       todayPoints, myText.data);
                                                 });
-                                          }),
+                                          },
+                                        ),
+                                      ),
                                       color: Colors.green[200],
                                     );
                                   } else {
                                     return Card(
                                         child: ListTile(
-                                            isThreeLine: true,
-                                            title: myText,
-                                            subtitle: myText2,
-                                            onTap: () {
+                                          isThreeLine: true,
+                                          title: myText,
+                                          subtitle: myText2,
+                                          trailing: IconButton(
+                                            icon: Icon(Icons.arrow_right),
+                                            onPressed: () {
                                               showDialog(
                                                   context: context,
                                                   builder: (context) {
@@ -95,7 +101,9 @@ class SummaryPage extends StatelessWidget {
                                                         todayPoints,
                                                         myText.data);
                                                   });
-                                            }),
+                                            },
+                                          ),
+                                        ),
                                         color: Colors.red[100]);
                                   }
                                 }),
@@ -139,7 +147,7 @@ class myAlert extends StatelessWidget {
         ),
         Legend_rad()
       ]),
-      titleTextStyle: TextStyle(color: Colors.black, fontSize: 15),
+      titleTextStyle: TextStyle(color: Colors.black, fontSize: 10),
       content: Container(
           child: RadialChart(chartData: chartData, pointsData: pointsData)),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
