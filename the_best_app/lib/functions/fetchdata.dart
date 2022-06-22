@@ -18,13 +18,13 @@ Future<void> fetchData(BuildContext context) async {
 
   DateTime lastInsertion = (allData.length > 0)
       ? myDate(allData[allData.length - 1].detailDate)
-      : DateTime.now().subtract(Duration(days: 1));
+      : DateTime.now().subtract(Duration(days: 3));
 
   print('Last insertion $lastInsertion');
-  DateTime startDate = DateTime.utc(2022, 5, 31);
-  //DateTime startDate = lastInsertion;
-  DateTime endDate = DateTime.utc(2022, 6, 2);
-  //DateTime endDate = DateTime.now();
+  //DateTime startDate = DateTime.utc(2022,5, 31);
+  DateTime startDate = lastInsertion;
+  //DateTime endDate = DateTime.utc(2022, 6, 2);
+  DateTime endDate = DateTime.now();
 
   int threshold = calculateThreshold(allData, endDate);
   print('Threshold mins $threshold');
@@ -59,6 +59,7 @@ Future<void> fetchData(BuildContext context) async {
 
         final resultBMRCal = await fetchActivityTSData(queryDate, 'caloriesBMR')
             as List<FitbitActivityTimeseriesData>;
+        print(resultBMRCal);
 
         final resultHR =
             await fetchHeartData(queryDate) as List<FitbitHeartData>;
