@@ -24,8 +24,8 @@ import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/functions/fetchdata.dart';
 import 'package:the_best_app/models/pointsModel.dart';
-import 'package:the_best_app/screens/LoginScreens/LoginPage.dart';
-import 'package:the_best_app/screens/PointsScreens/summaryPage.dart';
+import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
+import 'package:the_best_app/Screens/PointsScreens/summaryPage.dart';
 
 // import 'package:syncfusion_flutter_charts/charts.dart';
 // import 'package:syncfusion_flutter_charts/sparkcharts.dart';

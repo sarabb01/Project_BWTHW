@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:select_form_field/select_form_field.dart';
 import 'package:the_best_app/Database/Entities/UserInfos.dart';
-// SCREENS
+// Screens
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
 import 'package:the_best_app/Utils/DateFormats.dart';
@@ -234,7 +234,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       String gender, DateTime dateofbirth, String target) async {
     final user = await Provider.of<UsersDatabaseRepo>(context, listen: false)
         .findUser(username);
-    print(user);
+    print('User found $user');
     if (user != null) {
       final user_infos =
           UserInfos(null, user.id!, name, surname, gender, dateofbirth, target);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:the_best_app/Utils/cardWidget.dart';
 import 'package:the_best_app/Utils/points_displayer.dart';
-import 'package:the_best_app/screens/RewardScreens/queryPage.dart';
+import 'package:the_best_app/Screens/RewardScreens/queryPage.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class PreferencePage extends StatelessWidget {

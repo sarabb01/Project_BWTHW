@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:colours/colours.dart';
-// APP SCREENS
+// APP Screens
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Screens/LoginScreens/RegistrationPage.dart';

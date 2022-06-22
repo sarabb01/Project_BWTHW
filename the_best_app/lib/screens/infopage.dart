@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:the_best_app/screens/HomeScreens/HomePage.dart';
-import 'package:the_best_app/screens/LoginScreens/LoginPage.dart';
+import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
+import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
 
 class Infopage extends StatelessWidget {
   Infopage({Key? key}) : super(key: key);

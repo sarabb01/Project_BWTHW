@@ -1,6 +1,6 @@
 import 'package:colours/colours.dart';
 import 'package:flutter/material.dart';
-import 'package:the_best_app/screens/RewardScreens/queryPage.dart';
+import 'package:the_best_app/Screens/RewardScreens/queryPage.dart';
 
 class cardWidget extends StatelessWidget {
   final String input_image;

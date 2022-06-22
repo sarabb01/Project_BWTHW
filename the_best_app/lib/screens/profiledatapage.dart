@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_best_app/Database/Entities/UserCreds.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
-import 'package:the_best_app/screens/LoginScreens/HelloWordPage.dart';
-import 'package:the_best_app/screens/LoginScreens/RegistrationPage.dart';
+import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
+import 'package:the_best_app/Screens/LoginScreens/RegistrationPage.dart';
 
 class Profiledatapage extends StatelessWidget {
   Profiledatapage({Key? key}) : super(key: key);
@@ -88,11 +88,11 @@ class Profiledatapage extends StatelessWidget {
                                     listen: false)
                                 .findUser(name!);
                             var _user = result?.username;
-
                             print(_user);
-                            // await Provider.of<UsersDatabaseRepo>(context,
-                            //         listen: false)
-                            //     .deleteUser(result!);
+                            await Provider.of<UsersDatabaseRepo>(context,
+                                    listen: false)
+                                .deleteUser(result!);
+                            sp.remove('username');
                             await Navigator.pushReplacementNamed(
                                 context, HelloWordPage.route);
                           },

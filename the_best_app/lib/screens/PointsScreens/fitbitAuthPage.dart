@@ -2,7 +2,7 @@ import 'package:fitbitter/fitbitter.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:the_best_app/screens/PointsScreens/fetchPage.dart';
+import 'package:the_best_app/Screens/PointsScreens/fetchPage.dart';
 //import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class AuthPage extends StatelessWidget {

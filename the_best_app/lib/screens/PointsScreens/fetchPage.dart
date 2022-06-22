@@ -10,7 +10,7 @@ import 'package:the_best_app/Database/typeConverters/dateTimeConverter.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/models/fitbitDataTypes.dart';
 //Import Screens
-import 'package:the_best_app/screens/PointsScreens/pointsPage.dart';
+import 'package:the_best_app/Screens/PointsScreens/pointsPage.dart';
 
 //Import Functions and Useful things
 import 'package:the_best_app/functions/dateFormatter.dart';

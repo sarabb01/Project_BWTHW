@@ -5,8 +5,8 @@ import 'package:the_best_app/Database/Entities/UserCreds.dart';
 import 'package:the_best_app/Database/Entities/UserInfos.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/functions/dateFormatter.dart';
-import 'package:the_best_app/screens/RewardScreens/selectPrefPage.dart';
-import 'package:the_best_app/screens/profiledatapage.dart';
+import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
+import 'package:the_best_app/Screens/profiledatapage.dart';
 
 class Profilepage extends StatelessWidget {
   Profilepage({Key? key}) : super(key: key);
@@ -39,6 +39,7 @@ class Profilepage extends StatelessWidget {
           //         if (result.getString('username') != null) {
           //           final user = result.getString('username');
           //           print(user);
+
           //           return FutureBuilder(
           //               future: Provider.of<UsersDatabaseRepo>(context,
           //                       listen: false)

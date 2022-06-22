@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:the_best_app/screens/RewardScreens/experiencePage.dart';
-import 'package:the_best_app/screens/RewardScreens/shoppingPage.dart';
+import 'package:the_best_app/Screens/RewardScreens/experiencePage.dart';
+import 'package:the_best_app/Screens/RewardScreens/shoppingPage.dart';
 
 class QueryPage extends StatelessWidget {
   //QueryPage({Key? key}) : super(key: key);

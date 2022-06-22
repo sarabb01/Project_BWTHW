@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-// APP SCREENS
+// APP Screens
 import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Screens/LoginScreens/ForgotPasswordPage.dart';
@@ -319,7 +319,9 @@ class _log_in_settings extends State<LoginPage> {
                           _username.text, _password.text)) {
                         Navigator.pushReplacementNamed(context, HomePage.route,
                             arguments: {'username': _username.text});
-                        setInputData(); // To Clear the content of TextEditingController()
+                        setInputData();
+
+                        // To Clear the content of TextEditingController()
                       } else {
                         showDialog<void>(
                             context: context,
