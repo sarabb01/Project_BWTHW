@@ -20,6 +20,7 @@ dependencies:
   material_design_icons_flutter: ^5.0.6595
   fitbitter: ^1.1.1
   http: ^0.13.4
+  dio: ^4.0.6
   intl:
   flutter_svg: ^0.22.0
   colours: ^0.0.2

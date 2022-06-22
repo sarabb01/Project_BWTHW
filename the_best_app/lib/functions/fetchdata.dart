@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:fitbitter/fitbitter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,10 +28,10 @@ Future<void> fetchData(BuildContext context) async {
   // }
 
   print('Last insertion $lastInsertion');
-  DateTime startDate = DateTime.utc(2022, 6, 19);
-  //DateTime startDate = lastInsertion;
-  DateTime endDate = DateTime.utc(2022, 6, 21);
-  //DateTime endDate = DateTime.now();
+  //DateTime startDate = DateTime.utc(2022, 6, 19);
+  DateTime startDate = lastInsertion;
+  //DateTime endDate = DateTime.utc(2022, 6, 21);
+  DateTime endDate = DateTime.now();
 
   int threshold = calculateThreshold(allData, endDate);
   print('Threshold mins $threshold');
@@ -93,21 +94,23 @@ Future<void> fetchData(BuildContext context) async {
 
         if (resultBMRCal.length > 0) {
           int bmrCals = elaborateTSCalories(resultBMRCal);
-          print('BMR $bmrCals');
+          //print('BMR $bmrCals');
           int totCals = elaborateTSActiveCalories(
               await fetchActivityTSData(queryDate, 'calories')
                   as List<FitbitActivityTimeseriesData>);
-          print('Active $totCals');
-          print('$queryDate Metodi 2 TOT ${totCals - bmrCals}');
+          //print('Active $totCals');
+          //print('$queryDate Metodi 2 TOT ${totCals - bmrCals}');
           activeCals = totCals - bmrCals;
         }
 
         if (resultHR.length > 0) {
           mins = elaborateHRData(resultHR);
         }
+        // print('Current min $mins');
 
+        print('Act $activeCals met1: $cals');
         cals = activeCals > 0 ? activeCals : cals;
-        //print('Current min $mins');
+
         myFitbitData newdata = myFitbitData(tableKey,
             sleepHours: time,
             calories: cals,
@@ -116,11 +119,21 @@ Future<void> fetchData(BuildContext context) async {
             detailDate: detail);
         await Provider.of<UsersDatabaseRepo>(context, listen: false)
             .insertFitbitData(newdata);
-      } catch (FitbitRateLimitExceededException) {
+      } on FitbitRateLimitExceededException catch (e) {
         print('Catched error');
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text(
               'Too many requests! YOU HAVE TO WAIT!',
+              style: TextStyle(color: Colors.black, fontSize: 20),
+              textAlign: TextAlign.center,
+            ),
+            backgroundColor: Colors.red));
+        break;
+      } on DioError catch (e) {
+        print('Catched error');
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text(
+              'Check your authorization',
               style: TextStyle(color: Colors.black, fontSize: 20),
               textAlign: TextAlign.center,
             ),
