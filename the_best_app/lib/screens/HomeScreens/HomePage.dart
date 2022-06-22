@@ -1,12 +1,12 @@
-// APP SCREENS
+// APP Screens
 import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
 import 'package:the_best_app/models/pointsModel.dart';
-import 'package:the_best_app/screens/PointsScreens/fitbitAuthPage.dart';
-import 'package:the_best_app/screens/PointsScreens/pointsPage.dart';
-import 'package:the_best_app/screens/RewardScreens/selectPrefPage.dart';
-import 'package:the_best_app/screens/infopage.dart';
+import 'package:the_best_app/Screens/PointsScreens/fitbitAuthPage.dart';
+import 'package:the_best_app/Screens/PointsScreens/pointsPage.dart';
+import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
+import 'package:the_best_app/Screens/infopage.dart';
 // FLUTTER PACKAGES
 import 'package:flutter/cupertino.dart';
 import 'package:colours/colours.dart';
@@ -17,7 +17,7 @@ import 'package:provider/provider.dart';
 // DATABASE
 import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/Database/Entities/UserCreds.dart';
-import 'package:the_best_app/screens/profilepage.dart';
+import 'package:the_best_app/Screens/profilepage.dart';
 
 class HomePage extends StatefulWidget {
   static const route = '/hellowordpage/loginpage/homepage';
@@ -70,11 +70,6 @@ class _HomepageState extends State<HomePage>
           actions: [
             Row(
               children: [
-                // IconButton(
-                //     icon: Icon(Icons.info),
-                //     onPressed: () {
-                //       Navigator.pushNamed(context, Infopage.route);
-                //     }),
                 IconButton(
                     icon: Icon(Icons.show_chart_outlined),
                     onPressed: () {
@@ -84,15 +79,6 @@ class _HomepageState extends State<HomePage>
             )
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-            onPressed: () async {
-              final sp = await SharedPreferences.getInstance();
-              if (sp.getDouble('Points') != null) {
-                double? score = sp.getDouble('Points');
-                print(score);
-              }
-            },
-            child: Icon(Icons.update)),
         drawer: Drawer(
             child: ListView(children: [
           Padding(
