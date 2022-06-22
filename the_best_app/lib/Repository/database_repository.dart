@@ -39,10 +39,10 @@ class UsersDatabaseRepo extends ChangeNotifier {
 
   // ######### CHECKING USER INFORMATIONS (From UserInfos Table) #########
   //@Query('SELECT * FROM UserInfos WHERE username = :username')
-  // Future<UserInfos?> checkUserInfos(int userid) async {
-  //   final results = await database.user_infos_dao.checkUserInfos(userid);
-  //   return results;
-  // }
+  Future<UserInfos?> checkUserInfos(int userid) async {
+    final results = await database.user_infos_dao.checkUserInfos(userid);
+    return results;
+  }
   // ################################
 
   // ################################

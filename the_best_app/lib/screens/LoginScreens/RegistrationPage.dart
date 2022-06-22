@@ -236,8 +236,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
         .findUser(username);
     print(user);
     if (user != null) {
-      final user_infos = UserInfos(
-          null, /*user.id!,*/ name, surname, gender, dateofbirth, target);
+      final user_infos =
+          UserInfos(null, user.id!, name, surname, gender, dateofbirth, target);
       await Provider.of<UsersDatabaseRepo>(context, listen: false)
           .addUserInfos(user_infos);
     }
