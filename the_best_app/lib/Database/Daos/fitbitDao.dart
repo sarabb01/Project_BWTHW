@@ -8,7 +8,7 @@ abstract class FitbitDao {
 
   @Insert(
       onConflict: OnConflictStrategy
-          .ignore) // In ordert to avoid duplicates within the users
+          .replace) // In ordert to avoid duplicates within the users
   Future<void> insertFitbitData(myFitbitData newdata);
 
   @delete

@@ -7,6 +7,8 @@ import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/ForgotPasswordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/RegistrationPage.dart';
+import 'package:the_best_app/models/pointsModel.dart';
+import 'package:the_best_app/screens/PointsScreens/summaryPage.dart';
 import 'package:the_best_app/screens/infopage.dart';
 // Home Screens
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
@@ -42,8 +44,17 @@ Future<void> main() async {
   final users_database_repo = UsersDatabaseRepo(database: database);
   //Here, we run the app and we provide to the whole widget tree the instance of the DatabaseRepository.
   //That instance will be then shared through the platform and will be unique.
-  runApp(ChangeNotifierProvider<UsersDatabaseRepo>(
-    create: (context) => users_database_repo,
+  // runApp(ChangeNotifierProvider<UsersDatabaseRepo>(
+  //   create: (context) => users_database_repo,
+  //   child: MyApp(),
+  // ));
+
+  runApp(MultiProvider(
+    providers: [
+      ListenableProvider<UsersDatabaseRepo>(
+          create: (context) => users_database_repo),
+      ListenableProvider<PointsModel>(create: (context) => PointsModel())
+    ],
     child: MyApp(),
   ));
 } //main
@@ -104,6 +115,10 @@ class MyApp extends StatelessWidget {
           } else if (settings.name == PointsPage.route) {
             return MaterialPageRoute(builder: (context) {
               return PointsPage();
+            });
+          } else if (settings.name == SummaryPage.route) {
+            return MaterialPageRoute(builder: (context) {
+              return SummaryPage();
             });
           } else if (settings.name == PreferencePage.route) {
             return MaterialPageRoute(builder: (context) {

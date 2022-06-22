@@ -19,7 +19,7 @@ List<CircularStackEntry> createChartData(myFitbitData today) {
           rankKey: 'Cardio')
     ]),
     CircularStackEntry([
-      CircularSegmentEntry(today.calories * 100 / 600, Colors.yellowAccent[700],
+      CircularSegmentEntry(today.calories * 100 / 600, Colors.yellowAccent[400],
           rankKey: 'Calories'),
       CircularSegmentEntry(100 - today.calories * 100 / 600, Colors.yellow[100],
           rankKey: 'Calories')
@@ -43,7 +43,7 @@ List<charts.Series<DailyScore, String>> createBarData(
     scores.add([
       DailyScore('Steps', today_score[0]),
       DailyScore('Calories', today_score[1]),
-      DailyScore('Minutes cardio', today_score[2]),
+      DailyScore('Cardio', today_score[2]),
       DailyScore('Sleep', today_score[3]),
     ]);
 
@@ -52,13 +52,12 @@ List<charts.Series<DailyScore, String>> createBarData(
         domainFn: (DailyScore pts, _) => pts.type,
         measureFn: (DailyScore pts, _) => pts.points,
         data: scores[i],
-
-        //colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+        // colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
         fillColorFn: (_, __) {
           if (today_score.any((item) => item < 1)) {
-            return charts.MaterialPalette.purple.shadeDefault.lighter;
+            return charts.MaterialPalette.red.shadeDefault.lighter;
           } else {
-            return charts.MaterialPalette.deepOrange.shadeDefault.lighter;
+            return charts.MaterialPalette.green.shadeDefault.lighter;
           }
           ;
         }));

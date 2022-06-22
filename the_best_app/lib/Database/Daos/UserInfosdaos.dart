@@ -6,8 +6,8 @@ abstract class UserInfosDao {
   @Query('SELECT * FROM UserInfos')
   Future<List<UserInfos>> findAllUsersInfos();
 
-  @Query('SELECT * FROM UserInfos WHERE username = :username')
-  Future<UserInfos?> checkUserInfos(String username);
+  @Query('SELECT * FROM UserInfos WHERE userId = :userid')
+  Future<UserInfos?> checkUserInfos(int userid);
 
   @Insert(
       onConflict: OnConflictStrategy
