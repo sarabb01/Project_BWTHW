@@ -75,3 +75,12 @@ List<double> elaboratePoints(myFitbitData data) {
   //print(result);
   return result;
 }
+
+double computeTotalPoints(List<myFitbitData> input) {
+  double score = 0;
+  for (int i = 0; i < input.length; i++) {
+    score +=
+        elaboratePoints(input[i]).fold(0, (prev, element) => prev + element);
+  }
+  return double.parse(score.toStringAsFixed(2));
+}
