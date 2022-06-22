@@ -33,7 +33,7 @@ class SummaryPage extends StatelessWidget {
             children: [
               Text(
                 'Here you can see a resume of your daily points',
-                style: TextStyle(fontSize: 15),
+                //style: TextStyle(fontSize: 15),
               ),
               SizedBox(height: 20),
               Legend_bar(),
@@ -147,7 +147,7 @@ class myAlert extends StatelessWidget {
         ),
         Legend_rad()
       ]),
-      titleTextStyle: TextStyle(color: Colors.black, fontSize: 10),
+      titleTextStyle: TextStyle(color: Colors.black), //fontSize: 10),
       content: Container(
           child: RadialChart(chartData: chartData, pointsData: pointsData)),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
