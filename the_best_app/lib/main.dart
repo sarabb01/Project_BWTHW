@@ -44,16 +44,14 @@ Future<void> main() async {
   final users_database_repo = UsersDatabaseRepo(database: database);
   //Here, we run the app and we provide to the whole widget tree the instance of the DatabaseRepository.
   //That instance will be then shared through the platform and will be unique.
-  // runApp(ChangeNotifierProvider<UsersDatabaseRepo>(
-  //   create: (context) => users_database_repo,
-  //   child: MyApp(),
-  // ));
 
   runApp(MultiProvider(
     providers: [
       ListenableProvider<UsersDatabaseRepo>(
           create: (context) => users_database_repo),
-      ListenableProvider<PointsModel>(create: (context) => PointsModel())
+      ListenableProvider<PointsModel>(
+        create: (context) => PointsModel(),
+      )
     ],
     child: MyApp(),
   ));

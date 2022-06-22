@@ -186,11 +186,19 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 })),
             onPressed: (() async {
               if (formKey.currentState!.validate()) {
-                user_cred_storing(_username.text, _password.text);
-                user_info_storing(_username.text, _name.text, _surname.text,
-                    _selectedGender!, _selectedDate, _selectedTarget!);
+                await user_cred_storing(
+                  _username.text,
+                  _password.text,
+                );
+                await user_info_storing(
+                    _username.text,
+                    _name.text,
+                    _surname.text,
+                    _selectedGender!,
+                    _selectedDate,
+                    _selectedTarget!);
                 setInputData();
-                await Navigator.pushReplacementNamed(context, LoginPage.route);
+                Navigator.pushReplacementNamed(context, LoginPage.route);
               }
             }),
             child: Padding(

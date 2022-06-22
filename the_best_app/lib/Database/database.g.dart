@@ -86,9 +86,9 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `UsersCredentials` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `username` TEXT NOT NULL, `password` TEXT NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `User Credentials` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `username` TEXT NOT NULL, `password` TEXT NOT NULL)');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `User Informations` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `userid` INTEGER NOT NULL, `name` TEXT NOT NULL, `surname` TEXT NOT NULL, `gender` TEXT NOT NULL, `dateofbirth` INTEGER NOT NULL, `usertarget` TEXT NOT NULL, FOREIGN KEY (`userid`) REFERENCES `UsersCredentials` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE)');
+            'CREATE TABLE IF NOT EXISTS `User Informations` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `userid` INTEGER NOT NULL, `name` TEXT NOT NULL, `surname` TEXT NOT NULL, `gender` TEXT NOT NULL, `dateofbirth` INTEGER NOT NULL, `usertarget` TEXT NOT NULL, FOREIGN KEY (`userid`) REFERENCES `User Credentials` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `myFitbitData` (`keyDate` INTEGER NOT NULL, `sleepHours` INTEGER NOT NULL, `calories` INTEGER NOT NULL, `steps` INTEGER NOT NULL, `cardio` INTEGER NOT NULL, `detailDate` INTEGER NOT NULL, PRIMARY KEY (`keyDate`))');
 
@@ -120,7 +120,7 @@ class _$UserCrededentialsDao extends UserCrededentialsDao {
       : _queryAdapter = QueryAdapter(database),
         _usersCredentialsInsertionAdapter = InsertionAdapter(
             database,
-            'UsersCredentials',
+            'User Credentials',
             (UsersCredentials item) => <String, Object?>{
                   'id': item.id,
                   'username': item.username,
@@ -128,7 +128,7 @@ class _$UserCrededentialsDao extends UserCrededentialsDao {
                 }),
         _usersCredentialsUpdateAdapter = UpdateAdapter(
             database,
-            'UsersCredentials',
+            'User Credentials',
             ['id'],
             (UsersCredentials item) => <String, Object?>{
                   'id': item.id,
@@ -137,7 +137,7 @@ class _$UserCrededentialsDao extends UserCrededentialsDao {
                 }),
         _usersCredentialsDeletionAdapter = DeletionAdapter(
             database,
-            'UsersCredentials',
+            'User Credentials',
             ['id'],
             (UsersCredentials item) => <String, Object?>{
                   'id': item.id,
@@ -289,7 +289,7 @@ class _$UserInfosDao extends UserInfosDao {
             'User Informations',
             (UserInfos item) => <String, Object?>{
                   'id': item.id,
-                  'userid': item.userId,
+                  'userid': item.userid,
                   'name': item.name,
                   'surname': item.surname,
                   'gender': item.gender,
@@ -302,7 +302,7 @@ class _$UserInfosDao extends UserInfosDao {
             ['id'],
             (UserInfos item) => <String, Object?>{
                   'id': item.id,
-                  'userid': item.userId,
+                  'userid': item.userid,
                   'name': item.name,
                   'surname': item.surname,
                   'gender': item.gender,
@@ -315,7 +315,7 @@ class _$UserInfosDao extends UserInfosDao {
             ['id'],
             (UserInfos item) => <String, Object?>{
                   'id': item.id,
-                  'userid': item.userId,
+                  'userid': item.userid,
                   'name': item.name,
                   'surname': item.surname,
                   'gender': item.gender,
