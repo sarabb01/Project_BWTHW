@@ -93,158 +93,172 @@ class _HomepageState extends State<HomePage>
             },
             child: Icon(Icons.update)),
         drawer: Drawer(
-            child: ListView(children: [
-          Padding(
-            padding: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
-            child: Text(
-              'Settings',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: Colours.black,
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold),
-            ),
+          child: ListView(
+            children: [
+              Padding(
+                padding:
+                    EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+                child: Text(
+                  'Settings',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colours.black,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              Padding(
+                padding:
+                    EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 10),
+                child: ListTile(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  title: Text(
+                    'Personal Area',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.start,
+                  ),
+                  trailing: Icon(Icons.account_circle),
+                  tileColor: Colors.green[100],
+                  onTap: () {
+                    Navigator.pushNamed(context, Profilepage.route);
+                  },
+                ),
+              ),
+              Padding(
+                padding:
+                    EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 10),
+                child: ListTile(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  title: Text(
+                    'My Vouchers',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.start,
+                  ),
+                  trailing: Icon(Icons.more_vert),
+                  tileColor: Colors.green[100],
+                  onTap: () async {
+                    //await remove_Profile(widget.username, context);
+                  },
+                ),
+              ),
+              Padding(
+                padding:
+                    EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+                child: ListTile(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    title: Text(
+                      "Log-Out",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.start,
+                    ),
+                    tileColor: Colors.green[100],
+                    trailing: Icon(Icons.logout),
+                    onTap: () async {
+                      final sp = await SharedPreferences.getInstance();
+                      sp.remove('username');
+                      Navigator.pushReplacementNamed(context, LoginPage.route);
+                    }),
+              ),
+              Padding(
+                  padding:
+                      EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 10),
+                  child: ListTile(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      // side: BorderSide(color: Colours.azure)
+                    ),
+                    title: Text(
+                      'Info',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.start,
+                    ),
+                    trailing: Icon(Icons.info_outline),
+                    tileColor: Colors.green[100],
+                    onTap: () {
+                      Navigator.pushNamed(context, Infopage.route);
+                    },
+                  )),
+              Padding(
+                padding:
+                    EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+                child: ListTile(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      // side: BorderSide(color: Colours.azure)
+                    ),
+                    title: Text(
+                      'Delete all points',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.start,
+                    ),
+                    trailing: Icon(Icons.remove),
+                    tileColor: Colors.green[100],
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                                title: Text('Confirmation required'),
+                                content: Text(
+                                    'WARNING!\nIf you continue, all your progress will be deleted and you will have to start again from zero!\nDo you want to proceed?'),
+                                //color: Colors.grey[100],
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12.0)),
+                                //margin: EdgeInsets.fromLTRB(50, 450, 50, 200),
+                                actions: [
+                                  Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        IconButton(
+                                            onPressed: () async {
+                                              List<myFitbitData> allData =
+                                                  await Provider.of<
+                                                              UsersDatabaseRepo>(
+                                                          context,
+                                                          listen: false)
+                                                      .findAllFitbitData();
+                                              print(allData.length);
+                                              await Provider.of<
+                                                          UsersDatabaseRepo>(
+                                                      context,
+                                                      listen: false)
+                                                  .deleteAllFitbitData(allData);
+                                              Navigator.pop(context);
+                                            }, // TO BE IMPLEMENTED
+                                            icon: Icon(
+                                              Icons.check_circle,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                            )),
+                                        IconButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            icon: Icon(Icons.cancel_rounded,
+                                                color: Colors.red)),
+                                      ])
+                                ],
+                                actionsAlignment: MainAxisAlignment.center);
+                          });
+                      //await remove_Profile(widget.username, context);
+                    }),
+              ),
+            ],
           ),
-          Padding(
-            padding: EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 10),
-            child: ListTile(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              title: Text(
-                'Personal Area',
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.start,
-              ),
-              trailing: Icon(Icons.account_circle),
-              tileColor: Colors.green[100],
-              onTap: () {
-                Navigator.pushNamed(context, Profilepage.route);
-              },
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 10),
-            child: ListTile(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              title: Text(
-                'My Vouchers',
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.start,
-              ),
-              trailing: Icon(Icons.more_vert),
-              tileColor: Colors.green[100],
-              onTap: () async {
-                //await remove_Profile(widget.username, context);
-              },
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
-            child: ListTile(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              title: Text(
-                "Log-Out",
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.start,
-              ),
-              tileColor: Colors.green[100],
-              trailing: Icon(Icons.logout),
-              onTap: () async {
-                final sp = await SharedPreferences.getInstance();
-                sp.remove('username');
-                Navigator.pushReplacementNamed(context, LoginPage.route);
-            padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 10),
-            child: ListTile(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-                // side: BorderSide(color: Colours.azure)
-              ),
-              title: Text(
-                'Info',
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.start,
-              ),
-              trailing: Icon(Icons.info_outline),
-              tileColor: Colors.green[100],
-              onTap: () {
-                Navigator.pushNamed(context, Infopage.route);
-              },
-            );}
-          ),),
-          Padding(
-            padding: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
-            child: ListTile(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-                // side: BorderSide(color: Colours.azure)
-              ),
-              title: Text(
-                'Delete all points',
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.start,
-              ),
-              trailing: Icon(Icons.remove),
-              tileColor: Colors.green[100],
-              onTap: () {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                          title: Text('Confirmation required'),
-                          content: Text(
-                              'WARNING!\nIf you continue, all your progress will be deleted and you will have to start again from zero!\nDo you want to proceed?'),
-                          //color: Colors.grey[100],
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.0)),
-                          //margin: EdgeInsets.fromLTRB(50, 450, 50, 200),
-                          actions: [
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  IconButton(
-                                      onPressed: () async {
-                                        List<myFitbitData> allData =
-                                            await Provider.of<
-                                                        UsersDatabaseRepo>(
-                                                    context,
-                                                    listen: false)
-                                                .findAllFitbitData();
-                                        print(allData.length);
-                                        await Provider.of<UsersDatabaseRepo>(
-                                                context,
-                                                listen: false)
-                                            .deleteAllFitbitData(allData);
-                                        Navigator.pop(context);
-                                      }, // TO BE IMPLEMENTED
-                                      icon: Icon(
-                                        Icons.check_circle,
-                                        color: Theme.of(context).primaryColor,
-                                      )),
-                                  IconButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      icon: Icon(Icons.cancel_rounded,
-                                          color: Colors.red)),
-                                ])
-                          ],
-                          actionsAlignment: MainAxisAlignment.center);
-                    });
-                //await remove_Profile(widget.username, context);
-              }
-            ),
-    ),],),),
-          //BottomNavigationBar(items: const <BottomNavigationBarItem>[
-          //BottomNavigationBarItem(
-          //icon: Icons.remove_circle,
-          //label: Text('Delete my Profile')),
-          //])
-        
+        ),
+        //BottomNavigationBar(items: const <BottomNavigationBarItem>[
+        //BottomNavigationBarItem(
+        //icon: Icons.remove_circle,
+        //label: Text('Delete my Profile')),
+        //])
+
         body: Center(
             //TweenAnimationBuilder(
             //tween: Tween(begin: 0.0, end: 1.0),
