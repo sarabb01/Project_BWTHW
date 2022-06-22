@@ -50,6 +50,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     super.initState();
   }
 
+  // For Text Editing Controller Widget
   @override
   void dispose() {
     _name.dispose();
@@ -188,7 +189,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 user_cred_storing(_username.text, _password.text);
                 user_info_storing(_username.text, _name.text, _surname.text,
                     _selectedGender!, _selectedDate, _selectedTarget!);
-                //setInputData();
+                setInputData();
                 await Navigator.pushReplacementNamed(context, LoginPage.route);
               }
             }),
@@ -220,21 +221,22 @@ class _RegistrationPageState extends State<RegistrationPage> {
     });
   }
 
-  void user_cred_storing(String username, String password) async {
-    final usersCredentials = UsersCredentials(null, username, password);
+  Future<void> user_cred_storing(String username, String password) async {
     if (await Provider.of<UsersDatabaseRepo>(context, listen: false)
             .findUser(username) ==
         null) {
+      final usersCredentials = UsersCredentials(null, username, password);
       await Provider.of<UsersDatabaseRepo>(context, listen: false)
           .addUser(usersCredentials);
     }
   }
 
-  void user_info_storing(String username, String name, String surname,
+  Future<void> user_info_storing(String username, String name, String surname,
       String gender, DateTime dateofbirth, String target) async {
     final user = await Provider.of<UsersDatabaseRepo>(context, listen: false)
         .findUser(username);
     if (user != null) {
+      print([user.id!, name, surname, gender]);
       final user_infos =
           UserInfos(null, user.id!, name, surname, gender, dateofbirth, target);
       await Provider.of<UsersDatabaseRepo>(context, listen: false)
@@ -256,9 +258,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   if (states.contains(MaterialState.pressed))
                     return Colors.red; // <-- Splash color
                 })),
-            onPressed: (() async {
-              await setInputData();
-              await Navigator.pushReplacementNamed(context, LoginPage.route);
+            onPressed: (() {
+              setInputData();
+              Navigator.pushReplacementNamed(context, LoginPage.route);
             }),
             child: Icon(
               Icons.first_page,

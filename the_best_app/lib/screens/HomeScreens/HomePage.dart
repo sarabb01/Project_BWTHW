@@ -39,7 +39,6 @@ class _HomepageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
-
     controller = AnimationController(
       duration: const Duration(seconds: 10),
       vsync: this,
@@ -61,7 +60,7 @@ class _HomepageState extends State<HomePage>
     return Scaffold(
         appBar: AppBar(
           title: widget.username == null || widget.username.isEmpty
-              ? Text('ERROR !! (No username)',
+              ? Text('ERROR !! (No Username Found)',
                   style: TextStyle(fontWeight: FontWeight.bold))
               : Text(widget.username.toUpperCase(),
                   style: TextStyle(fontWeight: FontWeight.bold)),
@@ -94,30 +93,22 @@ class _HomepageState extends State<HomePage>
         drawer: Drawer(
             child: ListView(children: [
           Padding(
-              padding:
-                  EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
-              child: Container(
-                //decoration: BoxDecoration(
-                //color: Theme.of(context).accentColor,
-                //),
-                //child:
-                // Center(
-                child: Text(
-                  'Settings',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Colours.black,
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold),
-                ),
-              )),
-          //),
+            padding: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+            child: Text(
+              'Settings',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: Colours.black,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+
           Padding(
             padding: EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 10),
             child: ListTile(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
-                //side: BorderSide(color: Colours.azure)
               ),
               title: Text(
                 'Personal Area',
@@ -128,7 +119,6 @@ class _HomepageState extends State<HomePage>
               tileColor: Colors.green[100],
               onTap: () {
                 Navigator.pushNamed(context, Profilepage.route);
-                //Navigator.pushNamed(context, PreferencePage.route);
               },
             ),
           ),
@@ -137,7 +127,6 @@ class _HomepageState extends State<HomePage>
             child: ListTile(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
-                // side: BorderSide(color: Colours.azure)
               ),
               title: Text(
                 'My Vouchers',
@@ -152,7 +141,27 @@ class _HomepageState extends State<HomePage>
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(left: 10, right: 10, top: 400, bottom: 10),
+            padding: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+            child: ListTile(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              title: Text(
+                "Log-Out",
+                style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.start,
+              ),
+              tileColor: Colors.green[100],
+              trailing: Icon(Icons.logout),
+              onTap: () async {
+                final sp = await SharedPreferences.getInstance();
+                sp.remove('username');
+                Navigator.pushReplacementNamed(context, LoginPage.route);
+              },
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
             child: ListTile(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
