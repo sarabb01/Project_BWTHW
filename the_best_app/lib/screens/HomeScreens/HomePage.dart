@@ -70,11 +70,11 @@ class _HomepageState extends State<HomePage>
           actions: [
             Row(
               children: [
-                IconButton(
-                    icon: Icon(Icons.info),
-                    onPressed: () {
-                      Navigator.pushNamed(context, Infopage.route);
-                    }),
+                // IconButton(
+                //     icon: Icon(Icons.info),
+                //     onPressed: () {
+                //       Navigator.pushNamed(context, Infopage.route);
+                //     }),
                 IconButton(
                     icon: Icon(Icons.show_chart_outlined),
                     onPressed: () {
