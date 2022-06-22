@@ -20,14 +20,14 @@ class Legend_rad extends StatelessWidget {
           height: 10,
           width: 10,
           child: const DecoratedBox(
-              decoration: const BoxDecoration(color: Colors.yellowAccent))),
+              decoration: BoxDecoration(color: Colors.yellowAccent))),
       Text(' Calories'),
       SizedBox(height: 10, width: 10),
       SizedBox(
           height: 10,
           width: 10,
           child: const DecoratedBox(
-              decoration: const BoxDecoration(color: Colors.green))),
+              decoration: BoxDecoration(color: Colors.greenAccent))),
       Text(' Cardio'),
       SizedBox(height: 10, width: 10),
       SizedBox(

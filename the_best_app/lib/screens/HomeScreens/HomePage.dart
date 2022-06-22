@@ -261,7 +261,7 @@ class _HomepageState extends State<HomePage>
                 ),
                 SizedBox(height: 20),
                 const Text(
-                  'Your points:',
+                  'You have gained:',
                   style: TextStyle(fontSize: 20),
                 ),
                 SizedBox(height: 20),
@@ -271,10 +271,9 @@ class _HomepageState extends State<HomePage>
                   },
                   child: Container(
                       decoration: BoxDecoration(
-                          color: Colours.paleGreen,
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                              color: Colors.green, style: BorderStyle.solid)),
+                        color: Colours.paleTurquoise,
+                        shape: BoxShape.circle,
+                      ),
                       width: 200,
                       height: 200,
                       child: FutureBuilder(
@@ -293,7 +292,7 @@ class _HomepageState extends State<HomePage>
                                     value: score! / obiettivo,
                                     //value: score.totalScore / obiettivo,
                                     backgroundColor: Colors.grey[400],
-                                    color: Colors.greenAccent[700],
+                                    color: Colours.mediumSeaGreen,
                                     strokeWidth: 25,
                                   ),
                                   Center(
@@ -310,7 +309,7 @@ class _HomepageState extends State<HomePage>
                                   CircularProgressIndicator(
                                     value: score / obiettivo,
                                     backgroundColor: Colors.grey[400],
-                                    color: Colors.greenAccent[700],
+                                    color: Colours.mediumSeaGreen,
                                     strokeWidth: 25,
                                   ),
                                   Center(
@@ -325,18 +324,33 @@ class _HomepageState extends State<HomePage>
                         },
                       )),
                 ),
-                //Text(
-                //'You are far'
-                //' ${(obiettivo - puntiottenuti)}'
-                //' points from the AWARD, GO AND GET IT',
-                //style: TextStyle(fontSize: 20),
-                //),
                 SizedBox(height: 30),
-                CupertinoButton.filled(
-                    child: const Text('Gain your Award'),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colours.mediumSeaGreen,
+                      textStyle: TextStyle(color: Colors.white),
+                      padding: EdgeInsets.only(
+                          top: 5, left: 10, bottom: 5, right: 10),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                          side: BorderSide(color: Colours.mediumSeaGreen)),
+                    ),
+                    child: Text(
+                      'CLAIM YOUR REWARD',
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
                     onPressed: () {
                       Navigator.pushNamed(context, PreferencePage.route);
                     }),
+                // CupertinoButton.filled(
+                //     child: const Text('Gain your Award'),
+                //     borderRadius: BorderRadius.circular(25.0),
+                //     onPressed: () {
+                //       Navigator.pushNamed(context, PreferencePage.route);
+                //     }),
                 Container(
                   //width: MediaQuery.of(context).size.width * 0.4,
                   height: MediaQuery.of(context).size.height / 6,

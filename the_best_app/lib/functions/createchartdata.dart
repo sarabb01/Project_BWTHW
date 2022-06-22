@@ -19,7 +19,7 @@ List<CircularStackEntry> createChartData(myFitbitData today) {
           rankKey: 'Cardio')
     ]),
     CircularStackEntry([
-      CircularSegmentEntry(today.calories * 100 / 600, Colors.yellowAccent[700],
+      CircularSegmentEntry(today.calories * 100 / 600, Colors.yellowAccent[400],
           rankKey: 'Calories'),
       CircularSegmentEntry(100 - today.calories * 100 / 600, Colors.yellow[100],
           rankKey: 'Calories')
