@@ -24,6 +24,7 @@ import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/functions/fetchdata.dart';
 import 'package:the_best_app/models/pointsModel.dart';
+import 'package:the_best_app/screens/LoginScreens/LoginPage.dart';
 import 'package:the_best_app/screens/PointsScreens/summaryPage.dart';
 
 // import 'package:syncfusion_flutter_charts/charts.dart';
@@ -37,56 +38,63 @@ class PointsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     print('${PointsPage.routename} built');
     return Scaffold(
-        appBar: AppBar(title: Text(PointsPage.routename), actions: [
-          Row(
-            children: [
-              Consumer<PointsModel>(builder: (context, totscore, child) {
-                return IconButton(
-                    // Questo bottone serve per avere le informazioni!!
-                    iconSize: 40,
-                    tooltip: 'Info',
-                    icon: Icon(Icons.info),
-                    color: Colors.green[100],
-                    onPressed: () {
-                      // List<myFitbitData> allData =
-                      //     await Provider.of<UsersDatabaseRepo>(context,
-                      //             listen: false)
-                      //         .findAllFitbitData();
-                      //
-                      // final double score = computeTotalPoints(allData);
-                      // print('${allData.length}, ${sp.getDouble('Points')}');
+        appBar: AppBar(
+            leading: IconButton(
+                icon: Icon(Icons.home),
+                onPressed: () {
+                  Navigator.pushNamed(context, LoginPage.route);
+                }),
+            title: Text(PointsPage.routename),
+            actions: [
+              Row(
+                children: [
+                  Consumer<PointsModel>(builder: (context, totscore, child) {
+                    return IconButton(
+                        // Questo bottone serve per avere le informazioni!!
+                        iconSize: 40,
+                        tooltip: 'Info',
+                        icon: Icon(Icons.info),
+                        color: Colors.green[100],
+                        onPressed: () {
+                          // List<myFitbitData> allData =
+                          //     await Provider.of<UsersDatabaseRepo>(context,
+                          //             listen: false)
+                          //         .findAllFitbitData();
+                          //
+                          // final double score = computeTotalPoints(allData);
+                          // print('${allData.length}, ${sp.getDouble('Points')}');
 
-                      // totscore.updateScore(score);
+                          // totscore.updateScore(score);
 
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                                content: SingleChildScrollView(
-                                    child: ListBody(children: [
-                              Text(
-                                  '-To see further information, double tap on the graph\n\n-To refresh data click on the REFRESH button top right')
-                            ])));
-                          });
-                    });
-              }),
-              Consumer<PointsModel>(builder: (context, totscore, child) {
-                return IconButton(
-                    // Questo bottone serve per fetchare!!
-                    onPressed: () async {
-                      fetchData(context);
-                      List<myFitbitData> allData =
-                          await Provider.of<UsersDatabaseRepo>(context,
-                                  listen: false)
-                              .findAllFitbitData();
-                      final double score = computeTotalPoints(allData);
-                      totscore.updateScore(score);
-                    },
-                    icon: Icon(Icons.update));
-              })
-            ],
-          )
-        ]),
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                    content: SingleChildScrollView(
+                                        child: ListBody(children: [
+                                  Text(
+                                      '-To see further information, double tap on the graph\n\n-To refresh data click on the REFRESH button top right')
+                                ])));
+                              });
+                        });
+                  }),
+                  Consumer<PointsModel>(builder: (context, totscore, child) {
+                    return IconButton(
+                        // Questo bottone serve per fetchare!!
+                        onPressed: () async {
+                          fetchData(context);
+                          List<myFitbitData> allData =
+                              await Provider.of<UsersDatabaseRepo>(context,
+                                      listen: false)
+                                  .findAllFitbitData();
+                          final double score = computeTotalPoints(allData);
+                          totscore.updateScore(score);
+                        },
+                        icon: Icon(Icons.update));
+                  })
+                ],
+              )
+            ]),
         body: SingleChildScrollView(
             child: Padding(
           padding: const EdgeInsets.all(25.0),
