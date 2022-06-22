@@ -47,18 +47,16 @@ class PointsPage extends StatelessWidget {
                     tooltip: 'Info',
                     icon: Icon(Icons.info),
                     color: Colors.green[100],
-                    onPressed: () async {
-                      List<myFitbitData> allData =
-                          await Provider.of<UsersDatabaseRepo>(context,
-                                  listen: false)
-                              .findAllFitbitData();
-                      final sp = await SharedPreferences.getInstance();
+                    onPressed: () {
+                      // List<myFitbitData> allData =
+                      //     await Provider.of<UsersDatabaseRepo>(context,
+                      //             listen: false)
+                      //         .findAllFitbitData();
+                      //
+                      // final double score = computeTotalPoints(allData);
+                      // print('${allData.length}, ${sp.getDouble('Points')}');
 
-                      final double score = computeTotalPoints(allData);
-                      sp.setDouble('Points', score);
-                      print('${allData.length}, ${sp.getDouble('Points')}');
-
-                      totscore.updateScore(score);
+                      // totscore.updateScore(score);
 
                       showDialog(
                           context: context,
@@ -289,11 +287,11 @@ List<int> computeSum(List<myFitbitData> input) {
   return [tot1, tot2, tot3, tot4];
 }
 
-double computeTotalPoints(List<myFitbitData> input) {
-  double score = 0;
-  for (int i = 0; i < input.length; i++) {
-    score +=
-        elaboratePoints(input[i]).fold(0, (prev, element) => prev + element);
-  }
-  return double.parse(score.toStringAsFixed(2));
-}
+// double computeTotalPoints(List<myFitbitData> input) {
+//   double score = 0;
+//   for (int i = 0; i < input.length; i++) {
+//     score +=
+//         elaboratePoints(input[i]).fold(0, (prev, element) => prev + element);
+//   }
+//   return double.parse(score.toStringAsFixed(2));
+// }

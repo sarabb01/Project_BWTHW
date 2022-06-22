@@ -3,6 +3,7 @@ import 'package:fitbitter/fitbitter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/Utils/stringsKeywords.dart';
@@ -17,21 +18,13 @@ Future<void> fetchData(BuildContext context) async {
 
   DateTime lastInsertion = (allData.length > 0)
       ? myDate(allData[allData.length - 1].detailDate)
-      : DateTime.utc(2022, 6, 17);
-
-  // if (allData.length > 0) {
-  //   DateTime lastInsertion = myDate(allData[allData.length - 1].detailDate);
-  //   int intlastInsertion = (allData[allData.length - 1].detailDate);
-  //   final threshold =
-  //       (DateTime.now().millisecondsSinceEpoch ~/ 60000) - intlastInsertion;
-  //   print('met1 $intlastInsertion');;
-  // }
+      : DateTime.now().subtract(Duration(days: 1));
 
   print('Last insertion $lastInsertion');
-  //DateTime startDate = DateTime.utc(2022, 6, 19);
-  DateTime startDate = lastInsertion;
-  //DateTime endDate = DateTime.utc(2022, 6, 21);
-  DateTime endDate = DateTime.now();
+  DateTime startDate = DateTime.utc(2022, 5, 31);
+  //DateTime startDate = lastInsertion;
+  DateTime endDate = DateTime.utc(2022, 6, 2);
+  //DateTime endDate = DateTime.now();
 
   int threshold = calculateThreshold(allData, endDate);
   print('Threshold mins $threshold');
@@ -109,6 +102,7 @@ Future<void> fetchData(BuildContext context) async {
         // print('Current min $mins');
 
         print('Act $activeCals met1: $cals');
+
         cals = activeCals > 0 ? activeCals : cals;
 
         myFitbitData newdata = myFitbitData(tableKey,
@@ -120,7 +114,7 @@ Future<void> fetchData(BuildContext context) async {
         await Provider.of<UsersDatabaseRepo>(context, listen: false)
             .insertFitbitData(newdata);
       } on FitbitRateLimitExceededException catch (e) {
-        print('Catched error');
+        print('Catched Fitbit error');
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text(
               'Too many requests! YOU HAVE TO WAIT!',
@@ -130,7 +124,7 @@ Future<void> fetchData(BuildContext context) async {
             backgroundColor: Colors.red));
         break;
       } on DioError catch (e) {
-        print('Catched error');
+        print('Catched Dioerror');
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text(
               'Check your authorization',
@@ -139,6 +133,8 @@ Future<void> fetchData(BuildContext context) async {
             ),
             backgroundColor: Colors.red));
         break;
+      } catch (e) {
+        print('Catched other errors');
       }
     }
   } else {
@@ -151,6 +147,13 @@ Future<void> fetchData(BuildContext context) async {
         ),
         backgroundColor: Colors.yellow));
   }
+
+  List<myFitbitData> allDatanew =
+      await Provider.of<UsersDatabaseRepo>(context, listen: false)
+          .findAllFitbitData();
+  final double score = computeTotalPoints(allDatanew);
+  final sp = await SharedPreferences.getInstance();
+  sp.setDouble('Points', score);
 }
 
 ///////////////////////////
@@ -163,10 +166,12 @@ DateTime myDate(int date) {
 int calculateThreshold(List<myFitbitData> input, DateTime endDate) {
   if (input.length > 0) {
     DateTime lastInsertion = myDate(input[input.length - 1].detailDate);
+    print(lastInsertion);
     int intlastInsertion = (input[input.length - 1].detailDate);
-    final threshold =
-        (endDate.millisecondsSinceEpoch ~/ 60000) - intlastInsertion;
-    return threshold;
+    int intEndDate = endDate.millisecondsSinceEpoch ~/ 60000;
+    final threshold = intEndDate - intlastInsertion;
+
+    return threshold > 0 ? threshold : intlastInsertion - intEndDate;
   } else {
     final threshold = 6;
     return threshold;
