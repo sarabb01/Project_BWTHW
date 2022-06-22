@@ -154,6 +154,25 @@ class _HomepageState extends State<HomePage>
             ),
           ),
           Padding(
+            padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 10),
+            child: ListTile(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+                // side: BorderSide(color: Colours.azure)
+              ),
+              title: Text(
+                'Info',
+                style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.start,
+              ),
+              trailing: Icon(Icons.info_outline),
+              tileColor: Colors.green[100],
+              onTap: () {
+                Navigator.pushNamed(context, Infopage.route);
+              },
+            ),
+          ),
+          Padding(
             padding: EdgeInsets.only(left: 10, right: 10, top: 400, bottom: 10),
             child: ListTile(
               shape: RoundedRectangleBorder(
