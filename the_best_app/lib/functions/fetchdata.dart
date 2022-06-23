@@ -12,16 +12,20 @@ import 'package:the_best_app/functions/elaborateDataFunctions.dart';
 import 'package:the_best_app/models/fitbitDataTypes.dart';
 
 Future<void> fetchData(BuildContext context) async {
+  final sp = await SharedPreferences.getInstance();
+  final String? user = sp.getString('username');
+
+  print(user);
   List<myFitbitData> allData =
       await Provider.of<UsersDatabaseRepo>(context, listen: false)
-          .findAllFitbitData();
+          .findAllFitbitDataUser(user!);
 
   DateTime lastInsertion = (allData.length > 0)
       ? myDate(allData[allData.length - 1].detailDate)
       : DateTime.now().subtract(Duration(days: 3));
 
-  print('Last insertion $lastInsertion');
-  //DateTime startDate = DateTime.utc(2022,5, 31);
+  //print('Last insertion $lastInsertion');
+  //DateTime startDate = DateTime.utc(2022, 5, 31);
   DateTime startDate = lastInsertion;
   //DateTime endDate = DateTime.utc(2022, 6, 2);
   DateTime endDate = DateTime.now();
@@ -111,7 +115,8 @@ Future<void> fetchData(BuildContext context) async {
             calories: cals,
             steps: steps,
             cardio: mins,
-            detailDate: detail);
+            detailDate: detail,
+            username: user);
         await Provider.of<UsersDatabaseRepo>(context, listen: false)
             .insertFitbitData(newdata);
       } on FitbitRateLimitExceededException catch (e) {
@@ -151,10 +156,11 @@ Future<void> fetchData(BuildContext context) async {
 
   List<myFitbitData> allDatanew =
       await Provider.of<UsersDatabaseRepo>(context, listen: false)
-          .findAllFitbitData();
+          .findAllFitbitDataUser(user);
   final double score = computeTotalPoints(allDatanew);
-  final sp = await SharedPreferences.getInstance();
-  sp.setDouble('Points', score);
+  final spent_points = sp.getDouble('SpentPoints') ?? 0.0;
+  sp.setDouble('Points', score - spent_points);
+  // sp.setDouble('Points', score);
 }
 
 ///////////////////////////

@@ -190,17 +190,23 @@ class _HomepageState extends State<HomePage>
                                 children: [
                                   IconButton(
                                       onPressed: () async {
+                                        print(widget.username);
                                         List<myFitbitData> allData =
                                             await Provider.of<
                                                         UsersDatabaseRepo>(
                                                     context,
                                                     listen: false)
-                                                .findAllFitbitData();
+                                                .findAllFitbitDataUser(
+                                                    widget.username);
                                         print(allData.length);
                                         await Provider.of<UsersDatabaseRepo>(
                                                 context,
                                                 listen: false)
                                             .deleteAllFitbitData(allData);
+                                        final sp = await SharedPreferences
+                                            .getInstance();
+                                        sp.setDouble('Points', 0.0);
+                                        sp.setDouble('SpentPoints', 0.0);
                                         Navigator.pop(context);
                                       }, // TO BE IMPLEMENTED
                                       icon: Icon(
@@ -228,10 +234,6 @@ class _HomepageState extends State<HomePage>
           //])
         ])),
         body: Center(
-            //TweenAnimationBuilder(
-            //tween: Tween(begin: 0.0, end: 1.0),
-            //duration: Duration(seconds: 10),
-            //builder: (context, value, _) =>
             child: Padding(
           padding: const EdgeInsets.only(top: 10, bottom: 30),
           child: Column(crossAxisAlignment: CrossAxisAlignment.center,
@@ -252,8 +254,10 @@ class _HomepageState extends State<HomePage>
                 ),
                 SizedBox(height: 20),
                 GestureDetector(
-                  onDoubleTap: () {
-                    Navigator.pushNamed(context, PointsPage.route);
+                  onDoubleTap: () async {
+                    final sp = await SharedPreferences.getInstance();
+                    Navigator.pushNamed(context, PointsPage.route,
+                        arguments: {'username': sp.getString('username')});
                   },
                   child: Container(
                       decoration: BoxDecoration(
@@ -264,18 +268,29 @@ class _HomepageState extends State<HomePage>
                       height: 200,
                       child: FutureBuilder(
                         //child: Consumer<PointsModel>(
-                        future: SharedPreferences.getInstance(),
+                        future: Future.wait([
+                          SharedPreferences.getInstance(),
+                          Provider.of<UsersDatabaseRepo>(context, listen: false)
+                              .findAllFitbitDataUser(widget.username)
+                        ]),
                         builder: (context, snapshot) {
                           //builder: (context, score, child) {
                           if (snapshot.hasData) {
-                            final result = snapshot.data as SharedPreferences;
+                            final data = snapshot.data as List<Object>;
+                            final check = data[1] as List<myFitbitData>;
+                            final result = data[0] as SharedPreferences;
+                            print(widget.username);
+                            print(check.length);
                             if (result.getDouble('Points') != null) {
-                              final score = result.getDouble('Points');
+                              final score = check.length != 0
+                                  ? result.getDouble('Points')!.roundToDouble()
+                                  : 0.0;
+                              print(result.getDouble('SpentPoints'));
                               return Stack(
                                 fit: StackFit.expand,
                                 children: [
                                   CircularProgressIndicator(
-                                    value: score! / obiettivo,
+                                    value: score / obiettivo,
                                     //value: score.totalScore / obiettivo,
                                     backgroundColor: Colors.grey[400],
                                     color: Colours.mediumSeaGreen,

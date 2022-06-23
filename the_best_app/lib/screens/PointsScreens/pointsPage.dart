@@ -33,6 +33,9 @@ import 'package:the_best_app/Screens/PointsScreens/summaryPage.dart';
 class PointsPage extends StatelessWidget {
   static const route = '/hellowordpage/loginpage/homepage/pointspage';
   static const routename = 'Points Page';
+  String username;
+
+  PointsPage({required this.username});
 
   @override
   Widget build(BuildContext context) {
@@ -78,20 +81,21 @@ class PointsPage extends StatelessWidget {
                               });
                         });
                   }),
-                  Consumer<PointsModel>(builder: (context, totscore, child) {
-                    return IconButton(
-                        // Questo bottone serve per fetchare!!
-                        onPressed: () async {
-                          fetchData(context);
-                          List<myFitbitData> allData =
-                              await Provider.of<UsersDatabaseRepo>(context,
-                                      listen: false)
-                                  .findAllFitbitData();
-                          final double score = computeTotalPoints(allData);
-                          totscore.updateScore(score);
-                        },
-                        icon: Icon(Icons.update));
-                  })
+                  // Consumer<PointsModel>(builder: (context, totscore, child) {
+                  //   return
+                  IconButton(
+                      // Questo bottone serve per fetchare!!
+                      onPressed: () async {
+                        fetchData(context);
+                        List<myFitbitData> allData =
+                            await Provider.of<UsersDatabaseRepo>(context,
+                                    listen: false)
+                                .findAllFitbitDataUser(username);
+                        final double score = computeTotalPoints(allData);
+                        // totscore.updateScore(score);
+                      },
+                      icon: Icon(Icons.update))
+                  // })
                 ],
               )
             ]),
@@ -104,7 +108,7 @@ class PointsPage extends StatelessWidget {
             Consumer<UsersDatabaseRepo>(builder: (context, dbr, child) {
               return FutureBuilder(
                   initialData: null,
-                  future: dbr.findAllFitbitData(),
+                  future: dbr.findAllFitbitDataUser(username),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       final fitbit = snapshot.data as List<myFitbitData>;
@@ -234,7 +238,7 @@ class PointsPage extends StatelessWidget {
             Consumer<UsersDatabaseRepo>(builder: (context, dbr, child) {
               return FutureBuilder(
                   initialData: null,
-                  future: dbr.findAllFitbitData(),
+                  future: dbr.findAllFitbitDataUser(username),
                   //future: dbr.findAllSleepData(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
@@ -255,7 +259,8 @@ class PointsPage extends StatelessWidget {
                                     GestureDetector(
                                       onDoubleTap: () {
                                         Navigator.pushNamed(
-                                            context, SummaryPage.route);
+                                            context, SummaryPage.route,
+                                            arguments: {'username': username});
                                       },
                                       child: Container(
                                           height: 300,

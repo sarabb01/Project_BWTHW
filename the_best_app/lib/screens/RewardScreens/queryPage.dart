@@ -39,6 +39,9 @@ class QueryPage extends StatelessWidget {
                 ElevatedButton(
                     onPressed: () async {
                       final sp = await SharedPreferences.getInstance();
+                      // final spent_points = sp.getDouble('SpentPoints') ?? 0.0;
+                      // final points = sp.getDouble('Points') ?? 0;
+                      // sp.setDouble('Points', points - spent_points);
                       double score = sp.getDouble('Points') ?? 0;
                       if (myController.text != '' && path == 'shops') {
                         Navigator.pushNamed(context, ShoppingPage.route,

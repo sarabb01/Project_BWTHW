@@ -16,8 +16,9 @@ class SummaryPage extends StatelessWidget {
   static const route =
       '/hellowordpage/loginpage/homepage/pointspage/summarypage';
   static const routename = 'Summary';
+  final String username;
 
-  SummaryPage({Key? key}) : super(key: key);
+  SummaryPage({Key? key, required this.username}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,7 @@ class SummaryPage extends StatelessWidget {
                     Consumer<UsersDatabaseRepo>(builder: (context, dbr, child) {
                   return FutureBuilder(
                       initialData: null,
-                      future: dbr.findAllFitbitData(),
+                      future: dbr.findAllFitbitDataUser(username),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           final fitbit = snapshot.data as List<myFitbitData>;

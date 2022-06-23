@@ -46,14 +46,6 @@ class _FetchPageState extends State<FetchPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(FetchPage.routename),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.arrow_circle_right),
-            onPressed: () {
-              Navigator.pushNamed(context, PointsPage.route);
-            },
-          )
-        ],
       ),
       body: Center(
         child: Column(
@@ -135,14 +127,14 @@ class _FetchPageState extends State<FetchPage> {
                     }
                     //print('Current min $mins');
 
-                    myFitbitData newdata = myFitbitData(tableKey,
-                        sleepHours: time,
-                        calories: cals,
-                        steps: steps,
-                        cardio: mins,
-                        detailDate: detail);
-                    await Provider.of<UsersDatabaseRepo>(context, listen: false)
-                        .insertFitbitData(newdata);
+                    // myFitbitData newdata = myFitbitData(tableKey,
+                    //     sleepHours: time,
+                    //     calories: cals,
+                    //     steps: steps,
+                    //     cardio: mins,
+                    //     detailDate: detail);
+                    // await Provider.of<UsersDatabaseRepo>(context, listen: false)
+                    //     .insertFitbitData(newdata);
                   }
 
                   // OPTION B

@@ -112,12 +112,14 @@ class MyApp extends StatelessWidget {
               return FetchPage();
             });
           } else if (settings.name == PointsPage.route) {
+            final args6 = settings.arguments as Map;
             return MaterialPageRoute(builder: (context) {
-              return PointsPage();
+              return PointsPage(username: args6['username']);
             });
           } else if (settings.name == SummaryPage.route) {
+            final args7 = settings.arguments as Map;
             return MaterialPageRoute(builder: (context) {
-              return SummaryPage();
+              return SummaryPage(username: args7['username']);
             });
           } else if (settings.name == PreferencePage.route) {
             return MaterialPageRoute(builder: (context) {

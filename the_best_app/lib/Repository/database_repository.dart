@@ -120,6 +120,12 @@ class UsersDatabaseRepo extends ChangeNotifier {
     return results;
   } //findAll
 
+  //@Query('SELECT * FROM myFitbitData WHERE username = :username')
+  Future<List<myFitbitData>> findAllFitbitDataUser(String username) async {
+    final results = await database.fitbitDao.findAllFitbitDataUser(username);
+    return results;
+  }
+
   //This method wraps the insert..() method of the DAO.
   //Then, it notifies the listeners that something changed.
   Future<void> insertFitbitData(myFitbitData newdata) async {
@@ -136,4 +142,29 @@ class UsersDatabaseRepo extends ChangeNotifier {
     await database.fitbitDao.updateFitbitData(data);
     notifyListeners();
   }
+
+  // // METHODS TO MANAGE POINTS DATA
+  // //Points
+  // //This method wraps the findAll..() method of the DAO
+  // Future<List<Points>> findAllPoints() async {
+  //   final results = await database.points_dao.findAllPoints();
+  //   return results;
+  // } //findAll
+
+  // //This method wraps the insert..() method of the DAO.
+  // //Then, it notifies the listeners that something changed.
+  // Future<void> insertPoints(Points newdata) async {
+  //   await database.points_dao.insertPoints(newdata);
+  //   notifyListeners();
+  // } //insertActivity
+
+  // Future<void> deletePoints(List<Points> newdata) async {
+  //   await database.points_dao.deletePoints(newdata);
+  //   notifyListeners();
+  // } //insertActivity
+
+  // Future<void> updatePoints(Points data) async {
+  //   await database.points_dao.updatePoints(data);
+  //   notifyListeners();
+  // }
 }

@@ -22,6 +22,7 @@ class myFitbitData {
   final int steps;
   final int cardio;
   final int detailDate;
+  final String username;
 
   myFitbitData(this.keyDate,
       /* this.date,*/
@@ -29,5 +30,6 @@ class myFitbitData {
       required this.calories,
       required this.steps,
       required this.cardio,
-      required this.detailDate});
+      required this.detailDate,
+      required this.username});
 }
