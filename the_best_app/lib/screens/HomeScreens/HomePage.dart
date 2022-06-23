@@ -35,7 +35,7 @@ class _HomepageState extends State<HomePage>
       controller; // per controllare animazione di circular progress indicator, ho messo late perchè inizializzo dopo la variabile
   //double puntiottenuti = 70; //puntiottenuti ricavati da conversione punti
   double obiettivo = 300; //obiettivo fissato pagina preference
-  String username = 'PROBLEM TO SOLVE';
+  String username = 'SOMETHING GONE WRONG';
   @override
   void initState() {
     super.initState();
@@ -44,6 +44,13 @@ class _HomepageState extends State<HomePage>
       vsync: this,
     );
     controller.repeat();
+    SharedPreferences.getInstance().then((res) {
+      setState(() {
+        // Return string of "useFullName"
+        // or return empty string if "userFullName" is null
+        username = res.getString("username")!;
+      });
+    });
   }
 
   @override
