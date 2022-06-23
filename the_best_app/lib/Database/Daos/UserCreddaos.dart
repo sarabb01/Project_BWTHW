@@ -9,9 +9,7 @@ abstract class UserCrededentialsDao {
   @Query('SELECT * FROM UsersCredentials WHERE username = :username')
   Future<UsersCredentials?> checkUser(String username);
 
-  @Insert(
-      onConflict: OnConflictStrategy
-          .rollback) // In ordert to avoid duplicates within the users
+  @insert
   Future<void> addUser(UsersCredentials user);
 
   @Update(onConflict: OnConflictStrategy.replace)

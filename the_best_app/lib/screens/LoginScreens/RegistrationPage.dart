@@ -92,22 +92,25 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 key: formKey,
                 child: Padding(
                     padding: const EdgeInsets.only(
-                        top: 10, bottom: 8, left: 20, right: 20),
+                        top: 10, bottom: 10, left: 20, right: 20),
                     child: ListView(children: <Widget>[
-                      Text(
-                        'New Account',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 25.0),
-                      ),
                       Padding(
                         padding: EdgeInsets.all(10),
                         child: Container(
                           height: 100,
-                          width: 100,
-                          child: Image.asset('assets/Images/placeholder.jpg'),
+                          width: 200,
+                          child: Image.asset('assets/Images/logo5.png'),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Text(
+                          'New Account',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 25.0),
                         ),
                       ),
                       FormSeparator(label: 'Name'),
@@ -198,7 +201,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     _selectedDate,
                     _selectedTarget!);
                 setInputData();
-                Navigator.pushReplacementNamed(context, LoginPage.route);
+                await Navigator.pushReplacementNamed(context, LoginPage.route);
               }
             }),
             child: Padding(

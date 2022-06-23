@@ -6,7 +6,6 @@ import 'package:the_best_app/Database/typeConverters/dateTimeConverter.dart';
 
 //Here, we are importing the entities and the daos of the database
 import 'package:the_best_app/Database/Daos/fitbitDao.dart';
-
 import 'package:the_best_app/Database/Daos/UserCreddaos.dart';
 import 'package:the_best_app/Database/Daos/UserInfosdaos.dart';
 

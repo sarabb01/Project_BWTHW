@@ -9,9 +9,7 @@ abstract class UserInfosDao {
   @Query('SELECT * FROM UserInfos WHERE userId = :userid')
   Future<UserInfos?> checkUserInfos(int userid);
 
-  @Insert(
-      onConflict: OnConflictStrategy
-          .rollback) // In ordert to avoid duplicates within the users
+  @insert
   Future<void> addUserInfos(UserInfos user);
 
   @Update(onConflict: OnConflictStrategy.replace)
