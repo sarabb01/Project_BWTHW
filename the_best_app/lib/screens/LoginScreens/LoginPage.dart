@@ -291,8 +291,10 @@ class _log_in_settings extends State<LoginPage> {
                 _username.text.isEmpty ? user_submit() : null;
                 _password.text.isEmpty ? pass_submit() : null;
               } else if (await _User_LogIn(_username.text, _password.text)) {
-                Navigator.pushReplacementNamed(context, HomePage.route,
-                    arguments: {'username': _username.text});
+                Navigator.pushReplacementNamed(
+                  context,
+                  HomePage.route,
+                );
                 setInputData(); // To Clear the content of TextEditingController()
               } else {
                 showDialog<void>(

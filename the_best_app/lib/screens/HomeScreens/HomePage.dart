@@ -1,12 +1,13 @@
 // APP SCREENS
-import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
+import 'package:the_best_app/Screens/PointsScreens/fitbitAuthPage.dart';
+import 'package:the_best_app/Screens/PointsScreens/pointsPage.dart';
+import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
+import 'package:the_best_app/Screens/infopage.dart';
+import 'package:the_best_app/Screens/RewardScreens/MyVoucherPage.dart';
+// MODELS
 import 'package:the_best_app/models/pointsModel.dart';
-import 'package:the_best_app/screens/PointsScreens/fitbitAuthPage.dart';
-import 'package:the_best_app/screens/PointsScreens/pointsPage.dart';
-import 'package:the_best_app/screens/RewardScreens/selectPrefPage.dart';
-import 'package:the_best_app/screens/infopage.dart';
 // FLUTTER PACKAGES
 import 'package:flutter/cupertino.dart';
 import 'package:colours/colours.dart';
@@ -16,16 +17,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 // DATABASE
 import 'package:the_best_app/Repository/database_repository.dart';
+import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'package:the_best_app/Database/Entities/UserCreds.dart';
 import 'package:the_best_app/screens/profilepage.dart';
 
 class HomePage extends StatefulWidget {
   static const route = '/hellowordpage/loginpage/homepage';
   static const routename = 'Homepage';
-
-  String username;
-
-  HomePage({required this.username});
 
   @override
   _HomepageState createState() => _HomepageState();
@@ -37,7 +35,7 @@ class _HomepageState extends State<HomePage>
       controller; // per controllare animazione di circular progress indicator, ho messo late perchè inizializzo dopo la variabile
   //double puntiottenuti = 70; //puntiottenuti ricavati da conversione punti
   double obiettivo = 300; //obiettivo fissato pagina preference
-
+  String username = 'PROBLEM TO SOLVE';
   @override
   void initState() {
     super.initState();
@@ -45,7 +43,6 @@ class _HomepageState extends State<HomePage>
       duration: const Duration(seconds: 10),
       vsync: this,
     );
-
     controller.repeat();
   }
 
@@ -55,16 +52,22 @@ class _HomepageState extends State<HomePage>
     super.dispose();
   }
 
+  void user_name(String username) async {
+    final sp = await SharedPreferences.getInstance();
+    String name = sp.getString('username')!;
+    username = name.toUpperCase();
+  }
+
   @override
   Widget build(BuildContext context) {
     print('${HomePage.routename} built');
     // _loadPoints();
     return Scaffold(
         appBar: AppBar(
-          title: widget.username == null || widget.username.isEmpty
+          title: username == null || username.isEmpty
               ? Text('ERROR !! (No Username Found)',
                   style: TextStyle(fontWeight: FontWeight.bold))
-              : Text(widget.username.toUpperCase(),
+              : Text(username.toUpperCase(),
                   style: TextStyle(fontWeight: FontWeight.bold)),
           actions: [
             Row(
@@ -122,7 +125,7 @@ class _HomepageState extends State<HomePage>
                   trailing: Icon(Icons.account_circle),
                   tileColor: Colors.green[100],
                   onTap: () {
-                    Navigator.pushNamed(context, Profilepage.route);
+                    Navigator.pushReplacementNamed(context, Profilepage.route);
                   },
                 ),
               ),
@@ -138,10 +141,11 @@ class _HomepageState extends State<HomePage>
                     style: TextStyle(fontWeight: FontWeight.bold),
                     textAlign: TextAlign.start,
                   ),
-                  trailing: Icon(Icons.more_vert),
+                  trailing: Icon(Icons.favorite),
                   tileColor: Colors.green[100],
-                  onTap: () async {
-                    //await remove_Profile(widget.username, context);
+                  onTap: () {
+                    Navigator.pushReplacementNamed(
+                        context, MyVoucherPage.route);
                   },
                 ),
               ),

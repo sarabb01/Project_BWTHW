@@ -8,10 +8,12 @@ import 'package:the_best_app/Database/typeConverters/dateTimeConverter.dart';
 import 'package:the_best_app/Database/Daos/fitbitDao.dart';
 import 'package:the_best_app/Database/Daos/UserCreddaos.dart';
 import 'package:the_best_app/Database/Daos/UserInfosdaos.dart';
+import 'package:the_best_app/Database/Daos/VoucherDao.dart';
 
 import 'package:the_best_app/Database/Entities/UserCreds.dart';
 import 'package:the_best_app/Database/Entities/UserInfos.dart';
 import 'package:the_best_app/Database/Entities/FitbitTables.dart';
+import 'package:the_best_app/Database/Entities/VouchersList.dart';
 
 //The generated code will be in database.g.dart
 part 'database.g.dart';
@@ -22,10 +24,12 @@ part 'database.g.dart';
   UsersCredentials,
   UserInfos,
   myFitbitData,
+  VoucherList,
 ])
 abstract class AppDatabase extends FloorDatabase {
   //Add all the daos as getters here
   UserCrededentialsDao get user_crededentials_dao;
   FitbitDao get fitbitDao;
   UserInfosDao get user_infos_dao;
+  VoucherDao get voucher_dao;
 }//AppDatabase

@@ -76,11 +76,8 @@ class MyApp extends StatelessWidget {
               return LoginPage();
             });
           } else if (settings.name == HomePage.route) {
-            final args1 = settings.arguments as Map;
             return MaterialPageRoute(builder: (context) {
-              return HomePage(
-                username: args1['username'],
-              );
+              return HomePage();
             });
           } else if (settings.name == RegistrationPage.route) {
             return MaterialPageRoute(builder: (context) {
@@ -150,6 +147,10 @@ class MyApp extends StatelessWidget {
                 item: args5['n'],
                 list: args5['type'],
               );
+            });
+          } else if (settings.name == MyVoucherPage.route) {
+            return MaterialPageRoute(builder: (context) {
+              return MyVoucherPage();
             });
           } else {
             return null;

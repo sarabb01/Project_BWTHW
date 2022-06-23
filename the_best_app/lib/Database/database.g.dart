@@ -67,6 +67,8 @@ class _$AppDatabase extends AppDatabase {
 
   UserInfosDao? _user_infos_daoInstance;
 
+  VoucherDao? _voucher_daoInstance;
+
   Future<sqflite.Database> open(String path, List<Migration> migrations,
       [Callback? callback]) async {
     final databaseOptions = sqflite.OpenDatabaseOptions(
@@ -91,6 +93,8 @@ class _$AppDatabase extends AppDatabase {
             'CREATE TABLE IF NOT EXISTS `UserInfos` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `userid` INTEGER NOT NULL, `name` TEXT NOT NULL, `surname` TEXT NOT NULL, `gender` TEXT NOT NULL, `dateofbirth` INTEGER NOT NULL, `usertarget` TEXT NOT NULL, FOREIGN KEY (`userid`) REFERENCES `UsersCredentials` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `myFitbitData` (`keyDate` INTEGER NOT NULL, `sleepHours` INTEGER NOT NULL, `calories` INTEGER NOT NULL, `steps` INTEGER NOT NULL, `cardio` INTEGER NOT NULL, `detailDate` INTEGER NOT NULL, PRIMARY KEY (`keyDate`))');
+        await database.execute(
+            'CREATE TABLE IF NOT EXISTS `VoucherList` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `userid` INTEGER NOT NULL, `disconut_code` TEXT NOT NULL, FOREIGN KEY (`userid`) REFERENCES `UsersCredentials` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -112,6 +116,11 @@ class _$AppDatabase extends AppDatabase {
   @override
   UserInfosDao get user_infos_dao {
     return _user_infos_daoInstance ??= _$UserInfosDao(database, changeListener);
+  }
+
+  @override
+  VoucherDao get voucher_dao {
+    return _voucher_daoInstance ??= _$VoucherDao(database, changeListener);
   }
 }
 
@@ -380,6 +389,79 @@ class _$UserInfosDao extends UserInfosDao {
   @override
   Future<void> deleteAllUsersInfos(List<UserInfos> users) async {
     await _userInfosDeletionAdapter.deleteList(users);
+  }
+}
+
+class _$VoucherDao extends VoucherDao {
+  _$VoucherDao(this.database, this.changeListener)
+      : _queryAdapter = QueryAdapter(database),
+        _voucherListInsertionAdapter = InsertionAdapter(
+            database,
+            'VoucherList',
+            (VoucherList item) => <String, Object?>{
+                  'id': item.id,
+                  'userid': item.userId,
+                  'disconut_code': item.disconut_code
+                }),
+        _voucherListUpdateAdapter = UpdateAdapter(
+            database,
+            'VoucherList',
+            ['id'],
+            (VoucherList item) => <String, Object?>{
+                  'id': item.id,
+                  'userid': item.userId,
+                  'disconut_code': item.disconut_code
+                }),
+        _voucherListDeletionAdapter = DeletionAdapter(
+            database,
+            'VoucherList',
+            ['id'],
+            (VoucherList item) => <String, Object?>{
+                  'id': item.id,
+                  'userid': item.userId,
+                  'disconut_code': item.disconut_code
+                });
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  final InsertionAdapter<VoucherList> _voucherListInsertionAdapter;
+
+  final UpdateAdapter<VoucherList> _voucherListUpdateAdapter;
+
+  final DeletionAdapter<VoucherList> _voucherListDeletionAdapter;
+
+  @override
+  Future<List<VoucherList>?> findAllUserVouchers(int userid) async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM VoucherList WHERE userId = ?1',
+        mapper: (Map<String, Object?> row) => VoucherList(row['id'] as int?,
+            row['userid'] as int, row['disconut_code'] as String),
+        arguments: [userid]);
+  }
+
+  @override
+  Future<void> addUserVoucher(VoucherList voucher) async {
+    await _voucherListInsertionAdapter.insert(
+        voucher, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<void> updateUserVoucher(VoucherList voucher) async {
+    await _voucherListUpdateAdapter.update(voucher, OnConflictStrategy.replace);
+  }
+
+  @override
+  Future<void> deleteUserVoucher(VoucherList voucher) async {
+    await _voucherListDeletionAdapter.delete(voucher);
+  }
+
+  @override
+  Future<void> deleteAllUsersVoucher(List<VoucherList> voucherlist) async {
+    await _voucherListDeletionAdapter.deleteList(voucherlist);
   }
 }
 
