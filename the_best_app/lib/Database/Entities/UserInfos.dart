@@ -2,7 +2,7 @@ import 'package:floor/floor.dart';
 import 'UserCreds.dart';
 
 // TABLE STRUCTURE
-// Table Name : ProfileInfos
+// Table Name : UserInfos
 // Columns : ID(int)
 //           ID_from_User_Cred(int)
 //           USERNAME(String)
@@ -11,7 +11,7 @@ import 'UserCreds.dart';
 //           Gender(String)
 //           Date of Birth (DateTime)
 //           User Target (String)
-@Entity(tableName: "User_Informations", foreignKeys: [
+@Entity(foreignKeys: [
   ForeignKey(
     childColumns: ['userid'],
     parentColumns: ['id'],
