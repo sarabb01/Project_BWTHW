@@ -7,25 +7,30 @@ import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 
 class MyVoucherPage extends StatelessWidget {
   static const route = '/hellowordpage/loginpage/homepage/myvoucherpage';
-  static const routename = 'My Vouchers';
+  static const routename = 'My Vouchers ';
   @override
   Widget build(BuildContext contest) {
+    print('${MyVoucherPage.routename} Built');
     return Scaffold(
-        appBar: AppBar(
-      automaticallyImplyLeading: false,
-      title: Text(
-        MyVoucherPage.routename,
-        style: TextStyle(fontWeight: FontWeight.bold),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text(
+          MyVoucherPage.routename,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        leading: Back_Page([10, 5, 5, 5], contest),
       ),
-      actions: [
-        Back_Page([5, 10, 5, 5], contest)
-      ],
-    ));
+      body: Center(child: Text('GridViwe usign Future Builder')),
+    );
   }
 
-  Widget Back_Page(List<double> edgeInsets, BuildContext context) {
+  Widget Back_Page(List<double> edge_insets, BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(right: 5.0, bottom: 10, left: 5.0, top: 5),
+        padding: EdgeInsets.only(
+            left: edge_insets[0],
+            right: edge_insets[1],
+            bottom: edge_insets[2],
+            top: edge_insets[3]),
         child: ElevatedButton(
             style: ButtonStyle(
                 shape: MaterialStateProperty.all(CircleBorder()),

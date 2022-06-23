@@ -254,9 +254,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
     }
   }
 
-  Widget Back_Page(List<double> edgeInsets, BuildContext context) {
+  Widget Back_Page(List<double> edge_insets, BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(right: 5.0, bottom: 10, left: 5.0, top: 5),
+        padding: EdgeInsets.only(
+            left: edge_insets[0],
+            right: edge_insets[1],
+            bottom: edge_insets[2],
+            top: edge_insets[3]),
         child: ElevatedButton(
             style: ButtonStyle(
                 shape: MaterialStateProperty.all(CircleBorder()),
