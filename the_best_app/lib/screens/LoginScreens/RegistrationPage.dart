@@ -246,9 +246,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       String gender, DateTime dateofbirth, String target) async {
     final user = await Provider.of<UsersDatabaseRepo>(context, listen: false)
         .findUser(username);
-    print(user);
     if (user != null) {
-      print([user.id!, name, surname, gender]);
       final user_infos =
           UserInfos(null, user.id!, name, surname, gender, dateofbirth, target);
       await Provider.of<UsersDatabaseRepo>(context, listen: false)
