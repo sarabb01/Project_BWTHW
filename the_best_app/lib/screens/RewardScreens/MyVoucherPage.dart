@@ -18,13 +18,14 @@ class MyVoucherPage extends StatelessWidget {
           MyVoucherPage.routename,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        leading: Back_Page([10, 5, 5, 5], contest),
+        leading: Back_Page([10, 5, 5, 5], contest, HomePage.route),
       ),
       body: Center(child: Text('GridViwe usign Future Builder')),
     );
   }
 
-  Widget Back_Page(List<double> edge_insets, BuildContext context) {
+  Widget Back_Page(
+      List<double> edge_insets, BuildContext context, String pageroute) {
     return Padding(
         padding: EdgeInsets.only(
             left: edge_insets[0],
@@ -43,7 +44,7 @@ class MyVoucherPage extends StatelessWidget {
                     return Colors.red; // <-- Splash color
                 })),
             onPressed: (() {
-              Navigator.pushReplacementNamed(context, HomePage.route);
+              Navigator.pushReplacementNamed(context, pageroute);
             }),
             child: Icon(
               Icons.first_page,

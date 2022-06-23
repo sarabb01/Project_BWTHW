@@ -365,7 +365,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     }
   }
 
-  Widget Back_Page(List<double> edge_insets, BuildContext context) {
+  Widget Back_Page(
+      List<double> edge_insets, BuildContext context, String pageroute) {
     return Padding(
         padding: EdgeInsets.only(
             left: edge_insets[0],
@@ -384,7 +385,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     return Colors.red; // <-- Splash color
                 })),
             onPressed: (() async {
-              await Navigator.pushReplacementNamed(context, LoginPage.route);
+              await Navigator.pushReplacementNamed(context, pageroute);
             }),
             child: Icon(
               Icons.first_page,
