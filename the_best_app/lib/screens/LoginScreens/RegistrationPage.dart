@@ -136,7 +136,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       ),
                       FormSeparator(label: 'Target'),
                       DropdownButtonTileString(
-                        items: ['Target1', 'Target2', 'Target3', 'None'],
+                        items: ['Basic', 'Medium', 'Advanced', 'None'],
                         labelText: 'Personal Target',
                         notifyParent: selectTarget,
                       ),
@@ -185,9 +185,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 })),
             onPressed: (() async {
               if (formKey.currentState!.validate()) {
-                user_cred_storing(_username.text, _password.text);
-                user_info_storing(_username.text, _name.text, _surname.text,
-                    _selectedGender!, _selectedDate, _selectedTarget!);
+                await user_cred_storing(_username.text, _password.text);
+                await user_info_storing(
+                    _username.text,
+                    _name.text,
+                    _surname.text,
+                    _selectedGender!,
+                    _selectedDate,
+                    _selectedTarget!);
                 //setInputData();
                 await Navigator.pushReplacementNamed(context, LoginPage.route);
               }
@@ -220,7 +225,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     });
   }
 
-  void user_cred_storing(String username, String password) async {
+  Future<void> user_cred_storing(String username, String password) async {
     final usersCredentials = UsersCredentials(null, username, password);
     if (await Provider.of<UsersDatabaseRepo>(context, listen: false)
             .findUser(username) ==
@@ -230,11 +235,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
     }
   }
 
-  void user_info_storing(String username, String name, String surname,
+  Future<void> user_info_storing(String username, String name, String surname,
       String gender, DateTime dateofbirth, String target) async {
     final user = await Provider.of<UsersDatabaseRepo>(context, listen: false)
         .findUser(username);
-    print('User found $user');
+    print('User found ${user!.id}');
     if (user != null) {
       final user_infos =
           UserInfos(null, user.id!, name, surname, gender, dateofbirth, target);

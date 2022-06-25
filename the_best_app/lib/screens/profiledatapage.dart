@@ -57,10 +57,10 @@ class Profiledatapage extends StatelessWidget {
                           icon: Icon(Icons.logout),
                           //heroTag: 'btn2',
                           onPressed: () async {
-                            final sp = await SharedPreferences.getInstance();
-                            sp.remove('username');
-                            await Navigator.pushReplacementNamed(
-                                context, HelloWordPage.route);
+                            //   final sp = await SharedPreferences.getInstance();
+                            //   sp.remove('username');
+                            //   await Navigator.pushReplacementNamed(
+                            //       context, HelloWordPage.route);
                           },
                         ),
                         tileColor: Colors.green[100],
