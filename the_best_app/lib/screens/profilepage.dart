@@ -1,3 +1,4 @@
+import 'package:colours/colours.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -62,69 +63,94 @@ class Profilepage extends StatelessWidget {
                                               snapshot.data as UserInfos;
 
                                           print(data.name);
-                                          return ListView(
-                                            children: <Widget>[
-                                              ListTile(
-                                                title:
-                                                    const Text('Personal Data'),
-                                              ),
-                                              ListTile(
-                                                  title: Text('Name'),
-                                                  subtitle: TextField(
-                                                    obscureText: true,
-                                                    decoration: InputDecoration(
-                                                      border:
-                                                          OutlineInputBorder(),
-                                                      labelText: data.name,
+                                          return Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 20,
+                                                left: 10,
+                                                right: 10,
+                                                bottom: 10),
+                                            child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    'Personal Data',
+                                                    style: TextStyle(
+                                                        fontSize: 25,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  SizedBox(height: 10),
+                                                  Expanded(
+                                                    child: ListView(
+                                                      children: <Widget>[
+                                                        ListTile(
+                                                            title: Text('Name'),
+                                                            subtitle: TextField(
+                                                              decoration:
+                                                                  InputDecoration(
+                                                                border:
+                                                                    OutlineInputBorder(),
+                                                                labelText:
+                                                                    data.name,
+                                                              ),
+                                                            )),
+                                                        ListTile(
+                                                          title:
+                                                              Text('Surname'),
+                                                          subtitle: TextField(
+                                                            decoration:
+                                                                InputDecoration(
+                                                              border:
+                                                                  OutlineInputBorder(),
+                                                              labelText:
+                                                                  data.surname,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        ListTile(
+                                                          title: Text(
+                                                              'Date of Birth'),
+                                                          subtitle: TextField(
+                                                            decoration:
+                                                                InputDecoration(
+                                                              border:
+                                                                  OutlineInputBorder(),
+                                                              labelText:
+                                                                  dateFormatter(
+                                                                      data.dateofbirth,
+                                                                      opt: 2),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        ListTile(
+                                                          title: Text('Gender'),
+                                                          subtitle: TextField(
+                                                            decoration:
+                                                                InputDecoration(
+                                                              border:
+                                                                  OutlineInputBorder(),
+                                                              labelText:
+                                                                  data.gender,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        ListTile(
+                                                          title: Text('Target'),
+                                                          subtitle: TextField(
+                                                            decoration:
+                                                                InputDecoration(
+                                                              border:
+                                                                  OutlineInputBorder(),
+                                                              labelText: data
+                                                                  .usertarget,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
-                                                  )),
-                                              ListTile(
-                                                title: Text('Surname'),
-                                                subtitle: TextField(
-                                                  obscureText: true,
-                                                  decoration: InputDecoration(
-                                                    border:
-                                                        OutlineInputBorder(),
-                                                    labelText: data.surname,
                                                   ),
-                                                ),
-                                              ),
-                                              ListTile(
-                                                title: Text('Date of Birth'),
-                                                subtitle: TextField(
-                                                  obscureText: true,
-                                                  decoration: InputDecoration(
-                                                    border:
-                                                        OutlineInputBorder(),
-                                                    labelText: dateFormatter(
-                                                        data.dateofbirth,
-                                                        opt: 2),
-                                                  ),
-                                                ),
-                                              ),
-                                              ListTile(
-                                                title: Text('Gender'),
-                                                subtitle: TextField(
-                                                  obscureText: true,
-                                                  decoration: InputDecoration(
-                                                    border:
-                                                        OutlineInputBorder(),
-                                                    labelText: data.gender,
-                                                  ),
-                                                ),
-                                              ),
-                                              ListTile(
-                                                title: Text('Target'),
-                                                subtitle: TextField(
-                                                  obscureText: true,
-                                                  decoration: InputDecoration(
-                                                    border:
-                                                        OutlineInputBorder(),
-                                                    labelText: data.usertarget,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
+                                                ]),
                                           );
                                         } else {
                                           return CircularProgressIndicator();
@@ -139,7 +165,6 @@ class Profilepage extends StatelessWidget {
                                       ListTile(
                                           title: Text('Name'),
                                           subtitle: TextField(
-                                            obscureText: true,
                                             decoration: InputDecoration(
                                               border: OutlineInputBorder(),
                                               labelText: '',
@@ -148,7 +173,6 @@ class Profilepage extends StatelessWidget {
                                       ListTile(
                                         title: Text('Surname'),
                                         subtitle: TextField(
-                                          obscureText: true,
                                           decoration: InputDecoration(
                                             border: OutlineInputBorder(),
                                             labelText: '',
@@ -158,7 +182,6 @@ class Profilepage extends StatelessWidget {
                                       ListTile(
                                         title: Text('Date of Birth'),
                                         subtitle: TextField(
-                                          obscureText: true,
                                           decoration: InputDecoration(
                                             border: OutlineInputBorder(),
                                             labelText: '',
@@ -168,7 +191,6 @@ class Profilepage extends StatelessWidget {
                                       ListTile(
                                         title: Text('Gender'),
                                         subtitle: TextField(
-                                          obscureText: true,
                                           decoration: InputDecoration(
                                             border: OutlineInputBorder(),
                                             labelText: '',
@@ -178,7 +200,6 @@ class Profilepage extends StatelessWidget {
                                       ListTile(
                                         title: Text('Target'),
                                         subtitle: TextField(
-                                          obscureText: true,
                                           decoration: InputDecoration(
                                             border: OutlineInputBorder(),
                                             labelText: '',
