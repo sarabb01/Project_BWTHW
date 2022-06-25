@@ -23,6 +23,7 @@ import 'package:the_best_app/Utils/bar_chart.dart';
 import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/functions/fetchdata.dart';
+import 'package:the_best_app/functions/findTarget.dart';
 import 'package:the_best_app/models/pointsModel.dart';
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
 import 'package:the_best_app/Screens/PointsScreens/summaryPage.dart';
@@ -82,8 +83,11 @@ class PointsPage extends StatelessWidget {
                             await Provider.of<UsersDatabaseRepo>(context,
                                     listen: false)
                                 .findAllFitbitDataUser(username);
-                        final double score =
-                            computeTotalPoints(allData, 'Medium');
+                        final trg = await findTarget(context, username)
+                            .then((String target) {
+                          return target;
+                        });
+                        final double score = computeTotalPoints(allData, trg);
                         // totscore.updateScore(score);
                       },
                       icon: Icon(Icons.update))
@@ -100,20 +104,25 @@ class PointsPage extends StatelessWidget {
             Consumer<UsersDatabaseRepo>(builder: (context, dbr, child) {
               return FutureBuilder(
                   initialData: null,
-                  future: dbr.findAllFitbitDataUser(username),
+                  future: Future.wait([
+                    dbr.findAllFitbitDataUser(username),
+                    findTarget(context, username)
+                  ]),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      final fitbit = snapshot.data as List<myFitbitData>;
+                      final data = snapshot.data as List<Object>;
+                      final fitbit = data[0] as List<myFitbitData>;
+                      final target = data[1] as String;
 
                       //print(
                       //    '${dateFormatter(DateTime.fromMillisecondsSinceEpoch((fitbit[fitbit.length - 1].keyDate) * Duration.millisecondsPerDay))}');
                       if (fitbit.length > 0) {
                         final today = fitbit[fitbit.length - 1];
-                        final todayPoints = elaboratePoints(today, 'Medium');
+                        final todayPoints = elaboratePoints(today, target);
                         // QUI CI VUOLE ELABORAZIONE PERCENTUALI
                         final List<CircularStackEntry> chartData =
-                            createChartData(today, 'Medium');
-                        final List values = Target().targets['Medium']!;
+                            createChartData(today, target);
+                        final List values = Target().targets[target]!;
 
                         return fitbit.length == 0
                             ? Text('No activity recorded today')
@@ -231,14 +240,18 @@ class PointsPage extends StatelessWidget {
             Consumer<UsersDatabaseRepo>(builder: (context, dbr, child) {
               return FutureBuilder(
                   initialData: null,
-                  future: dbr.findAllFitbitDataUser(username),
+                  future: Future.wait([
+                    dbr.findAllFitbitDataUser(username),
+                    findTarget(context, username)
+                  ]),
                   //future: dbr.findAllSleepData(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      final fitbit = snapshot.data as List<myFitbitData>;
+                      final data = snapshot.data as List<Object>;
+                      final fitbit = data[0] as List<myFitbitData>;
+                      final target = data[1] as String;
                       if (fitbit.length > 0) {
-                        final double score =
-                            computeTotalPoints(fitbit, 'Medium');
+                        final double score = computeTotalPoints(fitbit, target);
 
                         final List total = computeSum(fitbit);
                         //print(total);
@@ -259,7 +272,7 @@ class PointsPage extends StatelessWidget {
                                       child: Container(
                                           height: 300,
                                           child: StackedBarChart(
-                                              createBarData(fitbit, 'Medium'))),
+                                              createBarData(fitbit, target))),
                                     )
                                   ]);
                       } else {

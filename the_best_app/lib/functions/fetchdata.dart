@@ -159,7 +159,15 @@ Future<void> fetchData(BuildContext context) async {
   List<myFitbitData> allDatanew =
       await Provider.of<UsersDatabaseRepo>(context, listen: false)
           .findAllFitbitDataUser(user);
-  final double score = computeTotalPoints(allDatanew, 'Basic');
+  final logged_user =
+      await Provider.of<UsersDatabaseRepo>(context, listen: false)
+          .findUser(user);
+  final logged_user_info =
+      await Provider.of<UsersDatabaseRepo>(context, listen: false)
+          .checkUserInfos(logged_user!.id!);
+  final level = logged_user_info!.usertarget;
+  print('Level: $level');
+  final double score = computeTotalPoints(allDatanew, level);
   final spent_points = sp.getDouble('SpentPoints') ?? 0.0;
   sp.setDouble('Points', score - spent_points);
   // sp.setDouble('Points', score);

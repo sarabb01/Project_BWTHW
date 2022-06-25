@@ -10,6 +10,7 @@ import 'package:the_best_app/Utils/radial_chart.dart';
 import 'package:the_best_app/functions/createchartdata.dart';
 import 'package:the_best_app/functions/dateFormatter.dart';
 import 'package:the_best_app/functions/elaborateDataFunctions.dart';
+import 'package:the_best_app/functions/findTarget.dart';
 import 'package:the_best_app/models/targetTypes.dart';
 
 class SummaryPage extends StatelessWidget {
@@ -44,10 +45,15 @@ class SummaryPage extends StatelessWidget {
                     Consumer<UsersDatabaseRepo>(builder: (context, dbr, child) {
                   return FutureBuilder(
                       initialData: null,
-                      future: dbr.findAllFitbitDataUser(username),
+                      future: Future.wait([
+                        dbr.findAllFitbitDataUser(username),
+                        findTarget(context, username)
+                      ]),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
-                          final fitbit = snapshot.data as List<myFitbitData>;
+                          final data = snapshot.data as List<Object>;
+                          final fitbit = data[0] as List<myFitbitData>;
+                          final target = data[1] as String;
                           final fitbit2 = fitbit.reversed.toList();
                           return Scrollbar(
                             isAlwaysShown: true,
@@ -59,11 +65,10 @@ class SummaryPage extends StatelessWidget {
                                   Text myText2 = Text(
                                       'Steps: ${fitbit2[index].steps}, Calories: ${fitbit2[index].calories}, Cardio: ${fitbit2[index].cardio},  Sleep: ${fitbit2[index].sleepHours}');
                                   final List<CircularStackEntry> chartData =
-                                      createChartData(fitbit2[index], 'Medium');
+                                      createChartData(fitbit2[index], target);
                                   final todayPoints =
-                                      elaboratePoints(fitbit2[index], 'Medium');
-                                  final List values =
-                                      Target().targets['Medium']!;
+                                      elaboratePoints(fitbit2[index], target);
+                                  final List values = Target().targets[target]!;
                                   //print(todayPoints);
                                   if (fitbit2[index].steps > values[0] &&
                                       fitbit2[index].calories > values[1] &&
