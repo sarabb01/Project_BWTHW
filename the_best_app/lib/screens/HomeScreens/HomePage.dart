@@ -6,9 +6,7 @@ import 'package:the_best_app/Screens/profilepage.dart';
 import 'package:the_best_app/Screens/PointsScreens/fitbitAuthPage.dart';
 import 'package:the_best_app/Screens/PointsScreens/pointsPage.dart';
 import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
-import 'package:the_best_app/Screens/infopage.dart';
 import 'package:the_best_app/Screens/RewardScreens/MyVoucherPage.dart';
-import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 
 // FUNCTIONS
 import 'package:the_best_app/functions/elaborateDataFunctions.dart';
@@ -249,18 +247,11 @@ class _HomepageState extends State<HomePage>
                                 ],
                                 actionsAlignment: MainAxisAlignment.center);
                           });
-                      //await remove_Profile(widget.username, context);
                     }),
               ),
             ],
           ),
         ),
-        //BottomNavigationBar(items: const <BottomNavigationBarItem>[
-        //BottomNavigationBarItem(
-        //icon: Icons.remove_circle,
-        //label: Text('Delete my Profile')),
-        //])
-
         body: Center(
             child: Padding(
           padding: const EdgeInsets.only(top: 10, bottom: 30),
@@ -295,95 +286,93 @@ class _HomepageState extends State<HomePage>
                       width: 200,
                       height: 200,
                       child: FutureBuilder(
-                        //child: Consumer<PointsModel>(
-                        future: Future.wait([
-                          SharedPreferences.getInstance(),
-                          Provider.of<UsersDatabaseRepo>(context, listen: false)
-                              .findAllFitbitDataUser(username),
-                          findTarget(context, username)
-                        ]),
-                        builder: (context, snapshot) {
-                          //builder: (context, score, child) {
-                          if (snapshot.hasData) {
-                            final data = snapshot.data as List<Object>;
-                            final result = data[0] as SharedPreferences;
-                            final check = data[1] as List<myFitbitData>;
-                            final target = data[2] as String;
-                            print(
-                                'wi user: ${username}'); // check the username is correct
-                            print('Data length ${check.length}');
-                            print(
-                                target); // check is he/she has some points stored
+                          //child: Consumer<PointsModel>(
+                          future: SharedPreferences.getInstance(),
 
-                            final double tot = check.length != 0
-                                ? computeTotalPoints(check, target)
-                                : 0.0; // get all the points
-                            final spent_points = check.length != 0 &&
-                                    result.getDouble('SpentPoints') != null
-                                ? result.getDouble('SpentPoints')
-                                : 0.0; // get the spent points
-                            result.setDouble(
-                                'Points',
-                                tot -
-                                    spent_points!); // set the new points variable
-                            if (result.getDouble('Points') != null) {
-                              final score = result
-                                  .getDouble('Points')!
-                                  .roundToDouble(); // set the variable used for the graph
-                              //print('points: ${result.getDouble('Points')}');
-                              return Stack(
-                                fit: StackFit.expand,
-                                children: [
-                                  CircularProgressIndicator(
-                                    value: score / obiettivo,
-                                    //value: score.totalScore / obiettivo,
-                                    backgroundColor: Colors.grey[400],
-                                    color: Colours.mediumSeaGreen,
-                                    strokeWidth: 25,
-                                  ),
-                                  Center(
-                                    child: buildprogress(score),
-                                    //child: buildprogress(score.totalScore),
-                                  ),
-                                ],
-                              );
+                          // Provider.of<UsersDatabaseRepo>(context, listen: false)
+                          //     .findAllFitbitDataUser(username),
+                          // findTarget(context, username)
+
+                          builder: (context, snapshot) {
+                            //builder: (context, score, child) {
+                            if (snapshot.hasData) {
+                              // final data = snapshot.data as List<Object>;
+                              final result = snapshot.data as SharedPreferences;
+                              final username = result.getString('username');
+                              print('wi user: ${username}');
+
+                              return FutureBuilder(
+                                  future: Future.wait([
+                                    SharedPreferences.getInstance(),
+                                    Provider.of<UsersDatabaseRepo>(context,
+                                            listen: false)
+                                        .findAllFitbitDataUser(username!),
+                                    findTarget(context, username)
+                                  ]),
+                                  builder: (context, snapshot) {
+                                    //builder: (context, score, child) {
+                                    if (snapshot.hasData) {
+                                      final data =
+                                          snapshot.data as List<Object>;
+                                      final result =
+                                          data[0] as SharedPreferences;
+                                      final check =
+                                          data[1] as List<myFitbitData>;
+                                      final target = data[2]
+                                          as String; // check the username is correct
+                                      print('Data length ${check.length}');
+                                      print(
+                                          target); // check is he/she has some points stored
+
+                                      final double tot = check.length != 0
+                                          ? computeTotalPoints(check, target)
+                                          : 0.0; // get all the points
+                                      final spent_points = check.length != 0 &&
+                                              result.getDouble('SpentPoints') !=
+                                                  null
+                                          ? result.getDouble('SpentPoints')
+                                          : 0.0; // get the spent points
+                                      result.setDouble(
+                                          'Points',
+                                          tot -
+                                              spent_points!); // set the new points variable
+                                      if (result.getDouble('Points') != null) {
+                                        final score = result
+                                            .getDouble('Points')!
+                                            .roundToDouble(); // set the variable used for the graph
+                                        //print('points: ${result.getDouble('Points')}');
+                                        return Stack(
+                                          fit: StackFit.expand,
+                                          children: [
+                                            CircularProgressIndicator(
+                                              value: score / obiettivo,
+                                              //value: score.totalScore / obiettivo,
+                                              backgroundColor: Colors.grey[400],
+                                              color: Colours.mediumSeaGreen,
+                                              strokeWidth: 25,
+                                            ),
+                                            Center(
+                                              child: buildprogress(score),
+                                              //child: buildprogress(score.totalScore),
+                                            ),
+                                          ],
+                                        );
+                                      } else {
+                                        final score = 0.0;
+                                        return EmptyCircle(score);
+                                      }
+                                    } else {
+                                      final score = 0.0;
+                                      return EmptyCircle(score);
+                                      // return CircularProgressIndicator();
+                                    }
+                                  });
                             } else {
                               final score = 0.0;
-                              return Stack(
-                                fit: StackFit.expand,
-                                children: [
-                                  CircularProgressIndicator(
-                                    value: score / obiettivo,
-                                    backgroundColor: Colors.grey[400],
-                                    color: Colours.mediumSeaGreen,
-                                    strokeWidth: 25,
-                                  ),
-                                  Center(
-                                    child: buildprogress(score),
-                                  ),
-                                ],
-                              );
+                              return EmptyCircle(score);
+                              // return CircularProgressIndicator();
                             }
-                          } else {
-                            final score = 0.0;
-                            return Stack(
-                              fit: StackFit.expand,
-                              children: [
-                                CircularProgressIndicator(
-                                  value: score / obiettivo,
-                                  backgroundColor: Colors.grey[400],
-                                  color: Colours.mediumSeaGreen,
-                                  strokeWidth: 25,
-                                ),
-                                Center(
-                                  child: buildprogress(score),
-                                ),
-                              ],
-                            );
-                            // return CircularProgressIndicator();
-                          }
-                        },
-                      )),
+                          })),
                 ),
                 SizedBox(height: 30),
                 ElevatedButton(
@@ -423,6 +412,23 @@ class _HomepageState extends State<HomePage>
               ]),
         )));
   } //build
+
+  Widget EmptyCircle(double score) {
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        CircularProgressIndicator(
+          value: score / obiettivo,
+          backgroundColor: Colors.grey[400],
+          color: Colours.mediumSeaGreen,
+          strokeWidth: 25,
+        ),
+        Center(
+          child: buildprogress(score),
+        ),
+      ],
+    );
+  }
 
   Widget buildprogress(double score) {
     if (score / obiettivo >= 1) {
