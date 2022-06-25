@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_best_app/Database/Entities/UserCreds.dart';
 import 'package:the_best_app/Database/Entities/UserInfos.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
+import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/functions/dateFormatter.dart';
 import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
 import 'package:the_best_app/Screens/profiledatapage.dart';
@@ -22,14 +23,66 @@ class Profilepage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text(Profilepage.routename),
-          actions: <Widget>[
-            IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, Profiledatapage.route);
-                },
-                icon: Icon(Icons.account_box))
-          ],
         ),
+        floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                        title: Text('Confirmation required'),
+                        content: Text(
+                            'WARNING!\nIf you continue, your account and all your data will be deleted.\nAre you sure to proceed?'),
+                        //color: Colors.grey[100],
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0)),
+                        //margin: EdgeInsets.fromLTRB(50, 450, 50, 200),
+                        actions: [
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                IconButton(
+                                    // yes
+                                    onPressed: () async {
+                                      final sp =
+                                          await SharedPreferences.getInstance();
+                                      final name = sp.getString('username');
+                                      print(name);
+                                      final result =
+                                          await Provider.of<UsersDatabaseRepo>(
+                                                  context,
+                                                  listen: false)
+                                              .findUser(name!);
+                                      var _user = result!.username;
+                                      print(_user);
+                                      if (result != null) {
+                                        sp.remove('username');
+                                        await Provider.of<UsersDatabaseRepo>(
+                                                context,
+                                                listen: false)
+                                            .deleteUser(result);
+                                      }
+
+                                      await Navigator.pushNamed(
+                                          context, HelloWordPage.route);
+                                    },
+                                    icon: Icon(
+                                      Icons.check_circle,
+                                      color: Theme.of(context).primaryColor,
+                                    )),
+                                IconButton(
+                                    // NO
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    icon: Icon(Icons.cancel_rounded,
+                                        color: Colors.red)),
+                              ])
+                        ],
+                        actionsAlignment: MainAxisAlignment.center);
+                  });
+            },
+            child: Icon(Icons.delete)),
         body: Center(
             child: SizedBox(
 

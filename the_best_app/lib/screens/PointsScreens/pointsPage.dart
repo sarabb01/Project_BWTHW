@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Utils/legends.dart';
 
 //Functions
@@ -47,7 +48,7 @@ class PointsPage extends StatelessWidget {
             leading: IconButton(
                 icon: Icon(Icons.home),
                 onPressed: () {
-                  Navigator.pushNamed(context, LoginPage.route);
+                  Navigator.pushNamed(context, HomePage.route);
                 }),
             title: Text(PointsPage.routename),
             actions: [
