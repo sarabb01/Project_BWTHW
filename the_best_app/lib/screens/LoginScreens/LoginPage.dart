@@ -339,7 +339,7 @@ class _log_in_settings extends State<LoginPage> {
                                       textAlign: TextAlign.center),
                                   actions: <Widget>[
                                     IconButton(
-                                      icon: Icon(Icons.error),
+                                      icon: Icon(Icons.check),
                                       onPressed: () {
                                         Navigator.pop(context);
                                       },
