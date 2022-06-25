@@ -25,7 +25,7 @@ Future<void> fetchData(BuildContext context) async {
 
   DateTime lastInsertion = (allData.length > 0)
       ? myDate(allData[allData.length - 1].detailDate)
-      : DateTime.now().subtract(Duration(days: 3));
+      : DateTime.now().subtract(Duration(days: 2));
 
   //print('Last insertion $lastInsertion');
   //DateTime startDate = DateTime.utc(2022, 5, 31);

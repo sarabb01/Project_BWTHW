@@ -46,28 +46,6 @@ class Profiledatapage extends StatelessWidget {
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                          left: 10, right: 10, top: 5, bottom: 5),
-                      child: ListTile(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          //side: BorderSide(color: Colours.azure)
-                        ),
-                        title: const Text('Logout'),
-                        trailing: IconButton(
-                          icon: Icon(Icons.logout),
-                          //heroTag: 'btn2',
-                          onPressed: () async {
-                            //   final sp = await SharedPreferences.getInstance();
-                            //   sp.remove('username');
-                            //   await Navigator.pushReplacementNamed(
-                            //       context, HelloWordPage.route);
-                          },
-                        ),
-                        tileColor: Colors.green[100],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
                           left: 10, right: 10, top: 5, bottom: 10),
                       child: ListTile(
                         shape: RoundedRectangleBorder(
