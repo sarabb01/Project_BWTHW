@@ -40,7 +40,6 @@ class Profilepage extends StatelessWidget {
                         final result = snapshot.data as SharedPreferences;
                         if (result.getString('username') != null) {
                           final user = result.getString('username');
-                          print(user);
 
                           return FutureBuilder(
                               future: Provider.of<UsersDatabaseRepo>(context,
@@ -59,7 +58,6 @@ class Profilepage extends StatelessWidget {
                                           .checkUserInfos(info.id!),
                                       builder: (context, snapshot) {
                                         if (snapshot.hasData) {
-                                          print(snapshot.data);
                                           final data =
                                               snapshot.data as UserInfos;
 

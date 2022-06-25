@@ -9,10 +9,16 @@ Future<String> findTarget(BuildContext context, String user) async {
   final logged_user =
       await Provider.of<UsersDatabaseRepo>(context, listen: false)
           .findUser(user);
-  final logged_user_info =
-      await Provider.of<UsersDatabaseRepo>(context, listen: false)
-          .checkUserInfos(logged_user!.id!);
-  final level = logged_user_info!.usertarget;
+  print('User $logged_user');
+  //print(logged_user!.id);
+  if (logged_user != null) {
+    final logged_user_info =
+        await Provider.of<UsersDatabaseRepo>(context, listen: false)
+            .checkUserInfos(logged_user.id!);
+    final level = logged_user_info!.usertarget;
 
-  return level;
+    return level;
+  } else {
+    return 'None';
+  }
 }
