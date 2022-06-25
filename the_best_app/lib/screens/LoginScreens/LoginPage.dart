@@ -93,9 +93,14 @@ class _log_in_settings extends State<LoginPage> {
         .findUser(username);
     var _user = result?.username;
     var _password = result?.password;
-    if (_user != null && _password != null && _password == password) {
+    var _userid = result?.id;
+    if (_user != null &&
+        _password != null &&
+        _password == password &&
+        _userid != null) {
       final sp = await SharedPreferences.getInstance();
       sp.setString('username', _user);
+      sp.setInt('userid', _userid);
       return await Future<bool>.value(true);
     } else {
       return await Future<bool>.value(false);
@@ -106,10 +111,9 @@ class _log_in_settings extends State<LoginPage> {
   void _checkLogin() async {
     //Get the SharedPreference instance and check if the value of the 'username' filed is set or not
     final sp = await SharedPreferences.getInstance();
-    if (sp.getString('username') != null) {
+    if (sp.getString('username') != null && sp.getInt('userid') != null) {
       //If 'username is set, push the HomePage
-      Navigator.pushReplacementNamed(context, HomePage.route,
-          arguments: {'username': sp.getString('username')});
+      Navigator.pushReplacementNamed(context, HomePage.route);
     }
   } //_checkLogin
 

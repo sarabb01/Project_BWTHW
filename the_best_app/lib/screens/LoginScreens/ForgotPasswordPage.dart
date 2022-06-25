@@ -99,7 +99,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         actions: [
-          Back_Page([5, 10, 5, 5], context)
+          Back_Page([5, 10, 5, 5], context, LoginPage.route)
         ],
       ),
       backgroundColor: Colours.white,

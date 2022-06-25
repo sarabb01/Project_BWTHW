@@ -173,6 +173,7 @@ class _HomepageState extends State<HomePage>
                     onTap: () async {
                       final sp = await SharedPreferences.getInstance();
                       sp.remove('username');
+                      sp.remove('userid');
                       Navigator.pushReplacementNamed(context, LoginPage.route);
                     }),
               ),
