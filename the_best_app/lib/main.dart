@@ -7,14 +7,12 @@ import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/ForgotPasswordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/RegistrationPage.dart';
-import 'package:the_best_app/models/pointsModel.dart';
 import 'package:the_best_app/Screens/PointsScreens/summaryPage.dart';
 import 'package:the_best_app/Screens/infopage.dart';
 // Home Screens
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Screens/PointsScreens/fetchPage.dart';
 import 'package:the_best_app/Screens/PointsScreens/fitbitAuthPage.dart';
-import 'package:the_best_app/Screens/profiledatapage.dart';
 
 //Profile Screens
 import 'package:the_best_app/Screens/profilepage.dart';
@@ -45,14 +43,8 @@ Future<void> main() async {
   //Here, we run the app and we provide to the whole widget tree the instance of the DatabaseRepository.
   //That instance will be then shared through the platform and will be unique.
 
-  runApp(MultiProvider(
-    providers: [
-      ListenableProvider<UsersDatabaseRepo>(
-          create: (context) => users_database_repo),
-      ListenableProvider<PointsModel>(
-        create: (context) => PointsModel(),
-      )
-    ],
+  runApp(ChangeNotifierProvider<UsersDatabaseRepo>(
+    create: (context) => users_database_repo,
     child: MyApp(),
   ));
 } //main
@@ -98,10 +90,6 @@ class MyApp extends StatelessWidget {
           } else if (settings.name == Profilepage.route) {
             return MaterialPageRoute(builder: (context) {
               return Profilepage();
-            });
-          } else if (settings.name == Profiledatapage.route) {
-            return MaterialPageRoute(builder: (context) {
-              return Profiledatapage();
             });
           } else if (settings.name == FetchPage.route) {
             return MaterialPageRoute(builder: (context) {

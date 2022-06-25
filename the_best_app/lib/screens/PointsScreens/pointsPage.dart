@@ -25,7 +25,6 @@ import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/functions/fetchdata.dart';
 import 'package:the_best_app/functions/findTarget.dart';
-import 'package:the_best_app/models/pointsModel.dart';
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
 import 'package:the_best_app/Screens/PointsScreens/summaryPage.dart';
 import 'package:the_best_app/models/targetTypes.dart';
@@ -54,26 +53,25 @@ class PointsPage extends StatelessWidget {
             actions: [
               Row(
                 children: [
-                  Consumer<PointsModel>(builder: (context, totscore, child) {
-                    return IconButton(
-                        // Questo bottone serve per avere le informazioni!!
-                        iconSize: 40,
-                        tooltip: 'Info',
-                        icon: Icon(Icons.info),
-                        color: Colors.green[100],
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                    content: SingleChildScrollView(
-                                        child: ListBody(children: [
-                                  Text(
-                                      '-To see further information, double tap on the graph\n\n-To refresh data click on the REFRESH button top right')
-                                ])));
-                              });
-                        });
-                  }),
+                  IconButton(
+                      // Questo bottone serve per avere le informazioni!!
+                      iconSize: 40,
+                      tooltip: 'Info',
+                      icon: Icon(Icons.info),
+                      color: Colors.green[100],
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                  content: SingleChildScrollView(
+                                      child: ListBody(children: [
+                                Text(
+                                    '-To see further information, double tap on the graph\n\n-To refresh data click on the REFRESH button top right')
+                              ])));
+                            });
+                      }),
+
                   // Consumer<PointsModel>(builder: (context, totscore, child) {
                   //   return
                   IconButton(

@@ -8,7 +8,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Utils/checkBoxWidget.dart';
 import 'package:the_best_app/models/expList.dart';
-import 'package:the_best_app/models/pointsModel.dart';
 import 'package:the_best_app/models/shopList.dart';
 
 class QRcodePage extends StatelessWidget {
