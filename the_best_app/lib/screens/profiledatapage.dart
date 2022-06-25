@@ -87,13 +87,16 @@ class Profiledatapage extends StatelessWidget {
                                     context,
                                     listen: false)
                                 .findUser(name!);
-                            var _user = result?.username;
+                            var _user = result!.username;
                             print(_user);
-                            await Provider.of<UsersDatabaseRepo>(context,
-                                    listen: false)
-                                .deleteUser(result!);
-                            sp.remove('username');
-                            await Navigator.pushReplacementNamed(
+                            if (result != null) {
+                              sp.remove('username');
+                              await Provider.of<UsersDatabaseRepo>(context,
+                                      listen: false)
+                                  .deleteUser(result);
+                            }
+
+                            await Navigator.pushNamed(
                                 context, HelloWordPage.route);
                           },
                         ),
