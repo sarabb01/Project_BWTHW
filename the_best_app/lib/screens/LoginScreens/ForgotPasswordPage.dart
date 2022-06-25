@@ -93,14 +93,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        leading: Back_Page([5, 10, 5, 5], context, LoginPage.route),
         title: Text(
           ForgotPasswordPage.routename,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        actions: [
-          Back_Page([5, 10, 5, 5], context, LoginPage.route)
-        ],
       ),
       backgroundColor: Colours.white,
       body: Center(
@@ -389,7 +386,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             }),
             child: Icon(
               Icons.first_page,
-              color: Colors.black,
+              color: Colors.white,
               size: 30,
             )));
   }

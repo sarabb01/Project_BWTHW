@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
+import 'package:the_best_app/Utils/back_page_button.dart';
 import 'package:the_best_app/Utils/cardWidget.dart';
 import 'package:the_best_app/Utils/points_displayer.dart';
 import 'package:the_best_app/Screens/RewardScreens/queryPage.dart';
@@ -15,7 +17,10 @@ class PreferencePage extends StatelessWidget {
     Size screenSize = MediaQuery.of(context).size;
     //print(screenSize.width); // Width = 392; Height = 781
     return Scaffold(
-      appBar: AppBar(title: Text('Rewards')),
+      appBar: AppBar(
+        title: Text('Choose your reward'),
+        leading: Back_Page([10, 10, 5, 5], context, HomePage.route),
+      ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(20, 60, 20, 0),
         child: Column(

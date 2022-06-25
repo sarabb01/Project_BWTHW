@@ -122,14 +122,11 @@ class _log_in_settings extends State<LoginPage> {
     print('Build ${LoginPage.routename}');
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        leading: Back_Page([10, 10, 5, 5], context, HelloWordPage.route),
         title: Text(
           LoginPage.routename,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        actions: [
-          Back_Page([5, 10, 5, 5], context, HelloWordPage.route)
-        ],
       ),
       body: Center(
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -388,7 +385,7 @@ class _log_in_settings extends State<LoginPage> {
             }),
             child: Icon(
               Icons.first_page,
-              color: Colors.black,
+              color: Colors.white,
               size: 30,
             )));
   }

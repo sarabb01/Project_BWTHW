@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 import 'package:random_string/random_string.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
+import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
+import 'package:the_best_app/Utils/back_page_button.dart';
 import 'package:the_best_app/Utils/checkBoxWidget.dart';
 import 'package:the_best_app/models/expList.dart';
 import 'package:the_best_app/models/shopList.dart';
@@ -27,7 +29,9 @@ class QRcodePage extends StatelessWidget {
     final place = list[key]![1];
     final prize = list[key]![2];
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          leading: Back_Page([10, 10, 5, 5], context, PreferencePage.route),
+        ),
         body: Center(
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,

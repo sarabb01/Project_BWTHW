@@ -5,10 +5,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_best_app/Database/Entities/UserCreds.dart';
 import 'package:the_best_app/Database/Entities/UserInfos.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
+import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
+import 'package:the_best_app/Utils/back_page_button.dart';
 import 'package:the_best_app/functions/dateFormatter.dart';
 import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
-import 'package:the_best_app/Screens/profiledatapage.dart';
 
 class Profilepage extends StatelessWidget {
   Profilepage({Key? key}) : super(key: key);
@@ -23,6 +24,7 @@ class Profilepage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text(Profilepage.routename),
+          leading: Back_Page([10, 10, 5, 5], context, HomePage.route),
         ),
         floatingActionButton: FloatingActionButton(
             onPressed: () {

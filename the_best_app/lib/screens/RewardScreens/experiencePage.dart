@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
+import 'package:the_best_app/Utils/back_page_button.dart';
 import 'package:the_best_app/Utils/points_displayer.dart';
 import 'package:the_best_app/models/expList.dart';
 import 'package:the_best_app/Screens/RewardScreens/QRcodePage.dart';
@@ -25,6 +27,7 @@ class ExperiencePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(ExperiencePage.routename),
+        leading: Back_Page([10, 10, 5, 5], context, PreferencePage.route),
       ),
       body: Container(
           padding: EdgeInsets.all(20),

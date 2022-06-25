@@ -1,6 +1,8 @@
 // APP SCREENS
 import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
+import 'package:the_best_app/Screens/infoPage2.dart';
+import 'package:the_best_app/Screens/profilepage.dart';
 import 'package:the_best_app/Screens/PointsScreens/fitbitAuthPage.dart';
 import 'package:the_best_app/Screens/PointsScreens/pointsPage.dart';
 import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
@@ -8,10 +10,7 @@ import 'package:the_best_app/Screens/infopage.dart';
 import 'package:the_best_app/Screens/RewardScreens/MyVoucherPage.dart';
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 
-// MODELS
-import 'package:the_best_app/models/pointsModel.dart';
-import 'package:the_best_app/Database/Entities/FitbitTables.dart';
-
+// FUNCTIONS
 import 'package:the_best_app/functions/elaborateDataFunctions.dart';
 import 'package:the_best_app/functions/findTarget.dart';
 
@@ -19,13 +18,12 @@ import 'package:the_best_app/functions/findTarget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:colours/colours.dart';
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 // DATABASE
 import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/Database/Entities/UserCreds.dart';
-import 'package:the_best_app/Screens/profilepage.dart';
+import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 
 class HomePage extends StatefulWidget {
   static const route = '/hellowordpage/loginpage/homepage';
@@ -185,7 +183,7 @@ class _HomepageState extends State<HomePage>
                     trailing: Icon(Icons.info_outline),
                     tileColor: Colors.green[100],
                     onTap: () {
-                      Navigator.pushNamed(context, Infopage.route);
+                      Navigator.pushNamed(context, InfoPage2.route);
                     },
                   )),
               Padding(

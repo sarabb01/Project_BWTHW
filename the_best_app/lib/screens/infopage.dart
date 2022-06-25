@@ -14,6 +14,7 @@ class Infopage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(Infopage.routename),
+        automaticallyImplyLeading: false,
       ),
       body: Center(
           child: Column(children: [
@@ -40,8 +41,6 @@ class Infopage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.pushNamed(context, LoginPage.route);
-            // Navigator.pushNamed(context, HomePage.route,
-            //     arguments: {'username': 'Pippo'});
           },
           child: Icon(Icons.done)),
       floatingActionButtonLocation:

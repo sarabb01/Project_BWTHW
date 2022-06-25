@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_best_app/Screens/RewardScreens/experiencePage.dart';
+import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
 import 'package:the_best_app/Screens/RewardScreens/shoppingPage.dart';
+import 'package:the_best_app/Utils/back_page_button.dart';
 
 class QueryPage extends StatelessWidget {
   //QueryPage({Key? key}) : super(key: key);
@@ -21,7 +23,10 @@ class QueryPage extends StatelessWidget {
     //final path = ModalRoute.of(context)!.settings.arguments! as String;
     //print(ModalRoute.of(context)!.settings.arguments!);
     return Scaffold(
-      appBar: AppBar(title: Text('Search')),
+      appBar: AppBar(
+        title: Text('Search'),
+        leading: Back_Page([10, 10, 5, 5], context, PreferencePage.route),
+      ),
       body: Center(
         child: Container(
             padding: EdgeInsets.all(20),
@@ -39,9 +44,6 @@ class QueryPage extends StatelessWidget {
                 ElevatedButton(
                     onPressed: () async {
                       final sp = await SharedPreferences.getInstance();
-                      // final spent_points = sp.getDouble('SpentPoints') ?? 0.0;
-                      // final points = sp.getDouble('Points') ?? 0;
-                      // sp.setDouble('Points', points - spent_points);
                       double score = sp.getDouble('Points') ?? 0;
                       if (myController.text != '' && path == 'shops') {
                         Navigator.pushNamed(context, ShoppingPage.route,

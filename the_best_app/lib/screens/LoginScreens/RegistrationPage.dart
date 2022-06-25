@@ -78,14 +78,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
     print('${RegistrationPage.routename} built');
     return Scaffold(
         appBar: AppBar(
-          automaticallyImplyLeading: false,
+          leading: Back_Page([5, 10, 5, 5], context),
           title: Text(
             RegistrationPage.routename,
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          actions: [
-            Back_Page([5, 10, 5, 5], context)
-          ],
         ),
         body: Center(
             child: Form(
@@ -278,7 +275,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             }),
             child: Icon(
               Icons.first_page,
-              color: Colors.black,
+              color: Colors.white,
               size: 30,
             )));
   }
