@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:the_best_app/screens/RewardScreens/experiencePage.dart';
-import 'package:the_best_app/screens/RewardScreens/shoppingPage.dart';
+import 'package:the_best_app/Screens/RewardScreens/experiencePage.dart';
+import 'package:the_best_app/Screens/RewardScreens/shoppingPage.dart';
 
 class QueryPage extends StatelessWidget {
   //QueryPage({Key? key}) : super(key: key);
@@ -39,6 +39,9 @@ class QueryPage extends StatelessWidget {
                 ElevatedButton(
                     onPressed: () async {
                       final sp = await SharedPreferences.getInstance();
+                      // final spent_points = sp.getDouble('SpentPoints') ?? 0.0;
+                      // final points = sp.getDouble('Points') ?? 0;
+                      // sp.setDouble('Points', points - spent_points);
                       double score = sp.getDouble('Points') ?? 0;
                       if (myController.text != '' && path == 'shops') {
                         Navigator.pushNamed(context, ShoppingPage.route,

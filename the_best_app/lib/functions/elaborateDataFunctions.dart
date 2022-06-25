@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:fitbitter/fitbitter.dart';
 import 'package:the_best_app/Database/Entities/FitbitTables.dart';
+import 'package:the_best_app/models/targetTypes.dart';
 
 //https://www.verywellfit.com/target-heart-rate-calculator-3878160
 //https://blog.fitbit.com/heart-rate-zones/
@@ -65,22 +66,28 @@ int elaborateHRData(List<FitbitHeartData> result) {
   //downloads['${result[6].dateOfMonitoring}'] = minCardio;
 }
 
-List<double> elaboratePoints(myFitbitData data) {
+List<double> elaboratePoints(myFitbitData data, String target) {
   List<double> result = [];
   List<String> result2 = ['Steps', 'Calories', 'Minutes cardio', 'Sleep'];
-  result.add(double.parse((data.steps / 10000).toStringAsFixed(2)));
-  result.add(double.parse((data.calories / 600).toStringAsFixed(2)));
-  result.add(double.parse((data.cardio / 15).toStringAsFixed(2)));
-  result.add(double.parse((data.sleepHours / 7).toStringAsFixed(2)));
+  final Target values = Target();
+  final int steps = values.targets[target]![0];
+  final int cals = values.targets[target]![1];
+  final int cardio = values.targets[target]![2];
+  final int sleep = values.targets[target]![3];
+
+  result.add(double.parse((data.steps / steps).toStringAsFixed(2)));
+  result.add(double.parse((data.calories / cals).toStringAsFixed(2)));
+  result.add(double.parse((data.cardio / cardio).toStringAsFixed(2)));
+  result.add(double.parse((data.sleepHours / sleep).toStringAsFixed(2)));
   //print(result);
   return result;
 }
 
-double computeTotalPoints(List<myFitbitData> input) {
+double computeTotalPoints(List<myFitbitData> input, String target) {
   double score = 0;
   for (int i = 0; i < input.length; i++) {
-    score +=
-        elaboratePoints(input[i]).fold(0, (prev, element) => prev + element);
+    score += elaboratePoints(input[i], target)
+        .fold(0, (prev, element) => prev + element);
   }
   return double.parse(score.toStringAsFixed(2));
 }

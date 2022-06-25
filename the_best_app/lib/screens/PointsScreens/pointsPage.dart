@@ -23,9 +23,11 @@ import 'package:the_best_app/Utils/bar_chart.dart';
 import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/functions/fetchdata.dart';
+import 'package:the_best_app/functions/findTarget.dart';
 import 'package:the_best_app/models/pointsModel.dart';
-import 'package:the_best_app/screens/LoginScreens/LoginPage.dart';
-import 'package:the_best_app/screens/PointsScreens/summaryPage.dart';
+import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
+import 'package:the_best_app/Screens/PointsScreens/summaryPage.dart';
+import 'package:the_best_app/models/targetTypes.dart';
 
 // import 'package:syncfusion_flutter_charts/charts.dart';
 // import 'package:syncfusion_flutter_charts/sparkcharts.dart';
@@ -33,6 +35,9 @@ import 'package:the_best_app/screens/PointsScreens/summaryPage.dart';
 class PointsPage extends StatelessWidget {
   static const route = '/hellowordpage/loginpage/homepage/pointspage';
   static const routename = 'Points Page';
+  String username;
+
+  PointsPage({required this.username});
 
   @override
   Widget build(BuildContext context) {
@@ -56,16 +61,6 @@ class PointsPage extends StatelessWidget {
                         icon: Icon(Icons.info),
                         color: Colors.green[100],
                         onPressed: () {
-                          // List<myFitbitData> allData =
-                          //     await Provider.of<UsersDatabaseRepo>(context,
-                          //             listen: false)
-                          //         .findAllFitbitData();
-                          //
-                          // final double score = computeTotalPoints(allData);
-                          // print('${allData.length}, ${sp.getDouble('Points')}');
-
-                          // totscore.updateScore(score);
-
                           showDialog(
                               context: context,
                               builder: (BuildContext context) {
@@ -78,20 +73,25 @@ class PointsPage extends StatelessWidget {
                               });
                         });
                   }),
-                  Consumer<PointsModel>(builder: (context, totscore, child) {
-                    return IconButton(
-                        // Questo bottone serve per fetchare!!
-                        onPressed: () async {
-                          fetchData(context);
-                          List<myFitbitData> allData =
-                              await Provider.of<UsersDatabaseRepo>(context,
-                                      listen: false)
-                                  .findAllFitbitData();
-                          final double score = computeTotalPoints(allData);
-                          totscore.updateScore(score);
-                        },
-                        icon: Icon(Icons.update));
-                  })
+                  // Consumer<PointsModel>(builder: (context, totscore, child) {
+                  //   return
+                  IconButton(
+                      // Questo bottone serve per fetchare!!
+                      onPressed: () async {
+                        fetchData(context);
+                        List<myFitbitData> allData =
+                            await Provider.of<UsersDatabaseRepo>(context,
+                                    listen: false)
+                                .findAllFitbitDataUser(username);
+                        final trg = await findTarget(context, username)
+                            .then((String target) {
+                          return target;
+                        });
+                        final double score = computeTotalPoints(allData, trg);
+                        // totscore.updateScore(score);
+                      },
+                      icon: Icon(Icons.update))
+                  // })
                 ],
               )
             ]),
@@ -104,19 +104,25 @@ class PointsPage extends StatelessWidget {
             Consumer<UsersDatabaseRepo>(builder: (context, dbr, child) {
               return FutureBuilder(
                   initialData: null,
-                  future: dbr.findAllFitbitData(),
+                  future: Future.wait([
+                    dbr.findAllFitbitDataUser(username),
+                    findTarget(context, username)
+                  ]),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      final fitbit = snapshot.data as List<myFitbitData>;
+                      final data = snapshot.data as List<Object>;
+                      final fitbit = data[0] as List<myFitbitData>;
+                      final target = data[1] as String;
 
                       //print(
                       //    '${dateFormatter(DateTime.fromMillisecondsSinceEpoch((fitbit[fitbit.length - 1].keyDate) * Duration.millisecondsPerDay))}');
                       if (fitbit.length > 0) {
                         final today = fitbit[fitbit.length - 1];
-                        final todayPoints = elaboratePoints(today);
+                        final todayPoints = elaboratePoints(today, target);
                         // QUI CI VUOLE ELABORAZIONE PERCENTUALI
                         final List<CircularStackEntry> chartData =
-                            createChartData(today);
+                            createChartData(today, target);
+                        final List values = Target().targets[target]!;
 
                         return fitbit.length == 0
                             ? Text('No activity recorded today')
@@ -138,28 +144,28 @@ class PointsPage extends StatelessWidget {
                                           content: SingleChildScrollView(
                                             child: ListBody(children: [
                                               Text(
-                                                'Steps ${(todayPoints[0] * 100).toStringAsFixed(1)}% (${today.steps} / 10000)',
+                                                'Steps ${(todayPoints[0] * 100).toStringAsFixed(1)}% (${today.steps} / ${values[0]})',
                                                 style: TextStyle(
                                                     color: Colors.blue[600],
                                                     fontWeight:
                                                         FontWeight.bold),
                                               ),
                                               Text(
-                                                  'Calories ${todayPoints[1] * 100}% (${today.calories} / 600)',
+                                                  'Calories ${todayPoints[1] * 100}% (${today.calories} / ${values[1]})',
                                                   style: TextStyle(
                                                       color: Colors
                                                           .yellowAccent[700],
                                                       fontWeight:
                                                           FontWeight.bold)),
                                               Text(
-                                                  'Cardio ${todayPoints[2] * 100}% (${today.cardio} / 15)',
+                                                  'Cardio ${todayPoints[2] * 100}% (${today.cardio} / ${values[2]})',
                                                   style: TextStyle(
                                                       color: Colors
                                                           .greenAccent[400],
                                                       fontWeight:
                                                           FontWeight.bold)),
                                               Text(
-                                                  'Sleep ${(todayPoints[3] * 100).toStringAsFixed(1)}% (${today.sleepHours} / 7)',
+                                                  'Sleep ${(todayPoints[3] * 100).toStringAsFixed(1)}% (${today.sleepHours} / ${values[3]})',
                                                   style: TextStyle(
                                                       color: Colors.redAccent,
                                                       fontWeight:
@@ -234,13 +240,18 @@ class PointsPage extends StatelessWidget {
             Consumer<UsersDatabaseRepo>(builder: (context, dbr, child) {
               return FutureBuilder(
                   initialData: null,
-                  future: dbr.findAllFitbitData(),
+                  future: Future.wait([
+                    dbr.findAllFitbitDataUser(username),
+                    findTarget(context, username)
+                  ]),
                   //future: dbr.findAllSleepData(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      final fitbit = snapshot.data as List<myFitbitData>;
+                      final data = snapshot.data as List<Object>;
+                      final fitbit = data[0] as List<myFitbitData>;
+                      final target = data[1] as String;
                       if (fitbit.length > 0) {
-                        final double score = computeTotalPoints(fitbit);
+                        final double score = computeTotalPoints(fitbit, target);
 
                         final List total = computeSum(fitbit);
                         //print(total);
@@ -250,17 +261,18 @@ class PointsPage extends StatelessWidget {
                             : Column(
                                 //height:250,
                                 children: [
-                                    Text(
-                                        'SUMMARY of ${fitbit.length} DAYS: ${score.toStringAsFixed(2)} POINTS'),
+                                    Text('SUMMARY of ${fitbit.length} DAYS'),
+                                    //  ${score.toStringAsFixed(2)} POINTS'),
                                     GestureDetector(
                                       onDoubleTap: () {
                                         Navigator.pushNamed(
-                                            context, SummaryPage.route);
+                                            context, SummaryPage.route,
+                                            arguments: {'username': username});
                                       },
                                       child: Container(
                                           height: 300,
                                           child: StackedBarChart(
-                                              createBarData(fitbit))),
+                                              createBarData(fitbit, target))),
                                     )
                                   ]);
                       } else {

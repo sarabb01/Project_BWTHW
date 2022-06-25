@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:the_best_app/Database/Entities/UserCreds.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
-import 'package:the_best_app/screens/LoginScreens/HelloWordPage.dart';
-import 'package:the_best_app/screens/LoginScreens/RegistrationPage.dart';
+import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
+import 'package:the_best_app/Screens/LoginScreens/RegistrationPage.dart';
 
 class Profiledatapage extends StatelessWidget {
   Profiledatapage({Key? key}) : super(key: key);
@@ -46,28 +46,6 @@ class Profiledatapage extends StatelessWidget {
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                          left: 10, right: 10, top: 5, bottom: 5),
-                      child: ListTile(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          //side: BorderSide(color: Colours.azure)
-                        ),
-                        title: const Text('Logout'),
-                        trailing: IconButton(
-                          icon: Icon(Icons.logout),
-                          //heroTag: 'btn2',
-                          onPressed: () async {
-                            final sp = await SharedPreferences.getInstance();
-                            sp.remove('username');
-                            await Navigator.pushReplacementNamed(
-                                context, HelloWordPage.route);
-                          },
-                        ),
-                        tileColor: Colors.green[100],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
                           left: 10, right: 10, top: 5, bottom: 10),
                       child: ListTile(
                         shape: RoundedRectangleBorder(
@@ -87,13 +65,16 @@ class Profiledatapage extends StatelessWidget {
                                     context,
                                     listen: false)
                                 .findUser(name!);
-                            var _user = result?.username;
-
+                            var _user = result!.username;
                             print(_user);
-                            // await Provider.of<UsersDatabaseRepo>(context,
-                            //         listen: false)
-                            //     .deleteUser(result!);
-                            await Navigator.pushReplacementNamed(
+                            if (result != null) {
+                              sp.remove('username');
+                              await Provider.of<UsersDatabaseRepo>(context,
+                                      listen: false)
+                                  .deleteUser(result);
+                            }
+
+                            await Navigator.pushNamed(
                                 context, HelloWordPage.route);
                           },
                         ),

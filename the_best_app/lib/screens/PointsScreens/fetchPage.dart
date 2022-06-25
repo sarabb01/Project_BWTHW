@@ -10,7 +10,7 @@ import 'package:the_best_app/Database/typeConverters/dateTimeConverter.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/models/fitbitDataTypes.dart';
 //Import Screens
-import 'package:the_best_app/screens/PointsScreens/pointsPage.dart';
+import 'package:the_best_app/Screens/PointsScreens/pointsPage.dart';
 
 //Import Functions and Useful things
 import 'package:the_best_app/functions/dateFormatter.dart';
@@ -46,14 +46,6 @@ class _FetchPageState extends State<FetchPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(FetchPage.routename),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.arrow_circle_right),
-            onPressed: () {
-              Navigator.pushNamed(context, PointsPage.route);
-            },
-          )
-        ],
       ),
       body: Center(
         child: Column(
@@ -135,14 +127,14 @@ class _FetchPageState extends State<FetchPage> {
                     }
                     //print('Current min $mins');
 
-                    myFitbitData newdata = myFitbitData(tableKey,
-                        sleepHours: time,
-                        calories: cals,
-                        steps: steps,
-                        cardio: mins,
-                        detailDate: detail);
-                    await Provider.of<UsersDatabaseRepo>(context, listen: false)
-                        .insertFitbitData(newdata);
+                    // myFitbitData newdata = myFitbitData(tableKey,
+                    //     sleepHours: time,
+                    //     calories: cals,
+                    //     steps: steps,
+                    //     cardio: mins,
+                    //     detailDate: detail);
+                    // await Provider.of<UsersDatabaseRepo>(context, listen: false)
+                    //     .insertFitbitData(newdata);
                   }
 
                   // OPTION B

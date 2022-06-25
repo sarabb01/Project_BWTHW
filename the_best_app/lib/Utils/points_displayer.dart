@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,13 +22,17 @@ class _Points_displayerState extends State<Points_displayer> {
   void _loadPoints() async {
     final sp = await SharedPreferences.getInstance();
     setState(() {
-      points = sp.getDouble('Points') ?? 0;
+      if (sp.getDouble('Points') != null) {
+        points = sp.getDouble('Points')!.roundToDouble();
+      } else {
+        points = 0.0;
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    print(points);
+    print('Your points $points');
     return Container(
       width: 150,
       height: 22,

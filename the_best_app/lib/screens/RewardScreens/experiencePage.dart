@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:the_best_app/Utils/points_displayer.dart';
 import 'package:the_best_app/models/expList.dart';
-import 'package:the_best_app/screens/RewardScreens/QRcodePage.dart';
+import 'package:the_best_app/Screens/RewardScreens/QRcodePage.dart';
 
 class ExperiencePage extends StatelessWidget {
   // ExperiencePage({Key? key}) : super(key: key);

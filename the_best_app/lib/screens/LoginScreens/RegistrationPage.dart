@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:select_form_field/select_form_field.dart';
 import 'package:the_best_app/Database/Entities/UserInfos.dart';
-// SCREENS
+// Screens
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
 import 'package:the_best_app/Utils/DateFormats.dart';
@@ -140,7 +140,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       ),
                       FormSeparator(label: 'Target'),
                       DropdownButtonTileString(
-                        items: ['Target1', 'Target2', 'Target3', 'None'],
+                        items: ['Basic', 'Medium', 'Advanced', 'None'],
                         labelText: 'Personal Target',
                         notifyParent: selectTarget,
                       ),

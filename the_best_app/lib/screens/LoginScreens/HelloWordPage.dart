@@ -1,4 +1,4 @@
-// APP SCREENS
+// APP Screens
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/screens/infopage.dart';
 import 'LoginPage.dart';

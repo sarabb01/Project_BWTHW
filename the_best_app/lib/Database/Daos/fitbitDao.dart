@@ -6,6 +6,9 @@ abstract class FitbitDao {
   @Query('SELECT * FROM myFitbitData')
   Future<List<myFitbitData>> findAllFitbitData();
 
+  @Query('SELECT * FROM myFitbitData WHERE username = :username')
+  Future<List<myFitbitData>> findAllFitbitDataUser(String username);
+
   @Insert(
       onConflict: OnConflictStrategy
           .replace) // In ordert to avoid duplicates within the users

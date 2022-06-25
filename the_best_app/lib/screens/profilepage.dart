@@ -1,3 +1,4 @@
+import 'package:colours/colours.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -5,8 +6,8 @@ import 'package:the_best_app/Database/Entities/UserCreds.dart';
 import 'package:the_best_app/Database/Entities/UserInfos.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/functions/dateFormatter.dart';
-import 'package:the_best_app/screens/RewardScreens/selectPrefPage.dart';
-import 'package:the_best_app/screens/profiledatapage.dart';
+import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
+import 'package:the_best_app/Screens/profiledatapage.dart';
 
 class Profilepage extends StatelessWidget {
   Profilepage({Key? key}) : super(key: key);
@@ -31,258 +32,261 @@ class Profilepage extends StatelessWidget {
         ),
         body: Center(
             child: SizedBox(
-          // child: FutureBuilder(
-          //     future: SharedPreferences.getInstance(),
-          //     builder: (context, snapshot) {
-          //       if (snapshot.hasData) {
-          //         final result = snapshot.data as SharedPreferences;
-          //         if (result.getString('username') != null) {
-          //           final user = result.getString('username');
-          //           print(user);
-          //           return FutureBuilder(
-          //               future: Provider.of<UsersDatabaseRepo>(context,
-          //                       listen: false)
-          //                   .findUser(user!),
-          //               builder: (context, snapshot) {
-          //                 if (snapshot.hasData) {
-          //                   final info =
-          //                       snapshot.data as UsersCredentials;
-          //                   print(info.id);
 
-          //                   return FutureBuilder(
-          //                       future: Provider.of<UsersDatabaseRepo>(
-          //                               context,
-          //                               listen: false)
-          //                           .findAllUsersInfos(),
-          //                       // .checkUserInfos(info.id!),
-          //                       builder: (context, snapshot) {
-          //                         if (snapshot.hasData) {
-          //                           print(snapshot.data);
-          //                           final dataTOT =
-          //                               snapshot.data as List<UserInfos>;
-          //                           final data = dataTOT[0];
-          //                           print(data.name);
-          //                           return ListView(
-          //                             children: <Widget>[
-          //                               ListTile(
-          //                                 title:
-          //                                     const Text('Personal Data'),
-          //                               ),
-          //                               ListTile(
-          //                                   title: Text('Name'),
-          //                                   subtitle: TextField(
-          //                                     obscureText: true,
-          //                                     decoration: InputDecoration(
-          //                                       border:
-          //                                           OutlineInputBorder(),
-          //                                       labelText: data.name,
-          //                                     ),
-          //                                   )),
-          //                               ListTile(
-          //                                 title: Text('Surname'),
-          //                                 subtitle: TextField(
-          //                                   obscureText: true,
-          //                                   decoration: InputDecoration(
-          //                                     border:
-          //                                         OutlineInputBorder(),
-          //                                     labelText: data.surname,
-          //                                   ),
-          //                                 ),
-          //                               ),
-          //                               ListTile(
-          //                                 title: Text('Gender'),
-          //                                 subtitle: TextField(
-          //                                   obscureText: true,
-          //                                   decoration: InputDecoration(
-          //                                     border:
-          //                                         OutlineInputBorder(),
-          //                                     labelText: dateFormatter(
-          //                                         data.dateofbirth),
-          //                                   ),
-          //                                 ),
-          //                               ),
-          //                               ListTile(
-          //                                 title: Text('Height'),
-          //                                 subtitle: TextField(
-          //                                   obscureText: true,
-          //                                   decoration: InputDecoration(
-          //                                     border:
-          //                                         OutlineInputBorder(),
-          //                                     labelText: '',
-          //                                   ),
-          //                                 ),
-          //                               ),
-          //                               ListTile(
-          //                                 title: Text('Weight'),
-          //                                 subtitle: TextField(
-          //                                   obscureText: true,
-          //                                   decoration: InputDecoration(
-          //                                     border:
-          //                                         OutlineInputBorder(),
-          //                                     labelText: '',
-          //                                   ),
-          //                                 ),
-          //                               ),
-          //                               ListTile(
-          //                                 title: Text('Diseases'),
-          //                                 subtitle: TextField(
-          //                                   obscureText: true,
-          //                                   decoration: InputDecoration(
-          //                                     border:
-          //                                         OutlineInputBorder(),
-          //                                     labelText: '',
-          //                                   ),
-          //                                 ),
-          //                               ),
-          //                             ],
-          //                           );
-          //                         } else {
-          //                           return CircularProgressIndicator();
-          //                         }
-          //                       });
-          //                 } else {
-          //                   return ListView(
-          //                     children: <Widget>[
-          //                       ListTile(
-          //                         title: const Text('Personal Data'),
-          //                       ),
-          //                       ListTile(
-          //                           title: Text('Name'),
-          //                           subtitle: TextField(
-          //                             obscureText: true,
-          //                             decoration: InputDecoration(
-          //                               border: OutlineInputBorder(),
-          //                               labelText: '',
-          //                             ),
-          //                           )),
-          //                       ListTile(
-          //                         title: Text('Surname'),
-          //                         subtitle: TextField(
-          //                           obscureText: true,
-          //                           decoration: InputDecoration(
-          //                             border: OutlineInputBorder(),
-          //                             labelText: '',
-          //                           ),
-          //                         ),
-          //                       ),
-          //                       ListTile(
-          //                         title: Text('Sex'),
-          //                         subtitle: TextField(
-          //                           obscureText: true,
-          //                           decoration: InputDecoration(
-          //                             border: OutlineInputBorder(),
-          //                             labelText: '',
-          //                           ),
-          //                         ),
-          //                       ),
-          //                       ListTile(
-          //                         title: Text('Height'),
-          //                         subtitle: TextField(
-          //                           obscureText: true,
-          //                           decoration: InputDecoration(
-          //                             border: OutlineInputBorder(),
-          //                             labelText: '',
-          //                           ),
-          //                         ),
-          //                       ),
-          //                       ListTile(
-          //                         title: Text('Weight'),
-          //                         subtitle: TextField(
-          //                           obscureText: true,
-          //                           decoration: InputDecoration(
-          //                             border: OutlineInputBorder(),
-          //                             labelText: '',
-          //                           ),
-          //                         ),
-          //                       ),
-          //                       ListTile(
-          //                         title: Text('Diseases'),
-          //                         subtitle: TextField(
-          //                           obscureText: true,
-          //                           decoration: InputDecoration(
-          //                             border: OutlineInputBorder(),
-          //                             labelText: '',
-          //                           ),
-          //                         ),
-          //                       ),
-          //                     ],
-          //                   );
-          //                 }
-          //               });
-          //         } else {
-          //           return CircularProgressIndicator();
-          //         }
-          //       } else {
-          //         return CircularProgressIndicator();
-          //       }
-          //     }
-          child: ListView(
-            children: <Widget>[
-              ListTile(
-                title: const Text('Personal Data'),
-              ),
-              ListTile(
-                  title: Text('Name'),
-                  subtitle: TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: '',
-                    ),
-                  )),
-              ListTile(
-                title: Text('Surname'),
-                subtitle: TextField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: '',
-                  ),
-                ),
-              ),
-              ListTile(
-                title: Text('Sex'),
-                subtitle: TextField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: '',
-                  ),
-                ),
-              ),
-              ListTile(
-                title: Text('Height'),
-                subtitle: TextField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: '',
-                  ),
-                ),
-              ),
-              ListTile(
-                title: Text('Weight'),
-                subtitle: TextField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: '',
-                  ),
-                ),
-              ),
-              ListTile(
-                title: Text('Diseases'),
-                subtitle: TextField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: '',
-                  ),
-                ),
-              ),
-            ],
-          ),
-        )));
+//OPTION A
+                child: FutureBuilder(
+                    future: SharedPreferences.getInstance(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        final result = snapshot.data as SharedPreferences;
+                        if (result.getString('username') != null) {
+                          final user = result.getString('username');
+
+                          return FutureBuilder(
+                              future: Provider.of<UsersDatabaseRepo>(context,
+                                      listen: false)
+                                  .findUser(user!),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  final info =
+                                      snapshot.data as UsersCredentials;
+                                  print(info.id);
+
+                                  return FutureBuilder(
+                                      future: Provider.of<UsersDatabaseRepo>(
+                                              context,
+                                              listen: false)
+                                          .checkUserInfos(info.id!),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.hasData) {
+                                          final data =
+                                              snapshot.data as UserInfos;
+
+                                          print(data.name);
+                                          return Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 20,
+                                                left: 10,
+                                                right: 10,
+                                                bottom: 10),
+                                            child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    'Personal Data',
+                                                    style: TextStyle(
+                                                        fontSize: 25,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  SizedBox(height: 10),
+                                                  Expanded(
+                                                    child: ListView(
+                                                      children: <Widget>[
+                                                        ListTile(
+                                                            title: Text('Name'),
+                                                            subtitle: TextField(
+                                                              decoration:
+                                                                  InputDecoration(
+                                                                border:
+                                                                    OutlineInputBorder(),
+                                                                labelText:
+                                                                    data.name,
+                                                              ),
+                                                            )),
+                                                        ListTile(
+                                                          title:
+                                                              Text('Surname'),
+                                                          subtitle: TextField(
+                                                            decoration:
+                                                                InputDecoration(
+                                                              border:
+                                                                  OutlineInputBorder(),
+                                                              labelText:
+                                                                  data.surname,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        ListTile(
+                                                          title: Text(
+                                                              'Date of Birth'),
+                                                          subtitle: TextField(
+                                                            decoration:
+                                                                InputDecoration(
+                                                              border:
+                                                                  OutlineInputBorder(),
+                                                              labelText:
+                                                                  dateFormatter(
+                                                                      data.dateofbirth,
+                                                                      opt: 2),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        ListTile(
+                                                          title: Text('Gender'),
+                                                          subtitle: TextField(
+                                                            decoration:
+                                                                InputDecoration(
+                                                              border:
+                                                                  OutlineInputBorder(),
+                                                              labelText:
+                                                                  data.gender,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        ListTile(
+                                                          title: Text('Target'),
+                                                          subtitle: TextField(
+                                                            decoration:
+                                                                InputDecoration(
+                                                              border:
+                                                                  OutlineInputBorder(),
+                                                              labelText: data
+                                                                  .usertarget,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ]),
+                                          );
+                                        } else {
+                                          return CircularProgressIndicator();
+                                        }
+                                      });
+                                } else {
+                                  return ListView(
+                                    children: <Widget>[
+                                      ListTile(
+                                        title: const Text('Personal Data'),
+                                      ),
+                                      ListTile(
+                                          title: Text('Name'),
+                                          subtitle: TextField(
+                                            decoration: InputDecoration(
+                                              border: OutlineInputBorder(),
+                                              labelText: '',
+                                            ),
+                                          )),
+                                      ListTile(
+                                        title: Text('Surname'),
+                                        subtitle: TextField(
+                                          decoration: InputDecoration(
+                                            border: OutlineInputBorder(),
+                                            labelText: '',
+                                          ),
+                                        ),
+                                      ),
+                                      ListTile(
+                                        title: Text('Date of Birth'),
+                                        subtitle: TextField(
+                                          decoration: InputDecoration(
+                                            border: OutlineInputBorder(),
+                                            labelText: '',
+                                          ),
+                                        ),
+                                      ),
+                                      ListTile(
+                                        title: Text('Gender'),
+                                        subtitle: TextField(
+                                          decoration: InputDecoration(
+                                            border: OutlineInputBorder(),
+                                            labelText: '',
+                                          ),
+                                        ),
+                                      ),
+                                      ListTile(
+                                        title: Text('Target'),
+                                        subtitle: TextField(
+                                          decoration: InputDecoration(
+                                            border: OutlineInputBorder(),
+                                            labelText: '',
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                }
+                              });
+                        } else {
+                          return CircularProgressIndicator();
+                        }
+                      } else {
+                        return CircularProgressIndicator();
+                      }
+                    })
+
+// OPTION B
+                // child: ListView(
+                //   children: <Widget>[
+                //     ListTile(
+                //       title: const Text('Personal Data'),
+                //     ),
+                //     ListTile(
+                //         title: Text('Name'),
+                //         subtitle: TextField(
+                //           obscureText: true,
+                //           decoration: InputDecoration(
+                //             border: OutlineInputBorder(),
+                //             labelText: '',
+                //           ),
+                //         )),
+                //     ListTile(
+                //       title: Text('Surname'),
+                //       subtitle: TextField(
+                //         obscureText: true,
+                //         decoration: InputDecoration(
+                //           border: OutlineInputBorder(),
+                //           labelText: '',
+                //         ),
+                //       ),
+                //     ),
+                //     ListTile(
+                //       title: Text('Sex'),
+                //       subtitle: TextField(
+                //         obscureText: true,
+                //         decoration: InputDecoration(
+                //           border: OutlineInputBorder(),
+                //           labelText: '',
+                //         ),
+                //       ),
+                //     ),
+                //     ListTile(
+                //       title: Text('Height'),
+                //       subtitle: TextField(
+                //         obscureText: true,
+                //         decoration: InputDecoration(
+                //           border: OutlineInputBorder(),
+                //           labelText: '',
+                //         ),
+                //       ),
+                //     ),
+                //     ListTile(
+                //       title: Text('Weight'),
+                //       subtitle: TextField(
+                //         obscureText: true,
+                //         decoration: InputDecoration(
+                //           border: OutlineInputBorder(),
+                //           labelText: '',
+                //         ),
+                //       ),
+                //     ),
+                //     ListTile(
+                //       title: Text('Diseases'),
+                //       subtitle: TextField(
+                //         obscureText: true,
+                //         decoration: InputDecoration(
+                //           border: OutlineInputBorder(),
+                //           labelText: '',
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // ),
+
+                )));
   } //build
 
 } //Profilepage

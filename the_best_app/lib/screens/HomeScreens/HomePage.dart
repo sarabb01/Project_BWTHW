@@ -6,8 +6,15 @@ import 'package:the_best_app/Screens/PointsScreens/pointsPage.dart';
 import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
 import 'package:the_best_app/Screens/infopage.dart';
 import 'package:the_best_app/Screens/RewardScreens/MyVoucherPage.dart';
+import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
+
 // MODELS
 import 'package:the_best_app/models/pointsModel.dart';
+import 'package:the_best_app/Database/Entities/FitbitTables.dart';
+
+import 'package:the_best_app/functions/elaborateDataFunctions.dart';
+import 'package:the_best_app/functions/findTarget.dart';
+
 // FLUTTER PACKAGES
 import 'package:flutter/cupertino.dart';
 import 'package:colours/colours.dart';
@@ -17,9 +24,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 // DATABASE
 import 'package:the_best_app/Repository/database_repository.dart';
-import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'package:the_best_app/Database/Entities/UserCreds.dart';
-import 'package:the_best_app/screens/profilepage.dart';
+import 'package:the_best_app/Screens/profilepage.dart';
 
 class HomePage extends StatefulWidget {
   static const route = '/hellowordpage/loginpage/homepage';
@@ -79,11 +85,6 @@ class _HomepageState extends State<HomePage>
           actions: [
             Row(
               children: [
-                // IconButton(
-                //     icon: Icon(Icons.info),
-                //     onPressed: () {
-                //       Navigator.pushNamed(context, Infopage.route);
-                //     }),
                 IconButton(
                     icon: Icon(Icons.show_chart_outlined),
                     onPressed: () {
@@ -93,15 +94,6 @@ class _HomepageState extends State<HomePage>
             )
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-            onPressed: () async {
-              final sp = await SharedPreferences.getInstance();
-              if (sp.getDouble('Points') != null) {
-                double? score = sp.getDouble('Points');
-                print(score);
-              }
-            },
-            child: Icon(Icons.update)),
         drawer: Drawer(
           child: ListView(
             children: [
@@ -272,10 +264,6 @@ class _HomepageState extends State<HomePage>
         //])
 
         body: Center(
-            //TweenAnimationBuilder(
-            //tween: Tween(begin: 0.0, end: 1.0),
-            //duration: Duration(seconds: 10),
-            //builder: (context, value, _) =>
             child: Padding(
           padding: const EdgeInsets.only(top: 10, bottom: 30),
           child: Column(crossAxisAlignment: CrossAxisAlignment.center,
@@ -296,8 +284,10 @@ class _HomepageState extends State<HomePage>
                 ),
                 SizedBox(height: 20),
                 GestureDetector(
-                  onDoubleTap: () {
-                    Navigator.pushNamed(context, PointsPage.route);
+                  onDoubleTap: () async {
+                    final sp = await SharedPreferences.getInstance();
+                    Navigator.pushNamed(context, PointsPage.route,
+                        arguments: {'username': sp.getString('username')});
                   },
                   child: Container(
                       decoration: BoxDecoration(
@@ -308,18 +298,46 @@ class _HomepageState extends State<HomePage>
                       height: 200,
                       child: FutureBuilder(
                         //child: Consumer<PointsModel>(
-                        future: SharedPreferences.getInstance(),
+                        future: Future.wait([
+                          SharedPreferences.getInstance(),
+                          Provider.of<UsersDatabaseRepo>(context, listen: false)
+                              .findAllFitbitDataUser(username),
+                          findTarget(context, username)
+                        ]),
                         builder: (context, snapshot) {
                           //builder: (context, score, child) {
                           if (snapshot.hasData) {
-                            final result = snapshot.data as SharedPreferences;
+                            final data = snapshot.data as List<Object>;
+                            final result = data[0] as SharedPreferences;
+                            final check = data[1] as List<myFitbitData>;
+                            final target = data[2] as String;
+                            print(
+                                'wi user: ${username}'); // check the username is correct
+                            print('Data length ${check.length}');
+                            print(
+                                target); // check is he/she has some points stored
+
+                            final double tot = check.length != 0
+                                ? computeTotalPoints(check, target)
+                                : 0.0; // get all the points
+                            final spent_points = check.length != 0 &&
+                                    result.getDouble('SpentPoints') != null
+                                ? result.getDouble('SpentPoints')
+                                : 0.0; // get the spent points
+                            result.setDouble(
+                                'Points',
+                                tot -
+                                    spent_points!); // set the new points variable
                             if (result.getDouble('Points') != null) {
-                              final score = result.getDouble('Points');
+                              final score = result
+                                  .getDouble('Points')!
+                                  .roundToDouble(); // set the variable used for the graph
+                              //print('points: ${result.getDouble('Points')}');
                               return Stack(
                                 fit: StackFit.expand,
                                 children: [
                                   CircularProgressIndicator(
-                                    value: score! / obiettivo,
+                                    value: score / obiettivo,
                                     //value: score.totalScore / obiettivo,
                                     backgroundColor: Colors.grey[400],
                                     color: Colours.mediumSeaGreen,
@@ -394,8 +412,23 @@ class _HomepageState extends State<HomePage>
   } //build
 
   Widget buildprogress(double score) {
-    if (score / obiettivo == 1) {
-      return const Icon(Icons.done, color: Colors.green, size: 56);
+    if (score / obiettivo >= 1) {
+      return Container(
+        width: 120,
+        height: 120,
+        child: Column(children: [
+          Text(
+            'Well done!\nTarget reached!',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 15),
+          ),
+          const Icon(Icons.done, color: Colors.green, size: 56),
+          Text(
+            '${(score)}' '/' '${(obiettivo).toStringAsFixed(0)}',
+            style: TextStyle(fontSize: 15),
+          )
+        ]),
+      );
     } else {
       return Container(
           width: 120,

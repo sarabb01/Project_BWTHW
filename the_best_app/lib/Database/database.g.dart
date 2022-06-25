@@ -221,7 +221,8 @@ class _$FitbitDao extends FitbitDao {
                   'calories': item.calories,
                   'steps': item.steps,
                   'cardio': item.cardio,
-                  'detailDate': item.detailDate
+                  'detailDate': item.detailDate,
+                  'username': item.username
                 }),
         _myFitbitDataUpdateAdapter = UpdateAdapter(
             database,
@@ -233,7 +234,8 @@ class _$FitbitDao extends FitbitDao {
                   'calories': item.calories,
                   'steps': item.steps,
                   'cardio': item.cardio,
-                  'detailDate': item.detailDate
+                  'detailDate': item.detailDate,
+                  'username': item.username
                 }),
         _myFitbitDataDeletionAdapter = DeletionAdapter(
             database,
@@ -245,7 +247,8 @@ class _$FitbitDao extends FitbitDao {
                   'calories': item.calories,
                   'steps': item.steps,
                   'cardio': item.cardio,
-                  'detailDate': item.detailDate
+                  'detailDate': item.detailDate,
+                  'username': item.username
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -269,7 +272,23 @@ class _$FitbitDao extends FitbitDao {
             calories: row['calories'] as int,
             steps: row['steps'] as int,
             cardio: row['cardio'] as int,
-            detailDate: row['detailDate'] as int));
+            detailDate: row['detailDate'] as int,
+            username: row['username'] as String));
+  }
+
+  @override
+  Future<List<myFitbitData>> findAllFitbitDataUser(String username) async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM myFitbitData WHERE username = ?1',
+        mapper: (Map<String, Object?> row) => myFitbitData(
+            row['keyDate'] as int,
+            sleepHours: row['sleepHours'] as int,
+            calories: row['calories'] as int,
+            steps: row['steps'] as int,
+            cardio: row['cardio'] as int,
+            detailDate: row['detailDate'] as int,
+            username: row['username'] as String),
+        arguments: [username]);
   }
 
   @override

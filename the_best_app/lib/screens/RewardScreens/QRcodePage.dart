@@ -1,8 +1,11 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:random_string/random_string.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Utils/checkBoxWidget.dart';
 import 'package:the_best_app/models/expList.dart';
 import 'package:the_best_app/models/pointsModel.dart';
@@ -25,17 +28,7 @@ class QRcodePage extends StatelessWidget {
     final place = list[key]![1];
     final prize = list[key]![2];
     return Scaffold(
-        appBar: AppBar(
-            // title: Text(''),
-            // actions: [
-            //   IconButton(
-            //       icon: Icon(Icons.backspace_outlined),
-            //       onPressed: () {
-            //         Navigator.popUntil(
-            //             context, ModalRoute.withName('/preference'));
-            //       })
-            // ],
-            ),
+        appBar: AppBar(),
         body: Center(
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -110,24 +103,31 @@ class QRcodePage extends StatelessWidget {
                               Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Consumer<PointsModel>(
-                                      builder: (context, totscore, child) {
-                                        return IconButton(
-                                            onPressed: () async {
-                                              totscore
-                                                  .subtractScore(list[key]![0]);
-                                              final sp = await SharedPreferences
-                                                  .getInstance();
-                                              sp.setDouble('Points',
-                                                  totscore.totalScore);
-                                            }, // TO BE IMPLEMENTED
-                                            icon: Icon(
-                                              Icons.check_circle,
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                            ));
-                                      },
-                                    ),
+                                    IconButton(
+                                        onPressed: () async {
+                                          final sp = await SharedPreferences
+                                              .getInstance();
+                                          final spent_points = list[key]![0];
+                                          print(spent_points.runtimeType);
+                                          sp.setDouble(
+                                              'SpentPoints', spent_points);
+                                          final tot_points =
+                                              sp.getDouble('Points');
+                                          sp.setDouble('Points',
+                                              tot_points! - spent_points);
+                                          Navigator.pushReplacementNamed(
+                                              context, HomePage.route,
+                                              arguments: {
+                                                'username':
+                                                    sp.getString('username')!
+                                              });
+                                        }, // TO BE IMPLEMENTED
+                                        icon: Icon(
+                                          Icons.check_circle,
+                                          color: Theme.of(context).primaryColor,
+                                        )),
+                                    //},
+                                    //),
                                     IconButton(
                                         onPressed: () {
                                           Navigator.pop(context);
@@ -142,7 +142,6 @@ class QRcodePage extends StatelessWidget {
                   },
                   child: Text('Use voucher'),
                 )
-                //checkboxWidget(),
               ]),
         ));
   }

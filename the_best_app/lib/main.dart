@@ -8,8 +8,8 @@ import 'package:the_best_app/Screens/LoginScreens/ForgotPasswordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/RegistrationPage.dart';
 import 'package:the_best_app/models/pointsModel.dart';
-import 'package:the_best_app/screens/PointsScreens/summaryPage.dart';
-import 'package:the_best_app/screens/infopage.dart';
+import 'package:the_best_app/Screens/PointsScreens/summaryPage.dart';
+import 'package:the_best_app/Screens/infopage.dart';
 // Home Screens
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Screens/PointsScreens/fetchPage.dart';
@@ -108,12 +108,14 @@ class MyApp extends StatelessWidget {
               return FetchPage();
             });
           } else if (settings.name == PointsPage.route) {
+            final args6 = settings.arguments as Map;
             return MaterialPageRoute(builder: (context) {
-              return PointsPage();
+              return PointsPage(username: args6['username']);
             });
           } else if (settings.name == SummaryPage.route) {
+            final args7 = settings.arguments as Map;
             return MaterialPageRoute(builder: (context) {
-              return SummaryPage();
+              return SummaryPage(username: args7['username']);
             });
           } else if (settings.name == PreferencePage.route) {
             return MaterialPageRoute(builder: (context) {

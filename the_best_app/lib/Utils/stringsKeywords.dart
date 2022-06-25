@@ -14,9 +14,5 @@ class Strings {
   /// Callback scheme
   static const String fitbitCallbackScheme = 'thebestapp';
 
-  // Targets
-  static const int targetSteps = 10000;
-  static const int targetCals = 600;
-  static const int targetCardio = 15;
-  static const int targetSleep = 7;
+  // Ø Mail: cappongiacomo@gmail.com Ø Password: bWtHw5055
 }

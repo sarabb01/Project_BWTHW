@@ -18,7 +18,7 @@ class _RadialChartState extends State<RadialChart> {
   @override
   Widget build(BuildContext context) {
     double sum = widget.pointsData.fold(0, (prev, element) => prev + element);
-    print(sum);
+    // print(sum);
     return AnimatedCircularChart(
         key: _chartKey,
         size: const Size(250.0, 250.0),
