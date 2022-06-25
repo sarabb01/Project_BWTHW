@@ -69,41 +69,86 @@ class MyVoucherPage extends StatelessWidget {
                                 });
                       } else {
                         return Center(
-                            child: ElevatedButton(
-                                style: ButtonStyle(
-                                    shape: MaterialStateProperty.all<
-                                        RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(18.0),
-                                          side: BorderSide(
-                                              color: Colours.seaGreen)),
-                                    ),
-                                    padding: MaterialStateProperty.all(
-                                        EdgeInsets.all(5)),
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colours.seaGreen), // <-- Button color
-                                    overlayColor: MaterialStateProperty
-                                        .resolveWith<Color?>((states) {
-                                      if (states
-                                          .contains(MaterialState.pressed))
-                                        return Colors.red; // <-- Splash color
-                                    })),
-                                onPressed: () {
-                                  Navigator.pushReplacementNamed(
-                                      context, PreferencePage.route);
-                                },
-                                child: Text(
-                                  'No Vouchers Yet',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                )));
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                              ElevatedButton(
+                                  style: ButtonStyle(
+                                      shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(18.0),
+                                            side: BorderSide(
+                                                color: Colours.seaGreen)),
+                                      ),
+                                      padding: MaterialStateProperty.all(
+                                          EdgeInsets.all(5)),
+                                      backgroundColor:
+                                          MaterialStateProperty.all(Colours
+                                              .seaGreen), // <-- Button color
+                                      overlayColor: MaterialStateProperty
+                                          .resolveWith<Color?>((states) {
+                                        if (states
+                                            .contains(MaterialState.pressed))
+                                          return Colors.red; // <-- Splash color
+                                      })),
+                                  onPressed: () {
+                                    Navigator.pushReplacementNamed(
+                                        context, PreferencePage.route);
+                                  },
+                                  child: Text(
+                                    'No Vouchers Yet',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  )),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              CircularProgressIndicator(
+                                strokeWidth: 10,
+                              )
+                            ]));
                       }
                     });
               } else {
-                return CircularProgressIndicator();
+                return Center(
+                    child: Column(children: [
+                  ElevatedButton(
+                      style: ButtonStyle(
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                                side: BorderSide(color: Colours.seaGreen)),
+                          ),
+                          padding: MaterialStateProperty.all(EdgeInsets.all(5)),
+                          backgroundColor: MaterialStateProperty.all(
+                              Colours.seaGreen), // <-- Button color
+                          overlayColor:
+                              MaterialStateProperty.resolveWith<Color?>(
+                                  (states) {
+                            if (states.contains(MaterialState.pressed))
+                              return Colors.red; // <-- Splash color
+                          })),
+                      onPressed: () {},
+                      child: Text(
+                        '!! Something Gone Wrong !!',
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
+                      )),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  CircularProgressIndicator(
+                    strokeWidth: 10,
+                  )
+                ]));
               }
             });
       }),
