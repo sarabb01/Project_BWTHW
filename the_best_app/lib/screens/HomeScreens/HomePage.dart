@@ -1,7 +1,9 @@
 // APP Screens
 import 'package:the_best_app/Database/Entities/FitbitTables.dart';
+import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
+import 'package:the_best_app/functions/elaborateDataFunctions.dart';
 import 'package:the_best_app/models/pointsModel.dart';
 import 'package:the_best_app/Screens/PointsScreens/fitbitAuthPage.dart';
 import 'package:the_best_app/Screens/PointsScreens/pointsPage.dart';
@@ -85,11 +87,6 @@ class _HomepageState extends State<HomePage>
               padding:
                   EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
               child: Container(
-                //decoration: BoxDecoration(
-                //color: Theme.of(context).accentColor,
-                //),
-                //child:
-                // Center(
                 child: Text(
                   'Settings',
                   textAlign: TextAlign.center,
@@ -116,7 +113,6 @@ class _HomepageState extends State<HomePage>
               tileColor: Colors.green[100],
               onTap: () {
                 Navigator.pushNamed(context, Profilepage.route);
-                //Navigator.pushNamed(context, PreferencePage.route);
               },
             ),
           ),
@@ -134,9 +130,7 @@ class _HomepageState extends State<HomePage>
               ),
               trailing: Icon(Icons.more_vert),
               tileColor: Colors.green[100],
-              onTap: () async {
-                //await remove_Profile(widget.username, context);
-              },
+              onTap: () async {},
             ),
           ),
           Padding(
@@ -190,7 +184,7 @@ class _HomepageState extends State<HomePage>
                                 children: [
                                   IconButton(
                                       onPressed: () async {
-                                        print(widget.username);
+                                        print('Username: ${widget.username}');
                                         List<myFitbitData> allData =
                                             await Provider.of<
                                                         UsersDatabaseRepo>(
@@ -198,7 +192,7 @@ class _HomepageState extends State<HomePage>
                                                     listen: false)
                                                 .findAllFitbitDataUser(
                                                     widget.username);
-                                        print(allData.length);
+                                        print('Data: ${allData.length}');
                                         await Provider.of<UsersDatabaseRepo>(
                                                 context,
                                                 listen: false)
@@ -207,7 +201,11 @@ class _HomepageState extends State<HomePage>
                                             .getInstance();
                                         sp.setDouble('Points', 0.0);
                                         sp.setDouble('SpentPoints', 0.0);
-                                        Navigator.pop(context);
+                                        Navigator.pushReplacementNamed(
+                                            context, HomePage.route,
+                                            arguments: {
+                                              'username': widget.username
+                                            });
                                       }, // TO BE IMPLEMENTED
                                       icon: Icon(
                                         Icons.check_circle,
@@ -277,15 +275,29 @@ class _HomepageState extends State<HomePage>
                           //builder: (context, score, child) {
                           if (snapshot.hasData) {
                             final data = snapshot.data as List<Object>;
-                            final check = data[1] as List<myFitbitData>;
                             final result = data[0] as SharedPreferences;
-                            print(widget.username);
-                            print(check.length);
+                            final check = data[1] as List<myFitbitData>;
+                            print(
+                                'wi user: ${widget.username}'); // check the username is correct
+                            print(
+                                'Data length ${check.length}'); // check is he/she has some points stored
+
+                            final double tot = check.length != 0
+                                ? computeTotalPoints(check)
+                                : 0.0; // get all the points
+                            final spent_points = check.length != 0 &&
+                                    result.getDouble('SpentPoints') != null
+                                ? result.getDouble('SpentPoints')
+                                : 0.0; // get the spent points
+                            result.setDouble(
+                                'Points',
+                                tot -
+                                    spent_points!); // set the new points variable
                             if (result.getDouble('Points') != null) {
-                              final score = check.length != 0
-                                  ? result.getDouble('Points')!.roundToDouble()
-                                  : 0.0;
-                              print(result.getDouble('SpentPoints'));
+                              final score = result
+                                  .getDouble('Points')!
+                                  .roundToDouble(); // set the variable used for the graph
+                              //print('points: ${result.getDouble('Points')}');
                               return Stack(
                                 fit: StackFit.expand,
                                 children: [
@@ -365,8 +377,23 @@ class _HomepageState extends State<HomePage>
   } //build
 
   Widget buildprogress(double score) {
-    if (score / obiettivo == 1) {
-      return const Icon(Icons.done, color: Colors.green, size: 56);
+    if (score / obiettivo >= 1) {
+      return Container(
+        width: 120,
+        height: 120,
+        child: Column(children: [
+          Text(
+            'Well done!\nTarget reached!',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 15),
+          ),
+          const Icon(Icons.done, color: Colors.green, size: 56),
+          Text(
+            '${(score)}' '/' '${(obiettivo).toStringAsFixed(0)}',
+            style: TextStyle(fontSize: 15),
+          )
+        ]),
+      );
     } else {
       return Container(
           width: 120,

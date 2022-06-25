@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:fitbitter/fitbitter.dart';
 import 'package:flutter/cupertino.dart';
@@ -52,7 +54,6 @@ Future<void> fetchData(BuildContext context) async {
 
       print('Query date: $queryDate');
       print('INT: $tableKey, DETAIL: $detail');
-
       try {
         final result = await fetchSleepData(queryDate) as List<FitbitSleepData>;
 
@@ -141,6 +142,7 @@ Future<void> fetchData(BuildContext context) async {
         break;
       } catch (e) {
         print('Catched other errors');
+        break;
       }
     }
   } else {
@@ -164,7 +166,7 @@ Future<void> fetchData(BuildContext context) async {
 }
 
 ///////////////////////////
-///
+
 DateTime myDate(int date) {
   return DateTime.fromMillisecondsSinceEpoch(
       date * Duration.millisecondsPerMinute);

@@ -59,16 +59,6 @@ class PointsPage extends StatelessWidget {
                         icon: Icon(Icons.info),
                         color: Colors.green[100],
                         onPressed: () {
-                          // List<myFitbitData> allData =
-                          //     await Provider.of<UsersDatabaseRepo>(context,
-                          //             listen: false)
-                          //         .findAllFitbitData();
-                          //
-                          // final double score = computeTotalPoints(allData);
-                          // print('${allData.length}, ${sp.getDouble('Points')}');
-
-                          // totscore.updateScore(score);
-
                           showDialog(
                               context: context,
                               builder: (BuildContext context) {
@@ -254,8 +244,8 @@ class PointsPage extends StatelessWidget {
                             : Column(
                                 //height:250,
                                 children: [
-                                    Text(
-                                        'SUMMARY of ${fitbit.length} DAYS: ${score.toStringAsFixed(2)} POINTS'),
+                                    Text('SUMMARY of ${fitbit.length} DAYS'),
+                                    //  ${score.toStringAsFixed(2)} POINTS'),
                                     GestureDetector(
                                       onDoubleTap: () {
                                         Navigator.pushNamed(

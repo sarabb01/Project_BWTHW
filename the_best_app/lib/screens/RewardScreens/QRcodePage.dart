@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:random_string/random_string.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Utils/checkBoxWidget.dart';
 import 'package:the_best_app/models/expList.dart';
 import 'package:the_best_app/models/pointsModel.dart';
@@ -114,7 +115,12 @@ class QRcodePage extends StatelessWidget {
                                               sp.getDouble('Points');
                                           sp.setDouble('Points',
                                               tot_points! - spent_points);
-                                          Navigator.pop(context);
+                                          Navigator.pushReplacementNamed(
+                                              context, HomePage.route,
+                                              arguments: {
+                                                'username':
+                                                    sp.getString('username')!
+                                              });
                                         }, // TO BE IMPLEMENTED
                                         icon: Icon(
                                           Icons.check_circle,
