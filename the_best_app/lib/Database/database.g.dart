@@ -88,7 +88,7 @@ class _$AppDatabase extends AppDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `UsersCredentials` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `username` TEXT NOT NULL, `password` TEXT NOT NULL)');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `User Informations` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `userid` INTEGER NOT NULL, `name` TEXT NOT NULL, `surname` TEXT NOT NULL, `gender` TEXT NOT NULL, `dateofbirth` INTEGER NOT NULL, `usertarget` TEXT NOT NULL, FOREIGN KEY (`userid`) REFERENCES `UsersCredentials` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE)');
+            'CREATE TABLE IF NOT EXISTS `UserInfos` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `userid` INTEGER NOT NULL, `name` TEXT NOT NULL, `surname` TEXT NOT NULL, `gender` TEXT NOT NULL, `dateofbirth` INTEGER NOT NULL, `usertarget` TEXT NOT NULL, FOREIGN KEY (`userid`) REFERENCES `UsersCredentials` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `myFitbitData` (`keyDate` INTEGER NOT NULL, `sleepHours` INTEGER NOT NULL, `calories` INTEGER NOT NULL, `steps` INTEGER NOT NULL, `cardio` INTEGER NOT NULL, `detailDate` INTEGER NOT NULL, `username` TEXT NOT NULL, PRIMARY KEY (`keyDate`))');
 
@@ -305,7 +305,7 @@ class _$UserInfosDao extends UserInfosDao {
       : _queryAdapter = QueryAdapter(database),
         _userInfosInsertionAdapter = InsertionAdapter(
             database,
-            'User Informations',
+            'UserInfos',
             (UserInfos item) => <String, Object?>{
                   'id': item.id,
                   'userid': item.userId,
@@ -317,7 +317,7 @@ class _$UserInfosDao extends UserInfosDao {
                 }),
         _userInfosUpdateAdapter = UpdateAdapter(
             database,
-            'User Informations',
+            'UserInfos',
             ['id'],
             (UserInfos item) => <String, Object?>{
                   'id': item.id,
@@ -330,7 +330,7 @@ class _$UserInfosDao extends UserInfosDao {
                 }),
         _userInfosDeletionAdapter = DeletionAdapter(
             database,
-            'User Informations',
+            'UserInfos',
             ['id'],
             (UserInfos item) => <String, Object?>{
                   'id': item.id,
@@ -383,7 +383,7 @@ class _$UserInfosDao extends UserInfosDao {
 
   @override
   Future<void> addUserInfos(UserInfos user) async {
-    await _userInfosInsertionAdapter.insert(user, OnConflictStrategy.rollback);
+    await _userInfosInsertionAdapter.insert(user, OnConflictStrategy.abort);
   }
 
   @override
