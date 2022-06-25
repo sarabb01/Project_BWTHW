@@ -11,6 +11,7 @@ import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/Utils/stringsKeywords.dart';
 import 'package:the_best_app/functions/dateFormatter.dart';
 import 'package:the_best_app/functions/elaborateDataFunctions.dart';
+import 'package:the_best_app/functions/findTarget.dart';
 import 'package:the_best_app/models/fitbitDataTypes.dart';
 
 Future<void> fetchData(BuildContext context) async {
@@ -159,13 +160,16 @@ Future<void> fetchData(BuildContext context) async {
   List<myFitbitData> allDatanew =
       await Provider.of<UsersDatabaseRepo>(context, listen: false)
           .findAllFitbitDataUser(user);
-  final logged_user =
-      await Provider.of<UsersDatabaseRepo>(context, listen: false)
-          .findUser(user);
-  final logged_user_info =
-      await Provider.of<UsersDatabaseRepo>(context, listen: false)
-          .checkUserInfos(logged_user!.id!);
-  final level = logged_user_info!.usertarget;
+  final level = await findTarget(context, user).then((String target) {
+    return target;
+  });
+  // final logged_user =
+  //     await Provider.of<UsersDatabaseRepo>(context, listen: false)
+  //         .findUser(user);
+  // final logged_user_info =
+  //     await Provider.of<UsersDatabaseRepo>(context, listen: false)
+  //         .checkUserInfos(logged_user!.id!);
+  // final level = logged_user_info!.usertarget;
   print('Level: $level');
   final double score = computeTotalPoints(allDatanew, level);
   final spent_points = sp.getDouble('SpentPoints') ?? 0.0;
