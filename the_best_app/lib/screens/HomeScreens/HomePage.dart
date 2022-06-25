@@ -4,6 +4,7 @@ import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
 import 'package:the_best_app/functions/elaborateDataFunctions.dart';
+import 'package:the_best_app/functions/findTarget.dart';
 import 'package:the_best_app/models/pointsModel.dart';
 import 'package:the_best_app/Screens/PointsScreens/fitbitAuthPage.dart';
 import 'package:the_best_app/Screens/PointsScreens/pointsPage.dart';
@@ -153,7 +154,30 @@ class _HomepageState extends State<HomePage>
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(left: 10, right: 10, top: 400, bottom: 10),
+            padding: EdgeInsets.only(
+                left: 10,
+                right: 10,
+                top: MediaQuery.of(context).size.height - 90 * 5,
+                bottom: 10),
+            child: ListTile(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                title: Text(
+                  "Log-Out",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.start,
+                ),
+                tileColor: Colors.green[100],
+                trailing: Icon(Icons.logout),
+                onTap: () async {
+                  final sp = await SharedPreferences.getInstance();
+                  sp.remove('username');
+                  Navigator.pushReplacementNamed(context, LoginPage.route);
+                }),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
             child: ListTile(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -269,7 +293,8 @@ class _HomepageState extends State<HomePage>
                         future: Future.wait([
                           SharedPreferences.getInstance(),
                           Provider.of<UsersDatabaseRepo>(context, listen: false)
-                              .findAllFitbitDataUser(widget.username)
+                              .findAllFitbitDataUser(widget.username),
+                          findTarget(context, widget.username)
                         ]),
                         builder: (context, snapshot) {
                           //builder: (context, score, child) {
@@ -277,13 +302,15 @@ class _HomepageState extends State<HomePage>
                             final data = snapshot.data as List<Object>;
                             final result = data[0] as SharedPreferences;
                             final check = data[1] as List<myFitbitData>;
+                            final target = data[2] as String;
                             print(
                                 'wi user: ${widget.username}'); // check the username is correct
+                            print('Data length ${check.length}');
                             print(
-                                'Data length ${check.length}'); // check is he/she has some points stored
+                                target); // check is he/she has some points stored
 
                             final double tot = check.length != 0
-                                ? computeTotalPoints(check, 'Basic')
+                                ? computeTotalPoints(check, target)
                                 : 0.0; // get all the points
                             final spent_points = check.length != 0 &&
                                     result.getDouble('SpentPoints') != null
