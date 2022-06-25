@@ -319,7 +319,8 @@ class _log_in_settings extends State<LoginPage> {
                           _username.text, _password.text)) {
                         Navigator.pushReplacementNamed(context, HomePage.route,
                             arguments: {'username': _username.text});
-                        setInputData(); // To Clear the content of TextEditingController()
+                        setInputData();
+                        // To Clear the content of TextEditingController()
                       } else {
                         showDialog<void>(
                             context: context,

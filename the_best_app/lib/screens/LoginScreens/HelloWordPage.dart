@@ -1,5 +1,6 @@
 // APP SCREENS
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
+import 'package:the_best_app/screens/infopage.dart';
 import 'LoginPage.dart';
 import 'RegistrationPage.dart';
 // DATABASE
@@ -65,6 +66,19 @@ class _HelloWordPageState extends State<HelloWordPage> {
                   height: 200,
                 ),
               ),
+            ),
+            Padding(
+              padding:
+                  EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 10),
+              child: Column(children: [
+                Text(
+                    'Before getting started you must know something more about this app, so click the button below'),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, Infopage.route);
+                    },
+                    child: Icon(Icons.info))
+              ]),
             ),
             Padding(
               padding:

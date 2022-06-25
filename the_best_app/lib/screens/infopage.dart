@@ -29,7 +29,7 @@ class Infopage extends StatelessWidget {
               height: 50,
             ),
             Text(
-                'In order to calculate your daily points we need to have access to your Fitbit account.\nPlease, LOG IN in Fitbit')
+                'We have also thought about three different target, which allow you to obtain points and when you register in the app you can choose bettween them; they are :  1) Basic : 7 hours of sleep, 600 calories burned, 10 minutes of cardio, 10000 steps; 2) Medium : 7 hours of sleep, 800 calories burned, 15 minutes of cardio, 12000 steps; 3) Advanced : 7 hours of sleep, 100 calories burned, 20 minutes of cardio, 15000 steps.')
           ]),
         ),
         // SizedBox(

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:the_best_app/Database/Entities/UserCreds.dart';
+import 'package:the_best_app/Database/Entities/UserInfos.dart';
+import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/screens/RewardScreens/selectPrefPage.dart';
 import 'package:the_best_app/screens/profiledatapage.dart';
 
@@ -50,7 +54,37 @@ class Profilepage extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: Text('Sex'),
+              title: Text('Date of Birth'),
+              subtitle: TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: '',
+                ),
+              ),
+            ),
+            //ListTile(
+            //title: Text('Height'),
+            //subtitle: TextField(
+            //obscureText: true,
+            //decoration: InputDecoration(
+            //border: OutlineInputBorder(),
+            //labelText: '',
+            //),
+            //),
+            //),
+            //ListTile(
+            //title: Text('Weight'),
+            //subtitle: TextField(
+            //obscureText: true,
+            //decoration: InputDecoration(
+            //border: OutlineInputBorder(),
+            //labelText: '',
+            //),
+            //),
+            //),
+            ListTile(
+              title: Text('Gender'),
               subtitle: TextField(
                 obscureText: true,
                 decoration: InputDecoration(
@@ -60,27 +94,7 @@ class Profilepage extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: Text('Height'),
-              subtitle: TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: '',
-                ),
-              ),
-            ),
-            ListTile(
-              title: Text('Weight'),
-              subtitle: TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: '',
-                ),
-              ),
-            ),
-            ListTile(
-              title: Text('Diseases'),
+              title: Text('usertarget'),
               subtitle: TextField(
                 obscureText: true,
                 decoration: InputDecoration(
