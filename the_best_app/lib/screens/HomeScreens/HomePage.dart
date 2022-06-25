@@ -367,7 +367,22 @@ class _HomepageState extends State<HomePage>
                               );
                             }
                           } else {
-                            return CircularProgressIndicator();
+                            final score = 0.0;
+                            return Stack(
+                              fit: StackFit.expand,
+                              children: [
+                                CircularProgressIndicator(
+                                  value: score / obiettivo,
+                                  backgroundColor: Colors.grey[400],
+                                  color: Colours.mediumSeaGreen,
+                                  strokeWidth: 25,
+                                ),
+                                Center(
+                                  child: buildprogress(score),
+                                ),
+                              ],
+                            );
+                            // return CircularProgressIndicator();
                           }
                         },
                       )),
