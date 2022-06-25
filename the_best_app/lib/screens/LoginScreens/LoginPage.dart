@@ -128,236 +128,244 @@ class _log_in_settings extends State<LoginPage> {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
-      body: Center(
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Container(
-            width: 200,
-            height: 150,
-            child: SvgPicture.asset('assets/Images/register.svg')),
-        Container(
-            height: 300,
-            child: Padding(
-              padding:
-                  EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 10),
-              child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  elevation: 20,
-                  color: Colours.darkSeagreen,
-                  shadowColor: Colors.black,
-                  margin: EdgeInsets.all(10),
-                  child: Container(
-                    padding: EdgeInsets.all(10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // Username TextBox
-                        Padding(
-                          padding: EdgeInsets.all(10),
-                          child: TextField(
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                            autocorrect: false,
-                            controller: _username,
-                            decoration: InputDecoration(
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.black, width: 1.0),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.black, width: 1.0),
-                                ),
-                                iconColor: Colors.black,
-                                labelText: 'Username',
-                                labelStyle: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15),
-                                prefixIcon: Icon(
-                                  Icons.account_circle,
+      body: SingleChildScrollView(
+        child: Center(
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Container(
+              width: 200,
+              height: 150,
+              child: SvgPicture.asset('assets/Images/register.svg')),
+          Container(
+              height: 300,
+              child: Padding(
+                padding:
+                    EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 10),
+                child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    elevation: 20,
+                    color: Colours.darkSeagreen,
+                    shadowColor: Colors.black,
+                    margin: EdgeInsets.all(10),
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // Username TextBox
+                          Padding(
+                            padding: EdgeInsets.all(10),
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
                                   color: Colors.black,
-                                ),
-                                hintText: 'Enter a Valid Mail Adress',
-                                hintStyle: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15),
-                                filled: true,
-                                fillColor: Colors.white,
-                                errorText:
-                                    user_submitted ? user_errorText : null,
-                                errorStyle: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 15)),
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        // Password TextBox
-                        Padding(
-                          padding: EdgeInsets.all(10),
-                          child: TextField(
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.black),
-                            autocorrect: false,
-                            controller: _password,
-                            obscureText: obscure_text,
-                            decoration: new InputDecoration(
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.black, width: 1.0),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.black, width: 1.0),
-                                ),
-                                iconColor: Colors.black,
-                                labelText: 'Password',
-                                labelStyle: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15),
-                                prefixIcon: Icon(
-                                  Icons.lock,
-                                  color: Colors.black,
-                                ),
-                                suffixIcon: IconButton(
-                                  icon: Icon(
-                                    MdiIcons.eye,
+                                  fontWeight: FontWeight.bold),
+                              autocorrect: false,
+                              controller: _username,
+                              decoration: InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.black, width: 1.0),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.black, width: 1.0),
+                                  ),
+                                  iconColor: Colors.black,
+                                  labelText: 'Username',
+                                  labelStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15),
+                                  prefixIcon: Icon(
+                                    Icons.account_circle,
                                     color: Colors.black,
                                   ),
-                                  onPressed: () {
-                                    set_ObscureText();
-                                  },
-                                ),
-                                hintText: 'Enter Your Password',
-                                hintStyle: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15),
-                                filled: true,
-                                fillColor: Colors.white,
-                                errorText:
-                                    password_submitted ? pass_errorText : null,
-                                errorStyle: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 15)),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )),
-            )),
-        SizedBox(
-          height: 5,
-        ),
-        Center(
-            child: Padding(
-          // LOG-IN
-          padding: EdgeInsets.only(left: 20, top: 5, right: 20, bottom: 10),
-          child: ElevatedButton(
-            style: ButtonStyle(
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
-                      side: BorderSide(color: Colours.seaGreen)),
-                ),
-                padding: MaterialStateProperty.all(EdgeInsets.all(5)),
-                backgroundColor: MaterialStateProperty.all(
-                    Colours.seaGreen), // <-- Button color
-                overlayColor:
-                    MaterialStateProperty.resolveWith<Color?>((states) {
-                  if (states.contains(MaterialState.pressed))
-                    return Colors.red; // <-- Splash color
-                })),
-            child: Padding(
-              padding: EdgeInsets.only(left: 20, top: 1, right: 20, bottom: 1),
-              child: Column(
-                children: [
-                  Icon(
-                    Icons.login,
-                    color: Colors.black,
-                  ),
-                  Text(
-                    'Log-In',
-                    style: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.bold),
-                  )
-                ],
-              ),
-            ),
-            onPressed: () async {
-              if (_username.text.isEmpty || _password.text.isEmpty) {
-                _username.text.isEmpty ? user_submit() : null;
-                _password.text.isEmpty ? pass_submit() : null;
-              } else if (await _User_LogIn(_username.text, _password.text)) {
-                Navigator.pushReplacementNamed(
-                  context,
-                  HomePage.route,
-                );
-                setInputData(); // To Clear the content of TextEditingController()
-              } else {
-                showDialog<void>(
-                    context: context,
-                    builder: (BuildContext context) {
-                      Future.delayed(Duration(seconds: 5), () {
-                        Navigator.of(context).pop(true);
-                      });
-                      return AlertDialog(
-                          actionsAlignment: MainAxisAlignment.center,
-                          title: Text(
-                            'Wrong Access',
-                            textAlign: TextAlign.center,
-                          ),
-                          content: Text("Wrong Credentials",
-                              textAlign: TextAlign.center),
-                          actions: <Widget>[
-                            IconButton(
-                              icon: Icon(Icons.error),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
+                                  hintText: 'Enter a Valid Mail Adress',
+                                  hintStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15),
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  errorText:
+                                      user_submitted ? user_errorText : null,
+                                  errorStyle: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15)),
                             ),
-                          ]);
-                    });
-              }
-            },
+                          ),
+                          SizedBox(height: 5),
+                          // Password TextBox
+                          Padding(
+                            padding: EdgeInsets.all(10),
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.black),
+                              autocorrect: false,
+                              controller: _password,
+                              obscureText: obscure_text,
+                              decoration: new InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.black, width: 1.0),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.black, width: 1.0),
+                                  ),
+                                  iconColor: Colors.black,
+                                  labelText: 'Password',
+                                  labelStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15),
+                                  prefixIcon: Icon(
+                                    Icons.lock,
+                                    color: Colors.black,
+                                  ),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      MdiIcons.eye,
+                                      color: Colors.black,
+                                    ),
+                                    onPressed: () {
+                                      set_ObscureText();
+                                    },
+                                  ),
+                                  hintText: 'Enter Your Password',
+                                  hintStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15),
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  errorText: password_submitted
+                                      ? pass_errorText
+                                      : null,
+                                  errorStyle: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15)),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )),
+              )),
+          SizedBox(
+            height: 5,
           ),
-        )),
-        Padding(
-            // FORGOT PASSWORD
-            padding: EdgeInsets.only(right: 5.0, bottom: 5, left: 5.0, top: 5),
+          Center(
+              child: Padding(
+            // LOG-IN
+            padding: EdgeInsets.only(left: 20, top: 5, right: 20, bottom: 10),
             child: ElevatedButton(
-                style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                          side: BorderSide(color: Colours.seaGreen)),
-                    ),
-                    padding: MaterialStateProperty.all(EdgeInsets.all(5)),
-                    backgroundColor: MaterialStateProperty.all(
-                        Colours.seaGreen), // <-- Button color
-                    overlayColor:
-                        MaterialStateProperty.resolveWith<Color?>((states) {
-                      if (states.contains(MaterialState.pressed))
-                        return Colors.red; // <-- Splash color
-                    })),
-                onPressed: (() {
-                  Navigator.pushReplacementNamed(
-                      context, ForgotPasswordPage.route);
-                  ;
-                }),
-                child: Padding(
-                  padding:
-                      EdgeInsets.only(left: 20, top: 5, right: 20, bottom: 5),
-                  child: Text(
-                    'Forgot Password ',
-                    style: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.bold),
+              style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: BorderSide(color: Colours.seaGreen)),
                   ),
-                )))
-      ])),
+                  padding: MaterialStateProperty.all(EdgeInsets.all(5)),
+                  backgroundColor: MaterialStateProperty.all(
+                      Colours.seaGreen), // <-- Button color
+                  overlayColor:
+                      MaterialStateProperty.resolveWith<Color?>((states) {
+                    if (states.contains(MaterialState.pressed))
+                      return Colors.red; // <-- Splash color
+                  })),
+              child: Padding(
+                padding:
+                    EdgeInsets.only(left: 20, top: 1, right: 20, bottom: 1),
+                child: Column(
+                  children: [
+                    Icon(
+                      Icons.login,
+                      color: Colors.black,
+                    ),
+                    Text(
+                      'Log-In',
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
+              ),
+              onPressed: () async {
+                if (_username.text.isEmpty || _password.text.isEmpty) {
+                  _username.text.isEmpty ? user_submit() : null;
+                  _password.text.isEmpty ? pass_submit() : null;
+                } else if (await _User_LogIn(_username.text, _password.text)) {
+                  Navigator.pushReplacementNamed(
+                    context,
+                    HomePage.route,
+                  );
+                  setInputData(); // To Clear the content of TextEditingController()
+                } else {
+                  showDialog<void>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        Future.delayed(Duration(seconds: 5), () {
+                          Navigator.of(context).pop(true);
+                        });
+                        return AlertDialog(
+                            actionsAlignment: MainAxisAlignment.center,
+                            title: Text(
+                              'Wrong Access',
+                              textAlign: TextAlign.center,
+                            ),
+                            content: Text("Wrong Credentials",
+                                textAlign: TextAlign.center),
+                            actions: <Widget>[
+                              IconButton(
+                                icon: Icon(Icons.error),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ]);
+                      });
+                }
+              },
+            ),
+          )),
+          Padding(
+              // FORGOT PASSWORD
+              padding:
+                  EdgeInsets.only(right: 5.0, bottom: 5, left: 5.0, top: 5),
+              child: ElevatedButton(
+                  style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(color: Colours.seaGreen)),
+                      ),
+                      padding: MaterialStateProperty.all(EdgeInsets.all(5)),
+                      backgroundColor: MaterialStateProperty.all(
+                          Colours.seaGreen), // <-- Button color
+                      overlayColor:
+                          MaterialStateProperty.resolveWith<Color?>((states) {
+                        if (states.contains(MaterialState.pressed))
+                          return Colors.red; // <-- Splash color
+                      })),
+                  onPressed: (() {
+                    Navigator.pushReplacementNamed(
+                        context, ForgotPasswordPage.route);
+                    ;
+                  }),
+                  child: Padding(
+                    padding:
+                        EdgeInsets.only(left: 20, top: 5, right: 20, bottom: 5),
+                    child: Text(
+                      'Forgot Password ',
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
+                  )))
+        ])),
+      ),
     );
   }
 

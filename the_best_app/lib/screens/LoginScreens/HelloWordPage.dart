@@ -51,53 +51,55 @@ class _HelloWordPageState extends State<HelloWordPage> {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
-        body: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding:
-                  EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 10),
-              child: Center(
-                child: Image.asset(
-                  'assets/Images/logoblack.png',
-                  width: screenSize.width / 1.2,
-                  height: 200,
-                  fit: BoxFit.contain,
+        body: SingleChildScrollView(
+          child: Center(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding:
+                    EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 10),
+                child: Center(
+                  child: Image.asset(
+                    'assets/Images/logoblack.png',
+                    width: screenSize.width / 1.2,
+                    height: 200,
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding:
-                  EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 10),
-              child: Column(children: [
-                Text(
-                    'Before getting started you must know something more about this app, so click the button below'),
-                ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, Infopage.route);
-                    },
-                    child: Icon(Icons.info))
-              ]),
-            ),
-            Padding(
-              padding:
-                  EdgeInsets.only(left: 16, top: 10, right: 16, bottom: 10),
-              child: Text(
-                'Welcome!',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.bold),
+              Padding(
+                padding:
+                    EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 10),
+                child: Column(children: [
+                  Text(
+                      'Before getting started you must know something more about this app, so click the button below'),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, Infopage.route);
+                      },
+                      child: Icon(Icons.info))
+                ]),
               ),
-            ),
-            WelcomePage_Form(screenSize, 'Log In', context, LoginPage.route),
-            WelcomePage_Form(
-                screenSize, 'Sign In', context, RegistrationPage.route)
-          ],
-        )),
+              Padding(
+                padding:
+                    EdgeInsets.only(left: 16, top: 10, right: 16, bottom: 10),
+                child: Text(
+                  'Welcome!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              WelcomePage_Form(screenSize, 'Log In', context, LoginPage.route),
+              WelcomePage_Form(
+                  screenSize, 'Sign In', context, RegistrationPage.route)
+            ],
+          )),
+        ),
         drawer: Drawer(
             elevation: 5,
             child: Center(
