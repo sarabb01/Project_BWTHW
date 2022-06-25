@@ -10,6 +10,7 @@ import 'package:the_best_app/Utils/radial_chart.dart';
 import 'package:the_best_app/functions/createchartdata.dart';
 import 'package:the_best_app/functions/dateFormatter.dart';
 import 'package:the_best_app/functions/elaborateDataFunctions.dart';
+import 'package:the_best_app/models/targetTypes.dart';
 
 class SummaryPage extends StatelessWidget {
   //ShoppingPage({Key? key}) : super(key: key);
@@ -58,14 +59,16 @@ class SummaryPage extends StatelessWidget {
                                   Text myText2 = Text(
                                       'Steps: ${fitbit2[index].steps}, Calories: ${fitbit2[index].calories}, Cardio: ${fitbit2[index].cardio},  Sleep: ${fitbit2[index].sleepHours}');
                                   final List<CircularStackEntry> chartData =
-                                      createChartData(fitbit2[index]);
+                                      createChartData(fitbit2[index], 'Medium');
                                   final todayPoints =
-                                      elaboratePoints(fitbit2[index]);
+                                      elaboratePoints(fitbit2[index], 'Medium');
+                                  final List values =
+                                      Target().targets['Medium']!;
                                   //print(todayPoints);
-                                  if (fitbit2[index].steps > 10000 &&
-                                      fitbit2[index].calories > 600 &&
-                                      fitbit2[index].cardio > 15 &&
-                                      fitbit2[index].sleepHours > 7) {
+                                  if (fitbit2[index].steps > values[0] &&
+                                      fitbit2[index].calories > values[1] &&
+                                      fitbit2[index].cardio > values[2] &&
+                                      fitbit2[index].sleepHours > values[3]) {
                                     return Card(
                                       child: ListTile(
                                         isThreeLine: true,

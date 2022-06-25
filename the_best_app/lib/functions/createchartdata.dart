@@ -3,43 +3,52 @@ import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'package:the_best_app/functions/elaborateDataFunctions.dart';
+import 'package:the_best_app/models/targetTypes.dart';
 
-List<CircularStackEntry> createChartData(myFitbitData today) {
+List<CircularStackEntry> createChartData(myFitbitData today, String target) {
+  final List values = Target().targets[target]!;
+  // STEPS, CLAS, CARDIO, SLEEP
   return [
     CircularStackEntry([
-      CircularSegmentEntry(today.sleepHours * 100 / 7, Colors.redAccent,
+      CircularSegmentEntry(today.sleepHours * 100 / values[3], Colors.redAccent,
           rankKey: 'Sleep'),
-      CircularSegmentEntry(100 - today.sleepHours * 100 / 7, Colors.red[100],
+      CircularSegmentEntry(
+          100 - today.sleepHours * 100 / values[3], Colors.red[100],
           rankKey: 'Sleep')
     ]),
     CircularStackEntry([
-      CircularSegmentEntry(today.cardio * 100 / 15, Colors.greenAccent[400],
+      CircularSegmentEntry(
+          today.cardio * 100 / values[2], Colors.greenAccent[400],
           rankKey: 'Cardio'),
-      CircularSegmentEntry(100 - today.cardio * 100 / 15, Colors.green[100],
+      CircularSegmentEntry(
+          100 - today.cardio * 100 / values[2], Colors.green[100],
           rankKey: 'Cardio')
     ]),
     CircularStackEntry([
-      CircularSegmentEntry(today.calories * 100 / 600, Colors.yellowAccent[400],
+      CircularSegmentEntry(
+          today.calories * 100 / values[1], Colors.yellowAccent[400],
           rankKey: 'Calories'),
-      CircularSegmentEntry(100 - today.calories * 100 / 600, Colors.yellow[100],
+      CircularSegmentEntry(
+          100 - today.calories * 100 / values[1], Colors.yellow[100],
           rankKey: 'Calories')
     ]),
     CircularStackEntry([
-      CircularSegmentEntry(today.steps * 100 / 10000, Colors.blue[600],
+      CircularSegmentEntry(today.steps * 100 / values[0], Colors.blue[600],
           rankKey: 'Steps'),
-      CircularSegmentEntry(100 - today.steps * 100 / 10000, Colors.blue[100],
+      CircularSegmentEntry(
+          100 - today.steps * 100 / values[0], Colors.blue[100],
           rankKey: 'Steps')
     ]), //rankKey: 'Daily objectives')
   ];
 }
 
 List<charts.Series<DailyScore, String>> createBarData(
-    List<myFitbitData> input) {
+    List<myFitbitData> input, String target) {
   final List<List<DailyScore>> scores = [];
   final List<charts.Series<DailyScore, String>> total = [];
 
   for (int i = 0; i < input.length; i++) {
-    List<double> today_score = elaboratePoints(input[i]);
+    List<double> today_score = elaboratePoints(input[i], target);
     scores.add([
       DailyScore('Steps', today_score[0]),
       DailyScore('Calories', today_score[1]),

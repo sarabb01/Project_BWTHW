@@ -283,7 +283,7 @@ class _HomepageState extends State<HomePage>
                                 'Data length ${check.length}'); // check is he/she has some points stored
 
                             final double tot = check.length != 0
-                                ? computeTotalPoints(check)
+                                ? computeTotalPoints(check, 'Basic')
                                 : 0.0; // get all the points
                             final spent_points = check.length != 0 &&
                                     result.getDouble('SpentPoints') != null
