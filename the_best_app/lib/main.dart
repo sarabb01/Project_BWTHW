@@ -7,26 +7,29 @@ import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/ForgotPasswordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/RegistrationPage.dart';
+import 'package:the_best_app/models/pointsModel.dart';
+import 'package:the_best_app/screens/PointsScreens/summaryPage.dart';
 import 'package:the_best_app/screens/infopage.dart';
 // Home Screens
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
-import 'package:the_best_app/screens/PointsScreens/fetchPage.dart';
-import 'package:the_best_app/screens/PointsScreens/fitbitAuthPage.dart';
-import 'package:the_best_app/screens/profiledatapage.dart';
+import 'package:the_best_app/Screens/PointsScreens/fetchPage.dart';
+import 'package:the_best_app/Screens/PointsScreens/fitbitAuthPage.dart';
+import 'package:the_best_app/Screens/profiledatapage.dart';
 
 //Profile Screens
-import 'package:the_best_app/screens/profilepage.dart';
+import 'package:the_best_app/Screens/profilepage.dart';
 
 // User Database
 import 'package:the_best_app/Database/database.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
-import 'package:the_best_app/screens/PointsScreens/pointsPage.dart';
+import 'package:the_best_app/Screens/PointsScreens/pointsPage.dart';
 // RewardScreens Screens
-import 'package:the_best_app/screens/RewardScreens/selectPrefPage.dart';
-import 'package:the_best_app/screens/RewardScreens/queryPage.dart';
-import 'package:the_best_app/screens/RewardScreens/shoppingPage.dart';
-import 'package:the_best_app/screens/RewardScreens/experiencePage.dart';
-import 'package:the_best_app/screens/RewardScreens/QRcodePage.dart';
+import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
+import 'package:the_best_app/Screens/RewardScreens/queryPage.dart';
+import 'package:the_best_app/Screens/RewardScreens/shoppingPage.dart';
+import 'package:the_best_app/Screens/RewardScreens/experiencePage.dart';
+import 'package:the_best_app/Screens/RewardScreens/QRcodePage.dart';
+import 'package:the_best_app/Screens/RewardScreens/MyVoucherPage.dart';
 
 Future<void> main() async {
   //This is a special method that use WidgetFlutterBinding to interact with the Flutter engine.
@@ -41,8 +44,15 @@ Future<void> main() async {
   final users_database_repo = UsersDatabaseRepo(database: database);
   //Here, we run the app and we provide to the whole widget tree the instance of the DatabaseRepository.
   //That instance will be then shared through the platform and will be unique.
-  runApp(ChangeNotifierProvider<UsersDatabaseRepo>(
-    create: (context) => users_database_repo,
+
+  runApp(MultiProvider(
+    providers: [
+      ListenableProvider<UsersDatabaseRepo>(
+          create: (context) => users_database_repo),
+      ListenableProvider<PointsModel>(
+        create: (context) => PointsModel(),
+      )
+    ],
     child: MyApp(),
   ));
 } //main
@@ -66,11 +76,8 @@ class MyApp extends StatelessWidget {
               return LoginPage();
             });
           } else if (settings.name == HomePage.route) {
-            final args1 = settings.arguments as Map;
             return MaterialPageRoute(builder: (context) {
-              return HomePage(
-                username: args1['username'],
-              );
+              return HomePage();
             });
           } else if (settings.name == RegistrationPage.route) {
             return MaterialPageRoute(builder: (context) {
@@ -104,6 +111,10 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute(builder: (context) {
               return PointsPage();
             });
+          } else if (settings.name == SummaryPage.route) {
+            return MaterialPageRoute(builder: (context) {
+              return SummaryPage();
+            });
           } else if (settings.name == PreferencePage.route) {
             return MaterialPageRoute(builder: (context) {
               return PreferencePage();
@@ -117,7 +128,9 @@ class MyApp extends StatelessWidget {
             final args3 = settings.arguments as Map;
             return MaterialPageRoute(builder: (context) {
               return ShoppingPage(
-                  city: args3['city'], earnedPoints: args3['points']);
+                city: args3['city'],
+                earnedPoints: args3['points'],
+              );
             });
           } else if (settings.name == ExperiencePage.route) {
             final args4 = settings.arguments as Map;
@@ -134,6 +147,10 @@ class MyApp extends StatelessWidget {
                 item: args5['n'],
                 list: args5['type'],
               );
+            });
+          } else if (settings.name == MyVoucherPage.route) {
+            return MaterialPageRoute(builder: (context) {
+              return MyVoucherPage();
             });
           } else {
             return null;

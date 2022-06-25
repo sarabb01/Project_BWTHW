@@ -50,6 +50,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     super.initState();
   }
 
+  // For Text Editing Controller Widget
   @override
   void dispose() {
     _name.dispose();
@@ -91,22 +92,25 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 key: formKey,
                 child: Padding(
                     padding: const EdgeInsets.only(
-                        top: 10, bottom: 8, left: 20, right: 20),
+                        top: 10, bottom: 10, left: 20, right: 20),
                     child: ListView(children: <Widget>[
-                      Text(
-                        'New Account',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 25.0),
-                      ),
                       Padding(
                         padding: EdgeInsets.all(10),
                         child: Container(
                           height: 100,
-                          width: 100,
-                          child: Image.asset('assets/Images/placeholder.jpg'),
+                          width: 200,
+                          child: Image.asset('assets/Images/logo5.png'),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Text(
+                          'New Account',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 25.0),
                         ),
                       ),
                       FormSeparator(label: 'Name'),
@@ -130,7 +134,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       ),
                       FormSeparator(label: 'Gender'),
                       DropdownButtonTileString(
-                        items: ['Female', 'Male', 'Genderqueer', 'None'],
+                        items: ['Female', 'Male', 'None'],
                         labelText: 'Female or Male',
                         notifyParent: selectGender,
                       ),
@@ -185,10 +189,18 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 })),
             onPressed: (() async {
               if (formKey.currentState!.validate()) {
-                user_cred_storing(_username.text, _password.text);
-                user_info_storing(_username.text, _name.text, _surname.text,
-                    _selectedGender!, _selectedDate, _selectedTarget!);
-                //setInputData();
+                await user_cred_storing(
+                  _username.text,
+                  _password.text,
+                );
+                await user_info_storing(
+                    _username.text,
+                    _name.text,
+                    _surname.text,
+                    _selectedGender!,
+                    _selectedDate,
+                    _selectedTarget!);
+                setInputData();
                 await Navigator.pushReplacementNamed(context, LoginPage.route);
               }
             }),
@@ -220,17 +232,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
     });
   }
 
-  void user_cred_storing(String username, String password) async {
-    final usersCredentials = UsersCredentials(null, username, password);
+  Future<void> user_cred_storing(String username, String password) async {
     if (await Provider.of<UsersDatabaseRepo>(context, listen: false)
             .findUser(username) ==
         null) {
+      final usersCredentials = UsersCredentials(null, username, password);
       await Provider.of<UsersDatabaseRepo>(context, listen: false)
           .addUser(usersCredentials);
     }
   }
 
-  void user_info_storing(String username, String name, String surname,
+  Future<void> user_info_storing(String username, String name, String surname,
       String gender, DateTime dateofbirth, String target) async {
     final user = await Provider.of<UsersDatabaseRepo>(context, listen: false)
         .findUser(username);
@@ -242,9 +254,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
     }
   }
 
-  Widget Back_Page(List<double> edgeInsets, BuildContext context) {
+  Widget Back_Page(List<double> edge_insets, BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(right: 5.0, bottom: 10, left: 5.0, top: 5),
+        padding: EdgeInsets.only(
+            left: edge_insets[0],
+            right: edge_insets[1],
+            bottom: edge_insets[2],
+            top: edge_insets[3]),
         child: ElevatedButton(
             style: ButtonStyle(
                 shape: MaterialStateProperty.all(CircleBorder()),
@@ -256,9 +272,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   if (states.contains(MaterialState.pressed))
                     return Colors.red; // <-- Splash color
                 })),
-            onPressed: (() async {
-              await setInputData();
-              await Navigator.pushReplacementNamed(context, LoginPage.route);
+            onPressed: (() {
+              setInputData();
+              Navigator.pushReplacementNamed(context, LoginPage.route);
             }),
             child: Icon(
               Icons.first_page,

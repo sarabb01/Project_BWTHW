@@ -99,7 +99,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         actions: [
-          Back_Page([5, 10, 5, 5], context)
+          Back_Page([5, 10, 5, 5], context, LoginPage.route)
         ],
       ),
       backgroundColor: Colours.white,
@@ -365,9 +365,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     }
   }
 
-  Widget Back_Page(List<double> edge_insets, BuildContext context) {
+  Widget Back_Page(
+      List<double> edge_insets, BuildContext context, String pageroute) {
     return Padding(
-        padding: EdgeInsets.only(right: 5.0, bottom: 10, left: 5.0, top: 5),
+        padding: EdgeInsets.only(
+            left: edge_insets[0],
+            right: edge_insets[1],
+            bottom: edge_insets[2],
+            top: edge_insets[3]),
         child: ElevatedButton(
             style: ButtonStyle(
                 shape: MaterialStateProperty.all(CircleBorder()),
@@ -380,7 +385,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     return Colors.red; // <-- Splash color
                 })),
             onPressed: (() async {
-              await Navigator.pushReplacementNamed(context, LoginPage.route);
+              await Navigator.pushReplacementNamed(context, pageroute);
             }),
             child: Icon(
               Icons.first_page,

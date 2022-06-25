@@ -21,12 +21,12 @@ class _RadialChartState extends State<RadialChart> {
     print(sum);
     return AnimatedCircularChart(
         key: _chartKey,
-        size: const Size(300.0, 300.0),
+        size: const Size(250.0, 250.0),
         initialChartData: widget.chartData,
         chartType: CircularChartType.Radial,
         edgeStyle: SegmentEdgeStyle.round,
         percentageValues: true,
-        holeRadius: 70.0,
+        holeRadius: 60.0,
         holeLabel: 'Your score: ${sum.toStringAsFixed(2)}',
         labelStyle: new TextStyle(
             color: Colours.darkGreen,
