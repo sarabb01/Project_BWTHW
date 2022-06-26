@@ -23,6 +23,8 @@ import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/Database/Entities/UserCreds.dart';
 import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 
+// SE NON FUNZIONA, COMMIT 6268fb4845e60975d2fb92c6f3126a3076201e8b
+
 class HomePage extends StatefulWidget {
   static const route = '/hellowordpage/loginpage/homepage';
   static const routename = 'Homepage';
@@ -250,6 +252,25 @@ class _HomepageState extends State<HomePage>
                                 actionsAlignment: MainAxisAlignment.center);
                           });
                     }),
+              ),
+              Padding(
+                padding:
+                    EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+                child: ListTile(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  title: Text(
+                    'Manage your authorization',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.start,
+                  ),
+                  trailing: Icon(Icons.key_rounded),
+                  tileColor: Colors.green[100],
+                  onTap: () {
+                    Navigator.pushReplacementNamed(context, AuthPage.route);
+                  },
+                ),
               ),
             ],
           ),
