@@ -51,6 +51,7 @@ class _HomepageState extends State<HomePage>
         // Return string of "useFullName"
         // or return empty string if "userFullName" is null
         username = res.getString("username")!;
+        print('1 $username');
       });
     });
   }
@@ -224,7 +225,8 @@ class _HomepageState extends State<HomePage>
                                                           context,
                                                           listen: false)
                                                       .findAllFitbitData();
-                                              print(allData.length);
+                                              print(
+                                                  'Days to delete ${allData.length}');
                                               await Provider.of<
                                                           UsersDatabaseRepo>(
                                                       context,
@@ -298,15 +300,19 @@ class _HomepageState extends State<HomePage>
                             if (snapshot.hasData) {
                               // final data = snapshot.data as List<Object>;
                               final result = snapshot.data as SharedPreferences;
-                              final username = result.getString('username');
-                              print('wi user: ${username}');
+                              final String? user = result.getString('username');
+                              print('sp user: ${user}');
 
                               return FutureBuilder(
                                   future: Future.wait([
                                     SharedPreferences.getInstance(),
                                     Provider.of<UsersDatabaseRepo>(context,
                                             listen: false)
-                                        .findAllFitbitDataUser(username!),
+                                        .findAllFitbitDataUser(username),
+                                    // Provider.of<UsersDatabaseRepo>(context,
+                                    //     listen: false)
+                                    // .findAllFitbitDataUser(result.getString('username')!)
+
                                     findTarget(context, username)
                                   ]),
                                   builder: (context, snapshot) {
@@ -322,7 +328,7 @@ class _HomepageState extends State<HomePage>
                                           as String; // check the username is correct
                                       print('Data length ${check.length}');
                                       print(
-                                          target); // check is he/she has some points stored
+                                          'Target $target'); // check is he/she has some points stored
 
                                       final double tot = check.length != 0
                                           ? computeTotalPoints(check, target)
