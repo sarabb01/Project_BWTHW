@@ -4,6 +4,7 @@ import 'package:the_best_app/Utils/stringsKeywords.dart';
 
 Future<void> checkAuthorization(BuildContext context) async {
   //final accessToken = await FitbitConnector.storage.read(key: 'fitbitAccessToken');
+  // await FitbitConnector.isTokenValid()
   if (await FitbitConnector.storage.read(key: 'fitbitAccessToken') != null) {
     print('Token ok!');
     return;
