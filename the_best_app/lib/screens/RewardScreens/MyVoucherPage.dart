@@ -38,80 +38,85 @@ class MyVoucherPage extends StatelessWidget {
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         final data = snapshot.data as List<VoucherList>;
-                        return data.length == 0
-                            ? Text('The Voucher List is currently empty')
-                            : GridView.builder(
-                                itemCount: data.length,
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount:
-                                      MediaQuery.of(context).orientation ==
-                                              Orientation.landscape
-                                          ? 3
-                                          : 2,
-                                  crossAxisSpacing: 8,
-                                  mainAxisSpacing: 8,
-                                  childAspectRatio: (2 / 1),
+                        if (data.length == 0) {
+                          return Center(
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                ElevatedButton(
+                                    style: ButtonStyle(
+                                        shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(18.0),
+                                              side: BorderSide(
+                                                  color: Colours.seaGreen)),
+                                        ),
+                                        padding: MaterialStateProperty.all(
+                                            EdgeInsets.all(5)),
+                                        backgroundColor:
+                                            MaterialStateProperty.all(Colours
+                                                .seaGreen), // <-- Button color
+                                        overlayColor: MaterialStateProperty
+                                            .resolveWith<Color?>((states) {
+                                          if (states
+                                              .contains(MaterialState.pressed))
+                                            return Colors
+                                                .red; // <-- Splash color
+                                        })),
+                                    onPressed: () {
+                                      Navigator.pushReplacementNamed(
+                                          context, PreferencePage.route);
+                                    },
+                                    child: Text(
+                                      'No Vouchers Yet',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                SizedBox(
+                                  height: 10,
                                 ),
-                                itemBuilder: (context, mealIndex) {
-                                  //Here, we are using a Card to show a Meal
-                                  return Card(
-                                    elevation: 5,
-                                    child: ListTile(
-                                      leading: Icon(MdiIcons.pasta),
-                                      trailing: Icon(MdiIcons.noteEdit),
-                                      title: Text('HI'),
-                                      subtitle: Text('Morning'),
-                                      onLongPress: () {},
-                                      onTap: () {},
-                                    ),
-                                  );
-                                });
-                      } else {
-                        return Center(
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                              ElevatedButton(
-                                  style: ButtonStyle(
-                                      shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(18.0),
-                                            side: BorderSide(
-                                                color: Colours.seaGreen)),
-                                      ),
-                                      padding: MaterialStateProperty.all(
-                                          EdgeInsets.all(5)),
-                                      backgroundColor:
-                                          MaterialStateProperty.all(Colours
-                                              .seaGreen), // <-- Button color
-                                      overlayColor: MaterialStateProperty
-                                          .resolveWith<Color?>((states) {
-                                        if (states
-                                            .contains(MaterialState.pressed))
-                                          return Colors.red; // <-- Splash color
-                                      })),
-                                  onPressed: () {
-                                    Navigator.pushReplacementNamed(
-                                        context, PreferencePage.route);
-                                  },
-                                  child: Text(
-                                    'No Vouchers Yet',
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold),
-                                  )),
-                              SizedBox(
-                                height: 10,
+                                CircularProgressIndicator(
+                                  strokeWidth: 10,
+                                )
+                              ]));
+                        } else {
+                          return GridView.builder(
+                              itemCount: data.length,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount:
+                                    MediaQuery.of(context).orientation ==
+                                            Orientation.landscape
+                                        ? 3
+                                        : 2,
+                                crossAxisSpacing: 8,
+                                mainAxisSpacing: 8,
+                                childAspectRatio: (2 / 1),
                               ),
-                              CircularProgressIndicator(
-                                strokeWidth: 10,
-                              )
-                            ]));
+                              itemBuilder: (context, mealIndex) {
+                                //Here, we are using a Card to show a Meal
+                                return Card(
+                                  elevation: 5,
+                                  child: ListTile(
+                                    leading: Icon(MdiIcons.pasta),
+                                    trailing: Icon(MdiIcons.noteEdit),
+                                    title: Text('HI'),
+                                    subtitle: Text('Morning'),
+                                    onLongPress: () {},
+                                    onTap: () {},
+                                  ),
+                                );
+                              });
+                        }
+                      } else {
+                        return CircularProgressIndicator(
+                          strokeWidth: 10,
+                        );
                       }
                     });
               } else {

@@ -6,7 +6,6 @@ class PointsModel extends ChangeNotifier {
 
   void updateScore(double input) {
     totalScore = input;
-
     notifyListeners();
   }
 
