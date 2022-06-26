@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:the_best_app/Database/Entities/VouchersList.dart';
+import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
 import 'package:the_best_app/Utils/back_page_button.dart';
 import 'package:the_best_app/Utils/points_displayer.dart';
@@ -54,7 +58,21 @@ class ShoppingPage extends StatelessWidget {
                                       'Required points : ${shoplist.Catalog[key]![0]}'),
                                   trailing: IconButton(
                                     icon: Icon(MdiIcons.arrowRight),
-                                    onPressed: () {
+                                    onPressed: () async {
+                                      final sp =
+                                          await SharedPreferences.getInstance();
+                                      int userid = sp.getInt('userid')!;
+                                      final voucher = VoucherList(
+                                          null,
+                                          userid,
+                                          shoplist.Catalog[key]![2],
+                                          key,
+                                          shoplist.Catalog[key]![3],
+                                          'Empty');
+                                      await Provider.of<UsersDatabaseRepo>(
+                                              context,
+                                              listen: false)
+                                          .addUserVoucher(voucher);
                                       Navigator.pushNamed(
                                           context, QRcodePage.route,
                                           arguments: {

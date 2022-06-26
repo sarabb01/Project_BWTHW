@@ -98,18 +98,208 @@ class MyVoucherPage extends StatelessWidget {
                                 mainAxisSpacing: 8,
                                 childAspectRatio: (2 / 1),
                               ),
-                              itemBuilder: (context, mealIndex) {
-                                //Here, we are using a Card to show a Meal
-                                return Card(
-                                  elevation: 5,
-                                  child: ListTile(
-                                    leading: Icon(MdiIcons.pasta),
-                                    trailing: Icon(MdiIcons.noteEdit),
-                                    title: Text('HI'),
-                                    subtitle: Text('Morning'),
-                                    onLongPress: () {},
-                                    onTap: () {},
+                              itemBuilder: (context, i) {
+                                return InkWell(
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    ),
+                                    color: Colours.forestGreen,
+                                    elevation: 5,
+                                    child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          ListTile(
+                                            title: Text(
+                                              '${data[i].shop_name.toUpperCase()}',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            onLongPress: () {},
+                                            onTap: () {},
+                                          ),
+                                          Container(
+                                            width: 50,
+                                            height: 20,
+                                            child: Image.asset(
+                                                data[i].QRcode_path),
+                                          ),
+                                        ]),
                                   ),
+                                  onTap: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                              actionsAlignment:
+                                                  MainAxisAlignment.center,
+                                              title: Text(
+                                                  '${data[i].shop_name} Coupon',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.bold,
+                                                  )),
+                                              content: Text(
+                                                  "Coupon Code :  ${data[i].discount_code}",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.bold,
+                                                  )),
+                                              actions: <Widget>[
+                                                Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      ElevatedButton(
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  left: 20,
+                                                                  top: 10,
+                                                                  right: 20,
+                                                                  bottom: 10),
+                                                          child: Column(
+                                                            children: [
+                                                              Icon(
+                                                                Icons.check,
+                                                                color:
+                                                                    Colors.blue,
+                                                              ),
+                                                              Text(
+                                                                'Use',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        style: ButtonStyle(
+                                                            shape: MaterialStateProperty
+                                                                .all<
+                                                                    RoundedRectangleBorder>(
+                                                              RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              18.0),
+                                                                  side: BorderSide(
+                                                                      color: Colours
+                                                                          .seaGreen)),
+                                                            ),
+                                                            padding:
+                                                                MaterialStateProperty
+                                                                    .all(EdgeInsets
+                                                                        .all(
+                                                                            5)),
+                                                            backgroundColor:
+                                                                MaterialStateProperty
+                                                                    .all(Colours
+                                                                        .seaGreen), // <-- Button color
+                                                            overlayColor:
+                                                                MaterialStateProperty
+                                                                    .resolveWith<
+                                                                            Color?>(
+                                                                        (states) {
+                                                              if (states.contains(
+                                                                  MaterialState
+                                                                      .pressed))
+                                                                return Colors
+                                                                    .red; // <-- Splash color
+                                                            })),
+                                                        onPressed: () async {
+                                                          await voucher
+                                                              .deleteUserVoucher(
+                                                                  data[i]);
+
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                      ),
+                                                      ElevatedButton(
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  left: 20,
+                                                                  top: 10,
+                                                                  right: 20,
+                                                                  bottom: 10),
+                                                          child: Column(
+                                                            children: [
+                                                              Icon(
+                                                                Icons.check,
+                                                                color:
+                                                                    Colors.red,
+                                                              ),
+                                                              Text(
+                                                                'Back',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        style: ButtonStyle(
+                                                            shape: MaterialStateProperty
+                                                                .all<
+                                                                    RoundedRectangleBorder>(
+                                                              RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              18.0),
+                                                                  side: BorderSide(
+                                                                      color: Colours
+                                                                          .seaGreen)),
+                                                            ),
+                                                            padding:
+                                                                MaterialStateProperty
+                                                                    .all(EdgeInsets
+                                                                        .all(
+                                                                            5)),
+                                                            backgroundColor:
+                                                                MaterialStateProperty
+                                                                    .all(Colours
+                                                                        .seaGreen), // <-- Button color
+                                                            overlayColor:
+                                                                MaterialStateProperty
+                                                                    .resolveWith<
+                                                                            Color?>(
+                                                                        (states) {
+                                                              if (states.contains(
+                                                                  MaterialState
+                                                                      .pressed))
+                                                                return Colors
+                                                                    .red; // <-- Splash color
+                                                            })),
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                      ),
+                                                    ])
+                                              ]);
+                                        });
+                                  },
                                 );
                               });
                         }

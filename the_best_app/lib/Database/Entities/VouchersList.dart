@@ -19,6 +19,10 @@ class VoucherList {
   final int? id;
   @ColumnInfo(name: 'userid') //From Credentials Table
   final int userId;
-  final String disconut_code;
-  VoucherList(this.id, this.userId, this.disconut_code);
+  final String discount;
+  final String shop_name;
+  final String QRcode_path;
+  final String discount_code;
+  VoucherList(this.id, this.userId, this.discount, this.shop_name,
+      this.QRcode_path, this.discount_code);
 }
