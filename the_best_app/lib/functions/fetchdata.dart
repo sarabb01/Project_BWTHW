@@ -131,7 +131,8 @@ Future<void> fetchData(BuildContext context) async {
             ),
             backgroundColor: Colors.red));
         break;
-      } on DioError catch (e) {
+      } on Exception catch (dioError) {
+        // } on DioError catch (e) {
         print('Catched Dioerror');
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text(
