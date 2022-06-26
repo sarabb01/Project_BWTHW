@@ -12,6 +12,7 @@ import 'package:the_best_app/Screens/LoginScreens/ForgotPasswordPage.dart';
 // DATA PERSISTENCE
 import 'package:the_best_app/Database/Entities/UserCreds.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
+import 'package:the_best_app/functions/checkAuthorization.dart';
 
 class LoginPage extends StatefulWidget {
   static const route = '/hellowordpage/loginpage';
@@ -298,6 +299,7 @@ class _log_in_settings extends State<LoginPage> {
                   _username.text.isEmpty ? user_submit() : null;
                   _password.text.isEmpty ? pass_submit() : null;
                 } else if (await _User_LogIn(_username.text, _password.text)) {
+                  await checkAuthorization(context);
                   Navigator.pushReplacementNamed(
                     context,
                     HomePage.route,
