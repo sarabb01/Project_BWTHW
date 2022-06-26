@@ -227,7 +227,16 @@ class PointsPage extends StatelessWidget {
                             ]);
                       }
                     } else {
-                      return CircularProgressIndicator();
+                      // return CircularProgressIndicator();
+                      return RadialChart(chartData: [
+                        CircularStackEntry([
+                          CircularSegmentEntry(100.0, Colors.grey,
+                              rankKey: 'Empty'),
+                          CircularSegmentEntry(0.0, Colors.grey)
+                        ])
+                      ], pointsData: [
+                        0.0
+                      ]);
                     }
                   });
             }),
@@ -278,7 +287,8 @@ class PointsPage extends StatelessWidget {
                         return Text('No data');
                       }
                     } else {
-                      return CircularProgressIndicator();
+                      return Text('');
+                      //CircularProgressIndicator();
                     }
                   });
             }),
