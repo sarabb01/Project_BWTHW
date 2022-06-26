@@ -33,7 +33,7 @@ class expList {
     ],
     'Bungee Jumping': [
       _minPoints * 50,
-      'Valgadena Bungee Center',
+      'Valgardena Bungee Center',
       'Free video',
       'assets/QRcodes/bungee.png'
     ],
