@@ -43,7 +43,7 @@ class Infopage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.pushNamed(context, HelloWordPage.route);
+            Navigator.pushReplacementNamed(context, HelloWordPage.route);
           },
           child: Icon(Icons.done)),
       floatingActionButtonLocation:
