@@ -5,6 +5,8 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:provider/provider.dart';
 import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
+import 'package:the_best_app/Screens/PointsScreens/pointsPage.dart';
+import 'package:the_best_app/Utils/back_page_button.dart';
 import 'package:the_best_app/Utils/legends.dart';
 import 'package:the_best_app/Utils/radial_chart.dart';
 import 'package:the_best_app/functions/createchartdata.dart';
@@ -27,6 +29,8 @@ class SummaryPage extends StatelessWidget {
     print('${SummaryPage.routename} built');
     return Scaffold(
       appBar: AppBar(
+        leading: Back_Page_withArgs(
+            [10, 10, 5, 5], context, PointsPage.route, {'username': username}),
         title: Text(SummaryPage.routename),
       ),
       body: Container(

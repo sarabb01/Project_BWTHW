@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Utils/legends.dart';
 
 //Functions
@@ -24,7 +25,6 @@ import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/functions/fetchdata.dart';
 import 'package:the_best_app/functions/findTarget.dart';
-import 'package:the_best_app/models/pointsModel.dart';
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
 import 'package:the_best_app/Screens/PointsScreens/summaryPage.dart';
 import 'package:the_best_app/models/targetTypes.dart';
@@ -47,32 +47,31 @@ class PointsPage extends StatelessWidget {
             leading: IconButton(
                 icon: Icon(Icons.home),
                 onPressed: () {
-                  Navigator.pushNamed(context, LoginPage.route);
+                  Navigator.pushNamed(context, HomePage.route);
                 }),
             title: Text(PointsPage.routename),
             actions: [
               Row(
                 children: [
-                  Consumer<PointsModel>(builder: (context, totscore, child) {
-                    return IconButton(
-                        // Questo bottone serve per avere le informazioni!!
-                        iconSize: 40,
-                        tooltip: 'Info',
-                        icon: Icon(Icons.info),
-                        color: Colors.green[100],
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                    content: SingleChildScrollView(
-                                        child: ListBody(children: [
-                                  Text(
-                                      '-To see further information, double tap on the graph\n\n-To refresh data click on the REFRESH button top right')
-                                ])));
-                              });
-                        });
-                  }),
+                  IconButton(
+                      // Questo bottone serve per avere le informazioni!!
+                      iconSize: 40,
+                      tooltip: 'Info',
+                      icon: Icon(Icons.info),
+                      color: Colors.green[100],
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                  content: SingleChildScrollView(
+                                      child: ListBody(children: [
+                                Text(
+                                    '-To see further information, double tap on the graph\n\n-To refresh data click on the REFRESH button top right')
+                              ])));
+                            });
+                      }),
+
                   // Consumer<PointsModel>(builder: (context, totscore, child) {
                   //   return
                   IconButton(
@@ -228,7 +227,16 @@ class PointsPage extends StatelessWidget {
                             ]);
                       }
                     } else {
-                      return CircularProgressIndicator();
+                      // return CircularProgressIndicator();
+                      return RadialChart(chartData: [
+                        CircularStackEntry([
+                          CircularSegmentEntry(100.0, Colors.grey,
+                              rankKey: 'Empty'),
+                          CircularSegmentEntry(0.0, Colors.grey)
+                        ])
+                      ], pointsData: [
+                        0.0
+                      ]);
                     }
                   });
             }),
@@ -279,7 +287,8 @@ class PointsPage extends StatelessWidget {
                         return Text('No data');
                       }
                     } else {
-                      return CircularProgressIndicator();
+                      return Text('');
+                      //CircularProgressIndicator();
                     }
                   });
             }),

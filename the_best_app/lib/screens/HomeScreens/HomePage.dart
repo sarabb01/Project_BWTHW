@@ -1,17 +1,14 @@
 // APP SCREENS
 import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
+import 'package:the_best_app/Screens/infoPage2.dart';
+import 'package:the_best_app/Screens/profilepage.dart';
 import 'package:the_best_app/Screens/PointsScreens/fitbitAuthPage.dart';
 import 'package:the_best_app/Screens/PointsScreens/pointsPage.dart';
 import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
-import 'package:the_best_app/Screens/infopage.dart';
 import 'package:the_best_app/Screens/RewardScreens/MyVoucherPage.dart';
-import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 
-// MODELS
-import 'package:the_best_app/models/pointsModel.dart';
-import 'package:the_best_app/Database/Entities/FitbitTables.dart';
-
+// FUNCTIONS
 import 'package:the_best_app/functions/elaborateDataFunctions.dart';
 import 'package:the_best_app/functions/findTarget.dart';
 
@@ -19,13 +16,14 @@ import 'package:the_best_app/functions/findTarget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:colours/colours.dart';
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 // DATABASE
 import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/Database/Entities/UserCreds.dart';
-import 'package:the_best_app/Screens/profilepage.dart';
+import 'package:the_best_app/Database/Entities/FitbitTables.dart';
+
+// SE NON FUNZIONA, COMMIT 6268fb4845e60975d2fb92c6f3126a3076201e8b
 
 class HomePage extends StatefulWidget {
   static const route = '/hellowordpage/loginpage/homepage';
@@ -55,6 +53,7 @@ class _HomepageState extends State<HomePage>
         // Return string of "useFullName"
         // or return empty string if "userFullName" is null
         username = res.getString("username")!;
+        print('1 $username');
       });
     });
   }
@@ -185,7 +184,7 @@ class _HomepageState extends State<HomePage>
                     trailing: Icon(Icons.info_outline),
                     tileColor: Colors.green[100],
                     onTap: () {
-                      Navigator.pushNamed(context, Infopage.route);
+                      Navigator.pushNamed(context, InfoPage2.route);
                     },
                   )),
               Padding(
@@ -228,7 +227,8 @@ class _HomepageState extends State<HomePage>
                                                           context,
                                                           listen: false)
                                                       .findAllFitbitData();
-                                              print(allData.length);
+                                              print(
+                                                  'Days to delete ${allData.length}');
                                               await Provider.of<
                                                           UsersDatabaseRepo>(
                                                       context,
@@ -251,18 +251,30 @@ class _HomepageState extends State<HomePage>
                                 ],
                                 actionsAlignment: MainAxisAlignment.center);
                           });
-                      //await remove_Profile(widget.username, context);
                     }),
+              ),
+              Padding(
+                padding:
+                    EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+                child: ListTile(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  title: Text(
+                    'Manage your authorization',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.start,
+                  ),
+                  trailing: Icon(Icons.key_rounded),
+                  tileColor: Colors.green[100],
+                  onTap: () {
+                    Navigator.pushReplacementNamed(context, AuthPage.route);
+                  },
+                ),
               ),
             ],
           ),
         ),
-        //BottomNavigationBar(items: const <BottomNavigationBarItem>[
-        //BottomNavigationBarItem(
-        //icon: Icons.remove_circle,
-        //label: Text('Delete my Profile')),
-        //])
-
         body: Center(
             child: Padding(
           padding: const EdgeInsets.only(top: 10, bottom: 30),
@@ -297,80 +309,97 @@ class _HomepageState extends State<HomePage>
                       width: 200,
                       height: 200,
                       child: FutureBuilder(
-                        //child: Consumer<PointsModel>(
-                        future: Future.wait([
-                          SharedPreferences.getInstance(),
-                          Provider.of<UsersDatabaseRepo>(context, listen: false)
-                              .findAllFitbitDataUser(username),
-                          findTarget(context, username)
-                        ]),
-                        builder: (context, snapshot) {
-                          //builder: (context, score, child) {
-                          if (snapshot.hasData) {
-                            final data = snapshot.data as List<Object>;
-                            final result = data[0] as SharedPreferences;
-                            final check = data[1] as List<myFitbitData>;
-                            final target = data[2] as String;
-                            print(
-                                'wi user: ${username}'); // check the username is correct
-                            print('Data length ${check.length}');
-                            print(
-                                target); // check is he/she has some points stored
+                          //child: Consumer<PointsModel>(
+                          future: SharedPreferences.getInstance(),
 
-                            final double tot = check.length != 0
-                                ? computeTotalPoints(check, target)
-                                : 0.0; // get all the points
-                            final spent_points = check.length != 0 &&
-                                    result.getDouble('SpentPoints') != null
-                                ? result.getDouble('SpentPoints')
-                                : 0.0; // get the spent points
-                            result.setDouble(
-                                'Points',
-                                tot -
-                                    spent_points!); // set the new points variable
-                            if (result.getDouble('Points') != null) {
-                              final score = result
-                                  .getDouble('Points')!
-                                  .roundToDouble(); // set the variable used for the graph
-                              //print('points: ${result.getDouble('Points')}');
-                              return Stack(
-                                fit: StackFit.expand,
-                                children: [
-                                  CircularProgressIndicator(
-                                    value: score / obiettivo,
-                                    //value: score.totalScore / obiettivo,
-                                    backgroundColor: Colors.grey[400],
-                                    color: Colours.mediumSeaGreen,
-                                    strokeWidth: 25,
-                                  ),
-                                  Center(
-                                    child: buildprogress(score),
-                                    //child: buildprogress(score.totalScore),
-                                  ),
-                                ],
-                              );
+                          // Provider.of<UsersDatabaseRepo>(context, listen: false)
+                          //     .findAllFitbitDataUser(username),
+                          // findTarget(context, username)
+
+                          builder: (context, snapshot) {
+                            //builder: (context, score, child) {
+                            if (snapshot.hasData) {
+                              // final data = snapshot.data as List<Object>;
+                              final result = snapshot.data as SharedPreferences;
+                              final String? user = result.getString('username');
+                              print('sp user: ${user}');
+
+                              return FutureBuilder(
+                                  future: Future.wait([
+                                    SharedPreferences.getInstance(),
+                                    Provider.of<UsersDatabaseRepo>(context,
+                                            listen: false)
+                                        .findAllFitbitDataUser(username),
+                                    // Provider.of<UsersDatabaseRepo>(context,
+                                    //     listen: false)
+                                    // .findAllFitbitDataUser(result.getString('username')!)
+
+                                    findTarget(context, username)
+                                  ]),
+                                  builder: (context, snapshot) {
+                                    //builder: (context, score, child) {
+                                    if (snapshot.hasData) {
+                                      final data =
+                                          snapshot.data as List<Object>;
+                                      final result =
+                                          data[0] as SharedPreferences;
+                                      final check =
+                                          data[1] as List<myFitbitData>;
+                                      final target = data[2]
+                                          as String; // check the username is correct
+                                      print('Data length ${check.length}');
+                                      print(
+                                          'Target $target'); // check is he/she has some points stored
+
+                                      final double tot = check.length != 0
+                                          ? computeTotalPoints(check, target)
+                                          : 0.0; // get all the points
+                                      final spent_points = check.length != 0 &&
+                                              result.getDouble('SpentPoints') !=
+                                                  null
+                                          ? result.getDouble('SpentPoints')
+                                          : 0.0; // get the spent points
+                                      result.setDouble(
+                                          'Points',
+                                          tot -
+                                              spent_points!); // set the new points variable
+                                      if (result.getDouble('Points') != null) {
+                                        final score = result
+                                            .getDouble('Points')!
+                                            .roundToDouble(); // set the variable used for the graph
+                                        //print('points: ${result.getDouble('Points')}');
+                                        return Stack(
+                                          fit: StackFit.expand,
+                                          children: [
+                                            CircularProgressIndicator(
+                                              value: score / obiettivo,
+                                              //value: score.totalScore / obiettivo,
+                                              backgroundColor: Colors.grey[400],
+                                              color: Colours.mediumSeaGreen,
+                                              strokeWidth: 25,
+                                            ),
+                                            Center(
+                                              child: buildprogress(score),
+                                              //child: buildprogress(score.totalScore),
+                                            ),
+                                          ],
+                                        );
+                                      } else {
+                                        final score = 0.0;
+                                        return EmptyCircle(score);
+                                      }
+                                    } else {
+                                      final score = 0.0;
+                                      return EmptyCircle(score);
+                                      // return CircularProgressIndicator();
+                                    }
+                                  });
                             } else {
                               final score = 0.0;
-                              return Stack(
-                                fit: StackFit.expand,
-                                children: [
-                                  CircularProgressIndicator(
-                                    value: score / obiettivo,
-                                    backgroundColor: Colors.grey[400],
-                                    color: Colours.mediumSeaGreen,
-                                    strokeWidth: 25,
-                                  ),
-                                  Center(
-                                    child: buildprogress(score),
-                                  ),
-                                ],
-                              );
+                              return EmptyCircle(score);
+                              // return CircularProgressIndicator();
                             }
-                          } else {
-                            return CircularProgressIndicator();
-                          }
-                        },
-                      )),
+                          })),
                 ),
                 SizedBox(height: 30),
                 ElevatedButton(
@@ -410,6 +439,23 @@ class _HomepageState extends State<HomePage>
               ]),
         )));
   } //build
+
+  Widget EmptyCircle(double score) {
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        CircularProgressIndicator(
+          value: score / obiettivo,
+          backgroundColor: Colors.grey[400],
+          color: Colours.mediumSeaGreen,
+          strokeWidth: 25,
+        ),
+        Center(
+          child: buildprogress(score),
+        ),
+      ],
+    );
+  }
 
   Widget buildprogress(double score) {
     if (score / obiettivo >= 1) {

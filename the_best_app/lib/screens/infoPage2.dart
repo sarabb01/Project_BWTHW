@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
-import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
+import 'package:the_best_app/Utils/back_page_button.dart';
 
-class Infopage extends StatelessWidget {
-  Infopage({Key? key}) : super(key: key);
+class InfoPage2 extends StatelessWidget {
+  InfoPage2({Key? key}) : super(key: key);
 
-  static const route = '/hellowordpage/registrationpage/Infopage';
-  static const routename = 'Infopage';
+  static const route =
+      '/hellowordpage/registrationpage/loginpage/homepage/infopage2';
+  static const routename = 'Infopage2';
 
   @override
   Widget build(BuildContext context) {
-    print('${Infopage.routename} built');
+    print('${InfoPage2.routename} built');
     return Scaffold(
       appBar: AppBar(
-        title: Text(Infopage.routename),
-        automaticallyImplyLeading: false,
+        title: Text('Info about MOVE(te)'),
+        leading: Back_Page([10, 10, 5, 5], context, HomePage.route),
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -29,7 +30,7 @@ class Infopage extends StatelessWidget {
                 //textAlign: TextAlign.center,
               ),
               SizedBox(
-                height: 30,
+                height: 50,
               ),
               Text(
                   'We have also thought about three different target, which allow you to obtain points and when you register in the app you can choose bettween them; they are :\n1) Basic : 7 hours of sleep, 600 calories burned, 10 minutes of cardio, 10000 steps;\n2) Medium : 7 hours of sleep, 800 calories burned, 15 minutes of cardio, 12000 steps;\n3) Advanced : 7 hours of sleep, 100 calories burned, 20 minutes of cardio, 15000 steps.')
@@ -41,13 +42,6 @@ class Infopage extends StatelessWidget {
           // ),
         ])),
       ),
-      floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushReplacementNamed(context, HelloWordPage.route);
-          },
-          child: Icon(Icons.done)),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.miniCenterFloat,
     );
   } //build
 
