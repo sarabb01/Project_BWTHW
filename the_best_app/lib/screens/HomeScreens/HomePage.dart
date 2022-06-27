@@ -350,10 +350,10 @@ class _HomepageState extends State<HomePage>
                                       final double tot = check.length != 0
                                           ? computeTotalPoints(check, target)
                                           : 0.0; // get all the points
+                                      final String s = username + 'SpentPoints';
                                       final spent_points = check.length != 0 &&
-                                              result.getDouble('SpentPoints') !=
-                                                  null
-                                          ? result.getDouble('SpentPoints')
+                                              result.getDouble(s) != null
+                                          ? result.getDouble(s)
                                           : 0.0; // get the spent points
                                       result.setDouble(
                                           'Points',

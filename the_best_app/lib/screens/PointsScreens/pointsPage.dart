@@ -157,28 +157,27 @@ class PointsPage extends StatelessWidget {
                                           content: SingleChildScrollView(
                                             child: ListBody(children: [
                                               Text(
-                                                'Steps ${(todayPoints[0] * 100).toStringAsFixed(1)}% (${today.steps} / ${values[0]})',
+                                                'Steps: ${today.steps}/${values[0]} (${(todayPoints[0]).toStringAsFixed(2)})',
                                                 style: TextStyle(
                                                     color: Colors.blue[600],
                                                     fontWeight:
                                                         FontWeight.bold),
                                               ),
                                               Text(
-                                                  'Calories ${(todayPoints[1] * 100).toStringAsFixed(1)}% (${today.calories} / ${values[1]})',
+                                                  'Calories: ${today.calories}/${values[1]}  (${(todayPoints[1]).toStringAsFixed(2)})',
                                                   style: TextStyle(
-                                                      color: Colors
-                                                          .yellowAccent[700],
+                                                      color: Colors.yellow[700],
                                                       fontWeight:
                                                           FontWeight.bold)),
                                               Text(
-                                                  'Cardio ${(todayPoints[2] * 100).toStringAsFixed(1)}% (${today.cardio} / ${values[2]})',
+                                                  'Minutes in cardio range: ${today.cardio}/${values[2]} (${(todayPoints[2]).toStringAsFixed(2)})',
                                                   style: TextStyle(
-                                                      color: Colors
-                                                          .greenAccent[400],
+                                                      color: Colors.green[500],
                                                       fontWeight:
                                                           FontWeight.bold)),
                                               Text(
-                                                  'Sleep ${(todayPoints[3] * 100).toStringAsFixed(1)}% (${today.sleepHours} / ${values[3]})',
+                                                  'Sleep:  ${today.sleepHours}/${values[3]} (${(todayPoints[3]).toStringAsFixed(2)})',
+                                                  // 'Sleep ${(todayPoints[3] * 100).toStringAsFixed(1)}% (${today.sleepHours} / ${values[3]})
                                                   style: TextStyle(
                                                       color: Colors.redAccent,
                                                       fontWeight:

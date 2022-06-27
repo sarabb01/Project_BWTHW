@@ -206,19 +206,19 @@ List<dynamic> _ismissing(myFitbitData fitbit2, List values) {
   ];
   if (fitbit2.steps < values[0]) {
     output[0] = false;
-    style[0] = TextStyle(fontWeight: FontWeight.w900);
+    style[0] = TextStyle(fontWeight: FontWeight.w900, color: Colours.darkRed);
   }
   if (fitbit2.calories < values[1]) {
     output[1] = false;
-    style[1] = TextStyle(fontWeight: FontWeight.w900);
+    style[1] = TextStyle(fontWeight: FontWeight.w900, color: Colours.darkRed);
   }
   if (fitbit2.cardio < values[2]) {
     output[2] = false;
-    style[2] = TextStyle(fontWeight: FontWeight.w900);
+    style[2] = TextStyle(fontWeight: FontWeight.w900, color: Colours.darkRed);
   }
   if (fitbit2.sleepHours < values[3]) {
     output[3] = false;
-    style[3] = TextStyle(fontWeight: FontWeight.w900);
+    style[3] = TextStyle(fontWeight: FontWeight.w900, color: Colours.darkRed);
   }
   return style;
 }
