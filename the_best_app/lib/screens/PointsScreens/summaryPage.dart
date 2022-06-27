@@ -117,7 +117,7 @@ class SummaryPage extends StatelessWidget {
                                             },
                                           ),
                                         ),
-                                        color: Colors.red[100]);
+                                        color: Colors.red[50]);
                                   }
                                 }),
                           );
