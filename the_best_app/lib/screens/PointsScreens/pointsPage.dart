@@ -44,15 +44,49 @@ class PointsPage extends StatelessWidget {
     print('${PointsPage.routename} built');
     return Scaffold(
         appBar: AppBar(
-            leading: IconButton(
-                icon: Icon(Icons.home),
-                onPressed: () {
-                  Navigator.pushNamed(context, HomePage.route);
-                }),
+            leading: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                  style: ButtonStyle(
+                      elevation: MaterialStateProperty.all(0),
+                      shape: MaterialStateProperty.all(CircleBorder()),
+                      padding: MaterialStateProperty.all(EdgeInsets.all(5)),
+                      backgroundColor: MaterialStateProperty.all(
+                          Colours.darkSeagreen), // <-- Button color
+                      overlayColor:
+                          MaterialStateProperty.resolveWith<Color?>((states) {
+                        if (states.contains(MaterialState.pressed))
+                          return Colors.white38; // <-- Splash color
+                      })),
+                  child: Icon(Icons.home),
+                  // IconButton(
+                  //     icon: Icon(Icons.home),
+                  onPressed: () {
+                    Navigator.pushNamed(context, HomePage.route);
+                  }),
+            ),
             title: Text(PointsPage.routename),
             actions: [
               Row(
                 children: [
+                  IconButton(
+                      // Questo bottone serve per fetchare!!
+                      iconSize: 40,
+                      tooltip: 'Update',
+                      color: Colors.green[100],
+                      onPressed: () async {
+                        fetchData(context);
+                        List<myFitbitData> allData =
+                            await Provider.of<UsersDatabaseRepo>(context,
+                                    listen: false)
+                                .findAllFitbitDataUser(username);
+                        final trg = await findTarget(context, username)
+                            .then((String target) {
+                          return target;
+                        });
+                        final double score = computeTotalPoints(allData, trg);
+                      },
+                      icon: Icon(Icons.update)),
                   IconButton(
                       // Questo bottone serve per avere le informazioni!!
                       iconSize: 40,
@@ -71,26 +105,6 @@ class PointsPage extends StatelessWidget {
                               ])));
                             });
                       }),
-
-                  // Consumer<PointsModel>(builder: (context, totscore, child) {
-                  //   return
-                  IconButton(
-                      // Questo bottone serve per fetchare!!
-                      onPressed: () async {
-                        fetchData(context);
-                        List<myFitbitData> allData =
-                            await Provider.of<UsersDatabaseRepo>(context,
-                                    listen: false)
-                                .findAllFitbitDataUser(username);
-                        final trg = await findTarget(context, username)
-                            .then((String target) {
-                          return target;
-                        });
-                        final double score = computeTotalPoints(allData, trg);
-                        // totscore.updateScore(score);
-                      },
-                      icon: Icon(Icons.update))
-                  // })
                 ],
               )
             ]),
