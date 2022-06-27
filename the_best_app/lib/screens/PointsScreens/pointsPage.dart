@@ -164,14 +164,14 @@ class PointsPage extends StatelessWidget {
                                                         FontWeight.bold),
                                               ),
                                               Text(
-                                                  'Calories ${todayPoints[1] * 100}% (${today.calories} / ${values[1]})',
+                                                  'Calories ${(todayPoints[1] * 100).toStringAsFixed(1)}% (${today.calories} / ${values[1]})',
                                                   style: TextStyle(
                                                       color: Colors
                                                           .yellowAccent[700],
                                                       fontWeight:
                                                           FontWeight.bold)),
                                               Text(
-                                                  'Cardio ${todayPoints[2] * 100}% (${today.cardio} / ${values[2]})',
+                                                  'Cardio ${(todayPoints[2] * 100).toStringAsFixed(1)}% (${today.cardio} / ${values[2]})',
                                                   style: TextStyle(
                                                       color: Colors
                                                           .greenAccent[400],
