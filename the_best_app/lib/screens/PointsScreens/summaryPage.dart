@@ -36,14 +36,16 @@ class SummaryPage extends StatelessWidget {
       body: Container(
           padding: EdgeInsets.all(20),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
                 'Here you can see a resume of your daily points',
+                //textAlign: TextAlign.center,
                 //style: TextStyle(fontSize: 15),
               ),
               SizedBox(height: 20),
               Legend_bar(),
+              SizedBox(height: 10),
               Expanded(
                 child:
                     Consumer<UsersDatabaseRepo>(builder: (context, dbr, child) {
