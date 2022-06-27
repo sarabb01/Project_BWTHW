@@ -1,14 +1,19 @@
+// Import packages
 import 'dart:io';
-
+import 'package:colours/colours.dart';
 import 'package:dio/dio.dart';
 import 'package:fitbitter/fitbitter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+// Database
 import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/Utils/stringsKeywords.dart';
+
+// Functions
 import 'package:the_best_app/functions/dateFormatter.dart';
 import 'package:the_best_app/functions/elaborateDataFunctions.dart';
 import 'package:the_best_app/functions/findTarget.dart';
@@ -28,9 +33,9 @@ Future<void> fetchData(BuildContext context) async {
       : DateTime.now().subtract(Duration(days: 2));
 
   //print('Last insertion $lastInsertion');
-  //DateTime startDate = DateTime.utc(2022, 5, 31);
+  //DateTime startDate = DateTime.utc(2022, 5, 27);
   DateTime startDate = lastInsertion;
-  //DateTime endDate = DateTime.utc(2022, 6, 2);
+  //DateTime endDate = DateTime.utc(2022, 6, 30);
   DateTime endDate = DateTime.now();
 
   int threshold = calculateThreshold(allData, endDate);
@@ -46,8 +51,16 @@ Future<void> fetchData(BuildContext context) async {
   if (await FitbitConnector.isTokenValid()) {
     if (threshold > 5) {
       for (int reqDay = daysToSubtract; reqDay >= 0; reqDay--) {
-        //for (int reqDay = 10; reqDay >= 8; reqDay--) {
-        //int reqDay = 1;
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+            'Update in progress.. please wait',
+            style: TextStyle(color: Colors.black, fontSize: 15),
+            textAlign: TextAlign.center,
+          ),
+          duration: Duration(seconds: 3),
+          backgroundColor: Colours.lightGreen,
+        ));
+
         DateTime queryDate = endDate.subtract(Duration(days: reqDay));
         int detail = queryDate.millisecondsSinceEpoch ~/
             60000; //MILLISECONDS IN A MINUTE --> NUMBER OF MINUTES SINCHE EPOCH
@@ -68,7 +81,7 @@ Future<void> fetchData(BuildContext context) async {
           final resultBMRCal =
               await fetchActivityTSData(queryDate, 'caloriesBMR')
                   as List<FitbitActivityTimeseriesData>;
-          print(resultBMRCal);
+          // print(resultBMRCal);
 
           final resultHR =
               await fetchHeartData(queryDate) as List<FitbitHeartData>;
@@ -86,7 +99,7 @@ Future<void> fetchData(BuildContext context) async {
 
           if (resultActivity.length > 0) {
             cals = elaborateActivityData(resultActivity);
-            print('$queryDate Metodo 1 TOt: $cals');
+            // print('$queryDate Metodo 1 TOt: $cals');
           }
           //print('Current cals $cals');
 
@@ -134,8 +147,8 @@ Future<void> fetchData(BuildContext context) async {
               ),
               backgroundColor: Colors.red));
           break;
-        } on Exception catch (dioError) {
-          // } on DioError catch (e) {
+          // } on Exception catch (dioError) {
+        } on DioError catch (e) {
           print('Catched Dioerror');
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               content: Text(
@@ -155,10 +168,10 @@ Future<void> fetchData(BuildContext context) async {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text(
             'Data alreay updated',
-            style: TextStyle(color: Colors.black, fontSize: 20),
+            style: TextStyle(color: Colors.black, fontSize: 15),
             textAlign: TextAlign.center,
           ),
-          backgroundColor: Colors.yellow));
+          backgroundColor: Colours.lightGreen));
     }
   } else {
     print('Go to authorization');
