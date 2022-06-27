@@ -65,10 +65,10 @@ List<charts.Series<DailyScore, String>> createBarData(
         // colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
         fillColorFn: (_, __) {
           if (today_score.any((item) => item < 1)) {
-            return charts.ColorUtil.fromDartColor(Color(0xFFFFCDD2));
+            return charts.ColorUtil.fromDartColor(Color(0xFFEF9A9A));
             //MaterialPalette.deepOrange.shadeDefault.lighter;
           } else {
-            return charts.MaterialPalette.green.shadeDefault.lighter;
+            return charts.ColorUtil.fromDartColor(Color(0xFFA5D6A7));
           }
           ;
         }));
