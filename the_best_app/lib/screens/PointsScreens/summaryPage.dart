@@ -32,6 +32,37 @@ class SummaryPage extends StatelessWidget {
         leading: Back_Page_withArgs(
             [10, 10, 5, 5], context, PointsPage.route, {'username': username}),
         title: Text(SummaryPage.routename),
+        actions: [
+          IconButton(
+              // Questo bottone serve per avere le informazioni!!
+              iconSize: 40,
+              tooltip: 'Info',
+              icon: Icon(Icons.question_mark_rounded),
+              color: Colors.green[100],
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                          content: SingleChildScrollView(
+                              child: ListBody(children: [
+                        FutureBuilder(
+                            future: findTarget(context, username),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                final target = snapshot.data as String;
+                                final List values = Target().targets[target]!;
+
+                                return Text(
+                                    'Your target:\n${values[0]} steps\n${values[1]} calories\n${values[2]} minutes cardio\n${values[3]} hours sleep');
+                              } else {
+                                return Text('');
+                              }
+                            }),
+                      ])));
+                    });
+              }),
+        ],
       ),
       body: Container(
           padding: EdgeInsets.all(20),
