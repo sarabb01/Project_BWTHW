@@ -1,5 +1,6 @@
 // APP Screens
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
+import 'package:the_best_app/Screens/infoPage2.dart';
 import 'package:the_best_app/screens/infopage.dart';
 import 'LoginPage.dart';
 import 'RegistrationPage.dart';
@@ -71,19 +72,6 @@ class _HelloWordPageState extends State<HelloWordPage> {
               ),
               Padding(
                 padding:
-                    EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 10),
-                child: Column(children: [
-                  Text(
-                      'Before getting started you must know something more about this app, so click the button below'),
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, Infopage.route);
-                      },
-                      child: Icon(Icons.info))
-                ]),
-              ),
-              Padding(
-                padding:
                     EdgeInsets.only(left: 16, top: 10, right: 16, bottom: 10),
                 child: Text(
                   'Welcome!',
@@ -96,7 +84,30 @@ class _HelloWordPageState extends State<HelloWordPage> {
               ),
               WelcomePage_Form(screenSize, 'Log In', context, LoginPage.route),
               WelcomePage_Form(
-                  screenSize, 'Sign In', context, RegistrationPage.route)
+                  screenSize, 'Sign In', context, RegistrationPage.route),
+              Padding(
+                padding:
+                    EdgeInsets.only(left: 40, top: 40, right: 40, bottom: 40),
+                child: Column(children: [
+                  Text(
+                    'Before getting started you should know something more about this app, so click the button below',
+                    style: TextStyle(fontSize: 20),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Colours.mediumSeaGreen),
+                      onPressed: () {
+                        Navigator.pushNamed(context, Infopage.route);
+                      },
+                      child: Icon(
+                        Icons.info,
+                      ))
+                ]),
+              ),
             ],
           )),
         ),

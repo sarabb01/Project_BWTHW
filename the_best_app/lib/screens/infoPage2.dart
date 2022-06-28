@@ -33,7 +33,9 @@ class InfoPage2 extends StatelessWidget {
                 height: 50,
               ),
               Text(
-                  'We have also thought about three different target, which allow you to obtain points and when you register in the app you can choose bettween them; they are :\n1) Basic : 7 hours of sleep, 600 calories burned, 10 minutes of cardio, 10000 steps;\n2) Medium : 7 hours of sleep, 800 calories burned, 15 minutes of cardio, 12000 steps;\n3) Advanced : 7 hours of sleep, 100 calories burned, 20 minutes of cardio, 15000 steps.')
+                'We have also thought about three different target, which allow you to obtain points and when you register in the app you can choose between them; they are :\n1) Basic : 7 hours of sleep per night, 600 calories burned per day, 10 minutes of cardio per day, 10000 steps per day ;     \n2) Medium : 7 hours of sleep per day, 800 calories burned per day, 15 minutes of cardio per day, 12000 steps per day;   \n3) Advanced : 7 hours of sleep per day, 1000 calories burned per day, 20 minutes of cardioper day, 15000 steps per day.',
+                style: TextStyle(fontSize: 16),
+              )
             ]),
           ),
           // SizedBox(
