@@ -1,7 +1,7 @@
 import 'dart:ffi';
 
 class shopList {
-  static double _minPoints = 120.0;
+  static double _minPoints = 100.0;
   Map<String, List> Catalog = {
     'Decathlon': [
       _minPoints * 1,

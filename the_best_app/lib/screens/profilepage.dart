@@ -59,6 +59,9 @@ class Profilepage extends StatelessWidget {
                                       print(_user);
                                       if (result != null) {
                                         sp.remove('username');
+                                        final String s = _user + 'SpentPoints';
+                                        print('To remove: ${sp.getDouble(s)}');
+                                        sp.remove(s);
                                         await Provider.of<UsersDatabaseRepo>(
                                                 context,
                                                 listen: false)
@@ -105,7 +108,7 @@ class Profilepage extends StatelessWidget {
                                 if (snapshot.hasData) {
                                   final info =
                                       snapshot.data as UsersCredentials;
-                                  print(info.id);
+                                  //print(info.id);
 
                                   return FutureBuilder(
                                       future: Provider.of<UsersDatabaseRepo>(
@@ -117,7 +120,7 @@ class Profilepage extends StatelessWidget {
                                           final data =
                                               snapshot.data as UserInfos;
 
-                                          print(data.name);
+                                          //print(data.name);
                                           return Padding(
                                             padding: const EdgeInsets.only(
                                                 top: 20,

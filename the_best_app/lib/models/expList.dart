@@ -1,5 +1,5 @@
 class expList {
-  static int _minPoints = 120;
+  static int _minPoints = 100;
   Map<String, List> Catalog = {
     'Swimming Pool': [
       _minPoints * 0.8,

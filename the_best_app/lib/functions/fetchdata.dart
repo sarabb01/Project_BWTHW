@@ -33,9 +33,9 @@ Future<void> fetchData(BuildContext context) async {
       : DateTime.now().subtract(Duration(days: 2));
 
   //print('Last insertion $lastInsertion');
-  //DateTime startDate = DateTime.utc(2022, 5, 27);
+  //DateTime startDate = DateTime.utc(2022, 6, 27);
   DateTime startDate = lastInsertion;
-  //DateTime endDate = DateTime.utc(2022, 6, 30);
+  //DateTime endDate = DateTime.utc(2022, 6, 3);
   DateTime endDate = DateTime.now();
 
   int threshold = calculateThreshold(allData, endDate);
@@ -199,7 +199,9 @@ Future<void> fetchData(BuildContext context) async {
   // final level = logged_user_info!.usertarget;
   print('Level: $level');
   final double score = computeTotalPoints(allDatanew, level);
-  final spent_points = sp.getDouble('SpentPoints') ?? 0.0;
+  final String s = sp.getString('username')! + 'SpentPoints';
+  final spent_points = sp.getDouble(s) ?? 0.0;
+  print(spent_points);
   sp.setDouble('Points', score - spent_points);
   // sp.setDouble('Points', score);
 }

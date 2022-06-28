@@ -350,10 +350,10 @@ class _HomepageState extends State<HomePage>
                                       final double tot = check.length != 0
                                           ? computeTotalPoints(check, target)
                                           : 0.0; // get all the points
+                                      final String s = username + 'SpentPoints';
                                       final spent_points = check.length != 0 &&
-                                              result.getDouble('SpentPoints') !=
-                                                  null
-                                          ? result.getDouble('SpentPoints')
+                                              result.getDouble(s) != null
+                                          ? result.getDouble(s)
                                           : 0.0; // get the spent points
                                       result.setDouble(
                                           'Points',
@@ -397,7 +397,7 @@ class _HomepageState extends State<HomePage>
                             }
                           })),
                 ),
-                SizedBox(height: 40),
+                SizedBox(height: 30),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       primary: Colours.mediumSeaGreen,
@@ -418,12 +418,6 @@ class _HomepageState extends State<HomePage>
                     onPressed: () {
                       Navigator.pushNamed(context, PreferencePage.route);
                     }),
-                // CupertinoButton.filled(
-                //     child: const Text('Gain your Award'),
-                //     borderRadius: BorderRadius.circular(25.0),
-                //     onPressed: () {
-                //       Navigator.pushNamed(context, PreferencePage.route);
-                //     }),
                 Container(
                   //width: MediaQuery.of(context).size.width * 0.4,
                   height: MediaQuery.of(context).size.height / 6,
