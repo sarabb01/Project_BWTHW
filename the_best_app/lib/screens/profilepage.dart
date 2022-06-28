@@ -139,66 +139,46 @@ class Profilepage extends StatelessWidget {
                                                   Expanded(
                                                     child: ListView(
                                                       children: <Widget>[
-                                                        ListTile(
+                                                        Card(
+                                                          child: ListTile(
                                                             title: Text('Name'),
-                                                            subtitle: TextField(
-                                                              decoration:
-                                                                  InputDecoration(
-                                                                border:
-                                                                    OutlineInputBorder(),
-                                                                labelText:
-                                                                    data.name,
-                                                              ),
-                                                            )),
-                                                        ListTile(
-                                                          title:
-                                                              Text('Surname'),
-                                                          subtitle: TextField(
-                                                            decoration:
-                                                                InputDecoration(
-                                                              border:
-                                                                  OutlineInputBorder(),
-                                                              labelText:
-                                                                  data.surname,
+                                                            subtitle: Text(
+                                                                '${data.name}'),
+                                                          ),
+                                                        ),
+                                                        Card(
+                                                          child: ListTile(
+                                                            title:
+                                                                Text('Surname'),
+                                                            subtitle: Text(
+                                                              '${data.surname}',
                                                             ),
                                                           ),
                                                         ),
-                                                        ListTile(
-                                                          title: Text(
-                                                              'Date of Birth'),
-                                                          subtitle: TextField(
-                                                            decoration:
-                                                                InputDecoration(
-                                                              border:
-                                                                  OutlineInputBorder(),
-                                                              labelText:
-                                                                  dateFormatter(
-                                                                      data.dateofbirth,
-                                                                      opt: 2),
+                                                        Card(
+                                                          child: ListTile(
+                                                            title: Text(
+                                                                'Date of Birth'),
+                                                            subtitle: Text(
+                                                              '${dateFormatter(data.dateofbirth, opt: 2)}',
                                                             ),
                                                           ),
                                                         ),
-                                                        ListTile(
-                                                          title: Text('Gender'),
-                                                          subtitle: TextField(
-                                                            decoration:
-                                                                InputDecoration(
-                                                              border:
-                                                                  OutlineInputBorder(),
-                                                              labelText:
-                                                                  data.gender,
+                                                        Card(
+                                                          child: ListTile(
+                                                            title:
+                                                                Text('Gender'),
+                                                            subtitle: Text(
+                                                              '${data.gender}',
                                                             ),
                                                           ),
                                                         ),
-                                                        ListTile(
-                                                          title: Text('Target'),
-                                                          subtitle: TextField(
-                                                            decoration:
-                                                                InputDecoration(
-                                                              border:
-                                                                  OutlineInputBorder(),
-                                                              labelText: data
-                                                                  .usertarget,
+                                                        Card(
+                                                          child: ListTile(
+                                                            title:
+                                                                Text('Target'),
+                                                            subtitle: Text(
+                                                              '${data.usertarget}',
                                                             ),
                                                           ),
                                                         ),
@@ -214,51 +194,39 @@ class Profilepage extends StatelessWidget {
                                 } else {
                                   return ListView(
                                     children: <Widget>[
-                                      ListTile(
-                                        title: const Text('Personal Data'),
+                                      Card(
+                                        child: ListTile(
+                                          title: const Text('Personal Data'),
+                                        ),
                                       ),
-                                      ListTile(
+                                      Card(
+                                        child: ListTile(
                                           title: Text('Name'),
-                                          subtitle: TextField(
-                                            decoration: InputDecoration(
-                                              border: OutlineInputBorder(),
-                                              labelText: '',
-                                            ),
-                                          )),
-                                      ListTile(
-                                        title: Text('Surname'),
-                                        subtitle: TextField(
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            labelText: '',
-                                          ),
+                                          subtitle: Text(''),
                                         ),
                                       ),
-                                      ListTile(
-                                        title: Text('Date of Birth'),
-                                        subtitle: TextField(
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            labelText: '',
-                                          ),
+                                      Card(
+                                        child: ListTile(
+                                          title: Text('Surname'),
+                                          subtitle: Text(''),
                                         ),
                                       ),
-                                      ListTile(
-                                        title: Text('Gender'),
-                                        subtitle: TextField(
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            labelText: '',
-                                          ),
+                                      Card(
+                                        child: ListTile(
+                                          title: Text('Date of Birth'),
+                                          subtitle: Text(''),
                                         ),
                                       ),
-                                      ListTile(
-                                        title: Text('Target'),
-                                        subtitle: TextField(
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            labelText: '',
-                                          ),
+                                      Card(
+                                        child: ListTile(
+                                          title: Text('Gender'),
+                                          subtitle: Text(''),
+                                        ),
+                                      ),
+                                      Card(
+                                        child: ListTile(
+                                          title: Text('Target'),
+                                          subtitle: Text(''),
                                         ),
                                       ),
                                     ],
