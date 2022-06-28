@@ -185,7 +185,8 @@ class myAlert extends StatelessWidget {
         SizedBox(
           height: 10,
         ),
-        Legend_rad()
+        SingleChildScrollView(
+            scrollDirection: Axis.horizontal, child: Legend_rad())
       ]),
       titleTextStyle: TextStyle(color: Colors.black), //fontSize: 10),
       content: Container(

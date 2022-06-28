@@ -397,7 +397,7 @@ class _HomepageState extends State<HomePage>
                             }
                           })),
                 ),
-                SizedBox(height: 40),
+                SizedBox(height: 30),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       primary: Colours.mediumSeaGreen,
@@ -418,12 +418,6 @@ class _HomepageState extends State<HomePage>
                     onPressed: () {
                       Navigator.pushNamed(context, PreferencePage.route);
                     }),
-                // CupertinoButton.filled(
-                //     child: const Text('Gain your Award'),
-                //     borderRadius: BorderRadius.circular(25.0),
-                //     onPressed: () {
-                //       Navigator.pushNamed(context, PreferencePage.route);
-                //     }),
                 Container(
                   //width: MediaQuery.of(context).size.width * 0.4,
                   height: MediaQuery.of(context).size.height / 6,

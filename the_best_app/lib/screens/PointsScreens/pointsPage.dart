@@ -170,7 +170,7 @@ class PointsPage extends StatelessWidget {
                                                       fontWeight:
                                                           FontWeight.bold)),
                                               Text(
-                                                  'Minutes in cardio range: ${today.cardio}/${values[2]} (${(todayPoints[2]).toStringAsFixed(2)})',
+                                                  'Minutes cardio: ${today.cardio}/${values[2]} (${(todayPoints[2]).toStringAsFixed(2)})',
                                                   style: TextStyle(
                                                       color: Colors.green[500],
                                                       fontWeight:
