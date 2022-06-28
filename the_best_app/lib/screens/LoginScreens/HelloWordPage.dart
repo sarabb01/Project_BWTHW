@@ -59,8 +59,7 @@ class _HelloWordPageState extends State<HelloWordPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Padding(
-                padding:
-                    EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 10),
+                padding: EdgeInsets.only(left: 20, top: 20, right: 20),
                 child: Center(
                   child: Image.asset(
                     'assets/Images/logoblack.png',
@@ -71,8 +70,7 @@ class _HelloWordPageState extends State<HelloWordPage> {
                 ),
               ),
               Padding(
-                padding:
-                    EdgeInsets.only(left: 16, top: 10, right: 16, bottom: 10),
+                padding: EdgeInsets.only(left: 16, right: 16, bottom: 10),
                 child: Text(
                   'Welcome!',
                   textAlign: TextAlign.center,
@@ -91,7 +89,7 @@ class _HelloWordPageState extends State<HelloWordPage> {
                 child: Column(children: [
                   Text(
                     'Before getting started you should know something more about this app, so click the button below',
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 18),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(
