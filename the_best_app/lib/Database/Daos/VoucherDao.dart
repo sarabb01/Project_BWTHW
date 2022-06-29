@@ -1,4 +1,6 @@
+// Flutter Packages
 import 'package:floor/floor.dart';
+// Screens
 import 'package:the_best_app/Database/Entities/VouchersList.dart';
 
 @dao
