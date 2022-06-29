@@ -80,6 +80,19 @@ List<double> elaboratePoints(myFitbitData data, String target) {
   result.add(double.parse((data.cardio / cardio).toStringAsFixed(2)));
   result.add(double.parse((data.sleepHours / sleep).toStringAsFixed(2)));
   //print(result);
+  if (target == 'Medium') {
+    var result1 = result.map((e) => e * 1.2).toList();
+    return result1;
+  }
+  if (target == 'Advanced') {
+    var result1 = result.map((e) => e * 1.5).toList();
+    return result1;
+  }
+
+  if (target == 'None') {
+    var result1 = result.map((e) => e * 0.8).toList();
+    return result1;
+  }
   return result;
 }
 

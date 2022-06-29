@@ -82,15 +82,11 @@ class _HomepageState extends State<HomePage>
               : Text(username.toUpperCase(),
                   style: TextStyle(fontWeight: FontWeight.bold)),
           actions: [
-            Row(
-              children: [
-                IconButton(
-                    icon: Icon(Icons.show_chart_outlined),
-                    onPressed: () {
-                      Navigator.pushNamed(context, AuthPage.route);
-                    })
-              ],
-            )
+            // IconButton(
+            //     icon: Icon(Icons.show_chart_outlined),
+            //     onPressed: () {
+            //       Navigator.pushNamed(context, AuthPage.route);
+            //     })
           ],
         ),
         drawer: Drawer(
@@ -291,7 +287,7 @@ class _HomepageState extends State<HomePage>
                 ),
                 SizedBox(height: 20),
                 const Text(
-                  'You have gained:',
+                  'Points earned:',
                   style: TextStyle(fontSize: 20),
                 ),
                 SizedBox(height: 20),
@@ -354,10 +350,10 @@ class _HomepageState extends State<HomePage>
                                       final double tot = check.length != 0
                                           ? computeTotalPoints(check, target)
                                           : 0.0; // get all the points
+                                      final String s = username + 'SpentPoints';
                                       final spent_points = check.length != 0 &&
-                                              result.getDouble('SpentPoints') !=
-                                                  null
-                                          ? result.getDouble('SpentPoints')
+                                              result.getDouble(s) != null
+                                          ? result.getDouble(s)
                                           : 0.0; // get the spent points
                                       result.setDouble(
                                           'Points',
@@ -422,12 +418,6 @@ class _HomepageState extends State<HomePage>
                     onPressed: () {
                       Navigator.pushNamed(context, PreferencePage.route);
                     }),
-                // CupertinoButton.filled(
-                //     child: const Text('Gain your Award'),
-                //     borderRadius: BorderRadius.circular(25.0),
-                //     onPressed: () {
-                //       Navigator.pushNamed(context, PreferencePage.route);
-                //     }),
                 Container(
                   //width: MediaQuery.of(context).size.width * 0.4,
                   height: MediaQuery.of(context).size.height / 6,
@@ -477,18 +467,24 @@ class _HomepageState extends State<HomePage>
       );
     } else {
       return Container(
-          width: 120,
-          height: 50,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.rectangle,
-              border: Border.all(color: Colors.green, width: 3),
-              borderRadius: BorderRadius.circular(20)),
-          alignment: Alignment.center,
-          child: Text(
-            '${(score)}' '/' '${(obiettivo).toStringAsFixed(0)}',
-            style: TextStyle(fontSize: 20),
-          ));
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Container(
+              width: 120,
+              height: 50,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.rectangle,
+                  border: Border.all(color: Colors.green, width: 3),
+                  borderRadius: BorderRadius.circular(20)),
+              alignment: Alignment.center,
+              child: Text(
+                '${(score)}' '/' '${(obiettivo).toStringAsFixed(0)}',
+                style: TextStyle(fontSize: 20),
+              )),
+          SizedBox(height: 5),
+          Text('Double tap for details')
+        ]),
+      );
     }
   }
 } //Homepage

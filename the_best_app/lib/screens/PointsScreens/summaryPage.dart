@@ -32,18 +32,51 @@ class SummaryPage extends StatelessWidget {
         leading: Back_Page_withArgs(
             [10, 10, 5, 5], context, PointsPage.route, {'username': username}),
         title: Text(SummaryPage.routename),
+        actions: [
+          IconButton(
+              // Questo bottone serve per avere le informazioni!!
+              iconSize: 40,
+              tooltip: 'Info',
+              icon: Icon(Icons.question_mark_rounded),
+              color: Colors.green[100],
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                          content: SingleChildScrollView(
+                              child: ListBody(children: [
+                        FutureBuilder(
+                            future: findTarget(context, username),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                final target = snapshot.data as String;
+                                final List values = Target().targets[target]!;
+
+                                return Text(
+                                    'Your target:\n${values[0]} steps\n${values[1]} calories\n${values[2]} minutes cardio\n${values[3]} hours sleep');
+                              } else {
+                                return Text('');
+                              }
+                            }),
+                      ])));
+                    });
+              }),
+        ],
       ),
       body: Container(
           padding: EdgeInsets.all(20),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
                 'Here you can see a resume of your daily points',
+                //textAlign: TextAlign.center,
                 //style: TextStyle(fontSize: 15),
               ),
               SizedBox(height: 20),
               Legend_bar(),
+              SizedBox(height: 10),
               Expanded(
                 child:
                     Consumer<UsersDatabaseRepo>(builder: (context, dbr, child) {
@@ -98,11 +131,36 @@ class SummaryPage extends StatelessWidget {
                                       color: Colors.green[200],
                                     );
                                   } else {
+                                    // Steps, calories, cardio, sleep
+                                    final style =
+                                        _ismissing(fitbit2[index], values);
+                                    var myText3 = RichText(
+                                        text: TextSpan(
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                            children: [
+                                          TextSpan(
+                                              text:
+                                                  'Steps: ${fitbit2[index].steps}, ',
+                                              style: style[0]),
+                                          TextSpan(
+                                              text:
+                                                  'Calories: ${fitbit2[index].calories}, ',
+                                              style: style[1]),
+                                          TextSpan(
+                                              text:
+                                                  ' Cardio: ${fitbit2[index].cardio},  ',
+                                              style: style[2]),
+                                          TextSpan(
+                                              text:
+                                                  'Sleep: ${fitbit2[index].sleepHours}',
+                                              style: style[3])
+                                        ]));
                                     return Card(
                                         child: ListTile(
                                           isThreeLine: true,
                                           title: myText,
-                                          subtitle: myText2,
+                                          subtitle: myText3,
                                           trailing: IconButton(
                                             icon: Icon(Icons.arrow_right),
                                             onPressed: () {
@@ -117,7 +175,7 @@ class SummaryPage extends StatelessWidget {
                                             },
                                           ),
                                         ),
-                                        color: Colors.red[100]);
+                                        color: Colors.red[50]);
                                   }
                                 }),
                           );
@@ -158,7 +216,8 @@ class myAlert extends StatelessWidget {
         SizedBox(
           height: 10,
         ),
-        Legend_rad()
+        SingleChildScrollView(
+            scrollDirection: Axis.horizontal, child: Legend_rad())
       ]),
       titleTextStyle: TextStyle(color: Colors.black), //fontSize: 10),
       content: Container(
@@ -167,4 +226,31 @@ class myAlert extends StatelessWidget {
       //margin: EdgeInsets.fromLTRB(50, 450, 50, 200),
     );
   }
+}
+
+List<dynamic> _ismissing(myFitbitData fitbit2, List values) {
+  List output = [true, true, true, true];
+  List style = [
+    TextStyle(fontWeight: FontWeight.normal),
+    TextStyle(fontWeight: FontWeight.normal),
+    TextStyle(fontWeight: FontWeight.normal),
+    TextStyle(fontWeight: FontWeight.normal)
+  ];
+  if (fitbit2.steps < values[0]) {
+    output[0] = false;
+    style[0] = TextStyle(fontWeight: FontWeight.w900, color: Colours.darkRed);
+  }
+  if (fitbit2.calories < values[1]) {
+    output[1] = false;
+    style[1] = TextStyle(fontWeight: FontWeight.w900, color: Colours.darkRed);
+  }
+  if (fitbit2.cardio < values[2]) {
+    output[2] = false;
+    style[2] = TextStyle(fontWeight: FontWeight.w900, color: Colours.darkRed);
+  }
+  if (fitbit2.sleepHours < values[3]) {
+    output[3] = false;
+    style[3] = TextStyle(fontWeight: FontWeight.w900, color: Colours.darkRed);
+  }
+  return style;
 }

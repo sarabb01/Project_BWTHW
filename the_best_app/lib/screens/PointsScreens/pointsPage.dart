@@ -44,15 +44,49 @@ class PointsPage extends StatelessWidget {
     print('${PointsPage.routename} built');
     return Scaffold(
         appBar: AppBar(
-            leading: IconButton(
-                icon: Icon(Icons.home),
-                onPressed: () {
-                  Navigator.pushNamed(context, HomePage.route);
-                }),
+            leading: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                  style: ButtonStyle(
+                      elevation: MaterialStateProperty.all(0),
+                      shape: MaterialStateProperty.all(CircleBorder()),
+                      padding: MaterialStateProperty.all(EdgeInsets.all(5)),
+                      backgroundColor: MaterialStateProperty.all(
+                          Colours.darkSeagreen), // <-- Button color
+                      overlayColor:
+                          MaterialStateProperty.resolveWith<Color?>((states) {
+                        if (states.contains(MaterialState.pressed))
+                          return Colors.white38; // <-- Splash color
+                      })),
+                  child: Icon(Icons.home),
+                  // IconButton(
+                  //     icon: Icon(Icons.home),
+                  onPressed: () {
+                    Navigator.pushNamed(context, HomePage.route);
+                  }),
+            ),
             title: Text(PointsPage.routename),
             actions: [
               Row(
                 children: [
+                  IconButton(
+                      // Questo bottone serve per fetchare!!
+                      iconSize: 40,
+                      tooltip: 'Update',
+                      color: Colors.green[100],
+                      onPressed: () async {
+                        fetchData(context);
+                        List<myFitbitData> allData =
+                            await Provider.of<UsersDatabaseRepo>(context,
+                                    listen: false)
+                                .findAllFitbitDataUser(username);
+                        final trg = await findTarget(context, username)
+                            .then((String target) {
+                          return target;
+                        });
+                        final double score = computeTotalPoints(allData, trg);
+                      },
+                      icon: Icon(Icons.update)),
                   IconButton(
                       // Questo bottone serve per avere le informazioni!!
                       iconSize: 40,
@@ -71,26 +105,6 @@ class PointsPage extends StatelessWidget {
                               ])));
                             });
                       }),
-
-                  // Consumer<PointsModel>(builder: (context, totscore, child) {
-                  //   return
-                  IconButton(
-                      // Questo bottone serve per fetchare!!
-                      onPressed: () async {
-                        fetchData(context);
-                        List<myFitbitData> allData =
-                            await Provider.of<UsersDatabaseRepo>(context,
-                                    listen: false)
-                                .findAllFitbitDataUser(username);
-                        final trg = await findTarget(context, username)
-                            .then((String target) {
-                          return target;
-                        });
-                        final double score = computeTotalPoints(allData, trg);
-                        // totscore.updateScore(score);
-                      },
-                      icon: Icon(Icons.update))
-                  // })
                 ],
               )
             ]),
@@ -143,28 +157,27 @@ class PointsPage extends StatelessWidget {
                                           content: SingleChildScrollView(
                                             child: ListBody(children: [
                                               Text(
-                                                'Steps ${(todayPoints[0] * 100).toStringAsFixed(1)}% (${today.steps} / ${values[0]})',
+                                                'Steps: ${today.steps}/${values[0]} (${(todayPoints[0]).toStringAsFixed(2)})',
                                                 style: TextStyle(
                                                     color: Colors.blue[600],
                                                     fontWeight:
                                                         FontWeight.bold),
                                               ),
                                               Text(
-                                                  'Calories ${todayPoints[1] * 100}% (${today.calories} / ${values[1]})',
+                                                  'Calories: ${today.calories}/${values[1]}  (${(todayPoints[1]).toStringAsFixed(2)})',
                                                   style: TextStyle(
-                                                      color: Colors
-                                                          .yellowAccent[700],
+                                                      color: Colors.yellow[700],
                                                       fontWeight:
                                                           FontWeight.bold)),
                                               Text(
-                                                  'Cardio ${todayPoints[2] * 100}% (${today.cardio} / ${values[2]})',
+                                                  'Minutes cardio: ${today.cardio}/${values[2]} (${(todayPoints[2]).toStringAsFixed(2)})',
                                                   style: TextStyle(
-                                                      color: Colors
-                                                          .greenAccent[400],
+                                                      color: Colors.green[500],
                                                       fontWeight:
                                                           FontWeight.bold)),
                                               Text(
-                                                  'Sleep ${(todayPoints[3] * 100).toStringAsFixed(1)}% (${today.sleepHours} / ${values[3]})',
+                                                  'Sleep:  ${today.sleepHours}/${values[3]} (${(todayPoints[3]).toStringAsFixed(2)})',
+                                                  // 'Sleep ${(todayPoints[3] * 100).toStringAsFixed(1)}% (${today.sleepHours} / ${values[3]})
                                                   style: TextStyle(
                                                       color: Colors.redAccent,
                                                       fontWeight:
