@@ -156,7 +156,7 @@ class MyVoucherPage extends StatelessWidget {
                                                           Image.asset(
                                                             data[i]
                                                                 .front_image_path,
-                                                            scale: 6,
+                                                            scale: 7,
                                                           ),
                                                         ])),
                                               )),
@@ -193,7 +193,7 @@ class MyVoucherPage extends StatelessWidget {
                                                               MediaQuery.of(context)
                                                                       .size
                                                                       .height /
-                                                                  3,
+                                                                  4,
                                                           child: Padding(
                                                               padding:
                                                                   EdgeInsets.all(
@@ -210,16 +210,15 @@ class MyVoucherPage extends StatelessWidget {
                                                                           color:
                                                                               Colors.black,
                                                                           fontSize:
-                                                                              15,
+                                                                              10,
                                                                         )),
                                                                     SizedBox(
-                                                                      height:
-                                                                          10,
+                                                                      height: 5,
                                                                     ),
                                                                     Image.asset(
                                                                       data[i]
                                                                           .QRcode_path,
-                                                                      scale: 2,
+                                                                      scale: 3,
                                                                     ),
                                                                     SizedBox(
                                                                       height:
