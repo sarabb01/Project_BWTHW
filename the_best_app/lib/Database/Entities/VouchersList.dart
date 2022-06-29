@@ -23,6 +23,7 @@ class VoucherList {
   final String shop_name;
   final String QRcode_path;
   final String discount_code;
+  final String front_image_path;
   VoucherList(this.id, this.userId, this.discount, this.shop_name,
-      this.QRcode_path, this.discount_code);
+      this.QRcode_path, this.discount_code, this.front_image_path);
 }

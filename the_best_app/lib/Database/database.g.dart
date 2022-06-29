@@ -94,7 +94,7 @@ class _$AppDatabase extends AppDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `myFitbitData` (`keyDate` INTEGER NOT NULL, `sleepHours` INTEGER NOT NULL, `calories` INTEGER NOT NULL, `steps` INTEGER NOT NULL, `cardio` INTEGER NOT NULL, `detailDate` INTEGER NOT NULL, `username` TEXT NOT NULL, PRIMARY KEY (`keyDate`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `VoucherList` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `userid` INTEGER NOT NULL, `discount` TEXT NOT NULL, `shop_name` TEXT NOT NULL, `QRcode_path` TEXT NOT NULL, `discount_code` TEXT NOT NULL, FOREIGN KEY (`userid`) REFERENCES `UsersCredentials` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE)');
+            'CREATE TABLE IF NOT EXISTS `VoucherList` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `userid` INTEGER NOT NULL, `discount` TEXT NOT NULL, `shop_name` TEXT NOT NULL, `QRcode_path` TEXT NOT NULL, `discount_code` TEXT NOT NULL, `front_image_path` TEXT NOT NULL, FOREIGN KEY (`userid`) REFERENCES `UsersCredentials` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -423,7 +423,8 @@ class _$VoucherDao extends VoucherDao {
                   'discount': item.discount,
                   'shop_name': item.shop_name,
                   'QRcode_path': item.QRcode_path,
-                  'discount_code': item.discount_code
+                  'discount_code': item.discount_code,
+                  'front_image_path': item.front_image_path
                 }),
         _voucherListUpdateAdapter = UpdateAdapter(
             database,
@@ -435,7 +436,8 @@ class _$VoucherDao extends VoucherDao {
                   'discount': item.discount,
                   'shop_name': item.shop_name,
                   'QRcode_path': item.QRcode_path,
-                  'discount_code': item.discount_code
+                  'discount_code': item.discount_code,
+                  'front_image_path': item.front_image_path
                 }),
         _voucherListDeletionAdapter = DeletionAdapter(
             database,
@@ -447,7 +449,8 @@ class _$VoucherDao extends VoucherDao {
                   'discount': item.discount,
                   'shop_name': item.shop_name,
                   'QRcode_path': item.QRcode_path,
-                  'discount_code': item.discount_code
+                  'discount_code': item.discount_code,
+                  'front_image_path': item.front_image_path
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -472,7 +475,8 @@ class _$VoucherDao extends VoucherDao {
             row['discount'] as String,
             row['shop_name'] as String,
             row['QRcode_path'] as String,
-            row['discount_code'] as String),
+            row['discount_code'] as String,
+            row['front_image_path'] as String),
         arguments: [userid]);
   }
 

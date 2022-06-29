@@ -18,10 +18,6 @@ import 'package:the_best_app/Screens/PointsScreens/fitbitAuthPage.dart';
 //Profile Screens
 import 'package:the_best_app/Screens/profilepage.dart';
 
-// User Database
-import 'package:the_best_app/Database/database.dart';
-import 'package:the_best_app/Repository/database_repository.dart';
-import 'package:the_best_app/Screens/PointsScreens/pointsPage.dart';
 // RewardScreens Screens
 import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
 import 'package:the_best_app/Screens/RewardScreens/queryPage.dart';
@@ -29,6 +25,11 @@ import 'package:the_best_app/Screens/RewardScreens/shoppingPage.dart';
 import 'package:the_best_app/Screens/RewardScreens/experiencePage.dart';
 import 'package:the_best_app/Screens/RewardScreens/QRcodePage.dart';
 import 'package:the_best_app/Screens/RewardScreens/MyVoucherPage.dart';
+
+// User Database
+import 'package:the_best_app/Database/database.dart';
+import 'package:the_best_app/Repository/database_repository.dart';
+import 'package:the_best_app/Screens/PointsScreens/pointsPage.dart';
 
 Future<void> main() async {
   //This is a special method that use WidgetFlutterBinding to interact with the Flutter engine.

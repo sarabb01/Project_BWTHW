@@ -58,21 +58,7 @@ class ShoppingPage extends StatelessWidget {
                                       'Required points : ${shoplist.Catalog[key]![0]}'),
                                   trailing: IconButton(
                                     icon: Icon(MdiIcons.arrowRight),
-                                    onPressed: () async {
-                                      final sp =
-                                          await SharedPreferences.getInstance();
-                                      int userid = sp.getInt('userid')!;
-                                      final voucher = VoucherList(
-                                          null,
-                                          userid,
-                                          shoplist.Catalog[key]![2],
-                                          key,
-                                          shoplist.Catalog[key]![3],
-                                          'Empty');
-                                      await Provider.of<UsersDatabaseRepo>(
-                                              context,
-                                              listen: false)
-                                          .addUserVoucher(voucher);
+                                    onPressed: () {
                                       Navigator.pushNamed(
                                           context, QRcodePage.route,
                                           arguments: {

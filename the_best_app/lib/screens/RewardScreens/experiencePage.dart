@@ -64,21 +64,7 @@ class ExperiencePage extends StatelessWidget {
                                       'Location: ${explist.Catalog[key]![1]}\nRequired points : ${explist.Catalog[key]![0]}'),
                                   trailing: IconButton(
                                     icon: Icon(MdiIcons.arrowRight),
-                                    onPressed: () async {
-                                      final sp =
-                                          await SharedPreferences.getInstance();
-                                      int userid = sp.getInt('userid')!;
-                                      final voucher = VoucherList(
-                                          null,
-                                          userid,
-                                          explist.Catalog[key]![2],
-                                          key,
-                                          explist.Catalog[key]![3],
-                                          'Empty');
-                                      await Provider.of<UsersDatabaseRepo>(
-                                              context,
-                                              listen: false)
-                                          .addUserVoucher(voucher);
+                                    onPressed: () {
                                       Navigator.pushNamed(
                                           context, QRcodePage.route,
                                           arguments: {
