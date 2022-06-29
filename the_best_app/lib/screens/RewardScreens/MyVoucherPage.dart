@@ -93,9 +93,9 @@ class MyVoucherPage extends StatelessWidget {
                                     SizedBox(
                                       height: 10,
                                     ),
-                                    CircularProgressIndicator(
-                                      strokeWidth: 10,
-                                    )
+                                    // CircularProgressIndicator(
+                                    //   strokeWidth: 10,
+                                    // )
                                   ]));
                             } else {
                               return Padding(
@@ -168,9 +168,8 @@ class MyVoucherPage extends StatelessWidget {
                                                   return AlertDialog(
                                                       shape: RoundedRectangleBorder(
                                                           borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      15)),
+                                                              BorderRadius.circular(
+                                                                  15)),
                                                       backgroundColor:
                                                           Colours.lightCyan,
                                                       title: Text(
@@ -189,15 +188,15 @@ class MyVoucherPage extends StatelessWidget {
                                                                   .size
                                                                   .width /
                                                               1.2,
-                                                          height:
-                                                              MediaQuery.of(context)
-                                                                      .size
-                                                                      .height /
-                                                                  4,
+                                                          height: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .height /
+                                                              3.2,
                                                           child: Padding(
                                                               padding:
-                                                                  EdgeInsets.all(
-                                                                      15),
+                                                                  EdgeInsets
+                                                                      .all(10),
                                                               child: Column(
                                                                   children: [
                                                                     Text(
@@ -235,7 +234,7 @@ class MyVoucherPage extends StatelessWidget {
                                                                             style: ButtonStyle(
                                                                                 elevation: MaterialStateProperty.all(0),
                                                                                 shape: MaterialStateProperty.all(CircleBorder()),
-                                                                                padding: MaterialStateProperty.all(EdgeInsets.all(5)),
+                                                                                padding: MaterialStateProperty.all(EdgeInsets.all(0)),
                                                                                 backgroundColor: MaterialStateProperty.all(Colours.darkSeagreen), // <-- Button color
                                                                                 overlayColor: MaterialStateProperty.resolveWith<Color?>((states) {
                                                                                   if (states.contains(MaterialState.pressed)) return Colors.white38; // <-- Splash color
@@ -272,7 +271,7 @@ class MyVoucherPage extends StatelessWidget {
                                                                             style: ButtonStyle(
                                                                                 elevation: MaterialStateProperty.all(0),
                                                                                 shape: MaterialStateProperty.all(CircleBorder()),
-                                                                                padding: MaterialStateProperty.all(EdgeInsets.all(5)),
+                                                                                padding: MaterialStateProperty.all(EdgeInsets.all(0)),
                                                                                 backgroundColor: MaterialStateProperty.all(Colours.lightSalmon), // <-- Button color
                                                                                 overlayColor: MaterialStateProperty.resolveWith<Color?>((states) {
                                                                                   if (states.contains(MaterialState.pressed)) return Colors.white38; // <-- Splash color
@@ -309,9 +308,7 @@ class MyVoucherPage extends StatelessWidget {
                                       }));
                             }
                           } else {
-                            return CircularProgressIndicator(
-                              strokeWidth: 10,
-                            );
+                            return Text('');
                           }
                         });
                   } else {
@@ -346,9 +343,9 @@ class MyVoucherPage extends StatelessWidget {
                       SizedBox(
                         height: 10,
                       ),
-                      CircularProgressIndicator(
-                        strokeWidth: 10,
-                      )
+                      // CircularProgressIndicator(
+                      //   strokeWidth: 10,
+                      // )
                     ]));
                   }
                 });

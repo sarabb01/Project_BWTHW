@@ -35,11 +35,11 @@ Future<void> fetchData(BuildContext context) async {
       : DateTime.now().subtract(Duration(days: 2));
 
   //print('Last insertion $lastInsertion');
-  //DateTime startDate = DateTime.utc(2022, 6, 16);
-  //DateTime endDate = DateTime.utc(2022, 6, 28);
+  DateTime startDate = DateTime.utc(2022, 6, 16);
+  DateTime endDate = DateTime.utc(2022, 6, 28);
 
-  DateTime startDate = lastInsertion;
-  DateTime endDate = DateTime.now();
+  // DateTime startDate = lastInsertion;
+  // DateTime endDate = DateTime.now();
 
   int threshold = calculateThreshold(allData, endDate);
   print('Threshold mins $threshold');
