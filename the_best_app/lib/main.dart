@@ -8,15 +8,15 @@ import 'package:the_best_app/Screens/LoginScreens/ForgotPasswordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/RegistrationPage.dart';
 import 'package:the_best_app/Screens/PointsScreens/summaryPage.dart';
-import 'package:the_best_app/Screens/infoPage2.dart';
-import 'package:the_best_app/Screens/infopage.dart';
+import 'package:the_best_app/Screens/HomeScreens/infoPage2.dart';
+import 'package:the_best_app/Screens/HomeScreens/infoPage.dart';
 // Home Screens
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Screens/PointsScreens/fetchPage.dart';
 import 'package:the_best_app/Screens/PointsScreens/fitbitAuthPage.dart';
 
 //Profile Screens
-import 'package:the_best_app/Screens/profilepage.dart';
+import 'package:the_best_app/Screens/HomeScreens/profilePage.dart';
 
 // RewardScreens Screens
 import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
@@ -93,10 +93,10 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute(builder: (context) {
               return Profilepage();
             });
-          } else if (settings.name == FetchPage.route) {
-            return MaterialPageRoute(builder: (context) {
-              return FetchPage();
-            });
+            // } else if (settings.name == FetchPage.route) {
+            //   return MaterialPageRoute(builder: (context) {
+            //     return FetchPage();
+            //   });
           } else if (settings.name == PointsPage.route) {
             final args6 = settings.arguments as Map;
             return MaterialPageRoute(builder: (context) {

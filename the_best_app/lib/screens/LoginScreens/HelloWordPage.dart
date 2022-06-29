@@ -1,7 +1,7 @@
 // APP Screens
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Screens/infoPage2.dart';
-import 'package:the_best_app/screens/infopage.dart';
+import 'package:the_best_app/screens/infoPage.dart';
 import 'LoginPage.dart';
 import 'RegistrationPage.dart';
 // DATABASE

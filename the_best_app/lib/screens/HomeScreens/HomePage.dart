@@ -1,8 +1,8 @@
 // APP SCREENS
 import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
-import 'package:the_best_app/Screens/infoPage2.dart';
-import 'package:the_best_app/Screens/profilepage.dart';
+import 'package:the_best_app/Screens/HomeScreens/infoPage2.dart';
+import 'package:the_best_app/Screens/HomeScreens/profilePage.dart';
 import 'package:the_best_app/Screens/PointsScreens/fitbitAuthPage.dart';
 import 'package:the_best_app/Screens/PointsScreens/pointsPage.dart';
 import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
@@ -222,10 +222,11 @@ class _HomepageState extends State<HomePage>
                                                               UsersDatabaseRepo>(
                                                           context,
                                                           listen: false)
-                                                      .findAllFitbitData();
-                                              final sp = await SharedPreferences
-                                                  .getInstance();
-                                              sp.setDouble('Points', 0);
+                                                      .findAllFitbitDataUser(
+                                                          username);
+                                              // final sp = await SharedPreferences
+                                              //     .getInstance();
+                                              // sp.setDouble('Points', 0);
                                               print(
                                                   'Days to delete ${allData.length}');
                                               await Provider.of<
@@ -233,7 +234,8 @@ class _HomepageState extends State<HomePage>
                                                       context,
                                                       listen: false)
                                                   .deleteAllFitbitData(allData);
-                                              Navigator.pop(context);
+                                              Navigator.pushReplacementNamed(
+                                                  context, HomePage.route);
                                             }, // TO BE IMPLEMENTED
                                             icon: Icon(
                                               Icons.check_circle,
@@ -492,15 +494,4 @@ class _HomepageState extends State<HomePage>
   }
 } //Homepage
 
-//Future<void> remove_Profile(String username, BuildContext context) async {
-//final user = await Provider.of<UsersDatabaseRepo>(context, listen: false)
-// .findUser(username);
-// Before deleting the current profile we check if is currently logged in and if is correctly signed in the database
-//if (user != null) {
-//final sp = await SharedPreferences.getInstance();
-//await sp.remove('username'); // Updating current Login session
-//await Provider.of<UsersDatabaseRepo>(context, listen: false)
-//.deleteUser(user); // Deleting User Profile
-//await Navigator.pushReplacementNamed(context, HelloWordPage.route);
-//}
-//}
+
