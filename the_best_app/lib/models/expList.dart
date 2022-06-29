@@ -1,6 +1,11 @@
+/* This class contains a Map with the experiences. 
+Key: name of the experience
+Value: details of the experience
+*/
+
 class expList {
-  //static int _minPoints = 100;
-  static double _minPoints = 0.0;
+  static double _minPoints = 100.0;
+  //static double _minPoints = 0.0;
   Map<String, List> Catalog = {
     'Swimming Pool': [
       _minPoints * 0.8,

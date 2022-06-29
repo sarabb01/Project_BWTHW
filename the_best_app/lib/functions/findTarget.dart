@@ -8,6 +8,7 @@ import 'package:the_best_app/Repository/database_repository.dart';
 Function Description:
 This function returns the target selected by the user during the registration phase
 */
+
 Future<String> findTarget(BuildContext context, String user) async {
   final logged_user =
       await Provider.of<UsersDatabaseRepo>(context, listen: false)
