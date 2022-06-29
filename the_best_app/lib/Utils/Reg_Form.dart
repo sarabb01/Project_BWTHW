@@ -1,7 +1,7 @@
+// Flutter Packages
 import 'package:flutter/material.dart';
 import 'package:colours/colours.dart';
 import 'package:intl/intl.dart';
-import 'package:select_form_field/select_form_field.dart';
 
 ///Class that implement a custom-made [ListTile] to manage textboxes containing strings in a [Form].
 ///You must provide a controller, a label that is shown as helper, and an icon. This is checked via a regex.
@@ -42,8 +42,8 @@ class FormTextTile extends ListTile {
         ],
       ),
     ));
-  } // build
-} // FormTextTile
+  }
+}
 
 ///Class that implement a custom-made [ListTile] to manage textboxes containing numbers in a [Form].
 ///You must provide a controller, a label that is shown as helper, and an icon.
@@ -84,8 +84,8 @@ class FormNumberTile extends ListTile {
         ],
       ),
     );
-  } // build
-} // FormTextTile
+  }
+}
 
 ///Class that implement a custom-made [ListTile] to manage textboxes containing dates in a [Form].
 ///You must provide a label that is shown as helper, the date to show, an icon, a callback to define the behaviour of the field when it is tapped, and a [DateFormat].
@@ -131,8 +131,8 @@ class FormDateTile extends ListTile {
         ],
       ),
     ));
-  } // build
-} // FormDateTile
+  }
+}
 
 ///Class that implement a custom-made [ListTile] to manage dropdown menus containing numbers in a [Form].
 ///You must provide a label that is shown as helper, the value to show, the items to show, a callback to define the behaviour of the field when it changes, and an icon.
@@ -174,7 +174,7 @@ class _DropdownButtonTileNumberState extends State<DropdownButtonTileNumber> {
       ),
     );
   }
-} // DropdownButtonTileNumber
+}
 
 class DropdownButtonTileString extends StatefulWidget {
   final Function(dynamic) notifyParent;
@@ -231,7 +231,7 @@ class _DropdownButtonTileStringState extends State<DropdownButtonTileString> {
       ),
     ));
   }
-} // DropdownButtonTileString
+}
 
 InputDecoration inputDecoration(
   label,
