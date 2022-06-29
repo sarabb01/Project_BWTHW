@@ -1,6 +1,10 @@
+// Flutter Packages
 import 'package:flutter/material.dart';
+
+// Screens
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
-import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
+
+// Utils
 import 'package:the_best_app/Utils/back_page_button.dart';
 
 class InfoPage2 extends StatelessWidget {
@@ -27,7 +31,6 @@ class InfoPage2 extends StatelessWidget {
               Text(
                 'This application is thought to encourage you to maintain a healthy lifestyle and keep yourself fit by doing some sport activity and having the necessary rest.',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                //textAlign: TextAlign.center,
               ),
               Text(
                   '\nThe better you perform, in terms of number of steps, burnt calories, minutes in active heart ratio range and duration of sleep, the higher score you will be given.\n\nYour points will sum up day-by-day and you will be given the possibility to get a reward proportional to you effort!\n',
@@ -52,13 +55,8 @@ class InfoPage2 extends StatelessWidget {
               ),
             ]),
           ),
-          // SizedBox(
-          //   width: 30,
-          //   height: 30,
-          // ),
         ])),
       ),
     );
-  } //build
-
-} //Page
+  }
+}

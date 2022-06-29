@@ -1,20 +1,21 @@
-// FLUTTER PACKAGES
+// Flutter Packages
 import 'package:colours/colours.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:select_form_field/select_form_field.dart';
-import 'package:the_best_app/Database/Entities/UserInfos.dart';
+
 // Screens
-import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
-import 'package:the_best_app/Utils/DateFormats.dart';
-// UTILIS
+
+// Utils
 import 'package:the_best_app/Utils/Form_Separator.dart';
 import 'package:the_best_app/Utils/Reg_Form.dart';
-// DATA PERSISTENCE
+import 'package:the_best_app/Utils/DateFormats.dart';
+import 'package:the_best_app/Utils/back_page_button.dart';
+
+// Database
 import 'package:the_best_app/Database/Entities/UserCreds.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
+import 'package:the_best_app/Database/Entities/UserInfos.dart';
 
 class RegistrationPage extends StatefulWidget {
   static const route = '/hellowordpage/registrationpage';
@@ -25,10 +26,10 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
-  late TextEditingController _name; // = TextEditingController();
-  late TextEditingController _surname; // = TextEditingController();
-  late TextEditingController _username; // = TextEditingController();
-  late TextEditingController _password; // = TextEditingController();
+  late TextEditingController _name;
+  late TextEditingController _surname;
+  late TextEditingController _username;
+  late TextEditingController _password;
 
   late DateTime _selectedDate;
   late String? _selectedGender;
@@ -78,7 +79,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     print('${RegistrationPage.routename} built');
     return Scaffold(
         appBar: AppBar(
-          leading: Back_Page([5, 10, 5, 5], context),
+          leading: Back_Page([5, 10, 5, 5], context, LoginPage.route),
           title: Text(
             RegistrationPage.routename,
             style: TextStyle(fontWeight: FontWeight.bold),
@@ -168,7 +169,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       setState(() {
         _selectedDate = picked;
       });
-  } //_selectDate
+  }
 
   Widget Sign_In_Button(BuildContext context, String route) {
     return Padding(
@@ -249,34 +250,5 @@ class _RegistrationPageState extends State<RegistrationPage> {
       await Provider.of<UsersDatabaseRepo>(context, listen: false)
           .addUserInfos(user_infos);
     }
-  }
-
-  Widget Back_Page(List<double> edge_insets, BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.only(
-            left: edge_insets[0],
-            right: edge_insets[1],
-            bottom: edge_insets[2],
-            top: edge_insets[3]),
-        child: ElevatedButton(
-            style: ButtonStyle(
-                shape: MaterialStateProperty.all(CircleBorder()),
-                padding: MaterialStateProperty.all(EdgeInsets.all(5)),
-                backgroundColor: MaterialStateProperty.all(
-                    Colours.darkSeagreen), // <-- Button color
-                overlayColor:
-                    MaterialStateProperty.resolveWith<Color?>((states) {
-                  if (states.contains(MaterialState.pressed))
-                    return Colors.red; // <-- Splash color
-                })),
-            onPressed: (() {
-              setInputData();
-              Navigator.pushReplacementNamed(context, LoginPage.route);
-            }),
-            child: Icon(
-              Icons.first_page,
-              color: Colors.white,
-              size: 30,
-            )));
   }
 }
