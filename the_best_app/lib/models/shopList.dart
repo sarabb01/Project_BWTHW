@@ -4,8 +4,8 @@ Value: details of the discount
 */
 
 class shopList {
-  //static double _minPoints = 100.0;
-  static double _minPoints = 0.0;
+  static double _minPoints = 100.0;
+  //static double _minPoints = 0.0;
   Map<String, List> Catalog = {
     'Decathlon': [
       _minPoints * 1,
