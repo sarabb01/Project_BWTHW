@@ -2,10 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Legend_rad extends StatelessWidget {
-  // final List<String> labels;
-  // final List<Color> color;
-
-  // Legend(this.labels, this.color);
   @override
   Widget build(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -49,10 +45,6 @@ class Legend_rad extends StatelessWidget {
 }
 
 class Legend_bar extends StatelessWidget {
-  // final List<String> labels;
-  // final List<Color> color;
-
-  // Legend(this.labels, this.color);
   @override
   Widget build(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.center, children: [

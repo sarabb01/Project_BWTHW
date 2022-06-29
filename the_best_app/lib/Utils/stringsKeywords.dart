@@ -14,5 +14,6 @@ class Strings {
   /// Callback scheme
   static const String fitbitCallbackScheme = 'thebestapp';
 
-  // Ø Mail: cappongiacomo@gmail.com Ø Password: bWtHw5055
+  // Mail: cappongiacomo@gmail.com
+  // Password: bWtHw5055
 }
