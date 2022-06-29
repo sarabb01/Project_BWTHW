@@ -9,10 +9,10 @@ import 'package:the_best_app/Screens/PointsScreens/pointsPage.dart';
 import 'package:the_best_app/Utils/back_page_button.dart';
 import 'package:the_best_app/Utils/legends.dart';
 import 'package:the_best_app/Utils/radial_chart.dart';
-import 'package:the_best_app/functions/createchartdata.dart';
-import 'package:the_best_app/functions/dateFormatter.dart';
-import 'package:the_best_app/functions/elaborateDataFunctions.dart';
-import 'package:the_best_app/functions/findTarget.dart';
+import 'package:the_best_app/Functions/createchartdata.dart';
+import 'package:the_best_app/Functions/dateFormatter.dart';
+import 'package:the_best_app/Functions/elaborateDataFunctions.dart';
+import 'package:the_best_app/Functions/findTarget.dart';
 import 'package:the_best_app/models/targetTypes.dart';
 
 class SummaryPage extends StatelessWidget {

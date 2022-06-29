@@ -13,8 +13,8 @@ import 'package:the_best_app/models/fitbitDataTypes.dart';
 import 'package:the_best_app/Screens/PointsScreens/pointsPage.dart';
 
 //Import Functions and Useful things
-import 'package:the_best_app/functions/dateFormatter.dart';
-import 'package:the_best_app/functions/elaborateDataFunctions.dart';
+import 'package:the_best_app/Functions/dateFormatter.dart';
+import 'package:the_best_app/Functions/elaborateDataFunctions.dart';
 import 'package:the_best_app/Utils/stringsKeywords.dart';
 
 class FetchPage extends StatefulWidget {

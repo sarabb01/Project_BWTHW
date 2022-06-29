@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:the_best_app/Database/Entities/FitbitTables.dart';
-import 'package:the_best_app/functions/createchartdata.dart';
+import 'package:the_best_app/Functions/createchartdata.dart';
 
 class StackedBarChart extends StatelessWidget {
   final List<charts.Series<dynamic, String>> seriesList;

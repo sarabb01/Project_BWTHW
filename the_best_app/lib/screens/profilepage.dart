@@ -8,7 +8,7 @@ import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/Utils/back_page_button.dart';
-import 'package:the_best_app/functions/dateFormatter.dart';
+import 'package:the_best_app/Functions/dateFormatter.dart';
 import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
 
 class Profilepage extends StatelessWidget {

@@ -11,9 +11,9 @@ import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Utils/legends.dart';
 
 //Functions
-import 'package:the_best_app/functions/createchartdata.dart';
-import 'package:the_best_app/functions/dateFormatter.dart';
-import 'package:the_best_app/functions/elaborateDataFunctions.dart';
+import 'package:the_best_app/Functions/createchartdata.dart';
+import 'package:the_best_app/Functions/dateFormatter.dart';
+import 'package:the_best_app/Functions/elaborateDataFunctions.dart';
 import 'package:the_best_app/Utils/formats.dart';
 
 //WIDGETS

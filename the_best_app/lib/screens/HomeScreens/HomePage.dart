@@ -9,8 +9,8 @@ import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
 import 'package:the_best_app/Screens/RewardScreens/MyVoucherPage.dart';
 
 // FUNCTIONS
-import 'package:the_best_app/functions/elaborateDataFunctions.dart';
-import 'package:the_best_app/functions/findTarget.dart';
+import 'package:the_best_app/Functions/elaborateDataFunctions.dart';
+import 'package:the_best_app/Functions/findTarget.dart';
 
 // FLUTTER PACKAGES
 import 'package:flutter/cupertino.dart';
