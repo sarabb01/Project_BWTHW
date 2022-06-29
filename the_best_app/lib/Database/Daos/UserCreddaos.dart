@@ -12,7 +12,9 @@ abstract class UserCrededentialsDao {
   @insert
   Future<void> addUser(UsersCredentials user);
 
-  @Update(onConflict: OnConflictStrategy.replace)
+  @Update(
+      onConflict: OnConflictStrategy
+          .replace) // In ordert to avoid duplicates within the users
   Future<void> updateUserPassword(UsersCredentials user);
 
   @delete

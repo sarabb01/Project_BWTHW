@@ -17,6 +17,9 @@ abstract class FitbitDao {
   @delete
   Future<void> deleteAllFitbitData(List<myFitbitData> newdata);
 
-  @Update(onConflict: OnConflictStrategy.replace)
+  @Update(
+      onConflict: OnConflictStrategy
+          .replace) // In ordert to avoid duplicates within the users
+
   Future<void> updateFitbitData(myFitbitData newdata);
 }

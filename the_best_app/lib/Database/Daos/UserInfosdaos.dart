@@ -12,7 +12,9 @@ abstract class UserInfosDao {
   @insert
   Future<void> addUserInfos(UserInfos user);
 
-  @Update(onConflict: OnConflictStrategy.replace)
+  @Update(
+      onConflict: OnConflictStrategy
+          .replace) // In ordert to avoid duplicates within the users
   Future<void> updateUserInfos(UserInfos user);
 
   @delete
