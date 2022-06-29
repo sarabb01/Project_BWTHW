@@ -1,11 +1,19 @@
 import 'package:floor/floor.dart';
 import 'UserCreds.dart';
 
-// TABLE STRUCTURE
-// Table Name : UserInfos
-// Columns : ID(int)
-//           ID_from_User_Cred(int)
-//           discount_code(String)
+//      TABLE STRUCTURE
+// Table Name :
+//            VoucherList
+// Attributes :
+//           id(int,Primary Key)
+//           userId(int,Foreign Key);
+//           discount_code(String);
+//           discount(String);
+//           shop_name(String);
+//           QRcode_path(String);
+//           discount_code(String);
+//           front_image_path(String);
+
 @Entity(foreignKeys: [
   ForeignKey(
     childColumns: ['userid'],
