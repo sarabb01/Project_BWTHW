@@ -20,6 +20,5 @@ abstract class FitbitDao {
   @Update(
       onConflict: OnConflictStrategy
           .replace) // In ordert to avoid duplicates within the users
-
   Future<void> updateFitbitData(myFitbitData newdata);
 }

@@ -1,8 +1,10 @@
+// Database
 import 'package:the_best_app/Database/Entities/VouchersList.dart';
-import 'package:the_best_app/Database/database.dart';
 import 'package:the_best_app/Database/Entities/UserCreds.dart';
 import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'package:the_best_app/Database/Entities/UserInfos.dart';
+import 'package:the_best_app/Database/database.dart';
+// Flutter Packages
 import 'package:flutter/material.dart';
 
 class UsersDatabaseRepo extends ChangeNotifier {
@@ -31,7 +33,7 @@ class UsersDatabaseRepo extends ChangeNotifier {
   }
 
   // ######### ADDING NEW USER (From UsersCredentials Table) #########
-  //@Insert(onConflict: OnConflictStrategy.rollback) // In ordert to avoid duplicates within the users
+  //@Insert(onConflict: OnConflictStrategy.rollback)
   Future<void> addUser(UsersCredentials user) async {
     await database.user_crededentials_dao.addUser(user);
     notifyListeners();
@@ -75,7 +77,7 @@ class UsersDatabaseRepo extends ChangeNotifier {
   }
 
   // ######### ADDING NEW USER INFOS (From UserInfos Table) #########
-  //@Insert(onConflict: OnConflictStrategy.rollback) // In ordert to avoid duplicates within the users
+  //@Insert(onConflict: OnConflictStrategy.rollback)
   Future<void> addUserInfos(UserInfos user) async {
     await database.user_infos_dao.addUserInfos(user);
     notifyListeners();
@@ -112,7 +114,7 @@ class UsersDatabaseRepo extends ChangeNotifier {
   }
 
   // ######### ADDING NEW USER VOUCHER (From VoucherList Table)) #########
-  //@Insert(onConflict: OnConflictStrategy.rollback) // In ordert to avoid duplicates within the users
+  //@Insert(onConflict: OnConflictStrategy.rollback)
   Future<void> addUserVoucher(VoucherList voucher) async {
     await database.voucher_dao.addUserVoucher(voucher);
     notifyListeners();
@@ -139,62 +141,42 @@ class UsersDatabaseRepo extends ChangeNotifier {
     notifyListeners();
   }
 
-  //
-  //
-  //
-  // METHODS TO MANAGE FITBIT DATA
-  //myFitbitDATA
-  //This method wraps the findAll..() method of the DAO
+  // ################################ USERS FITBIT DATA ################################
+
+  // ######### SHOWING ALL USERS FITBIT DATA (From myFitbitDATA Table) #########
+  // @Query('SELECT * FROM myFitbitData')
   Future<List<myFitbitData>> findAllFitbitData() async {
     final results = await database.fitbitDao.findAllFitbitData();
     return results;
-  } //findAll
+  }
 
-  //@Query('SELECT * FROM myFitbitData WHERE username = :username')
+  // ######### SHOWING ALL USER FITBIT DATA (From myFitbitDATA Table) #########
+  // @Query('SELECT * FROM myFitbitData WHERE username = :username')
   Future<List<myFitbitData>> findAllFitbitDataUser(String username) async {
     final results = await database.fitbitDao.findAllFitbitDataUser(username);
     return results;
   }
 
-  //This method wraps the insert..() method of the DAO.
-  //Then, it notifies the listeners that something changed.
+  // ######### ADDING USER-SPECIFIC FITBIT DATA (From myFitbitDATA Table) #########
+  // @Insert(onConflict: OnConflictStrategy.replace)
   Future<void> insertFitbitData(myFitbitData newdata) async {
     await database.fitbitDao.insertFitbitData(newdata);
     notifyListeners();
-  } //insertActivity
+  }
 
+  // ######### REMOVING USER-SPECIFIC FITBIT DATA (From myFitbitDATA Table) #########
+  // OSS: WE can delete either totally/partially user-specific fit bit data or
+  // all fit bit data dependingon the list of myFitvitData records reported
+  // @delete
   Future<void> deleteAllFitbitData(List<myFitbitData> newdata) async {
     await database.fitbitDao.deleteAllFitbitData(newdata);
     notifyListeners();
-  } //insertActivity
+  }
 
+  // ######### UPDATING USER-SPECIFIC FITBIT DATA (From myFitbitDATA Table) #########
+  // @Update(onConflict: OnConflictStrategy.replace)
   Future<void> updateFitbitData(myFitbitData data) async {
     await database.fitbitDao.updateFitbitData(data);
     notifyListeners();
   }
-
-  // // METHODS TO MANAGE POINTS DATA
-  // //Points
-  // //This method wraps the findAll..() method of the DAO
-  // Future<List<Points>> findAllPoints() async {
-  //   final results = await database.points_dao.findAllPoints();
-  //   return results;
-  // } //findAll
-
-  // //This method wraps the insert..() method of the DAO.
-  // //Then, it notifies the listeners that something changed.
-  // Future<void> insertPoints(Points newdata) async {
-  //   await database.points_dao.insertPoints(newdata);
-  //   notifyListeners();
-  // } //insertActivity
-
-  // Future<void> deletePoints(List<Points> newdata) async {
-  //   await database.points_dao.deletePoints(newdata);
-  //   notifyListeners();
-  // } //insertActivity
-
-  // Future<void> updatePoints(Points data) async {
-  //   await database.points_dao.updatePoints(data);
-  //   notifyListeners();
-  // }
 }
