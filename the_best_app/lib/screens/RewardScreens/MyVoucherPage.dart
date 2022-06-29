@@ -112,8 +112,8 @@ class MyVoucherPage extends StatelessWidget {
                                                 borderRadius:
                                                     BorderRadius.circular(15.0),
                                               ),
-                                              color: Colours.lightSalmon,
-                                              elevation: 5,
+                                              color: Colours.powderBlue,
+                                              elevation: 20,
                                               child: Center(
                                                 child: Padding(
                                                     padding: EdgeInsets.all(10),
@@ -159,10 +159,16 @@ class MyVoucherPage extends StatelessWidget {
                                                 builder:
                                                     (BuildContext context) {
                                                   return AlertDialog(
+                                                      shape: RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      15)),
                                                       backgroundColor:
-                                                          Colours.antiqueWhite,
+                                                          Colours.lightCyan,
                                                       title: Text(
-                                                          '${data[i].shop_name} Coupon',
+                                                          '${data[i].shop_name} Coupon'
+                                                              .toUpperCase(),
                                                           textAlign:
                                                               TextAlign.center,
                                                           style: TextStyle(
@@ -171,21 +177,20 @@ class MyVoucherPage extends StatelessWidget {
                                                                 FontWeight.bold,
                                                           )),
                                                       content: Container(
-                                                          width:
-                                                              MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width /
-                                                                  1.2,
-                                                          height: MediaQuery.of(
+                                                          width: MediaQuery.of(
                                                                       context)
                                                                   .size
-                                                                  .height /
-                                                              3,
+                                                                  .width /
+                                                              1.2,
+                                                          height:
+                                                              MediaQuery.of(context)
+                                                                      .size
+                                                                      .height /
+                                                                  3,
                                                           child: Padding(
                                                               padding:
-                                                                  EdgeInsets
-                                                                      .all(15),
+                                                                  EdgeInsets.all(
+                                                                      15),
                                                               child: Column(
                                                                   children: [
                                                                     Text(
@@ -225,7 +230,7 @@ class MyVoucherPage extends StatelessWidget {
                                                                                 elevation: MaterialStateProperty.all(0),
                                                                                 shape: MaterialStateProperty.all(CircleBorder()),
                                                                                 padding: MaterialStateProperty.all(EdgeInsets.all(5)),
-                                                                                backgroundColor: MaterialStateProperty.all(Colours.lightSalmon), // <-- Button color
+                                                                                backgroundColor: MaterialStateProperty.all(Colours.darkSeagreen), // <-- Button color
                                                                                 overlayColor: MaterialStateProperty.resolveWith<Color?>((states) {
                                                                                   if (states.contains(MaterialState.pressed)) return Colors.white38; // <-- Splash color
                                                                                 })),
@@ -235,7 +240,7 @@ class MyVoucherPage extends StatelessWidget {
                                                                                   children: [
                                                                                     Icon(
                                                                                       Icons.check,
-                                                                                      color: Colors.blue,
+                                                                                      color: Colors.black,
                                                                                     ),
                                                                                     Text(
                                                                                       'Use',
@@ -271,8 +276,8 @@ class MyVoucherPage extends StatelessWidget {
                                                                                 child: Column(
                                                                                   children: [
                                                                                     Icon(
-                                                                                      Icons.first_page,
-                                                                                      color: Colors.red,
+                                                                                      Icons.close,
+                                                                                      color: Colors.black,
                                                                                     ),
                                                                                     Text(
                                                                                       'Back',

@@ -1,24 +1,23 @@
-// Import packages
-import 'dart:io';
+// Flutter Packages
 import 'package:colours/colours.dart';
 import 'package:dio/dio.dart';
 import 'package:fitbitter/fitbitter.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'dart:io';
 // Database
 import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
+// Utils
 import 'package:the_best_app/Utils/stringsKeywords.dart';
-
 // Functions
-import 'package:the_best_app/functions/dateFormatter.dart';
-import 'package:the_best_app/functions/elaborateDataFunctions.dart';
-import 'package:the_best_app/functions/findTarget.dart';
-import 'package:the_best_app/models/fitbitDataTypes.dart';
+import 'package:the_best_app/Functions/dateFormatter.dart';
+import 'package:the_best_app/Functions/elaborateDataFunctions.dart';
+import 'package:the_best_app/Functions/findTarget.dart';
 
+/*
+*/
 Future<void> fetchData(BuildContext context) async {
   final sp = await SharedPreferences.getInstance();
   final String? user = sp.getString('username');

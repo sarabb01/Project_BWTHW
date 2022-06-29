@@ -23,8 +23,8 @@ import 'package:the_best_app/Utils/bar_chart.dart';
 //DATABASE AND REPO
 import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
-import 'package:the_best_app/functions/fetchdata.dart';
-import 'package:the_best_app/functions/findTarget.dart';
+import 'package:the_best_app/Functions/fetchdata.dart';
+import 'package:the_best_app/Functions/findTarget.dart';
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
 import 'package:the_best_app/Screens/PointsScreens/summaryPage.dart';
 import 'package:the_best_app/models/targetTypes.dart';

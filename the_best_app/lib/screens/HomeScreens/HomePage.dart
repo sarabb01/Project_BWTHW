@@ -223,6 +223,9 @@ class _HomepageState extends State<HomePage>
                                                           context,
                                                           listen: false)
                                                       .findAllFitbitData();
+                                              final sp = await SharedPreferences
+                                                  .getInstance();
+                                              sp.setDouble('Points', 0);
                                               print(
                                                   'Days to delete ${allData.length}');
                                               await Provider.of<
