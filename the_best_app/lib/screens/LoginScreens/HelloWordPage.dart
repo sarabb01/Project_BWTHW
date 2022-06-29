@@ -118,7 +118,6 @@ class _HelloWordPageState extends State<HelloWordPage> {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       final data = snapshot.data as List<UsersCredentials>;
-                      //If the Meal table is empty, show a simple Text, otherwise show the list of meals using a ListView.
                       return data.length == 0
                           ? ElevatedButton(
                               child: Text('No Users Registered Yet',
@@ -154,14 +153,12 @@ class _HelloWordPageState extends State<HelloWordPage> {
                                   ),
                                 );
                               });
-                    } //if
-                    else {
+                    } else {
                       return CircularProgressIndicator();
-                    } //else
-                  }, //FutureBuilder builder
+                    }
+                  },
                 );
-              } //Consumer-builder
-                      ),
+              }),
             )));
   }
 }
@@ -188,7 +185,7 @@ Widget WelcomePage_Form(
               fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
         ),
         onPressed: () {
-          Navigator.pushNamed(context, route);
+          Navigator.pushReplacementNamed(context, route);
         },
       ),
     ),
