@@ -1,10 +1,21 @@
+// Flutter packages
 import 'package:awesome_circular_chart/awesome_circular_chart.dart';
 import 'package:colours/colours.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+
+// Database
 import 'package:the_best_app/Database/Entities/FitbitTables.dart';
-import 'package:the_best_app/functions/elaborateDataFunctions.dart';
+import 'package:the_best_app/Functions/elaborateDataFunctions.dart';
+
+// Models
 import 'package:the_best_app/models/targetTypes.dart';
+
+/*
+Function Description:
+This function takes the data (Fitbit data) and the target in input and gives in output data
+in the correct format to generate charts
+*/
 
 List<CircularStackEntry> createChartData(myFitbitData today, String target) {
   final List values = Target().targets[target]!;
@@ -66,7 +77,7 @@ List<charts.Series<DailyScore, String>> createBarData(
         fillColorFn: (_, __) {
           if (today_score.any((item) => item < 1)) {
             return charts.ColorUtil.fromDartColor(Color(0xFFEF9A9A));
-            //MaterialPalette.deepOrange.shadeDefault.lighter;
+            //MaterialPalette.red.shadeDefault.lighter;
           } else {
             return charts.ColorUtil.fromDartColor(Color(0xFFA5D6A7));
           }

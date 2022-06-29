@@ -1,22 +1,30 @@
+// Flutter packages
 import 'package:awesome_circular_chart/awesome_circular_chart.dart';
 import 'package:colours/colours.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
+
+// Screens
+import 'package:the_best_app/Screens/PointsScreens/pointsPage.dart';
+
+// Database
 import 'package:the_best_app/Database/Entities/FitbitTables.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
-import 'package:the_best_app/Screens/PointsScreens/pointsPage.dart';
+
+// Functions
+import 'package:the_best_app/Functions/elaborateDataFunctions.dart';
+import 'package:the_best_app/Functions/findTarget.dart';
+import 'package:the_best_app/Functions/createChartdata.dart';
+import 'package:the_best_app/Functions/dateFormatter.dart';
+
+// Widgets and models
 import 'package:the_best_app/Utils/back_page_button.dart';
 import 'package:the_best_app/Utils/legends.dart';
 import 'package:the_best_app/Utils/radial_chart.dart';
-import 'package:the_best_app/functions/createchartdata.dart';
-import 'package:the_best_app/functions/dateFormatter.dart';
-import 'package:the_best_app/functions/elaborateDataFunctions.dart';
-import 'package:the_best_app/functions/findTarget.dart';
 import 'package:the_best_app/models/targetTypes.dart';
 
 class SummaryPage extends StatelessWidget {
-  //ShoppingPage({Key? key}) : super(key: key);
   static const route =
       '/hellowordpage/loginpage/homepage/pointspage/summarypage';
   static const routename = 'Summary';
@@ -34,7 +42,7 @@ class SummaryPage extends StatelessWidget {
         title: Text(SummaryPage.routename),
         actions: [
           IconButton(
-              // Questo bottone serve per avere le informazioni!!
+              //This button shows the target
               iconSize: 40,
               tooltip: 'Info',
               icon: Icon(Icons.question_mark_rounded),
@@ -71,8 +79,6 @@ class SummaryPage extends StatelessWidget {
             children: [
               Text(
                 'Here you can see a resume of your daily points',
-                //textAlign: TextAlign.center,
-                //style: TextStyle(fontSize: 15),
               ),
               SizedBox(height: 20),
               Legend_bar(),
@@ -190,7 +196,9 @@ class SummaryPage extends StatelessWidget {
     );
   } //build
 
-} //Page
+} //SummaryPage
+
+// This function converts the date into D-M-Y format
 
 String myDate(int date) {
   return dateFormatter(
@@ -198,6 +206,7 @@ String myDate(int date) {
       opt: 2);
 }
 
+// This widget creates a radial chart for every listTile
 class myAlert extends StatelessWidget {
   final List<CircularStackEntry> chartData;
   final List<double> pointsData;
@@ -219,14 +228,15 @@ class myAlert extends StatelessWidget {
         SingleChildScrollView(
             scrollDirection: Axis.horizontal, child: Legend_rad())
       ]),
-      titleTextStyle: TextStyle(color: Colors.black), //fontSize: 10),
+      titleTextStyle: TextStyle(color: Colors.black),
       content: Container(
           child: RadialChart(chartData: chartData, pointsData: pointsData)),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-      //margin: EdgeInsets.fromLTRB(50, 450, 50, 200),
     );
   }
 }
+
+// This function sets the font to bold if the target is not reached, otherwise the font is set to normal
 
 List<dynamic> _ismissing(myFitbitData fitbit2, List values) {
   List output = [true, true, true, true];

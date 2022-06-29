@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
+// Flutter Packages
 import 'package:flutter/material.dart';
 
+// WIDGET NOT USED IN THIS VERSION OF THE APP
 class checkboxWidget extends StatefulWidget {
   const checkboxWidget({Key? key}) : super(key: key);
   @override

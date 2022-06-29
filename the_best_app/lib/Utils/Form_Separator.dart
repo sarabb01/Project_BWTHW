@@ -1,3 +1,4 @@
+// Flutter Packages
 import 'package:flutter/material.dart';
 
 class FormSeparator extends StatelessWidget {
@@ -39,6 +40,5 @@ class FormSeparator extends StatelessWidget {
         ),
       ),
     );
-  } // build
-
-} // FormSeparator
+  }
+}

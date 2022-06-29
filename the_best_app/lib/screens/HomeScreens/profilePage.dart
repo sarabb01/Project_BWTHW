@@ -1,21 +1,28 @@
+// Flutter Packages
 import 'package:colours/colours.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+// Database
 import 'package:the_best_app/Database/Entities/UserCreds.dart';
 import 'package:the_best_app/Database/Entities/UserInfos.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
+
+// Screens
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
+
+// Utils
 import 'package:the_best_app/Utils/back_page_button.dart';
-import 'package:the_best_app/functions/dateFormatter.dart';
-import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
+
+// Functions
+import 'package:the_best_app/Functions/dateFormatter.dart';
 
 class Profilepage extends StatelessWidget {
   Profilepage({Key? key}) : super(key: key);
 
   static const route = '/helloworldpage/loginpage/homepage/profilepage';
-  //static const route = '/profilepage';
   static const routename = 'Profilepage';
 
   @override
@@ -35,10 +42,8 @@ class Profilepage extends StatelessWidget {
                         title: Text('Confirmation required'),
                         content: Text(
                             'WARNING!\nIf you continue, your account and all your data will be deleted.\nAre you sure to proceed?'),
-                        //color: Colors.grey[100],
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.0)),
-                        //margin: EdgeInsets.fromLTRB(50, 450, 50, 200),
                         actions: [
                           Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -119,8 +124,6 @@ class Profilepage extends StatelessWidget {
                                         if (snapshot.hasData) {
                                           final data =
                                               snapshot.data as UserInfos;
-
-                                          //print(data.name);
                                           return Padding(
                                             padding: const EdgeInsets.only(
                                                 top: 20,

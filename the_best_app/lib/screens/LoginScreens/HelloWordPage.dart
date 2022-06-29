@@ -1,14 +1,12 @@
-// APP Screens
+// Screens
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
-import 'package:the_best_app/Screens/infoPage2.dart';
-import 'package:the_best_app/screens/infopage.dart';
+import 'package:the_best_app/Screens/HomeScreens/infoPage.dart';
 import 'LoginPage.dart';
 import 'RegistrationPage.dart';
-// DATABASE
+// Database
 import 'package:the_best_app/Repository/database_repository.dart';
-import 'package:the_best_app/Database/Daos/UserCreddaos.dart';
 import 'package:the_best_app/Database/Entities/UserCreds.dart';
-// PACKAGES
+// Flutter Packages
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -39,7 +37,7 @@ class _HelloWordPageState extends State<HelloWordPage> {
       Navigator.pushReplacementNamed(context, HomePage.route,
           arguments: {'username': sp.getString('username')});
     }
-  } //_checkLogin
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +57,7 @@ class _HelloWordPageState extends State<HelloWordPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Padding(
-                padding:
-                    EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 10),
+                padding: EdgeInsets.only(left: 20, top: 20, right: 20),
                 child: Center(
                   child: Image.asset(
                     'assets/Images/logoblack.png',
@@ -71,8 +68,7 @@ class _HelloWordPageState extends State<HelloWordPage> {
                 ),
               ),
               Padding(
-                padding:
-                    EdgeInsets.only(left: 16, top: 10, right: 16, bottom: 10),
+                padding: EdgeInsets.only(left: 16, right: 16, bottom: 10),
                 child: Text(
                   'Welcome!',
                   textAlign: TextAlign.center,
@@ -87,11 +83,11 @@ class _HelloWordPageState extends State<HelloWordPage> {
                   screenSize, 'Sign In', context, RegistrationPage.route),
               Padding(
                 padding:
-                    EdgeInsets.only(left: 40, top: 40, right: 40, bottom: 40),
+                    EdgeInsets.only(left: 40, top: 150, right: 40, bottom: 40),
                 child: Column(children: [
                   Text(
                     'Before getting started you should know something more about this app, so click the button below',
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 18),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(
@@ -116,9 +112,6 @@ class _HelloWordPageState extends State<HelloWordPage> {
             child: Center(
               child:
                   Consumer<UsersDatabaseRepo>(builder: (context, dbr, child) {
-                //The logic is to query the DB for the entire list of Meal using dbr.findAllMeals()
-                //and then populate the ListView accordingly.
-                //We need to use a FutureBuilder since the result of dbr.findAllMeals() is a Future.
                 return FutureBuilder(
                   future: dbr.findAllUsers(),
                   builder: (context, snapshot) {
@@ -139,7 +132,6 @@ class _HelloWordPageState extends State<HelloWordPage> {
                           : ListView.builder(
                               itemCount: data.length,
                               itemBuilder: (context, i) {
-                                //Here, we are using a Card to show a Meal
                                 return Card(
                                   elevation: 5,
                                   child: ListTile(
@@ -161,14 +153,12 @@ class _HelloWordPageState extends State<HelloWordPage> {
                                   ),
                                 );
                               });
-                    } //if
-                    else {
+                    } else {
                       return CircularProgressIndicator();
-                    } //else
-                  }, //FutureBuilder builder
+                    }
+                  },
                 );
-              } //Consumer-builder
-                      ),
+              }),
             )));
   }
 }

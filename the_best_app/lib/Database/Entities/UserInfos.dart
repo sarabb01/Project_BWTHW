@@ -1,16 +1,17 @@
 import 'package:floor/floor.dart';
 import 'UserCreds.dart';
 
-// TABLE STRUCTURE
-// Table Name : UserInfos
-// Columns : ID(int)
-//           ID_from_User_Cred(int)
-//           USERNAME(String)
-//           Name(String)
-//           Surname(String)
-//           Gender(String)
-//           Date of Birth (DateTime)
-//           User Target (String)
+//      TABLE STRUCTURE
+// Table Name :
+//          UserInfos
+// Attributes :
+//           id(int,Primary Key)
+//           userId(int,Foreign Key)
+//           name(String)
+//           surname(String)
+//           gender(String)
+//           dateofbirth(DateTime)
+//           usertarget(String)
 @Entity(foreignKeys: [
   ForeignKey(
     childColumns: ['userid'],

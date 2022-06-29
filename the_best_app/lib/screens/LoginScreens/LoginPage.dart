@@ -5,14 +5,20 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-// APP Screens
+
+// Utils
+import 'package:the_best_app/Utils/back_page_button.dart';
+
+// Screens
 import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Screens/LoginScreens/ForgotPasswordPage.dart';
-// DATA PERSISTENCE
-import 'package:the_best_app/Database/Entities/UserCreds.dart';
+
+// Database
 import 'package:the_best_app/Repository/database_repository.dart';
-import 'package:the_best_app/functions/checkAuthorization.dart';
+
+// Functions
+import 'package:the_best_app/Functions/checkAuthorization.dart';
 
 class LoginPage extends StatefulWidget {
   static const route = '/hellowordpage/loginpage';
@@ -23,8 +29,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _log_in_settings extends State<LoginPage> {
-  late TextEditingController _username; // = TextEditingController();
-  late TextEditingController _password; // = TextEditingController();
+  late TextEditingController _username;
+  late TextEditingController _password;
   bool obscure_text = true;
 
   bool user_submitted = false;
@@ -116,7 +122,7 @@ class _log_in_settings extends State<LoginPage> {
       //If 'username is set, push the HomePage
       Navigator.pushReplacementNamed(context, HomePage.route);
     }
-  } //_checkLogin
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -369,34 +375,5 @@ class _log_in_settings extends State<LoginPage> {
         ])),
       ),
     );
-  }
-
-  Widget Back_Page(
-      List<double> edge_insets, BuildContext context, String pageroute) {
-    return Padding(
-        padding: EdgeInsets.only(
-            left: edge_insets[0],
-            right: edge_insets[1],
-            bottom: edge_insets[2],
-            top: edge_insets[3]),
-        child: ElevatedButton(
-            style: ButtonStyle(
-                shape: MaterialStateProperty.all(CircleBorder()),
-                padding: MaterialStateProperty.all(EdgeInsets.all(5)),
-                backgroundColor: MaterialStateProperty.all(
-                    Colours.darkSeagreen), // <-- Button color
-                overlayColor:
-                    MaterialStateProperty.resolveWith<Color?>((states) {
-                  if (states.contains(MaterialState.pressed))
-                    return Colors.red; // <-- Splash color
-                })),
-            onPressed: (() async {
-              await Navigator.pushReplacementNamed(context, pageroute);
-            }),
-            child: Icon(
-              Icons.first_page,
-              color: Colors.white,
-              size: 30,
-            )));
   }
 }

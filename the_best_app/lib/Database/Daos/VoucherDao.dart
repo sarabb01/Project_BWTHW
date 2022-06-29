@@ -1,4 +1,6 @@
+// Flutter Packages
 import 'package:floor/floor.dart';
+// Screens
 import 'package:the_best_app/Database/Entities/VouchersList.dart';
 
 @dao
@@ -9,7 +11,9 @@ abstract class VoucherDao {
   @insert
   Future<void> addUserVoucher(VoucherList voucher);
 
-  @Update(onConflict: OnConflictStrategy.replace)
+  @Update(
+      onConflict: OnConflictStrategy
+          .replace) // In ordert to avoid duplicates within the users
   Future<void> updateUserVoucher(VoucherList voucher);
 
   @delete

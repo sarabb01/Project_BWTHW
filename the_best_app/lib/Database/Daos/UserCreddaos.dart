@@ -1,4 +1,6 @@
+// Flutter Packages
 import 'package:floor/floor.dart';
+// Screens
 import 'package:the_best_app/Database/Entities/UserCreds.dart';
 
 @dao
@@ -12,7 +14,9 @@ abstract class UserCrededentialsDao {
   @insert
   Future<void> addUser(UsersCredentials user);
 
-  @Update(onConflict: OnConflictStrategy.replace)
+  @Update(
+      onConflict: OnConflictStrategy
+          .replace) // In ordert to avoid duplicates within the users
   Future<void> updateUserPassword(UsersCredentials user);
 
   @delete

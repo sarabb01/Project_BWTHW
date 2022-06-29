@@ -1,21 +1,28 @@
-import 'dart:ffi';
-
+// Flutter packages
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'dart:ffi';
 import 'package:random_string/random_string.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+// Screens
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
+
+// Database
+import 'package:the_best_app/Database/Entities/VouchersList.dart';
+import 'package:the_best_app/Repository/database_repository.dart';
+
+// Widgets and models
 import 'package:the_best_app/Utils/back_page_button.dart';
 import 'package:the_best_app/Utils/checkBoxWidget.dart';
 import 'package:the_best_app/models/expList.dart';
 import 'package:the_best_app/models/shopList.dart';
 
 class QRcodePage extends StatelessWidget {
-  //QRcodePage({Key? key}) : super(key: key);
-  int item;
-  Map list;
+  int item; // ID Current Experience/Shop List
+  Map list; // Current Experience/Shop Map
   QRcodePage({required this.item, required this.list});
 
   static const route =
@@ -25,9 +32,10 @@ class QRcodePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('${QRcodePage.routename} built');
-    final key = list.keys.elementAt(item);
-    final place = list[key]![1];
-    final prize = list[key]![2];
+    final key = list.keys.elementAt(item); // Key (Experienxe/Shop Name)
+    final place = list[key]![1]; // Experience/Shop Location
+    final prize = list[key]![2]; // Experience/Shop Disconut Voucher
+    final String web_code = randomAlphaNumeric(10).toUpperCase(); // Web Code
     return Scaffold(
         appBar: AppBar(
           leading: Back_Page([10, 10, 5, 5], context, PreferencePage.route),
@@ -56,20 +64,20 @@ class QRcodePage extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  randomAlphaNumeric(10),
+                  web_code,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                  textAlign: TextAlign.center,
                 ),
-                IconButton(
+                SizedBox(height: 20),
+                ElevatedButton(
                     onPressed: () {
                       showDialog(
                           context: context,
                           builder: (context) {
                             return Dialog(
                                 insetAnimationDuration: Duration(seconds: 2),
-                                //color: Colors.grey[100],
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12.0)),
-                                //margin: EdgeInsets.fromLTRB(50, 450, 50, 200),
                                 child: Container(
                                   width: 200,
                                   height: 100,
@@ -83,11 +91,12 @@ class QRcodePage extends StatelessWidget {
                                 ));
                           });
                     },
-                    icon: Icon(
+                    child: Icon(
                       Icons.info,
-                      color: Colors.grey,
+                      color: Colors.white,
+                      size: 30,
                     )),
-                SizedBox(height: 20),
+                SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: () {
                     //This function will subtract points;
@@ -95,13 +104,16 @@ class QRcodePage extends StatelessWidget {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            title: Text('Confirmation required'),
+                            title: Text(
+                              'Confirmation required',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
                             content: Text(
-                                'After confirmation, the required points will be subtracted from your total score.\nYou will find your available vouchers in the Home page'),
-                            //color: Colors.grey[100],
+                                'After confirmation, the required points will be subtracted from your total score.\nYou will find your available vouchers in the Home page',
+                                textAlign: TextAlign.center),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12.0)),
-                            //margin: EdgeInsets.fromLTRB(50, 450, 50, 200),
                             actions: [
                               Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -110,7 +122,9 @@ class QRcodePage extends StatelessWidget {
                                         onPressed: () async {
                                           final sp = await SharedPreferences
                                               .getInstance();
-                                          final spent_points = list[key]![0];
+
+                                          final double spent_points =
+                                              list[key]![0].toDouble();
                                           print(spent_points.runtimeType);
                                           final String s =
                                               sp.getString('username')! +
@@ -120,6 +134,20 @@ class QRcodePage extends StatelessWidget {
                                               sp.getDouble('Points');
                                           sp.setDouble('Points',
                                               tot_points! - spent_points);
+
+                                          int userid = sp.getInt('userid')!;
+                                          final voucher = VoucherList(
+                                              null,
+                                              userid,
+                                              list[key]![2],
+                                              key,
+                                              list[key]![3],
+                                              web_code,
+                                              list[key]![4]);
+                                          await Provider.of<UsersDatabaseRepo>(
+                                                  context,
+                                                  listen: false)
+                                              .addUserVoucher(voucher);
                                           Navigator.pushReplacementNamed(
                                               context, HomePage.route,
                                               arguments: {
@@ -130,15 +158,22 @@ class QRcodePage extends StatelessWidget {
                                         icon: Icon(
                                           Icons.check_circle,
                                           color: Theme.of(context).primaryColor,
+                                          size: 40,
                                         )),
                                     //},
                                     //),
+                                    SizedBox(
+                                      width: 30,
+                                    ),
                                     IconButton(
                                         onPressed: () {
                                           Navigator.pop(context);
                                         },
-                                        icon: Icon(Icons.cancel_rounded,
-                                            color: Colors.red)),
+                                        icon: Icon(
+                                          Icons.cancel_rounded,
+                                          color: Colors.red,
+                                          size: 40,
+                                        )),
                                   ])
                             ],
                             actionsAlignment: MainAxisAlignment.center,

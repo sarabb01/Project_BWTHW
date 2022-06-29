@@ -1,4 +1,4 @@
-//PACKAGES
+// Flutter packages
 import 'package:awesome_circular_chart/awesome_circular_chart.dart';
 import 'package:colours/colours.dart';
 import 'package:floor/floor.dart';
@@ -7,30 +7,29 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:shared_preferences/shared_preferences.dart';
+
+// Screens
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
-import 'package:the_best_app/Utils/legends.dart';
-
-//Functions
-import 'package:the_best_app/functions/createchartdata.dart';
-import 'package:the_best_app/functions/dateFormatter.dart';
-import 'package:the_best_app/functions/elaborateDataFunctions.dart';
-import 'package:the_best_app/Utils/formats.dart';
-
-//WIDGETS
-import 'package:the_best_app/Utils/radial_chart.dart';
-import 'package:the_best_app/Utils/bar_chart.dart';
-
-//DATABASE AND REPO
-import 'package:the_best_app/Database/Entities/FitbitTables.dart';
-import 'package:the_best_app/Repository/database_repository.dart';
-import 'package:the_best_app/functions/fetchdata.dart';
-import 'package:the_best_app/functions/findTarget.dart';
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
 import 'package:the_best_app/Screens/PointsScreens/summaryPage.dart';
+
+//Functions
+import 'package:the_best_app/Functions/createChartdata.dart';
+import 'package:the_best_app/Functions/dateFormatter.dart';
+import 'package:the_best_app/Functions/elaborateDataFunctions.dart';
+import 'package:the_best_app/Functions/fetchData.dart';
+import 'package:the_best_app/Functions/findTarget.dart';
+
+// Widgets and models
+import 'package:the_best_app/Utils/radial_chart.dart';
+import 'package:the_best_app/Utils/bar_chart.dart';
+import 'package:the_best_app/Utils/legends.dart';
+import 'package:the_best_app/Utils/formats.dart';
 import 'package:the_best_app/models/targetTypes.dart';
 
-// import 'package:syncfusion_flutter_charts/charts.dart';
-// import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+// Database
+import 'package:the_best_app/Database/Entities/FitbitTables.dart';
+import 'package:the_best_app/Repository/database_repository.dart';
 
 class PointsPage extends StatelessWidget {
   static const route = '/hellowordpage/loginpage/homepage/pointspage';
@@ -59,8 +58,6 @@ class PointsPage extends StatelessWidget {
                           return Colors.white38; // <-- Splash color
                       })),
                   child: Icon(Icons.home),
-                  // IconButton(
-                  //     icon: Icon(Icons.home),
                   onPressed: () {
                     Navigator.pushNamed(context, HomePage.route);
                   }),
@@ -70,7 +67,7 @@ class PointsPage extends StatelessWidget {
               Row(
                 children: [
                   IconButton(
-                      // Questo bottone serve per fetchare!!
+                      // This button fetches data!
                       iconSize: 40,
                       tooltip: 'Update',
                       color: Colors.green[100],
@@ -88,7 +85,7 @@ class PointsPage extends StatelessWidget {
                       },
                       icon: Icon(Icons.update)),
                   IconButton(
-                      // Questo bottone serve per avere le informazioni!!
+                      // This button gets information!
                       iconSize: 40,
                       tooltip: 'Info',
                       icon: Icon(Icons.info),
@@ -127,8 +124,6 @@ class PointsPage extends StatelessWidget {
                       final fitbit = data[0] as List<myFitbitData>;
                       final target = data[1] as String;
 
-                      //print(
-                      //    '${dateFormatter(DateTime.fromMillisecondsSinceEpoch((fitbit[fitbit.length - 1].keyDate) * Duration.millisecondsPerDay))}');
                       if (fitbit.length > 0) {
                         final today = fitbit[fitbit.length - 1];
                         final todayPoints = elaboratePoints(today, target);
@@ -177,7 +172,6 @@ class PointsPage extends StatelessWidget {
                                                           FontWeight.bold)),
                                               Text(
                                                   'Sleep:  ${today.sleepHours}/${values[3]} (${(todayPoints[3]).toStringAsFixed(2)})',
-                                                  // 'Sleep ${(todayPoints[3] * 100).toStringAsFixed(1)}% (${today.sleepHours} / ${values[3]})
                                                   style: TextStyle(
                                                       color: Colors.redAccent,
                                                       fontWeight:
@@ -188,12 +182,11 @@ class PointsPage extends StatelessWidget {
                                           shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(12.0)),
-                                          //margin: EdgeInsets.fromLTRB(50, 450, 50, 200),
                                           actions: [
                                             IconButton(
                                                 onPressed: () {
                                                   Navigator.pop(context);
-                                                }, // TO BE IMPLEMENTED
+                                                },
                                                 icon: Icon(
                                                   Icons.check_circle,
                                                   color: Theme.of(context)
@@ -253,11 +246,9 @@ class PointsPage extends StatelessWidget {
                     }
                   });
             }),
-            // SizedBox(height: 5),
             Legend_rad(),
             SizedBox(height: 15),
             Divider(color: Colors.black),
-            // Text('SUMMARY of  DAYS'),
             Consumer<UsersDatabaseRepo>(builder: (context, dbr, child) {
               return FutureBuilder(
                   initialData: null,
@@ -265,7 +256,6 @@ class PointsPage extends StatelessWidget {
                     dbr.findAllFitbitDataUser(username),
                     findTarget(context, username)
                   ]),
-                  //future: dbr.findAllSleepData(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       final data = snapshot.data as List<Object>;
@@ -315,6 +305,7 @@ class PointsPage extends StatelessWidget {
 
 } //Page
 
+// This function computes the total of each variable (not used here, but could be useful)
 List<int> computeSum(List<myFitbitData> input) {
   int tot1 = 0;
   int tot2 = 0;
@@ -328,12 +319,3 @@ List<int> computeSum(List<myFitbitData> input) {
   }
   return [tot1, tot2, tot3, tot4];
 }
-
-// double computeTotalPoints(List<myFitbitData> input) {
-//   double score = 0;
-//   for (int i = 0; i < input.length; i++) {
-//     score +=
-//         elaboratePoints(input[i]).fold(0, (prev, element) => prev + element);
-//   }
-//   return double.parse(score.toStringAsFixed(2));
-// }

@@ -1,17 +1,17 @@
-// PACKAGES
-import 'dart:ui';
-
+// Flutter Packages
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter/material.dart';
 import 'package:colours/colours.dart';
-// APP Screens
+
+// Utils
+import 'package:the_best_app/Utils/back_page_button.dart';
+
+// Screens
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
-import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Screens/LoginScreens/RegistrationPage.dart';
-// DATA PERSISTENCE
+
+// Database
 import 'package:the_best_app/Database/Entities/UserCreds.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
 
@@ -24,8 +24,8 @@ class ForgotPasswordPage extends StatefulWidget {
 }
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
-  late TextEditingController _username; // = TextEditingController();
-  late TextEditingController _password; // = TextEditingController();
+  late TextEditingController _username;
+  late TextEditingController _password;
   bool obscure_text = true;
 
   bool user_submitted = false;
@@ -360,34 +360,5 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     } else {
       return false;
     }
-  }
-
-  Widget Back_Page(
-      List<double> edge_insets, BuildContext context, String pageroute) {
-    return Padding(
-        padding: EdgeInsets.only(
-            left: edge_insets[0],
-            right: edge_insets[1],
-            bottom: edge_insets[2],
-            top: edge_insets[3]),
-        child: ElevatedButton(
-            style: ButtonStyle(
-                shape: MaterialStateProperty.all(CircleBorder()),
-                padding: MaterialStateProperty.all(EdgeInsets.all(5)),
-                backgroundColor: MaterialStateProperty.all(
-                    Colours.darkSeagreen), // <-- Button color
-                overlayColor:
-                    MaterialStateProperty.resolveWith<Color?>((states) {
-                  if (states.contains(MaterialState.pressed))
-                    return Colors.red; // <-- Splash color
-                })),
-            onPressed: (() async {
-              await Navigator.pushReplacementNamed(context, pageroute);
-            }),
-            child: Icon(
-              Icons.first_page,
-              color: Colors.white,
-              size: 30,
-            )));
   }
 }

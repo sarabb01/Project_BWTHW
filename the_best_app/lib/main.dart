@@ -2,47 +2,40 @@
 import 'package:colours/colours.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-// Login Screens
+// Registration and Login Screens
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/ForgotPasswordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/RegistrationPage.dart';
-import 'package:the_best_app/Screens/PointsScreens/summaryPage.dart';
-import 'package:the_best_app/Screens/infoPage2.dart';
-import 'package:the_best_app/Screens/infopage.dart';
-// Home Screens
+
+// Home, Profile, Info Screens
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
-import 'package:the_best_app/Screens/PointsScreens/fetchPage.dart';
 import 'package:the_best_app/Screens/PointsScreens/fitbitAuthPage.dart';
+import 'package:the_best_app/Screens/HomeScreens/infoPage2.dart';
+import 'package:the_best_app/Screens/HomeScreens/infoPage.dart';
+import 'package:the_best_app/Screens/HomeScreens/profilePage.dart';
 
-//Profile Screens
-import 'package:the_best_app/Screens/profilepage.dart';
-
-// User Database
-import 'package:the_best_app/Database/database.dart';
-import 'package:the_best_app/Repository/database_repository.dart';
-import 'package:the_best_app/Screens/PointsScreens/pointsPage.dart';
-// RewardScreens Screens
+// Points and Reward Screens
 import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
 import 'package:the_best_app/Screens/RewardScreens/queryPage.dart';
 import 'package:the_best_app/Screens/RewardScreens/shoppingPage.dart';
 import 'package:the_best_app/Screens/RewardScreens/experiencePage.dart';
 import 'package:the_best_app/Screens/RewardScreens/QRcodePage.dart';
 import 'package:the_best_app/Screens/RewardScreens/MyVoucherPage.dart';
+import 'package:the_best_app/Screens/PointsScreens/summaryPage.dart';
+import 'package:the_best_app/Screens/PointsScreens/pointsPage.dart';
+
+// Database
+import 'package:the_best_app/Database/database.dart';
+import 'package:the_best_app/Repository/database_repository.dart';
 
 Future<void> main() async {
-  //This is a special method that use WidgetFlutterBinding to interact with the Flutter engine.
-  //This is needed when you need to interact with the native core of the app.
-  //Here, we need it since when need to initialize the DB before running the app.
   WidgetsFlutterBinding.ensureInitialized();
 
   //This opens the database.
   final AppDatabase database =
       await $FloorAppDatabase.databaseBuilder('app_database.db').build();
-  //This creates a new DatabaseRepository from the AppDatabase instance just initialized
   final users_database_repo = UsersDatabaseRepo(database: database);
-  //Here, we run the app and we provide to the whole widget tree the instance of the DatabaseRepository.
-  //That instance will be then shared through the platform and will be unique.
 
   runApp(ChangeNotifierProvider<UsersDatabaseRepo>(
     create: (context) => users_database_repo,
@@ -92,10 +85,10 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute(builder: (context) {
               return Profilepage();
             });
-          } else if (settings.name == FetchPage.route) {
-            return MaterialPageRoute(builder: (context) {
-              return FetchPage();
-            });
+            // } else if (settings.name == FetchPage.route) {
+            //   return MaterialPageRoute(builder: (context) {
+            //     return FetchPage();
+            //   });
           } else if (settings.name == PointsPage.route) {
             final args6 = settings.arguments as Map;
             return MaterialPageRoute(builder: (context) {

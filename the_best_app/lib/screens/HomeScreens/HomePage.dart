@@ -1,29 +1,28 @@
-// APP SCREENS
+// Screens
 import 'package:the_best_app/Screens/LoginScreens/HelloWordPage.dart';
 import 'package:the_best_app/Screens/LoginScreens/LoginPage.dart';
-import 'package:the_best_app/Screens/infoPage2.dart';
-import 'package:the_best_app/Screens/profilepage.dart';
+import 'package:the_best_app/Screens/HomeScreens/infoPage2.dart';
+import 'package:the_best_app/Screens/HomeScreens/profilePage.dart';
 import 'package:the_best_app/Screens/PointsScreens/fitbitAuthPage.dart';
 import 'package:the_best_app/Screens/PointsScreens/pointsPage.dart';
 import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
 import 'package:the_best_app/Screens/RewardScreens/MyVoucherPage.dart';
 
-// FUNCTIONS
-import 'package:the_best_app/functions/elaborateDataFunctions.dart';
-import 'package:the_best_app/functions/findTarget.dart';
+// Functions
+import 'package:the_best_app/Functions/elaborateDataFunctions.dart';
+import 'package:the_best_app/Functions/findTarget.dart';
 
-// FLUTTER PACKAGES
+// Flutter Packages
 import 'package:flutter/cupertino.dart';
 import 'package:colours/colours.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
-// DATABASE
+
+// Database
 import 'package:the_best_app/Repository/database_repository.dart';
 import 'package:the_best_app/Database/Entities/UserCreds.dart';
 import 'package:the_best_app/Database/Entities/FitbitTables.dart';
-
-// SE NON FUNZIONA, COMMIT 6268fb4845e60975d2fb92c6f3126a3076201e8b
 
 class HomePage extends StatefulWidget {
   static const route = '/hellowordpage/loginpage/homepage';
@@ -36,9 +35,8 @@ class HomePage extends StatefulWidget {
 class _HomepageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   late AnimationController
-      controller; // per controllare animazione di circular progress indicator, ho messo late perchè inizializzo dopo la variabile
-  //double puntiottenuti = 70; //puntiottenuti ricavati da conversione punti
-  double obiettivo = 300; //obiettivo fissato pagina preference
+      controller; // this part is necessary to control the circular progress indicator
+  double obiettivo = 300;
   String username = 'SOMETHING GONE WRONG';
   @override
   void initState() {
@@ -50,8 +48,6 @@ class _HomepageState extends State<HomePage>
     controller.repeat();
     SharedPreferences.getInstance().then((res) {
       setState(() {
-        // Return string of "useFullName"
-        // or return empty string if "userFullName" is null
         username = res.getString("username")!;
         print('1 $username');
       });
@@ -81,13 +77,6 @@ class _HomepageState extends State<HomePage>
                   style: TextStyle(fontWeight: FontWeight.bold))
               : Text(username.toUpperCase(),
                   style: TextStyle(fontWeight: FontWeight.bold)),
-          actions: [
-            // IconButton(
-            //     icon: Icon(Icons.show_chart_outlined),
-            //     onPressed: () {
-            //       Navigator.pushNamed(context, AuthPage.route);
-            //     })
-          ],
         ),
         drawer: Drawer(
           child: ListView(
@@ -170,7 +159,6 @@ class _HomepageState extends State<HomePage>
                   child: ListTile(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
-                      // side: BorderSide(color: Colours.azure)
                     ),
                     title: Text(
                       'Info',
@@ -189,7 +177,6 @@ class _HomepageState extends State<HomePage>
                 child: ListTile(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
-                      // side: BorderSide(color: Colours.azure)
                     ),
                     title: Text(
                       'Delete all points',
@@ -206,10 +193,8 @@ class _HomepageState extends State<HomePage>
                                 title: Text('Confirmation required'),
                                 content: Text(
                                     'WARNING!\nIf you continue, all your progress will be deleted and you will have to start again from zero!\nDo you want to proceed?'),
-                                //color: Colors.grey[100],
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12.0)),
-                                //margin: EdgeInsets.fromLTRB(50, 450, 50, 200),
                                 actions: [
                                   Row(
                                       mainAxisAlignment:
@@ -222,7 +207,11 @@ class _HomepageState extends State<HomePage>
                                                               UsersDatabaseRepo>(
                                                           context,
                                                           listen: false)
-                                                      .findAllFitbitData();
+                                                      .findAllFitbitDataUser(
+                                                          username);
+                                              // final sp = await SharedPreferences
+                                              //     .getInstance();
+                                              // sp.setDouble('Points', 0);
                                               print(
                                                   'Days to delete ${allData.length}');
                                               await Provider.of<
@@ -230,8 +219,9 @@ class _HomepageState extends State<HomePage>
                                                       context,
                                                       listen: false)
                                                   .deleteAllFitbitData(allData);
-                                              Navigator.pop(context);
-                                            }, // TO BE IMPLEMENTED
+                                              Navigator.pushReplacementNamed(
+                                                  context, HomePage.route);
+                                            },
                                             icon: Icon(
                                               Icons.check_circle,
                                               color: Theme.of(context)
@@ -274,161 +264,136 @@ class _HomepageState extends State<HomePage>
         body: Center(
             child: Padding(
           padding: const EdgeInsets.only(top: 10, bottom: 30),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.center,
-              //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width / 1.2,
-                  height: MediaQuery.of(context).size.height / 6,
-                  child: Image.asset('assets/Images/logoblack.png',
-                      fit: BoxFit.contain),
-                  //decoration:
-                  //BoxDecoration(border: Border.all(color: Colors.black)),
-                ),
-                SizedBox(height: 20),
-                const Text(
-                  'Points earned:',
-                  style: TextStyle(fontSize: 20),
-                ),
-                SizedBox(height: 20),
-                GestureDetector(
-                  onDoubleTap: () async {
-                    final sp = await SharedPreferences.getInstance();
-                    Navigator.pushNamed(context, PointsPage.route,
-                        arguments: {'username': sp.getString('username')});
-                  },
-                  child: Container(
-                      decoration: BoxDecoration(
-                        color: Colours.paleTurquoise,
-                        shape: BoxShape.circle,
-                      ),
-                      width: 200,
-                      height: 200,
-                      child: FutureBuilder(
-                          //child: Consumer<PointsModel>(
-                          future: SharedPreferences.getInstance(),
-
-                          // Provider.of<UsersDatabaseRepo>(context, listen: false)
-                          //     .findAllFitbitDataUser(username),
-                          // findTarget(context, username)
-
-                          builder: (context, snapshot) {
-                            //builder: (context, score, child) {
-                            if (snapshot.hasData) {
-                              // final data = snapshot.data as List<Object>;
-                              final result = snapshot.data as SharedPreferences;
-                              final String? user = result.getString('username');
-                              print('sp user: ${user}');
-
-                              return FutureBuilder(
-                                  future: Future.wait([
-                                    SharedPreferences.getInstance(),
-                                    Provider.of<UsersDatabaseRepo>(context,
-                                            listen: false)
-                                        .findAllFitbitDataUser(username),
-                                    // Provider.of<UsersDatabaseRepo>(context,
-                                    //     listen: false)
-                                    // .findAllFitbitDataUser(result.getString('username')!)
-
-                                    findTarget(context, username)
-                                  ]),
-                                  builder: (context, snapshot) {
-                                    //builder: (context, score, child) {
-                                    if (snapshot.hasData) {
-                                      final data =
-                                          snapshot.data as List<Object>;
-                                      final result =
-                                          data[0] as SharedPreferences;
-                                      final check =
-                                          data[1] as List<myFitbitData>;
-                                      final target = data[2]
-                                          as String; // check the username is correct
-                                      print('Data length ${check.length}');
-                                      print(
-                                          'Target $target'); // check is he/she has some points stored
-
-                                      final double tot = check.length != 0
-                                          ? computeTotalPoints(check, target)
-                                          : 0.0; // get all the points
-                                      final String s = username + 'SpentPoints';
-                                      final spent_points = check.length != 0 &&
-                                              result.getDouble(s) != null
-                                          ? result.getDouble(s)
-                                          : 0.0; // get the spent points
-                                      result.setDouble(
-                                          'Points',
-                                          tot -
-                                              spent_points!); // set the new points variable
-                                      if (result.getDouble('Points') != null) {
-                                        final score = result
-                                            .getDouble('Points')!
-                                            .roundToDouble(); // set the variable used for the graph
-                                        //print('points: ${result.getDouble('Points')}');
-                                        return Stack(
-                                          fit: StackFit.expand,
-                                          children: [
-                                            CircularProgressIndicator(
-                                              value: score / obiettivo,
-                                              //value: score.totalScore / obiettivo,
-                                              backgroundColor: Colors.grey[400],
-                                              color: Colours.mediumSeaGreen,
-                                              strokeWidth: 25,
-                                            ),
-                                            Center(
-                                              child: buildprogress(score),
-                                              //child: buildprogress(score.totalScore),
-                                            ),
-                                          ],
-                                        );
-                                      } else {
-                                        final score = 0.0;
-                                        return EmptyCircle(score);
-                                      }
-                                    } else {
-                                      final score = 0.0;
-                                      return EmptyCircle(score);
-                                      // return CircularProgressIndicator();
-                                    }
-                                  });
-                            } else {
-                              final score = 0.0;
-                              return EmptyCircle(score);
-                              // return CircularProgressIndicator();
-                            }
-                          })),
-                ),
-                SizedBox(height: 30),
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colours.mediumSeaGreen,
-                      textStyle: TextStyle(color: Colors.white),
-                      padding: EdgeInsets.only(
-                          top: 5, left: 10, bottom: 5, right: 10),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25.0),
-                          side: BorderSide(color: Colours.mediumSeaGreen)),
-                    ),
-                    child: Text(
-                      'CLAIM YOUR REWARD',
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, PreferencePage.route);
-                    }),
-                Container(
-                  //width: MediaQuery.of(context).size.width * 0.4,
-                  height: MediaQuery.of(context).size.height / 6,
-                  child: Image.asset(
-                    'assets/Images/present.png',
-                    fit: BoxFit.cover,
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            Container(
+              width: MediaQuery.of(context).size.width / 1.2,
+              height: MediaQuery.of(context).size.height / 6,
+              child: Image.asset('assets/Images/logoblack.png',
+                  fit: BoxFit.contain),
+            ),
+            SizedBox(height: 20),
+            const Text(
+              'Points earned:',
+              style: TextStyle(fontSize: 20),
+            ),
+            SizedBox(height: 20),
+            GestureDetector(
+              onDoubleTap: () async {
+                final sp = await SharedPreferences.getInstance();
+                Navigator.pushNamed(context, PointsPage.route,
+                    arguments: {'username': sp.getString('username')});
+              },
+              child: Container(
+                  decoration: BoxDecoration(
+                    color: Colours.paleTurquoise,
+                    shape: BoxShape.circle,
                   ),
-                )
-              ]),
+                  width: 200,
+                  height: 200,
+                  child: FutureBuilder(
+                      future: SharedPreferences.getInstance(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          final result = snapshot.data as SharedPreferences;
+                          final String? user = result.getString('username');
+                          print('sp user: ${user}');
+
+                          return FutureBuilder(
+                              future: Future.wait([
+                                SharedPreferences.getInstance(),
+                                Provider.of<UsersDatabaseRepo>(context,
+                                        listen: false)
+                                    .findAllFitbitDataUser(username),
+                                findTarget(context, username)
+                              ]),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  final data = snapshot.data as List<Object>;
+                                  final result = data[0] as SharedPreferences;
+                                  final check = data[1] as List<myFitbitData>;
+                                  final target = data[2]
+                                      as String; // check the username is correct
+                                  print('Data length ${check.length}');
+                                  print(
+                                      'Target $target'); // check if he/she has some points stored
+
+                                  final double tot = check.length != 0
+                                      ? computeTotalPoints(check, target)
+                                      : 0.0; // get all the points
+                                  final String s = username + 'SpentPoints';
+                                  final spent_points = check.length != 0 &&
+                                          result.getDouble(s) != null
+                                      ? result.getDouble(s)
+                                      : 0.0; // get the spent points
+                                  result.setDouble(
+                                      'Points',
+                                      tot -
+                                          spent_points!); // set the new points variable
+                                  if (result.getDouble('Points') != null) {
+                                    final score = result
+                                        .getDouble('Points')!
+                                        .roundToDouble(); // set the variable used for the graph
+                                    return Stack(
+                                      fit: StackFit.expand,
+                                      children: [
+                                        CircularProgressIndicator(
+                                          value: score / obiettivo,
+                                          backgroundColor: Colors.grey[400],
+                                          color: Colours.mediumSeaGreen,
+                                          strokeWidth: 25,
+                                        ),
+                                        Center(
+                                          child: buildprogress(score),
+                                        ),
+                                      ],
+                                    );
+                                  } else {
+                                    final score = 0.0;
+                                    return EmptyCircle(score);
+                                  }
+                                } else {
+                                  final score = 0.0;
+                                  return EmptyCircle(score);
+                                }
+                              });
+                        } else {
+                          final score = 0.0;
+                          return EmptyCircle(score);
+                        }
+                      })),
+            ),
+            SizedBox(height: 30),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colours.mediumSeaGreen,
+                  textStyle: TextStyle(color: Colors.white),
+                  padding:
+                      EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 10),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                      side: BorderSide(color: Colours.mediumSeaGreen)),
+                ),
+                child: Text(
+                  'CLAIM YOUR REWARD',
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, PreferencePage.route);
+                }),
+            Container(
+              height: MediaQuery.of(context).size.height / 6,
+              child: Image.asset(
+                'assets/Images/present.png',
+                fit: BoxFit.cover,
+              ),
+            )
+          ]),
         )));
-  } //build
+  }
 
   Widget EmptyCircle(double score) {
     return Stack(
@@ -487,17 +452,4 @@ class _HomepageState extends State<HomePage>
       );
     }
   }
-} //Homepage
-
-//Future<void> remove_Profile(String username, BuildContext context) async {
-//final user = await Provider.of<UsersDatabaseRepo>(context, listen: false)
-// .findUser(username);
-// Before deleting the current profile we check if is currently logged in and if is correctly signed in the database
-//if (user != null) {
-//final sp = await SharedPreferences.getInstance();
-//await sp.remove('username'); // Updating current Login session
-//await Provider.of<UsersDatabaseRepo>(context, listen: false)
-//.deleteUser(user); // Deleting User Profile
-//await Navigator.pushReplacementNamed(context, HelloWordPage.route);
-//}
-//}
+}
