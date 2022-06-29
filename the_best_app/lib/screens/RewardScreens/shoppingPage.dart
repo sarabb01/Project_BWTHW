@@ -1,17 +1,23 @@
+// Flutter packages
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+//Screens
+import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
+import 'package:the_best_app/Screens/RewardScreens/QRcodePage.dart';
+
+// Database
 import 'package:the_best_app/Database/Entities/VouchersList.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
-import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
+
+// Widgets and models
 import 'package:the_best_app/Utils/back_page_button.dart';
 import 'package:the_best_app/Utils/points_displayer.dart';
 import 'package:the_best_app/models/shopList.dart';
-import 'package:the_best_app/Screens/RewardScreens/QRcodePage.dart';
 
 class ShoppingPage extends StatelessWidget {
-  //ShoppingPage({Key? key}) : super(key: key);
   static const route =
       '/hellowordpage/loginpage/homepage/preferencepage/querypage/shoppingpage';
   static const routename = 'Shopping';
@@ -83,4 +89,4 @@ class ShoppingPage extends StatelessWidget {
     );
   } //build
 
-} //Page
+} //ShoppingPage

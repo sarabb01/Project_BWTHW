@@ -1,3 +1,4 @@
+// Flutter packages
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:colours/colours.dart';
@@ -5,10 +6,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:the_best_app/Database/Entities/VouchersList.dart';
-import 'package:the_best_app/Repository/database_repository.dart';
+
+// Screens
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
+
+// Database
+import 'package:the_best_app/Database/Entities/VouchersList.dart';
+import 'package:the_best_app/Repository/database_repository.dart';
+
+// Widgets and models
 import 'package:the_best_app/Utils/back_page_button.dart';
 
 class MyVoucherPage extends StatelessWidget {

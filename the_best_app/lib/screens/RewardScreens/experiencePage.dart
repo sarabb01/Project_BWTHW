@@ -1,18 +1,23 @@
+// Flutter packages
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+// Screens
+import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
+import 'package:the_best_app/Screens/RewardScreens/QRcodePage.dart';
+
+// Database
 import 'package:the_best_app/Database/Entities/VouchersList.dart';
 import 'package:the_best_app/Repository/database_repository.dart';
-import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
+
+// Widgets and models
 import 'package:the_best_app/Utils/back_page_button.dart';
 import 'package:the_best_app/Utils/points_displayer.dart';
 import 'package:the_best_app/models/expList.dart';
-import 'package:the_best_app/Screens/RewardScreens/QRcodePage.dart';
 
 class ExperiencePage extends StatelessWidget {
-  // ExperiencePage({Key? key}) : super(key: key);
-
   static const route =
       '/hellowordpage/loginpage/homepage/preferencepage/querypage/experience';
   static const routename = 'Experiences';
@@ -22,11 +27,9 @@ class ExperiencePage extends StatelessWidget {
   ExperiencePage({required this.city, required this.earnedPoints});
 
   final expList explist = expList();
-  //final earnedPoints = 0;
 
   @override
   Widget build(BuildContext context) {
-    //final word = ModalRoute.of(context)!.settings.arguments! as String;
     print('${ExperiencePage.routename} built');
     return Scaffold(
       appBar: AppBar(
@@ -90,5 +93,5 @@ class ExperiencePage extends StatelessWidget {
     );
   } //build
 
-} //Page
+} //ExperiencePage
 
