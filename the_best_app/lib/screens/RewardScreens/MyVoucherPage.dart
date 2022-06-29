@@ -168,9 +168,8 @@ class MyVoucherPage extends StatelessWidget {
                                                   return AlertDialog(
                                                       shape: RoundedRectangleBorder(
                                                           borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      15)),
+                                                              BorderRadius.circular(
+                                                                  15)),
                                                       backgroundColor:
                                                           Colours.lightCyan,
                                                       title: Text(
@@ -189,15 +188,15 @@ class MyVoucherPage extends StatelessWidget {
                                                                   .size
                                                                   .width /
                                                               1.2,
-                                                          height:
-                                                              MediaQuery.of(context)
-                                                                      .size
-                                                                      .height /
-                                                                  4,
+                                                          height: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .height /
+                                                              3.4,
                                                           child: Padding(
                                                               padding:
-                                                                  EdgeInsets.all(
-                                                                      15),
+                                                                  EdgeInsets
+                                                                      .all(15),
                                                               child: Column(
                                                                   children: [
                                                                     Text(
