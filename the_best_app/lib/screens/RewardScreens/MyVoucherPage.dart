@@ -210,7 +210,7 @@ class MyVoucherPage extends StatelessWidget {
                                                                           color:
                                                                               Colors.black,
                                                                           fontSize:
-                                                                              10,
+                                                                              15,
                                                                         )),
                                                                     SizedBox(
                                                                       height: 5,
