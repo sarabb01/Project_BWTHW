@@ -1,11 +1,10 @@
-// Home Screens
+// Screens
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Screens/HomeScreens/infoPage.dart';
 import 'LoginPage.dart';
 import 'RegistrationPage.dart';
 // Database
 import 'package:the_best_app/Repository/database_repository.dart';
-import 'package:the_best_app/Database/Daos/UserCreddaos.dart';
 import 'package:the_best_app/Database/Entities/UserCreds.dart';
 // Flutter Packages
 import 'package:flutter/material.dart';
@@ -38,7 +37,7 @@ class _HelloWordPageState extends State<HelloWordPage> {
       Navigator.pushReplacementNamed(context, HomePage.route,
           arguments: {'username': sp.getString('username')});
     }
-  } //_checkLogin
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -154,14 +153,12 @@ class _HelloWordPageState extends State<HelloWordPage> {
                                   ),
                                 );
                               });
-                    } //if
-                    else {
+                    } else {
                       return CircularProgressIndicator();
-                    } //else
-                  }, //FutureBuilder builder
+                    }
+                  },
                 );
-              } //Consumer-builder
-                      ),
+              }),
             )));
   }
 }
