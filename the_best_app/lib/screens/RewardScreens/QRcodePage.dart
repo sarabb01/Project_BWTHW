@@ -136,6 +136,7 @@ class QRcodePage extends StatelessWidget {
 
                                           final tot_points =
                                               sp.getDouble('Points');
+
                                           sp.setDouble('Points',
                                               tot_points! - spent_points);
 
