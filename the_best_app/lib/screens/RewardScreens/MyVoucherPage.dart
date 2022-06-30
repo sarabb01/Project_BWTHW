@@ -93,9 +93,9 @@ class MyVoucherPage extends StatelessWidget {
                                     SizedBox(
                                       height: 10,
                                     ),
-                                    CircularProgressIndicator(
-                                      strokeWidth: 10,
-                                    )
+                                    // CircularProgressIndicator(
+                                    //   strokeWidth: 10,
+                                    // )
                                   ]));
                             } else {
                               return Padding(
