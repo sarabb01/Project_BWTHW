@@ -192,7 +192,7 @@ class MyVoucherPage extends StatelessWidget {
                                                                       context)
                                                                   .size
                                                                   .height /
-                                                              3.4,
+                                                              2.5,
                                                           child: Padding(
                                                               padding:
                                                                   EdgeInsets
