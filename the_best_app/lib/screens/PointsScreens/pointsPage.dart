@@ -1,4 +1,4 @@
-//PACKAGES
+//Packages
 import 'package:awesome_circular_chart/awesome_circular_chart.dart';
 import 'package:colours/colours.dart';
 import 'package:floor/floor.dart';
