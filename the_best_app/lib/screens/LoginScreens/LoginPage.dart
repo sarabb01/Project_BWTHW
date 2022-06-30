@@ -114,7 +114,7 @@ class _log_in_settings extends State<LoginPage> {
     }
   }
 
-  //Get the SharedPreference instance and check if the value of the 'username' filed is set or not
+  //Get the SharedPreference instance and check if the value of the 'username' and 'userid' are set or not
   void _checkLogin() async {
     //Get the SharedPreference instance and check if the value of the 'username' filed is set or not
     final sp = await SharedPreferences.getInstance();

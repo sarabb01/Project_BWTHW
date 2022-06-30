@@ -38,6 +38,7 @@ class _HomepageState extends State<HomePage>
       controller; // this part is necessary to control the circular progress indicator
   double obiettivo = 300;
   String username = 'SOMETHING GONE WRONG';
+
   @override
   void initState() {
     super.initState();
@@ -69,7 +70,6 @@ class _HomepageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     print('${HomePage.routename} built');
-    // _loadPoints();
     return Scaffold(
         appBar: AppBar(
           title: username == null || username.isEmpty
