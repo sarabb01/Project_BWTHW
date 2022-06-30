@@ -1,10 +1,16 @@
+// Flutter packages
 import 'package:fitbitter/fitbitter.dart';
 import 'package:flutter/cupertino.dart';
+// Utils
 import 'package:the_best_app/Utils/stringsKeywords.dart';
 
+/*
+Function Description:
+This function checks if the token/refresh token is valid, otherwise asks the user 
+to authorize fitbit.
+*/
+
 Future<void> checkAuthorization(BuildContext context) async {
-  //final accessToken = await FitbitConnector.storage.read(key: 'fitbitAccessToken');
-  // await FitbitConnector.isTokenValid()
   if (await FitbitConnector.storage.read(key: 'fitbitAccessToken') != null) {
     print('Token ok!');
     return;

@@ -1,3 +1,4 @@
+// Flutter packages
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:colours/colours.dart';
@@ -5,10 +6,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:the_best_app/Database/Entities/VouchersList.dart';
-import 'package:the_best_app/Repository/database_repository.dart';
+
+// Screens
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
+
+// Database
+import 'package:the_best_app/Database/Entities/VouchersList.dart';
+import 'package:the_best_app/Repository/database_repository.dart';
+
+// Widgets and models
 import 'package:the_best_app/Utils/back_page_button.dart';
 
 class MyVoucherPage extends StatelessWidget {
@@ -149,7 +156,7 @@ class MyVoucherPage extends StatelessWidget {
                                                           Image.asset(
                                                             data[i]
                                                                 .front_image_path,
-                                                            scale: 6,
+                                                            scale: 7,
                                                           ),
                                                         ])),
                                               )),
@@ -161,9 +168,8 @@ class MyVoucherPage extends StatelessWidget {
                                                   return AlertDialog(
                                                       shape: RoundedRectangleBorder(
                                                           borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      15)),
+                                                              BorderRadius.circular(
+                                                                  15)),
                                                       backgroundColor:
                                                           Colours.lightCyan,
                                                       title: Text(
@@ -182,15 +188,15 @@ class MyVoucherPage extends StatelessWidget {
                                                                   .size
                                                                   .width /
                                                               1.2,
-                                                          height:
-                                                              MediaQuery.of(context)
-                                                                      .size
-                                                                      .height /
-                                                                  3,
+                                                          height: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .height /
+                                                              3.4,
                                                           child: Padding(
                                                               padding:
-                                                                  EdgeInsets.all(
-                                                                      15),
+                                                                  EdgeInsets
+                                                                      .all(15),
                                                               child: Column(
                                                                   children: [
                                                                     Text(
@@ -206,13 +212,12 @@ class MyVoucherPage extends StatelessWidget {
                                                                               15,
                                                                         )),
                                                                     SizedBox(
-                                                                      height:
-                                                                          10,
+                                                                      height: 5,
                                                                     ),
                                                                     Image.asset(
                                                                       data[i]
                                                                           .QRcode_path,
-                                                                      scale: 2,
+                                                                      scale: 3,
                                                                     ),
                                                                     SizedBox(
                                                                       height:

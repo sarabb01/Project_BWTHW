@@ -1,21 +1,26 @@
-import 'dart:ffi';
-
+// Flutter packages
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'dart:ffi';
 import 'package:random_string/random_string.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:the_best_app/Database/Entities/VouchersList.dart';
-import 'package:the_best_app/Repository/database_repository.dart';
+
+// Screens
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
+
+// Database
+import 'package:the_best_app/Database/Entities/VouchersList.dart';
+import 'package:the_best_app/Repository/database_repository.dart';
+
+// Widgets and models
 import 'package:the_best_app/Utils/back_page_button.dart';
 import 'package:the_best_app/Utils/checkBoxWidget.dart';
 import 'package:the_best_app/models/expList.dart';
 import 'package:the_best_app/models/shopList.dart';
 
 class QRcodePage extends StatelessWidget {
-  //QRcodePage({Key? key}) : super(key: key);
   int item; // ID Current Experience/Shop List
   Map list; // Current Experience/Shop Map
   QRcodePage({required this.item, required this.list});
@@ -71,10 +76,8 @@ class QRcodePage extends StatelessWidget {
                           builder: (context) {
                             return Dialog(
                                 insetAnimationDuration: Duration(seconds: 2),
-                                //color: Colors.grey[100],
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12.0)),
-                                //margin: EdgeInsets.fromLTRB(50, 450, 50, 200),
                                 child: Container(
                                   width: 200,
                                   height: 100,
@@ -109,10 +112,8 @@ class QRcodePage extends StatelessWidget {
                             content: Text(
                                 'After confirmation, the required points will be subtracted from your total score.\nYou will find your available vouchers in the Home page',
                                 textAlign: TextAlign.center),
-                            //color: Colors.grey[100],
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12.0)),
-                            //margin: EdgeInsets.fromLTRB(50, 450, 50, 200),
                             actions: [
                               Row(
                                   mainAxisAlignment: MainAxisAlignment.center,

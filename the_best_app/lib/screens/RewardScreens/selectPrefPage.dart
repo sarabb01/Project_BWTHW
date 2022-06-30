@@ -1,10 +1,14 @@
+// Flutter packages
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+// Screens
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
+import 'package:the_best_app/Screens/RewardScreens/queryPage.dart';
+
+// Widgets
 import 'package:the_best_app/Utils/back_page_button.dart';
 import 'package:the_best_app/Utils/cardWidget.dart';
 import 'package:the_best_app/Utils/points_displayer.dart';
-import 'package:the_best_app/Screens/RewardScreens/queryPage.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class PreferencePage extends StatelessWidget {
   PreferencePage({Key? key}) : super(key: key);
@@ -29,7 +33,6 @@ class PreferencePage extends StatelessWidget {
             Points_displayer(),
             SizedBox(height: 20),
             Container(
-              //width: MediaQuery.of(context).size.width * 0.4,
               height: screenSize.height / 5,
               child: Image.asset(
                 'assets/Images/picwish.png',
@@ -47,8 +50,9 @@ class PreferencePage extends StatelessWidget {
             ),
             SizedBox(height: 50),
             Expanded(
-                child: GridView.count(crossAxisCount: 2, crossAxisSpacing: 15,
-                    //mainAxisSpacing: 4,
+                child: GridView.count(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 15,
                     children: [
                   cardWidget(context, 'assets/Images/shopping.png', 'Shopping',
                       'shops'),
@@ -61,5 +65,4 @@ class PreferencePage extends StatelessWidget {
     );
   } //build
 
-} //Page
-
+} //PreferencePage

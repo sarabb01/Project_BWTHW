@@ -17,6 +17,9 @@ import 'package:the_best_app/Functions/elaborateDataFunctions.dart';
 import 'package:the_best_app/Functions/findTarget.dart';
 
 /*
+Function Description:
+This function fetches data from the date of the last insertion (last fetching) to the actual date
+
 */
 Future<void> fetchData(BuildContext context) async {
   final sp = await SharedPreferences.getInstance();
@@ -32,17 +35,16 @@ Future<void> fetchData(BuildContext context) async {
       : DateTime.now().subtract(Duration(days: 2));
 
   //print('Last insertion $lastInsertion');
-  //DateTime startDate = DateTime.utc(2022, 6, 27);
+  //DateTime startDate = DateTime.utc(2022, 6, 16);
+  //DateTime endDate = DateTime.utc(2022, 6, 28);
+
   DateTime startDate = lastInsertion;
-  //DateTime endDate = DateTime.utc(2022, 6, 3);
   DateTime endDate = DateTime.now();
 
   int threshold = calculateThreshold(allData, endDate);
   print('Threshold mins $threshold');
 
-  int daysToSubtract =
-      // DateTime.now().difference(DateTime.utc(2022, 6, 8, 1, 1, 1, 1, 1)).inDays;
-      endDate.difference(startDate).inDays;
+  int daysToSubtract = endDate.difference(startDate).inDays;
 
   print('N of calls $daysToSubtract');
   print(endDate);
@@ -189,14 +191,8 @@ Future<void> fetchData(BuildContext context) async {
   final level = await findTarget(context, user).then((String target) {
     return target;
   });
-  // final logged_user =
-  //     await Provider.of<UsersDatabaseRepo>(context, listen: false)
-  //         .findUser(user);
-  // final logged_user_info =
-  //     await Provider.of<UsersDatabaseRepo>(context, listen: false)
-  //         .checkUserInfos(logged_user!.id!);
-  // final level = logged_user_info!.usertarget;
-  print('Level: $level');
+
+  //print('Level: $level');
   final double score = computeTotalPoints(allDatanew, level);
   final String s = sp.getString('username')! + 'SpentPoints';
   final spent_points = sp.getDouble(s) ?? 0.0;
@@ -207,10 +203,21 @@ Future<void> fetchData(BuildContext context) async {
 
 ///////////////////////////
 
+/*
+Function Description:
+This function converts the int (milliseconds since epoch) into a DateTime
+*/
+
 DateTime myDate(int date) {
   return DateTime.fromMillisecondsSinceEpoch(
       date * Duration.millisecondsPerMinute);
 }
+
+/*
+Function Description:
+This function calculates the difference (in minutes) between the last fetch and the acutal moment
+
+*/
 
 int calculateThreshold(List<myFitbitData> input, DateTime endDate) {
   if (input.length > 0) {
@@ -226,6 +233,10 @@ int calculateThreshold(List<myFitbitData> input, DateTime endDate) {
     return threshold;
   }
 }
+/*
+Function Description:
+The following functions are aimed to actually fetch Fitbit data using the package Fitbitter
+*/
 
 Future fetchActivityData(DateTime reqDay) async {
   // Activity Data

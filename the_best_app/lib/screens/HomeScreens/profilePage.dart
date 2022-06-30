@@ -245,76 +245,7 @@ class Profilepage extends StatelessWidget {
                       } else {
                         return CircularProgressIndicator();
                       }
-                    })
+                    }))));
+  } //build
 
-// OPTION B
-                // child: ListView(
-                //   children: <Widget>[
-                //     ListTile(
-                //       title: const Text('Personal Data'),
-                //     ),
-                //     ListTile(
-                //         title: Text('Name'),
-                //         subtitle: TextField(
-                //           obscureText: true,
-                //           decoration: InputDecoration(
-                //             border: OutlineInputBorder(),
-                //             labelText: '',
-                //           ),
-                //         )),
-                //     ListTile(
-                //       title: Text('Surname'),
-                //       subtitle: TextField(
-                //         obscureText: true,
-                //         decoration: InputDecoration(
-                //           border: OutlineInputBorder(),
-                //           labelText: '',
-                //         ),
-                //       ),
-                //     ),
-                //     ListTile(
-                //       title: Text('Sex'),
-                //       subtitle: TextField(
-                //         obscureText: true,
-                //         decoration: InputDecoration(
-                //           border: OutlineInputBorder(),
-                //           labelText: '',
-                //         ),
-                //       ),
-                //     ),
-                //     ListTile(
-                //       title: Text('Height'),
-                //       subtitle: TextField(
-                //         obscureText: true,
-                //         decoration: InputDecoration(
-                //           border: OutlineInputBorder(),
-                //           labelText: '',
-                //         ),
-                //       ),
-                //     ),
-                //     ListTile(
-                //       title: Text('Weight'),
-                //       subtitle: TextField(
-                //         obscureText: true,
-                //         decoration: InputDecoration(
-                //           border: OutlineInputBorder(),
-                //           labelText: '',
-                //         ),
-                //       ),
-                //     ),
-                //     ListTile(
-                //       title: Text('Diseases'),
-                //       subtitle: TextField(
-                //         obscureText: true,
-                //         decoration: InputDecoration(
-                //           border: OutlineInputBorder(),
-                //           labelText: '',
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // ),
-
-                )));
-  }
-}
+} //Profilepage

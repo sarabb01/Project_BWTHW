@@ -1,8 +1,11 @@
-import 'dart:ffi';
+/* This class contains a Map with the shops. 
+Key: name of the shop
+Value: details of the discount
+*/
 
 class shopList {
-  //static double _minPoints = 100.0;
-  static double _minPoints = 0.0;
+  static double _minPoints = 100.0;
+  //static double _minPoints = 5.0;
   Map<String, List> Catalog = {
     'Decathlon': [
       _minPoints * 1,

@@ -1,13 +1,16 @@
+// Flutter packages
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+// Screens
 import 'package:the_best_app/Screens/RewardScreens/experiencePage.dart';
 import 'package:the_best_app/Screens/RewardScreens/selectPrefPage.dart';
 import 'package:the_best_app/Screens/RewardScreens/shoppingPage.dart';
+
+// Widgets
 import 'package:the_best_app/Utils/back_page_button.dart';
 
 class QueryPage extends StatelessWidget {
-  //QueryPage({Key? key}) : super(key: key);
-
   static const route =
       '/hellowordpage/loginpage/homepage/preferencepage/querypage/';
   static const routename = 'Query';
@@ -20,8 +23,6 @@ class QueryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('${QueryPage.routename} built');
-    //final path = ModalRoute.of(context)!.settings.arguments! as String;
-    //print(ModalRoute.of(context)!.settings.arguments!);
     return Scaffold(
       appBar: AppBar(
         title: Text('Search'),
@@ -79,5 +80,5 @@ class QueryPage extends StatelessWidget {
     );
   } //build
 
-} //Page
+} //QueryPage
 

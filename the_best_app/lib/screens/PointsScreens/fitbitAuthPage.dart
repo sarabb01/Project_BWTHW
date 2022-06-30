@@ -1,11 +1,13 @@
+// Flutter packages
 import 'package:fitbitter/fitbitter.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+// Screens
 import 'package:the_best_app/Screens/HomeScreens/HomePage.dart';
 
-import 'package:the_best_app/Screens/PointsScreens/fetchPage.dart';
+// Widgets
 import 'package:the_best_app/Utils/back_page_button.dart';
-//import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class AuthPage extends StatefulWidget {
   AuthPage({Key? key}) : super(key: key);
@@ -32,14 +34,6 @@ class _AuthPageState extends State<AuthPage> {
       appBar: AppBar(
         title: Text(AuthPage.routename),
         leading: Back_Page([10, 10, 5, 5], context, HomePage.route),
-        // actions: [
-        //   IconButton(
-        //     icon: Icon(Icons.arrow_forward_ios),
-        //     onPressed: () {
-        //       Navigator.pushNamed(context, FetchPage.route);
-        //     },
-        //   )
-        // ],
       ),
       body: Center(
         child: Column(
@@ -81,5 +75,5 @@ class _AuthPageState extends State<AuthPage> {
       ),
     );
   }
-} //HomePage
+} //AuthPage
 
