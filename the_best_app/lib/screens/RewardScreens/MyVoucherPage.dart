@@ -93,9 +93,9 @@ class MyVoucherPage extends StatelessWidget {
                                     SizedBox(
                                       height: 10,
                                     ),
-                                    CircularProgressIndicator(
-                                      strokeWidth: 10,
-                                    )
+                                    // CircularProgressIndicator(
+                                    //   strokeWidth: 10,
+                                    // )
                                   ]));
                             } else {
                               return Padding(
@@ -192,7 +192,7 @@ class MyVoucherPage extends StatelessWidget {
                                                                       context)
                                                                   .size
                                                                   .height /
-                                                              3.4,
+                                                              2.5,
                                                           child: Padding(
                                                               padding:
                                                                   EdgeInsets

@@ -61,11 +61,14 @@ class _HomepageState extends State<HomePage>
     super.dispose();
   }
 
+/*
+// Not used in this app version
   void user_name(String username) async {
     final sp = await SharedPreferences.getInstance();
     String name = sp.getString('username')!;
     username = name.toUpperCase();
   }
+  */
 
   @override
   Widget build(BuildContext context) {
@@ -209,11 +212,7 @@ class _HomepageState extends State<HomePage>
                                                           listen: false)
                                                       .findAllFitbitDataUser(
                                                           username);
-                                              // final sp = await SharedPreferences
-                                              //     .getInstance();
-                                              // sp.setDouble('Points', 0);
-                                              print(
-                                                  'Days to delete ${allData.length}');
+
                                               await Provider.of<
                                                           UsersDatabaseRepo>(
                                                       context,
@@ -297,7 +296,6 @@ class _HomepageState extends State<HomePage>
                         if (snapshot.hasData) {
                           final result = snapshot.data as SharedPreferences;
                           final String? user = result.getString('username');
-                          print('sp user: ${user}');
 
                           return FutureBuilder(
                               future: Future.wait([
@@ -313,8 +311,7 @@ class _HomepageState extends State<HomePage>
                                   final result = data[0] as SharedPreferences;
                                   final check = data[1] as List<myFitbitData>;
                                   final target = data[2]
-                                      as String; // check the username is correct
-                                  print('Data length ${check.length}');
+                                      as String; // check the username is correc
                                   print(
                                       'Target $target'); // check if he/she has some points stored
 
