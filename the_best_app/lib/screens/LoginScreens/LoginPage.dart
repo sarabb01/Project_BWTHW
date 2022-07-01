@@ -44,7 +44,7 @@ class _log_in_settings extends State<LoginPage> {
   }
 
   String? get pass_errorText {
-    String pass_text = _username.text;
+    String pass_text = _password.text;
     if (pass_text.isEmpty || pass_text == null) {
       return 'Must not be empty';
     } else if (pass_text.length < 8 &&
@@ -71,7 +71,7 @@ class _log_in_settings extends State<LoginPage> {
     _username = TextEditingController();
     _password = TextEditingController();
     //Check if the user is already logged in before rendering the login page
-    _checkLogin();
+    //_checkLogin();
     super.initState();
   }
 
@@ -114,6 +114,7 @@ class _log_in_settings extends State<LoginPage> {
     }
   }
 
+/*
   //Get the SharedPreference instance and check if the value of the 'username' and 'userid' are set or not
   void _checkLogin() async {
     //Get the SharedPreference instance and check if the value of the 'username' filed is set or not
@@ -123,6 +124,7 @@ class _log_in_settings extends State<LoginPage> {
       Navigator.pushReplacementNamed(context, HomePage.route);
     }
   }
+  */
 
   @override
   Widget build(BuildContext context) {
@@ -306,11 +308,11 @@ class _log_in_settings extends State<LoginPage> {
                   _password.text.isEmpty ? pass_submit() : null;
                 } else if (await _User_LogIn(_username.text, _password.text)) {
                   await checkAuthorization(context);
+                  setInputData(); // To Clear the content of TextEditingController()
                   Navigator.pushReplacementNamed(
                     context,
                     HomePage.route,
                   );
-                  setInputData(); // To Clear the content of TextEditingController()
                 } else {
                   showDialog<void>(
                       context: context,
@@ -330,6 +332,7 @@ class _log_in_settings extends State<LoginPage> {
                               IconButton(
                                 icon: Icon(Icons.error),
                                 onPressed: () {
+                                  setInputData(); // To Clear the content of TextEditingController()
                                   Navigator.pop(context);
                                 },
                               ),

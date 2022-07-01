@@ -39,7 +39,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   }
 
   String? get pass_errorText {
-    String pass_text = _username.text;
+    String pass_text = _password.text;
     if (pass_text.isEmpty || pass_text == null) {
       return 'Must not be empty';
     } else if (pass_text.length < 8 &&
@@ -63,6 +63,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     _password.dispose();
   }
 
+/*
   void user_submit() {
     setState(() {
       user_submitted = true;
@@ -74,7 +75,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       password_submitted = true;
     });
   }
-
+*/
   void setInputData() {
     setState(() {
       _username.clear();

@@ -187,19 +187,63 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 })),
             onPressed: (() async {
               if (formKey.currentState!.validate()) {
-                await user_cred_storing(
-                  _username.text,
-                  _password.text,
-                );
-                await user_info_storing(
+                if (await Provider.of<UsersDatabaseRepo>(context, listen: false)
+                        .findUser(_username.text) ==
+                    null) {
+                  await user_cred_storing(
                     _username.text,
-                    _name.text,
-                    _surname.text,
-                    _selectedGender!,
-                    _selectedDate,
-                    _selectedTarget!);
-                setInputData();
-                await Navigator.pushReplacementNamed(context, LoginPage.route);
+                    _password.text,
+                  );
+                  await user_info_storing(
+                      _username.text,
+                      _name.text,
+                      _surname.text,
+                      _selectedGender!,
+                      _selectedDate,
+                      _selectedTarget!);
+                  setInputData();
+                  await Navigator.pushReplacementNamed(
+                      context, LoginPage.route);
+                } else {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15)),
+                            actionsAlignment: MainAxisAlignment.center,
+                            title: Text(
+                              '!!! This Username Already Exists !!!',
+                              textAlign: TextAlign.center,
+                            ),
+                            content: Text(
+                                "Please enter a not-already used username",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center),
+                            actions: <Widget>[
+                              ElevatedButton(
+                                child: Container(
+                                  padding: EdgeInsets.only(
+                                      right: 10.0,
+                                      bottom: 10,
+                                      left: 10.0,
+                                      top: 10),
+                                  child: Column(children: [
+                                    Icon(Icons.close),
+                                    Text('Retry',
+                                        style: TextStyle(fontSize: 10))
+                                  ]),
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _username.clear();
+                                  });
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ]);
+                      });
+                }
               }
             }),
             child: Padding(
@@ -231,13 +275,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
   }
 
   Future<void> user_cred_storing(String username, String password) async {
-    if (await Provider.of<UsersDatabaseRepo>(context, listen: false)
-            .findUser(username) ==
-        null) {
-      final usersCredentials = UsersCredentials(null, username, password);
-      await Provider.of<UsersDatabaseRepo>(context, listen: false)
-          .addUser(usersCredentials);
-    }
+    final usersCredentials = UsersCredentials(null, username, password);
+    await Provider.of<UsersDatabaseRepo>(context, listen: false)
+        .addUser(usersCredentials);
   }
 
   Future<void> user_info_storing(String username, String name, String surname,
