@@ -63,7 +63,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     _password.dispose();
   }
 
-/*
   void user_submit() {
     setState(() {
       user_submitted = true;
@@ -75,7 +74,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       password_submitted = true;
     });
   }
-*/
+
   void setInputData() {
     setState(() {
       _username.clear();
@@ -104,7 +103,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       body: Center(
         child: Form(
           child: Container(
-            height: 300,
+            height: 350,
             width: 350,
             child: Card(
               color: Colours.mediumSeaGreen,
@@ -245,8 +244,48 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         ),
                       ),
                       onPressed: () async {
-                        if (await new_password(
-                            _username.text, _password.text)) {
+                        if (_username.text.isEmpty ||
+                            _password.text.isEmpty ||
+                            _password.text.length < 8) {
+                          _username.text.isEmpty ? user_submit() : null;
+                          _password.text.isEmpty || _password.text.length < 8
+                              ? pass_submit()
+                              : null;
+                        } else if (await Provider.of<UsersDatabaseRepo>(context,
+                                    listen: false)
+                                .findUser(_username.text) !=
+                            null) {
+                          final result = await Provider.of<UsersDatabaseRepo>(
+                                  context,
+                                  listen: false)
+                              .findUser(_username.text);
+                          if (result!.password == _password.text) {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                      actionsAlignment:
+                                          MainAxisAlignment.center,
+                                      title: Text("!!!! Something Wrong !!!!",
+                                          textAlign: TextAlign.center),
+                                      content: Text(
+                                        'The New password cannot be equal to the Old Password',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      actions: <Widget>[
+                                        IconButton(
+                                          icon: Icon(Icons.error),
+                                          onPressed: () {
+                                            setInputData(); // To Clear the content of TextEditingController()
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                      ]);
+                                });
+                          } else {
+                            await new_password(
+                                result.id!, result.username, _password.text);
+                          }
                         } else {
                           setInputData();
                           showDialog<void>(
@@ -346,20 +385,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     );
   }
 
-  Future<bool> new_password(String username, String password) async {
-    final result = await Provider.of<UsersDatabaseRepo>(context, listen: false)
-        .findUser(username);
-    if (result != null) {
-      // That means that this account is already siged in the application
-      final edited_user =
-          UsersCredentials(result.id, result.username, password);
-      await Provider.of<UsersDatabaseRepo>(context, listen: false)
-          .updateUserPassword(edited_user);
-      setInputData();
-      await Navigator.pushReplacementNamed(context, LoginPage.route);
-      return true;
-    } else {
-      return false;
-    }
+  Future<void> new_password(
+      int id, String username, String new_password) async {
+    final edited_user = UsersCredentials(id, username, new_password);
+    await Provider.of<UsersDatabaseRepo>(context, listen: false)
+        .updateUserPassword(edited_user);
+    setInputData();
+    await Navigator.pushReplacementNamed(context, LoginPage.route);
   }
 }

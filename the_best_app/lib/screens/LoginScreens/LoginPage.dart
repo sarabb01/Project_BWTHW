@@ -31,8 +31,8 @@ class LoginPage extends StatefulWidget {
 class _log_in_settings extends State<LoginPage> {
   late TextEditingController _username;
   late TextEditingController _password;
-  bool obscure_text = true;
 
+  bool obscure_text = true;
   bool user_submitted = false;
   bool password_submitted = false;
 
@@ -303,9 +303,13 @@ class _log_in_settings extends State<LoginPage> {
                 ),
               ),
               onPressed: () async {
-                if (_username.text.isEmpty || _password.text.isEmpty) {
+                if (_username.text.isEmpty ||
+                    _password.text.isEmpty ||
+                    _password.text.length < 8) {
                   _username.text.isEmpty ? user_submit() : null;
-                  _password.text.isEmpty ? pass_submit() : null;
+                  _password.text.isEmpty || _password.text.length < 8
+                      ? pass_submit()
+                      : null;
                 } else if (await _User_LogIn(_username.text, _password.text)) {
                   await checkAuthorization(context);
                   setInputData(); // To Clear the content of TextEditingController()
