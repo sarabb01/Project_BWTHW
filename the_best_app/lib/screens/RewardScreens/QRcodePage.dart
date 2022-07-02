@@ -125,7 +125,7 @@ class QRcodePage extends StatelessWidget {
 
                                           final double spent_points =
                                               list[key]![0].toDouble();
-                                          print(spent_points.runtimeType);
+                                          //print(spent_points.runtimeType);
                                           final String s =
                                               sp.getString('username')! +
                                                   'SpentPoints';
