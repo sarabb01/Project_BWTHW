@@ -81,7 +81,7 @@ class PointsPage extends StatelessWidget {
                             .then((String target) {
                           return target;
                         });
-                        final double score = computeTotalPoints(allData, trg);
+                        //final double score = computeTotalPoints(allData, trg);
                       },
                       icon: Icon(Icons.update)),
                   IconButton(
@@ -262,9 +262,9 @@ class PointsPage extends StatelessWidget {
                       final fitbit = data[0] as List<myFitbitData>;
                       final target = data[1] as String;
                       if (fitbit.length > 0) {
-                        final double score = computeTotalPoints(fitbit, target);
+                        //final double score = computeTotalPoints(fitbit, target);
 
-                        final List total = computeSum(fitbit);
+                        //final List total = computeSum(fitbit);
                         //print(total);
                         //print(score.toStringAsFixed(2));
                         return fitbit.length == 0
