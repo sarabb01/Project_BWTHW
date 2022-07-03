@@ -61,6 +61,12 @@ List<charts.Series<DailyScore, String>> createBarData(
 
   for (int i = 0; i < input.length; i++) {
     List<double> today_score = elaboratePoints(input[i], target);
+    final Target values = Target();
+    final int steps = values.targets[target]![0];
+    final int cals = values.targets[target]![1];
+    final int cardio = values.targets[target]![2];
+    final int sleep = values.targets[target]![3];
+
     scores.add([
       DailyScore('Steps', today_score[0]),
       DailyScore('Calories', today_score[1]),
@@ -75,11 +81,16 @@ List<charts.Series<DailyScore, String>> createBarData(
         data: scores[i],
         // colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
         fillColorFn: (_, __) {
-          if (today_score.any((item) => item < 1)) {
+          if (input[i].steps > steps &&
+              input[i].calories > cals &&
+              input[i].cardio > cardio &&
+              input[i].sleepHours > sleep) {
+            return charts.ColorUtil.fromDartColor(Color(0xFFA5D6A7));
+          } else {
+            // if (today_score.any((item) => item < 1)) {
             return charts.ColorUtil.fromDartColor(Color(0xFFEF9A9A));
             //MaterialPalette.red.shadeDefault.lighter;
-          } else {
-            return charts.ColorUtil.fromDartColor(Color(0xFFA5D6A7));
+
           }
           ;
         }));
