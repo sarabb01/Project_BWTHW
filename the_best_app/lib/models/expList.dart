@@ -4,7 +4,7 @@ Value: details of the experience
 */
 
 class expList {
-  static double _minPoints = 100.0;
+  static double _minPoints = 15.0;
   //static double _minPoints = 0.0;
   Map<String, List> Catalog = {
     'Swimming Pool': [

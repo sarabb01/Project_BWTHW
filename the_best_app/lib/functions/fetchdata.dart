@@ -25,18 +25,18 @@ Future<void> fetchData(BuildContext context) async {
   final sp = await SharedPreferences.getInstance();
   final String? user = sp.getString('username');
 
-  print(user);
+  //print(user);
   List<myFitbitData> allData =
       await Provider.of<UsersDatabaseRepo>(context, listen: false)
           .findAllFitbitDataUser(user!);
 
   DateTime lastInsertion = (allData.length > 0)
       ? myDate(allData[allData.length - 1].detailDate)
-      : DateTime.now().subtract(Duration(days: 2));
+      : DateTime.now().subtract(Duration(days: 7));
 
   //print('Last insertion $lastInsertion');
-  // DateTime startDate = DateTime.utc(2022, 6, 20);
-  // DateTime endDate = DateTime.utc(2022, 6, 28);
+  // DateTime startDate = DateTime.utc(2022, 6, 19);
+  // DateTime endDate = DateTime.utc(2022, 6, 25);
 
   DateTime startDate = lastInsertion;
   DateTime endDate = DateTime.now();
@@ -185,6 +185,16 @@ Future<void> fetchData(BuildContext context) async {
         backgroundColor: Colors.red));
   }
 
+  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+    content: Text(
+      'Update completed',
+      style: TextStyle(color: Colors.black, fontSize: 15),
+      textAlign: TextAlign.center,
+    ),
+    duration: Duration(seconds: 2),
+    backgroundColor: Colours.lightGreen,
+  ));
+
   List<myFitbitData> allDatanew =
       await Provider.of<UsersDatabaseRepo>(context, listen: false)
           .findAllFitbitDataUser(user);
@@ -196,7 +206,7 @@ Future<void> fetchData(BuildContext context) async {
   final double score = computeTotalPoints(allDatanew, level);
   final String s = sp.getString('username')! + 'SpentPoints';
   final spent_points = sp.getDouble(s) ?? 0.0;
-  print(spent_points);
+  //print(spent_points);
   sp.setDouble('Points', score - spent_points);
   // sp.setDouble('Points', score);
 }
