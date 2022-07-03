@@ -81,10 +81,10 @@ List<charts.Series<DailyScore, String>> createBarData(
         data: scores[i],
         // colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
         fillColorFn: (_, __) {
-          if (input[i].steps > steps &&
-              input[i].calories > cals &&
-              input[i].cardio > cardio &&
-              input[i].sleepHours > sleep) {
+          if (input[i].steps >= steps &&
+              input[i].calories >= cals &&
+              input[i].cardio >= cardio &&
+              input[i].sleepHours >= sleep) {
             return charts.ColorUtil.fromDartColor(Color(0xFFA5D6A7));
           } else {
             // if (today_score.any((item) => item < 1)) {

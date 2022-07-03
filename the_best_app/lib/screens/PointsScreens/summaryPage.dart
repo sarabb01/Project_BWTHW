@@ -112,11 +112,12 @@ class SummaryPage extends StatelessWidget {
                                   final todayPoints =
                                       elaboratePoints(fitbit2[index], target);
                                   final List values = Target().targets[target]!;
-                                  //print(todayPoints);
-                                  if (fitbit2[index].steps > values[0] &&
-                                      fitbit2[index].calories > values[1] &&
-                                      fitbit2[index].cardio > values[2] &&
-                                      fitbit2[index].sleepHours > values[3]) {
+                                  print(todayPoints);
+                                  print(values);
+                                  if (fitbit2[index].steps >= values[0] &&
+                                      fitbit2[index].calories >= values[1] &&
+                                      fitbit2[index].cardio >= values[2] &&
+                                      fitbit2[index].sleepHours >= values[3]) {
                                     return Card(
                                       child: ListTile(
                                         isThreeLine: true,
