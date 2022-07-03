@@ -190,17 +190,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 if (await Provider.of<UsersDatabaseRepo>(context, listen: false)
                         .findUser(_username.text) ==
                     null) {
-                  await user_cred_storing(
+                  await user_data_storing(
+                    _name.text,
+                    _surname.text,
+                    _selectedGender!,
+                    _selectedDate,
+                    _selectedTarget!,
                     _username.text,
                     _password.text,
                   );
-                  await user_info_storing(
-                      _username.text,
-                      _name.text,
-                      _surname.text,
-                      _selectedGender!,
-                      _selectedDate,
-                      _selectedTarget!);
                   setInputData();
                   await Navigator.pushReplacementNamed(
                       context, LoginPage.route);
@@ -274,14 +272,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
     });
   }
 
-  Future<void> user_cred_storing(String username, String password) async {
+  Future<void> user_data_storing(
+      String name,
+      String surname,
+      String gender,
+      DateTime dateofbirth,
+      String target,
+      String username,
+      String password) async {
     final usersCredentials = UsersCredentials(null, username, password);
     await Provider.of<UsersDatabaseRepo>(context, listen: false)
         .addUser(usersCredentials);
-  }
-
-  Future<void> user_info_storing(String username, String name, String surname,
-      String gender, DateTime dateofbirth, String target) async {
     final user = await Provider.of<UsersDatabaseRepo>(context, listen: false)
         .findUser(username);
     if (user != null) {
